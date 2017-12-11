@@ -26,59 +26,24 @@
       position: relative;
       width: 100%;
       height: 0.9rem;
-      background: #15c488;
-    }
-    .bottom-out .bottom.punch{
-      background: #15c488;
-    }
-    .bottom-out .bottom.punched{
-      background: #4983F0;
+      background: #15c489;
     }
     .bottom .notfinish,.bottom .finish{
       float: left;
       width: 50%;
+      box-sizing: border-box;
       line-height: 0.9rem;
       text-align: center;
       font-size: 0.28rem;
       color: #fff;
       position: relative;
     }
-    .bottom .sign{
-      position: absolute;
-      bottom: 0;
-      left:50%;
-      margin-left: -0.67rem;
-      width: 1.35rem;
-      height:1.35rem;
-    }
-    .bottom .sign.punch{
-      background:url(../../../image/farmLand/qiandao.png) no-repeat center center;
-      background-size: 100% 100%;
-    }
-    .bottom .sign.punched{
-      background:url(../../../image/farmLand/tui.png) no-repeat center center;
-      background-size: 100% 100%;
-    }
-    .bottom .notfinish .num{
-      position: absolute;
-      right: 1rem;
-      top: 0;
-      width: 0.4rem;
-      height: 0.4rem;
-      line-height: 0.4rem;
-      text-align: center;
-      font-size: 0.24rem;
-      color: #fff;
-      overflow: hidden;
-      background: #ff7a01;
-      border-radius: 50%;
-    }
   </style>
 </head>
 <body>
   <div class="bottom-out">
     <div class="bottom" id="bottom">
-      <div class="notfinish" id="notfinish">
+      <div class="notfinish" id="notfinish" style="border-right:1px solid #fff;">
       作物长势
       </div>
       <div class="finish" id="finish">员工活动轨迹</div>
