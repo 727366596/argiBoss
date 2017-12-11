@@ -11,7 +11,7 @@ html,body{
 		width: 100%;
 		overflow: hidden;
 	  background-color: #00c558;
-		font-size: 20px;
+		font-size: 0.36rem;
 		color: #fff;
 		padding-top:22px;
 		display: -webkit-box;
@@ -35,7 +35,7 @@ html,body{
 		width: 100%;
 		overflow: hidden;
 	  background-color: #00c558;
-		font-size: 20px;
+		font-size: 0.36rem;
 		color: #fff;
 		padding-top:22px;
 		display: -webkit-box;
@@ -63,7 +63,7 @@ html,body{
 .headerLeft {
 		width: 15%;
 		box-sizing:border-box;
-		background: url("../../image/common/header_backBtn.png") no-repeat 13px center;
+		background: url("../../image/farmLand/left.png") no-repeat 13px center;
 		background-size: 10px 18px;
 }
 .headerCenter {
@@ -71,7 +71,7 @@ html,body{
 		height: 44px;
 		line-height: 44px;
 		text-align: center;
-		font-size: 20px;font-family: PingFangSC-Regular, sans-serif;color: #fff;
+		font-size: 0.36rem;font-family: PingFangSC-Regular, sans-serif;color: #fff;
 
 		display: -webkit-box;
 		display: -webkit-flex;
@@ -94,7 +94,7 @@ html,body{
 		height: 44px;
 		line-height: 44px;
 		text-align: center;
-		font-size: 36px;font-family: PingFangSC-Regular, sans-serif;color: #fff;
+		font-size: 0.36rem;font-family: PingFangSC-Regular, sans-serif;color: #fff;
 		display: -webkit-box;
 		display: -webkit-flex;
 		display:flex;
@@ -114,5 +114,5 @@ html,body{
 .headerRight {
 		width: 15%;
 		color:#fff;
-		font-size: 17px;
+		font-size: 0.34rem;
 }
