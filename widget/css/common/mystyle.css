@@ -4,9 +4,9 @@ html, body{
 	width: 100%;
 	overflow-x:hidden;
 	overflow-y: scroll;
-	-ms-word-wrap: break-word; 
+	-ms-word-wrap: break-word;
 	word-wrap: break-word;
-	-webkit-text-size-adjust: none; 
+	-webkit-text-size-adjust: none;
 	text-size-adjust: none;
 	}
 
@@ -89,18 +89,18 @@ html, body{
 	width: 20px;
 	height: 20px;
 	position: absolute;
-	margin: -64px 20px 0px 88%; 
+	margin: -64px 20px 0px 88%;
 }
 .banner-back-btn{
 	top: 35px;
     left: 20px;
-	width:10px;
-	height:18px;
-	background:url("../image/business_img/back.png") no-repeat;
-	background-size:100% 100%;
+		width: 39px;
+	height: 23px;
+	background: url("../../image/farmLand/left.png") no-repeat 13px center;
+	background-size: 10px 18px;
 }
 .banner-edit-btn{
-	background-image: url("../image/edit.png");
+	background: url("../../image/edit.png") no-repeat;
 	background-size: 100%;
 	background-repeat: none;
 }
@@ -159,7 +159,7 @@ html, body{
 }
 .menu1st ul{
 	list-style: none;
-	margin: 0px 0px; 
+	margin: 0px 0px;
 	background-color: none;
     margin-bottom: 3px;
      -webkit-box-shadow: 0px 2px 4px #dddcdc;
@@ -168,7 +168,7 @@ html, body{
 }
 .menu1st ul li{
 	width: 100%;
-    line-height: 53px;    
+    line-height: 53px;
 }
 .menu1st ul li div{
 	border-bottom: 1px solid #f2f2f2;
@@ -376,7 +376,7 @@ textarea[disabled]{
 	display:table;
 	padding:.5em 0;
 	border-bottom:solid 1px #eceeeb;
-} 
+}
 .infos-panel-line:after{
 	content:"";
 	display:block;
@@ -543,7 +543,7 @@ textarea[disabled]{
 
 /*弹性布局flex css3*/
 .argi-flex{
-	
+
 }
 .argi-flex-name{
 	display:table-cell;
@@ -638,7 +638,7 @@ textarea[disabled]{
 .album-group
 .album-group .album-box,
 .album-group .album-box2{
-	
+
 	text-align:center;
 	margin:.5em 0;
 }
@@ -664,7 +664,7 @@ textarea[disabled]{
 	margin-bottom:10px;
 }
 @media (max-width:400px){
-	
+
 	.album-list-2{
 		min-width:140px;
 		max-width:140px;
@@ -754,7 +754,7 @@ textarea[disabled]{
 	height:50px;
 }
 .argi-flex-img.resource-img + .argi-flex-infos2{margin-left:50px;}
-.argi-flex-img.resource-img + .argi-flex-infos2 > .flex-full{padding-bottom:16px;} 
+.argi-flex-img.resource-img + .argi-flex-infos2 > .flex-full{padding-bottom:16px;}
 .price-layer,.control-btn{
  	position:absolute;
  	right: 7px;
@@ -776,7 +776,7 @@ textarea[disabled]{
 	line-height:0;
 	display:block;
 	clear:both;
-	
+
 }
 .layer-block > .active{color:#5eb95e}
 .btn-h3>ul>li,.btn-h2>ul>li{float:left;padding:0 5px;}

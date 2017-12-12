@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>打点按钮frm</title>
+		<!-- <link rel="stylesheet" type="text/css" href="../../../../css/api.css"/> -->
+    <!-- <link rel="stylesheet" type="text/css" href="../../../../css/aui.css" /> -->
+		<script src="../../../../script/common/zepto.min.js"></script>
+		<script type="text/javascript" src="../../../../script/common/api.js"></script>
+
+</head>
+<style type="text/css">
+.frmBtn{
+  display: inline-block;
+  width: 65px;
+  height:65px;
+  border:none;
+  outline: none;
+  background-color: rgba(0,0,0,0.0);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 110% 110%;
+}
+.btn_active{
+  background-image: url("../../../../image/delBtn_active_bc_frm.png");
+}
+.btn{
+  background-image: url("../../../../image/delBtn_bc_frm.png");
+}
+</style>
+<body>
+    <button id="delBtn" class="btn frmBtn" disabled="disabled" onclick="delPoint();"></button>
+</body>
+
+<script type="text/javascript">
+    apiready = function(){
+        api.parseTapmode();
+    }
+
+    function delUseable(){
+      $("#delBtn").removeAttr("disabled").removeClass("btn").addClass("btn_active");
+    };
+    function forbideDel(){
+      $("#delBtn").attr("disabled","disabled").removeClass("btn_active").addClass("btn");
+    };
+    function delPoint(){
+      api.execScript({
+          frameName: 'myposition_bmap_hand_show_frm',
+          script: 'deleteAnnotation()'
+      });
+    }
+</script>
+</html>

@@ -175,7 +175,7 @@
         var isSame = function(doms, el){
             var i = 0, len = doms.length;
             for(i; i<len; i++){
-                if(doms[i].isSameNode(el)){
+                if(doms[i].isEqualNode(el)){
                     return doms[i];
                 }
             }
@@ -318,7 +318,14 @@
         if(arguments.length === 2){
             switch(el.tagName){
                 case 'SELECT':
-                    el.options[el.selectedIndex].value = val;
+//                  el.options[el.selectedIndex].value = val;
+//                  el.options[el.selectedIndex].innerHTML = val;
+                    var options = el.options;
+                    for(var i=0;i<options.length;i++){
+                    	if(options[i].value == val){
+                    		options[i].setAttribute('selected','selected');
+                    	}
+                    }
                     return el;
                     break;
                 case 'INPUT':
@@ -474,24 +481,40 @@
             ls.clear();
         }
     };
+
+   
+    /*by king*/
     u.fixIos7Bar = function(el){
-        return u.fixStatusBar(el);
+        if(!u.isElement(el)){
+            console.warn('$api.fixIos7Bar Function need el param, el param must be DOM Element');
+            return;
+        }
+        var strDM = api.systemType;
+        if (strDM == 'ios') {
+            var strSV = api.systemVersion;
+            var numSV = parseInt(strSV,10);
+            var fullScreen = api.fullScreen;
+            var iOS7StatusBarAppearance = api.iOS7StatusBarAppearance;
+            if (numSV >= 7 && !fullScreen && iOS7StatusBarAppearance) {
+                el.style.paddingTop = '20px';
+            }
+        }
     };
     u.fixStatusBar = function(el){
         if(!u.isElement(el)){
             console.warn('$api.fixStatusBar Function need el param, el param must be DOM Element');
-            return 0;
+            return;
         }
-        el.style.paddingTop = api.safeArea.top + 'px';
-        return el.offsetHeight;
-    };
-    u.fixTabBar = function(el){
-        if(!u.isElement(el)){
-            console.warn('$api.fixTabBar Function need el param, el param must be DOM Element');
-            return 0;
+        var sysType = api.systemType;
+        if(sysType == 'ios'){
+            u.fixIos7Bar(el);
+        }else if(sysType == 'android'){
+            var ver = api.systemVersion;
+            ver = parseFloat(ver);
+            if(ver >= 4.4){
+                el.style.paddingTop = '25px';
+            }
         }
-        el.style.paddingBottom = api.safeArea.bottom + 'px';
-        return el.offsetHeight;
     };
     u.toast = function(title, text, time){
         var opts = {};
@@ -583,7 +606,23 @@
 
 /*end*/
     
-
+	u.openWin = function(params){
+//  	if($api.getStorage("openWin")&&$api.getStorage("openWin").indexOf(params.name+"&")>-1){
+//  		params.own = true;
+//  	}else{
+//  		$api.setStorage("openWin",params.name+"&"+$api.getStorage("openWin"))
+//  	}
+    	if(api.winName==params.name){
+    		params.own = true;
+    	}
+    	api.openWin({		
+        		name:params.name,
+        		url:'widget://html/win_home.html',
+        		slidBackEnabled:false,
+        		reload:true,
+        		pageParam:{'extend_params':JSON.stringify(params)}
+    	});
+	}
     window.$api = u;
 
 })(window);

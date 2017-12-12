@@ -4,10 +4,12 @@
 (function(window) {
 //       var host = 'http://47.93.238.45/'  //release
 //var host = 'http://dev.znphjf.com/'
-var host = 'http://172.16.36.126:8080/'  //release
+//var host = 'http://172.16.36.126:8080/'  //小强
+var host = 'http://172.16.36.119:8080/'  //富川
+
     var basePath = '/app'
 
-    var debug = false; // 打印错误信息，false不打印
+    var debug = true; // 打印错误信息，false不打印
 
     var url = function(path) {
         var u = host + basePath + path
@@ -22,7 +24,7 @@ var host = 'http://172.16.36.126:8080/'  //release
           return debug;
         },
         debugUserId: function(){
-          return 1887
+          return 1888
         }
     }
 })(window)
