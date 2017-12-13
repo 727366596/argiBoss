@@ -3584,7 +3584,7 @@ var openMap = function openMap() {
         show: true,
         position: {
           x: api.winWidth - 50,
-          y: api.winHeight - 110
+          y: api.winHeight - 130
         }
       });
       ready(farmId);
@@ -3711,7 +3711,7 @@ var openMyPosition = function openMyPosition() {
     url: '../../../html/farmLand/index/myposition_frm.html',
     rect: {
       x: api.winWidth - 60,
-      y: api.winHeight - 170,
+      y: api.winHeight - 190,
       w: 250,
       h: 120
     },
@@ -3872,16 +3872,16 @@ var closePunch = function closePunch() {
   _Ajax2.default.get(url, {
     farmId: farmId
   }, function (res) {
-    api.closeFrame({
-      name: 'punch_frm'
-    });
-    api.closeFrame({
-      name: 'farm_frm'
-    });
-    api.closeFrame({
-      name: 'myposition_frm'
-    });
-    closeMap();
+    // api.closeFrame({
+    //   name: 'punch_frm'
+    // });
+    // api.closeFrame({
+    //   name: 'farm_frm'
+    // });
+    // api.closeFrame({
+    //   name: 'myposition_frm'
+    // });
+    // closeMap();
     //  api.closeWin( {} )
   });
 };
