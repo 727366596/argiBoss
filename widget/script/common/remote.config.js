@@ -9,7 +9,7 @@ var host = 'http://dev.znphjf.com/'
 
     var basePath = '/app'
 
-    var debug = true; // 打印错误信息，false不打印
+    var debug = false; // 打印错误信息，false不打印
 
     var url = function(path) {
         var u = host + basePath + path
