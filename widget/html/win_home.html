@@ -157,12 +157,12 @@ apiready = function(){
 			    param_.animation=null;
 		    }
 		    // 关闭farm_index的地图
-	//	    if(frameName!="farm_index1"){
-		    // 	api.execScript({
-				// 	name : 'win_home',
-				// 	frameName : 'farm_index',
-				// 	script : "closeMap()"
-				// });
+		    if(frameName!="farm_index"){
+		    	api.execScript({
+					name : 'win_home',
+					frameName : 'farm_index',
+					script : "closeMap()"
+				});
 				// api.execScript({
 				// 	name : 'agriculturalData',
 				// 	frameName : 'farm_index',
@@ -178,7 +178,7 @@ apiready = function(){
 				// 	frameName : 'farm_index',
 				// 	script : "closeMap()"
 				// });
-	//	    }
+		    }
 			if(frameName=="farm_index"){
 				// api.execScript({
 				// 	name : 'mypostion',
