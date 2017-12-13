@@ -182,10 +182,9 @@
 			}, function(ret, err) {
 				var index = ret.buttonIndex;
 				if (index == 1) {
-					api.execScript({
-	            name: 'delimitBlockArea',
-	            script: 'refreshStatusList()'
-	        });
+					api.sendEvent( {
+							name: 'refreshStatusList'
+					} )
 					api.closeWin();
 				};
 			});

@@ -139,6 +139,13 @@
 <script>
 apiready = function(){
 		refreshStatusList();
+		api.addEventListener({
+				name: 'refreshStatusList'
+		}, function(ret, err){
+				if( ret ){
+					 refreshStatusList()
+				}
+		});
 }
 function refreshStatusList(){
 		pds.ajaxSubmit({
