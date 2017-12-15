@@ -4,7 +4,7 @@ var pds = (typeof this.pds === 'undefined') ? {} : this.pds;
 	var uriConfig = {
 	  //  dev:"http://172.16.36.98:8080/",
 		// dev:'http://172.16.36.126:8080/',//小强
-		 	dev:'http://172.16.36.119:8080/',//富川
+			dev:'http://172.16.36.119:8080/',//富川
 		// dev:"http://172.16.36.132:8080/",
 		// uat:"http://60.205.185.177/",
 		uat:"http://dev.znphjf.com/",
@@ -40,7 +40,7 @@ var pds = (typeof this.pds === 'undefined') ? {} : this.pds;
 	}
 
 
-	var defaultUri = remoteUri("uat")
+	var defaultUri = remoteUri("dev")
 
 
 	/**release
