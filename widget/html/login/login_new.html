@@ -333,10 +333,11 @@ function login(){
 
    var username = $('#username').val();
    var password = $('#password').val();
+	 var flag ="boss";
    //ajax访问后端数据
    pds.ajaxSubmit({
 		url:"app/sys/enter",
-		data:{"username":username,"password":password},
+		data:{"username":username,"password":password,"flag":flag},
 		success:function(e){
 	        if(e.status == "error"){
 	        	$('#username').val("");
