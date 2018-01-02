@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<title>投入和长势</title>
+		<link rel="stylesheet" type="text/css" href="../../css/common/api.css">
+		<script type="text/javascript" src="../../script/common/rem.js"></script>
+		<link rel="stylesheet" href="../../css/common/public.css" />
+		<link rel="stylesheet" href="../../css/common/header.css" />
+    <style>
+				article{
+					padding-top: 0.2rem;
+					padding-left: 0.2rem;
+					padding-right: 0.2rem;
+					padding-bottom: 0.6rem;
+					background-color: #f3f4f4;
+				}
+				section{
+					margin-top: 0.2rem;
+					background-color: #fff;
+				}
+				#section1{
+					padding-top: 0.25rem;
+					padding-bottom: 0.25rem;
+					text-align: center;
+				}
+				#section2{
+					margin-top: 0.3rem;
+				}
+				#section1 li{
+					height: 0.8rem;
+					line-height: 0.8rem;
+					text-align: center;
+				}
+				#section1 li span{
+					display: inline-block;
+					font-size: 0.3rem;
+					width: 1.5rem;
+				  color: #666666;
+				}
+				input{
+					font-size: 0.3rem;
+					padding-top: 0.1rem;
+					padding-bottom: 0.1rem;
+					width: 3.4rem;
+					padding-left: 0.1rem;
+					color: #666666;
+					background-color: #f3f4f4;
+				}
+				button{
+					width: 5.7rem;
+					height: 0.7rem;
+					background-color: #00c558;
+					color:#ffffff;
+					font-size: 0.3rem;
+					border-radius: 0.7rem;
+					outline: 0;
+				}
+				.plantCondition{
+					height: 0.95rem;
+					font-size: 0.34rem;
+					line-height: 0.95rem;
+					color: #00c558;
+					text-align: center;
+					border-bottom: 1px solid #f6f3f3;
+				}
+				.collectionTime{
+					font-size: 0.28rem;
+					color: #666666;
+					height: 0.88rem;
+					line-height: 0.88rem;
+					text-align: center;
+				}
+				.xuanxiang{
+					border-bottom: 1px solid #f6f3f3;
+				}
+				.plantA{
+					display: inline-block;;
+					text-align: center;
+					height: 1rem;
+					line-height: 1rem;
+					width: 48.25%;
+					font-size: 0.3rem;
+					color: #00c558;
+				}
+				.plantB{
+					display: inline-block;
+					height: 1rem;
+					line-height: 1rem;
+					text-align: center;
+					width: 48.25%;
+					font-size: 0.3rem;
+					color: #333333;
+				}
+				.shuju{
+					height: 2.25rem;
+					background-color: #fff;
+				}
+				.jihuashuju{
+					display: inline-block;
+					text-align: center;
+					width: 48.25%;
+					font-size: 0.6rem;
+					color: #BAD863;
+					border-right: 1px solid #f6f3f3;
+				}
+				.shijishuju{
+					display: inline-block;
+					text-align: center;
+					width: 48.25%;
+					font-size: 0.6rem;
+					color: #2C9FE4;
+				}
+				.shujuyuan{
+					font-size: 0.34rem;
+					color: #747976;
+				}
+				.title2{
+					clear: both;
+					height: 1rem;
+					line-height: 1rem;
+					font-size: 0.3rem;
+					color: #666;
+					text-align: center;
+					border-top: 0.2rem solid #f3f4f4;
+				}
+				.nian{
+					position: relative;
+					height: 0.86rem;
+					font-size: 0.28rem;
+					color: #5c634b;
+					border-top: 1px solid #f6f3f3;
+				}
+				.nianfen{
+					height: 0.86rem;
+					text-align: center;
+					line-height: 0.86rem;
+				}
+				.sanjiao1{
+					position: absolute;
+					top: 0.28rem;
+					right: 0.4rem;
+					width: 0;
+					height: 0;
+					border-top: 0.2rem solid transparent;
+					border-left: 0.4rem solid #A2C446;
+					border-bottom: 0.2rem solid transparent;
+				}
+				.sanjiao2{
+					position: absolute;
+					top: 0.28rem;
+					left: 0.4rem;
+					width: 0;
+					height: 0;
+					border-top: 0.2rem solid transparent;
+					border-right: 0.4rem solid #A2C446;
+					border-bottom: 0.2rem solid transparent;
+				}
+			 .wrap{
+			 	 position: relative;
+				 overflow-x: scroll;
+				 width: 100%;
+				 height: 0.86rem;
+				 border-top: 1px solid #f6f3f3;
+				 border-bottom: 1px solid #f6f3f3;
+			 }
+			 .slider{
+				white-space:nowrap;
+		    word-wrap:break-word;
+		    word-break:break-all;
+				margin-top: -0.42rem;
+			 }
+			 .slider span{
+			 	display: inline-block;
+				margin-left: 0.17rem;
+				padding-top: 0.1rem;
+				padding-bottom: 0.1rem;
+				padding-left: 0.2rem;
+				padding-right: 0.2rem;
+				border-radius: 0.8rem;
+				font-size: 0.28rem;
+				color: #747976;
+				text-align: center;
+				border: 1px solid #ededed;
+			 }
+			 .slider span:first-child{
+			 	margin-left: 0.34rem;
+			 }
+			 .slider span:last-child{
+			 	margin-right: 0.34rem;
+			 }
+			 #container1{
+			 	clear: both;
+				height: 7rem;
+			 }
+			 .circle{
+			 	position: relative;
+				display: none;
+				float: left;
+				margin: 0.05rem;
+			 	width: 2.5rem;
+				height: 2.5rem;
+				border-radius: 2rem;
+				color: #fff;
+				background-color: #EE6B67;
+			 }
+			 #gongJu{
+			 	float: right;
+			  width: 2.8rem;
+			  height: 2.8rem;
+			  background-color: #32D6C5;
+			}
+			#renGong{
+				width: 3.2rem;
+				height: 3.2rem;
+				background-color: #4198E1;
+			}
+			#nongyao{
+				float: right;
+				width: 1.8rem;
+				height: 1.8rem;
+				/*margin-right: 0.3rem;*/
+				background-color: #D8E801;
+			}
+			#zicai{
+				width: 2.1rem;
+				height: 2.1rem;
+				background-color: #A864A8;
+			}
+			#guangai{
+				float: right;
+				width: 2.4rem;
+				height: 2.4rem;
+				background-color: #AFA9FE;
+			}
+			#shebei{
+				width: 2.1rem;
+				height: 2.1rem;
+				/*margin-top: -0.4rem;*/
+				background-color: #A2C446;
+			}
+			#qita{
+				float: right;
+				/*margin-top: -0.7rem;*/
+				width: 2.4rem;
+				height: 2.4rem;
+				background-color: #FFC65C;
+			}
+			 .neiRong{
+			 	position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -0.7rem;
+				margin-top: -0.45rem;
+			 	width: 1.4rem;
+				height: 0.9rem;
+			 }
+			 .neiRong>span{
+				float: left;
+				margin: 0;
+				padding: 0;
+				line-height: 1;
+			 }
+			 .tuBiao{
+			 	display: inline-block;
+				width: 0.3rem;
+				height: 0.3rem;
+				background:url("../../image/planting/feiliao.jpg") no-repeat left center;
+				background-size: 100% 100%;
+			}
+			#gongJu .tuBiao{
+				background:url("../../image/planting/gongJu.jpg") no-repeat left center;
+				background-size: 100% 100%;
+			}
+			#renGong .tuBiao{
+				background:url("../../image/planting/rengong.jpg") no-repeat left center;
+				background-size: 100% 100%;
+			}
+			#nongyao .tuBiao{
+				background:url("../../image/planting/nongyao.jpg") no-repeat left center;
+				background-size: 100% 100%;
+			}
+			#zicai .tuBiao{
+				background:url("../../image/planting/zicai.jpg") no-repeat left center;
+				background-size: 100% 100%;
+			}
+			#guangai .tuBiao{
+				background:url("../../image/planting/guangai.jpg") no-repeat left center;
+				background-size: 100% 100%;
+			}
+			#shebei .tuBiao{
+				background:url("../../image/planting/shebei.jpg") no-repeat left center;
+				background-size: 100% 100%;
+			}
+			#qita .tuBiao{
+				background:url("../../image/planting/qita.jpg") no-repeat left center;
+				background-size: 100% 100%;
+			}
+			 .gongXu{
+			 	height: 0.3rem;
+			 	font-size: 0.3rem;
+			 }
+			 .huaFei{
+			 	position: absolute;
+				top: 0.3rem;
+				left: -0.3rem;
+			 	height: 0.6rem;
+				width: 1.4rem;
+				text-align: right;
+			 	font-size: 0.6rem;
+			 }
+			 .danWei{
+			 	position: absolute;
+				right: 0;
+				bottom: -0.2rem;
+			 	height: 0.6rem;
+				width: 0.3rem;
+				padding-top: 0.3rem;
+				font-size: 0.3rem;
+			 }
+			 .zhanBi{
+			 	position: absolute;
+				top: 0.12rem;
+				right: 0.2rem;
+			 	height: 0.26rem;
+				width: 0.26rem;
+			 	font-size: 0.26rem;
+				color: #666;
+			 }
+			 .leftTitle{
+			 	float: left;
+				padding-left: 0.2rem;
+			 	font-size: 0.3rem;
+				color: #666;
+			 }
+			 .rightUnit{
+			 	float: right;
+				padding-right: 0.2rem;
+				text-align: right;
+			 	font-size: 0.28rem;
+				color: #333;
+			 }
+			 .biaoTitle{
+			 	padding-top: 0.74rem;
+				background-color: #fff;
+			 }
+	     #container2{
+				padding-top: 0.5rem;
+				padding-left: 0.2rem;
+				padding-right: 0.2em;
+	     }
+			 #zhanwei{
+				 position: relative;
+				 overflow-x: scroll;
+				 width: 100%;
+				 height: 0.4rem;
+			}
+			#part1,#part2{
+				background-color: #fff;
+			}
+			.cropFiled{
+				height: 1.2rem;
+				text-align: center;
+				padding-top: 0.32rem;
+				padding-bottom: 0.32rem;
+			}
+			.cropName{
+				font-size: 0.3rem;
+				color: #666;
+			}
+			.plantTime{
+				font-size: 0.26em;
+				color: #999;
+			}
+			#container3{
+				height: 1.88rem;
+				border-top: 1px solid #f6f3f3;
+				border-bottom: 1px solid #f6f3f3;
+				overflow-x: scroll;
+			}
+			.period{
+				border-bottom: 1px solid #f6f3f3;
+			}
+			.process{
+				display: inline-block;
+				padding-left: 0.2rem;
+				width: 40%;
+			}
+			.xuhao{
+				float: left;
+				width: 0.34rem;
+				height: 0.34rem;
+				font-size: 0.28rem;
+				line-height: 0.34rem;
+				text-align: center;
+				background-color: #74c09e;
+				border-radius: 2px;
+			}
+			.chuli{
+				float: left;
+				padding-left: 0.1rem;
+				width: 1.4rem;
+				height: 0.34rem;
+				font-size: 0.28rem;
+				line-height: 0.36rem;
+				text-align: left;
+				color: #333333;
+			}
+			.jutineirong{
+				display: inline-block;
+				width: 55%;
+				font-size: 0.26rem;
+				color: #666;
+			}
+			.jutiwenzi{
+				overflow: hidden;
+				text-overflow:ellipsis;
+				white-space: nowrap;
+			}
+			.more{
+				color: #4198e1;
+			}
+			#partA1{
+				width: 2rem;
+				height: 1px;
+				margin-left: 0.7rem;
+				background-color: #00c558;
+			}
+			#partA2{
+				display: none;
+				width: 1.9rem;
+				height: 1px;
+				margin-left: 0.8rem;
+				background-color: #00c558;
+			}
+			#part2{
+				display: none;
+			}
+			.slide{
+			 white-space:nowrap;
+			 word-wrap:break-word;
+			 word-break:break-all;
+			 margin-top: -0.42rem;
+			}
+			.slide span{
+			 display: inline-block;
+			}
+			.slide span:first-child{
+			 margin-left: 0.34rem;
+			}
+			.slide span:last-child{
+			 margin-right: 0.34rem;
+			}
+			.chucao{
+				margin-top: 0.7rem;
+				margin-left: -0.15rem;
+				width: 1.34rem;
+				height: 1.34rem;
+				border-radius: 2rem;
+				background:url("../../image/planting/chucao.jpg") no-repeat left center;
+				background-size: 100% 100%;
+			}
+			.dot{
+				margin-left: -0.15rem;
+				width: 1rem;
+				height: 1rem;
+				background:url("../../image/planting/dot.jpg") no-repeat left 30%;
+				background-size: 100% 25%;
+			}
+    </style>
+</head>
+<body>
+<div id="header">
+        <div class="headerLeft" onclick="api.closeWin()"></div>
+        <div class="headerCenter">投入和长势</div>
+        <div class="headerRight"></div>
+</div>
+<article>
+    <section id="section1">
+				<ul>
+					<li>
+						<span>统计时间：</span>
+						<input id="time" type="text" value="2017年1月-2017年10月" readonly>
+					</li>
+					<li>
+						<span>地&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp块：</span>
+						<input id="land"type="text" value="#1" readonly>
+						<input id="landId" type="hidden">
+					</li>
+					<li>
+						<span>种的作物：</span>
+						<input id="crop" type="text" value="玉米一号" readonly>
+						<input id="catId" type="hidden">
+					</li>
+				</ul>
+				<button>点我选择</button>
+    </section>
+		<section>
+			<div class="xuanxiang">
+				<div id="partA" class="plantA">
+					种植成本分析
+					<span id="partA1"></span>
+				</div>
+				<div id="partB" class="plantB">
+					工序执行情况
+					<span id="partA2"></span>
+				</div>
+			</div>
+		</section>
+		<div id="part1">
+			<p class="biaoTitle">
+				<span class="leftTitle">总共投了多少钱</span>
+				<span class="rightUnit">单位：元</span>
+			</p>
+			<div id="container1"></div>
+			<div class="shuju">
+				<div class="jihuashuju">
+					<span id="plan">￥1700</span>
+					<span class="shujuyuan">打算花多少钱</span>
+				</div>
+				<div class="shijishuju">
+					<span id="real">￥2000</span>
+					<span class="shujuyuan">实际花多少钱</span>
+				</div>
+			</div>
+			<div class="title2">
+				实际投入分布
+			</div>
+			<div class="nian">
+				<span id="sanjiao2" class="sanjiao2"></span>
+				<span id="nianfen" class="nianfen">2017</span>
+				<span id="sanjiao1" class="sanjiao1"></span>
+			</div>
+			<div id="wrap" class="wrap">
+				<div id="slider" class="slider">
+					<span>1月</span>
+					<span>2月</span>
+					<span>3月</span>
+					<span>4月</span>
+					<span>5月</span>
+					<span>6月</span>
+					<span>7月</span>
+					<span>8月</span>
+					<span>9月</span>
+					<span>10月</span>
+					<span>11月</span>
+					<span>12月</span>
+				</div>
+			</div>
+			<div id="container2">
+				<div id="feiliao" class="circle">
+					<p class="neiRong">
+						<span class="tuBiao"></span>
+						<span class="gongXu">肥料</span>
+						<span class="zhanBi">15%</span>
+						<span class="huaFei">150</span>
+						<span class="danWei">元</span>
+					</p>
+				</div>
+				<div id="gongJu" class="circle">
+					<p class="neiRong">
+						<span class="tuBiao"></span>
+						<span class="gongXu">工具</span>
+						<span class="zhanBi">25%</span>
+						<span class="huaFei">200</span>
+						<span class="danWei">元</span>
+					</p>
+				</div>
+				<div id="renGong" class="circle">
+					<p class="neiRong">
+						<span class="tuBiao"></span>
+						<span class="gongXu">人工</span>
+						<span class="zhanBi">25%</span>
+						<span class="huaFei">250</span>
+						<span class="danWei">元</span>
+					</p>
+				</div>
+				<div id="nongyao" class="circle">
+					<p class="neiRong">
+						<span class="tuBiao"></span>
+						<span class="gongXu">农药</span>
+						<span class="zhanBi">4%</span>
+						<span class="huaFei">40</span>
+						<span class="danWei">元</span>
+					</p>
+				</div>
+				<div id="zicai" class="circle">
+					<p class="neiRong">
+						<span class="tuBiao"></span>
+						<span class="gongXu">资材</span>
+						<span class="zhanBi">8%</span>
+						<span class="huaFei">80</span>
+						<span class="danWei">元</span>
+					</p>
+				</div>
+				<div id="guangai" class="circle">
+					<p class="neiRong">
+						<span class="tuBiao"></span>
+						<span class="gongXu">灌溉</span>
+						<span class="zhanBi">10%</span>
+						<span class="huaFei">100</span>
+						<span class="danWei">元</span>
+					</p>
+				</div>
+				<div id="shebei" class="circle">
+					<p class="neiRong">
+						<span class="tuBiao"></span>
+						<span class="gongXu">设备</span>
+						<span class="zhanBi">8%</span>
+						<span class="huaFei">80</span>
+						<span class="danWei">元</span>
+					</p>
+				</div>
+				<div id="qita" class="circle">
+					<p class="neiRong">
+						<span class="tuBiao"></span>
+						<span class="gongXu">种苗</span>
+						<span class="zhanBi">10%</span>
+						<span class="huaFei">100</span>
+						<span class="danWei">元</span>
+					</p>
+				</div>
+			</div>
+			<div id="zhanwei">
+			</div>
+		</div>
+		<div id="part2">
+			<div class="cropFiled">
+				<p class="cropName">玉米-玉米一号</p>
+				<p class="plantTime">定植时间：2017-05-28</p>
+			</div>
+			<div id="container3" class="wrap">
+				<div class="slide">
+					<span id="chucao" class="chucao"></span>
+					<span class="dot"></span>
+					<span class="chucao"></span>
+					<span class="dot"></span>
+					<span class="chucao"></span>
+					<span class="dot"></span>
+				</div>
+			</div>
+			<div class="period">
+				<div class="process">
+					<span class="xuhao">1</span>
+					<span class="chuli">浇水阶段</span>
+				</div>
+				<div class="jutineirong">
+					<span class="jutiwenzi">处在浇水阶段的地块：1#、2#、3#、五八15组、五八16组、五八17组</span>
+					<span class="more">查看更多</span>
+				</div>
+			</div>
+			<div class="period">
+				<div class="process">
+					<span class="xuhao">2</span>
+					<span class="chuli">打药阶段</span>
+				</div>
+				<div class="jutineirong">
+					<span class="jutiwenzi">1#、2#、3#</span>
+				</div>
+			</div>
+			<div class="period">
+				<div class="process">
+					<span class="xuhao">3</span>
+					<span class="chuli">除草阶段</span>
+				</div>
+				<div class="jutineirong">
+					<span class="jutiwenzi">1#、2#、3#</span>
+				</div>
+			</div>
+		</div>
+</article>
+<script type="text/javascript" src="../../script/common/api.js"></script>
+<script type="text/javascript" src="../../script/common/zepto-1.2.0.min.js"></script>
+<script type="text/javascript" src="../../script/common/jquery.min.js"></script>
+<script type="text/javascript" src="../../script/common/pds.ajax.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/highcharts-3d.js"></script>
+<script>
+
+	apiready=function(){
+		var header = $api.byId('header');
+			$api.fixStatusBar(header);
+			var headerH = $api.offset(header).h;
+			$("body").css({"paddingTop":headerH+"px"});
+			initIn()
+			$("#slider>span").eq(0).css("backgroundColor","#A2C446")
+			$("#slider>span").eq(0).css("color","#fff")
+			$("#slider>span").eq(0).css("border","0")
+			le=$("#slider>span").length
+			for(var k=0; k<le; k++){
+				$("#slider>span").eq(k).on("touchstart",function(){
+					$("#slider>span").css("backgroundColor","#fff")
+					$("#slider>span").css("color","#747976")
+					$("#slider>span").css("border","1px solid #ededed")
+					$(this).css("backgroundColor","#A2C446")
+					$(this).css("color","#fff")
+					$(this).css("border","0")
+				})
+		 }
+		 $("#sanjiao1").on("touchstart",function(){
+			 $("#nianfen").html(parseInt($("#nianfen").html())+1)
+		 })
+		 $("#sanjiao2").on("touchstart",function(){
+			$("#nianfen").html(parseInt($("#nianfen").html())-1)
+		})
+		var show=1
+		$("#partA").on("touchstart",function(){
+			if(!show){
+				show=1
+				$("#partA").attr("class","plantA")
+				$("#partB").attr("class","plantB")
+				$("#part1").show()
+				$("#part2").hide()
+				$("#partA1").show()
+				$("#partA2").hide()
+			}
+		})
+		$("#partB").on("touchstart",function(){
+			if(show){
+				show=null
+				$("#partA").attr("class","plantB")
+				$("#partB").attr("class","plantA")
+				$("#part1").hide()
+				$("#part2").show()
+				$("#partA2").show()
+				$("#partA1").hide()
+			}
+		})
+		plan()
+		qiu()
+		api.ajax({
+			headers : {
+				authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
+		},
+			url:pds.defaultUri + 'app/plantStat/selectProcess',
+			data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
+		},function(ret,err){
+			if(ret){
+				api.alert({msg:JSON.stringify(ret)});
+			} else {
+				//api.alert({msg:JSON.stringify(err)});
+			};
+		});
+	}
+	function initIn(n){
+		back=n;
+		if(n){
+			var startDate=$api.getStorage('startDates')
+			var endDate=$api.getStorage('endDates')
+			var landId=$api.getStorage('landIds')
+			var categoryId=$api.getStorage('categoryIds')
+			$("#time").val(startDate.substring(0,4)+"年"+startDate.substring(5,7)+"月-"+endDate.substring(0,4)+"年"+endDate.substring(5,7)+"月")
+			$("#land").val($api.getStorage('landNames'))
+			$("#crop").val($api.getStorage('categorys'))
+			//showGrowth(api.pageParam.farmId,landId,categoryId,startDate,endDate)
+		}else{
+			var d = new Date(), y = d.getFullYear(), m = d.getMonth() + 1, r = d.getDate();
+			m < 10 ? m = "0" + m : m;
+			r < 10 ? r = "0" + r : r;
+			var endDate=y + "-" + m + "-" + r;
+			var startDate=y + "-0" + 1 + "-0" + 1;
+			$("#time").val(y+"年0"+1+"月-"+y+"年"+m+"月")
+			api.ajax({
+				url:pds.defaultUri + 'app/crop/firstEnterCondition',
+				data:{values:{farmId:api.pageParam.farmId}}
+			},function(ret,err){
+				if (ret) {
+					if(!ret.data.land){
+						return
+					}
+					$("#land").val(ret.data.land.landName)
+					$("#crop").val(ret.data.category.catName)
+					$("#landId").val(ret.data.land.id)
+					$("#catId").val(ret.data.category.id)
+					//showGrowth(api.pageParam.farmId,ret.data.land.id,ret.data.category.id,startDate,endDate)
+					//showGrowth(11,1,23,'2017-11-20','2017-12-04')
+				} else {
+					//api.alert({msg:JSON.stringify(err)});
+				};
+			});
+		}
+	}
+	function plan(){
+		api.ajax({
+			headers : {
+				authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
+		},
+			url:pds.defaultUri + 'app/plantStat/planInvestment',
+			data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
+		},function(ret,err){
+			if(ret){
+							var plan=ret.data
+							api.ajax({
+								headers : {
+									authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
+							},
+								url:pds.defaultUri + 'app/plantStat/realInvestment',
+								data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
+							},function(ret,err){
+								if(ret){
+										//api.alert({msg:JSON.stringify(ret)});
+										var real=ret.data
+										$('#container1').highcharts({
+											credits: { enabled: false },
+											chart: {
+													 type: 'column',
+													 spacingTop: 50,
+													 options3d: {
+														 enabled: true,
+														 alpha: 15,
+														 beta: 15,
+														 viewDistance: 25,
+														 depth: 40
+													 }
+											 },
+											 title: {
+													 text: '',
+													 align: 'left',
+													 style: {
+														 color:'#666666',
+														 fontSize:'0.3rem'
+													 }
+											 },
+											 yAxis: {
+													 title: {
+															 text: '',
+															 style: {
+																 color:'#666666',
+																 fontSize:'0.3rem'
+															 },
+															 align:'high',
+													 },
+													 labels: {
+															style: {
+																	fontSize: '0.26rem',
+																	color:'#666666',
+																	fontFamily: 'Verdana, sans-serif',
+														}
+													},
+
+													tickWidth:1,
+													lineWidth:1,
+													gridLineWidth:0
+											 },
+											 xAxis: {
+														type: 'category',
+														labels: {
+															 style: {
+																	 fontSize: '0.26rem',
+																	 color:'#666666',
+																	 fontFamily: 'Verdana, sans-serif',
+															 },
+															 y:20
+													 },
+													 tickWidth:0,
+													 gridLineWidth:0
+											 },
+											 legend: {
+														enabled: false,
+												},
+												tooltip: {
+													enabled:false
+													// headerFormat: '<span>{series.name}</span><br>',
+													// pointFormat: '<span>{point.name}</span>: <b>{point.y}</b>元<br/>'
+												},
+												plotOptions: {
+													column:{
+															shadow: false,
+															stacking: 'normal',
+															depth: 70,
+															pointWidth:35,
+															dataLabels:{
+															align:'right',
+															enabled:true,
+															verticalAlign: top,
+															useHTML:true,
+															y:-50,
+															x:35,
+															formatter: function() {
+																	return '<span style="color:'+this.color+';font-size:0.3rem">'+this.y+'元</span>';
+															}
+														}
+													},
+														series: {
+															 animation: {
+																	 duration: 2500
+															 }
+														}
+												},
+												series: [{
+													 name: '投资总额',
+													 colorByPoint: true,
+													 data: [{
+															 name: '打算花多少钱',
+															 color : "#bad863",
+															 y: plan
+													 }, {
+															 name: '总共花多少钱',
+															 color : "#2c9fe4",
+															 y: real
+													 }]
+											 }]
+									 });
+									 if(real>10000){
+										 real=(real/10000).toFixed(1)+"万"
+									 }else{
+										 real=real.toFixed(0)
+									 }
+									 if(plan>10000){
+										 plan=(plan/10000).toFixed(1)+"万"
+									 }else {
+									 	 plan=plan.toFixed(0)
+									 }
+									 $("#real").html("￥"+real)
+									 $("#plan").html("￥"+plan)
+									} else {
+										api.alert({msg:JSON.stringify(err)});
+									};
+							});
+				} else {
+					api.alert({msg:JSON.stringify(err)});
+				};
+		});
+	}
+	function qiu(){
+		api.ajax({
+			headers : {
+				authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
+		},
+			url:pds.defaultUri + 'app/plantStat/costAnalysis',
+			data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
+			},function(ret,err){
+				if(ret){
+					//api.alert({msg:JSON.stringify(ret)});
+					var shi=ret.data,l=ret.data.length,zhan=0,str=""
+					for(var i=0;i<l;i++){
+						zhan+=parseInt(shi[i].money)
+					}
+					for(var i=0;i<l;i++){
+						var bi=((shi[i].money/zhan)*100).toFixed(1)+"%",da=2*(0.9+2*shi[i].money/zhan)
+					  if(shi[i].money>10000){
+							shi[i].money=(shi[i].money/10000).toFixed(0)+"万"
+						}else{
+							shi[i].money=shi[i].money.toFixed(0)
+						}
+						if(shi[i].resPriIdName=="人工"){
+							$("#renGong").show()
+							$("#renGong").css({"width":da+"rem","height":da+"rem"})
+							$("#renGong .zhanBi").html(bi)
+							$("#renGong .huaFei").html(shi[i].money)
+						}
+						if(shi[i].resPriIdName=="肥料"){
+							$("#feiliao").show()
+							$("#feiliao").css({"width":da+"rem","height":da+"rem"})
+							$("#feiliao .zhanBi").html(bi)
+							$("#feiliao .huaFei").html(shi[i].money)
+						}
+						if(shi[i].resPriIdName=="工具"){
+							$("#gongJu").show()
+							$("#gongJu").css({"width":da+"rem","height":da+"rem"})
+							$("#gongJu .zhanBi").html(bi)
+							$("#gongJu .huaFei").html(shi[i].money)
+						}
+						if(shi[i].resPriIdName=="农药"){
+							$("#nongyao").show()
+							$("#nongyao").css({"width":da+"rem","height":da+"rem"})
+							$("#nongyao .zhanBi").html(bi)
+							$("#nongyao .huaFei").html(shi[i].money)
+						}
+						if(shi[i].resPriIdName=="资材"){
+							$("#zicai").show()
+							$("#zicai").css({"width":da+"rem","height":da+"rem"})
+							$("#zicai .zhanBi").html(bi)
+							$("#zicai .huaFei").html(shi[i].money)
+						}
+						if(shi[i].resPriIdName=="灌溉"){
+							$("#guangai").show()
+							$("#guangai").css({"width":da+"rem","height":da+"rem"})
+							$("#guangai .zhanBi").html(bi)
+							$("#guangai .huaFei").html(shi[i].money)
+						}
+						if(shi[i].resPriIdName=="设备"){
+							$("#shebei").show()
+							$("#shebei").css({"width":da+"rem","height":da+"rem"})
+							$("#shebei .zhanBi").html(bi)
+							$("#shebei .huaFei").html(shi[i].money)
+						}
+						if(shi[i].resPriIdName=="种苗"){
+							$("#qita").show()
+							$("#qita").css({"width":da+"rem","height":da+"rem"})
+							$("#qita .zhanBi").html(bi)
+							$("#qita .huaFei").html(shi[i].money)
+						}
+					}
+				} else {
+					api.alert({msg:JSON.stringify(err)});
+				};
+		});
+	}
+
+
+
+</script>
+</body>
+</html>

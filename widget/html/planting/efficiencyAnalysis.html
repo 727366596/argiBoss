@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<title>效率分析图</title>
+		<link rel="stylesheet" type="text/css" href="../../css/common/api.css">
+		<script type="text/javascript" src="../../script/common/rem.js"></script>
+		<link rel="stylesheet" href="../../css/common/public.css" />
+		<link rel="stylesheet" href="../../css/common/header.css" />
+    <style>
+				article{
+					padding-top: 0.2rem;
+					padding-left: 0.2rem;
+					padding-right: 0.2rem;
+					padding-bottom: 0.6rem;
+					background-color: #f3f4f4;
+				}
+				section{
+					margin-top: 0.2rem;
+					background-color: #fff;
+				}
+				#section1{
+					padding-top: 0.25rem;
+					padding-bottom: 0.25rem;
+					text-align: center;
+				}
+				#section2{
+					margin-top: 0.3rem;
+				}
+				#section1 li{
+					height: 0.8rem;
+					line-height: 0.8rem;
+					text-align: center;
+				}
+				#section1 li span{
+					display: inline-block;
+					font-size: 0.3rem;
+					width: 1.5rem;
+				  color: #666666;
+				}
+				input{
+					font-size: 0.3rem;
+					padding-top: 0.1rem;
+					padding-bottom: 0.1rem;
+					width: 3.4rem;
+					padding-left: 0.1rem;
+					color: #666666;
+					background-color: #f3f4f4;
+				}
+				button{
+					width: 5.7rem;
+					height: 0.7rem;
+					background-color: #00c558;
+					color:#ffffff;
+					font-size: 0.3rem;
+					border-radius: 0.7rem;
+					outline: 0;
+				}
+				.plantCondition{
+					height: 0.95rem;
+					font-size: 0.34rem;
+					line-height: 0.95rem;
+					color: #00c558;
+					text-align: center;
+					border-bottom: 1px solid #f6f3f3;
+				}
+				.collectionTime{
+					font-size: 0.28rem;
+					color: #666666;
+					height: 0.88rem;
+					line-height: 0.88rem;
+					text-align: center;
+				}
+			 #wrap{
+			 	 position: relative;
+				 overflow-x: scroll;
+				 width: 100%;
+				 height: 1.4rem;
+			 }
+			 #slider{
+				white-space:nowrap;
+		    word-wrap:break-word;
+		    word-break:break-all;
+				padding-left: 0.2rem;
+			 }
+			 #slider span{
+			 	display: inline-block;
+				margin-left: 0.2rem;
+				padding-top: 0.1rem;
+				padding-bottom: 0.1rem;
+				padding-left: 0.2rem;
+				padding-right: 0.2rem;
+				border-radius: 0.8rem;
+				font-size: 0.28rem;
+				color: #999999;
+				text-align: center;
+				border: 1px solid #ededed;
+			 }
+			 #slider span:last-child{
+			 	margin-right: 0.2rem;
+			 }
+			 #container1,#container2{
+			 	margin: 0 auto;
+				height: 7rem;
+			 }
+    </style>
+</head>
+<body>
+<div id="header">
+        <div class="headerLeft" onclick="api.closeWin()"></div>
+        <div class="headerCenter">作物长的怎么样</div>
+        <div class="headerRight"></div>
+</div>
+<article>
+    <section id="section1">
+				<ul>
+					<li>
+						<span>统计时间：</span>
+						<input id="time" type="text" value="2017年1月-2017年10月" readonly>
+					</li>
+    </section>
+		<section>
+			<div id="container1"></div>
+			<div id="container2"></div>
+		</section>
+</article>
+<script type="text/javascript" src="../../script/common/api.js"></script>
+<script type="text/javascript" src="../../script/common/zepto-1.2.0.min.js"></script>
+<script type="text/javascript" src="../../script/common/jquery.min.js"></script>
+<script type="text/javascript" src="../../script/common/pds.ajax.js"></script>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/highcharts-3d.js"></script>
+<script>
+
+	apiready=function(){
+		var header = $api.byId('header');
+			$api.fixStatusBar(header);
+			var headerH = $api.offset(header).h;
+			$("body").css({"paddingTop":headerH+"px"});
+			initIn()
+			$("#slider>span").eq(0).css("backgroundColor","#A2C446")
+			$("#slider>span").eq(0).css("color","#fff")
+			$("#slider>span").eq(0).css("border","0")
+			le=$("#slider>span").length
+			for(var k=0; k<le; k++){
+				$("#slider>span").eq(k).on("touchstart",function(){
+					$("#slider>span").css("backgroundColor","#fff")
+					$("#slider>span").css("color","#747976")
+					$("#slider>span").css("border","1px solid #ededed")
+					$(this).css("backgroundColor","#A2C446")
+					$(this).css("color","#fff")
+					$(this).css("border","0")
+				})
+		 }
+	}
+	function initIn(n){
+		back=n;
+		if(n){
+			var startDate=$api.getStorage('startDates')
+			var endDate=$api.getStorage('endDates')
+			var landId=$api.getStorage('landIds')
+			var categoryId=$api.getStorage('categoryIds')
+			$("#time").val(startDate.substring(0,4)+"年"+startDate.substring(5,7)+"月-"+endDate.substring(0,4)+"年"+endDate.substring(5,7)+"月")
+			$("#land").val($api.getStorage('landNames'))
+			$("#crop").val($api.getStorage('categorys'))
+			showGrowth(api.pageParam.farmId,landId,categoryId,startDate,endDate)
+		}else{
+			var d = new Date(), y = d.getFullYear(), m = d.getMonth() + 1, r = d.getDate();
+			m < 10 ? m = "0" + m : m;
+			r < 10 ? r = "0" + r : r;
+			var endDate=y + "-" + m + "-" + r;
+			var startDate=y + "-0" + 1 + "-0" + 1;
+			$("#time").val(y+"年0"+1+"月-"+y+"年"+m+"月")
+			api.ajax({
+				url:pds.defaultUri + 'app/crop/firstEnterCondition',
+				data:{values:{farmId:api.pageParam.farmId}}
+			},function(ret,err){
+				if (ret) {
+					if(!ret.data.land){
+						return
+					}
+					$("#land").val(ret.data.land.landName)
+					$("#crop").val(ret.data.category.catName)
+					$("#landId").val(ret.data.land.id)
+					$("#catId").val(ret.data.category.id)
+					showGrowth(api.pageParam.farmId,ret.data.land.id,ret.data.category.id,startDate,endDate)
+					//showGrowth(11,1,23,'2017-11-20','2017-12-04')
+				} else {
+					//api.alert({msg:JSON.stringify(err)});
+				};
+			});
+		}
+	}
+	$(document).ready(function() {
+		$('#container1').highcharts({
+      chart: {
+             type: 'bar'
+         },
+         title: {
+             text: '各洲不同时间的人口条形图'
+         },
+         subtitle: {
+             text: '数据来源: Wikipedia.org'
+         },
+         xAxis: {
+             categories: ['非洲', '美洲', '亚洲', '欧洲', '大洋洲'],
+             title: {
+                 text: null
+             }
+         },
+         yAxis: {
+             min: 0,
+             title: {
+                 text: '人口总量 (百万)',
+                 align: 'high'
+             },
+             labels: {
+                 overflow: 'justify'
+             }
+         },
+         tooltip: {
+             valueSuffix: ' 百万'
+         },
+         plotOptions: {
+             bar: {
+                 dataLabels: {
+                     enabled: true,
+                     allowOverlap: true
+                 }
+             }
+         },
+         legend: {
+             layout: 'vertical',
+             align: 'right',
+             verticalAlign: 'top',
+             x: -40,
+             y: 100,
+             floating: true,
+             borderWidth: 1,
+             backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+             shadow: true
+         },
+         credits: {
+             enabled: false
+         },
+         series: [{
+             name: '1800 年',
+             data: [107, 31, 635, 203, 2]
+         }, {
+             name: '1900 年',
+             data: [133, 156, 947, 408, 6]
+         }, {
+             name: '2008 年',
+             data: [973, 914, 4054, 732, 34]
+         }]
+	 });
+});
+
+</script>
+</body>
+</html>
