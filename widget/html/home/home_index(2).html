@@ -8,19 +8,16 @@
 	<link rel="stylesheet" type="text/css" href="../../css/common/reset.css">
 	<link rel="stylesheet" type="text/css" href="../../css/common/api.css"/>
 	<link rel="stylesheet" type="text/css" href="../../css/common/swiper.min.css"/>
-
 	<!--<link rel="stylesheet" type="text/css" href="../../css/iscroll-style.css"/>-->
 	<script type="text/javascript" src="../../script/common/rem.js"></script>
 	<style type="text/css">
 		html,body{
 			width:100%;
-			/*height:100%;*/
 		}
 		body{
 			overflow-x: hidden;
 			background: #f8f8f8;
 			position:relative;
-			/*top:-0.4rem;*/
 		}
 		#top{
 			position: relative;
@@ -37,26 +34,31 @@
 			position: relative;
 			width:100%;
 			height: 100%;
+			border: none;
 		}
 
 		#top>.bannerWrap1 .swiper-wrapper{
 			position: relative;
 			width: 100%;
 			height: 100%;
+			border: none;
 		}
 		#top>.bannerWrap1 .swiper-wrapper .swiper-slide{
 			position: relative;
 			width: 100%;
 			height: 100%;
-			/*padding:0.25rem;*/
 		}
-		#top>.bannerWrap1 .swiper-wrapper .swiper-slide>div{
+		#top>.bannerWrap1 .swiper-wrapper .swiper-slide a{
+			display: block;
+			width:100%;
+			height:100%;
+		}
+		#top>.bannerWrap1 .swiper-wrapper .swiper-slide img{
 			width:100%;
 			height:100%;
 			border-radius: 6px;
-			background-size: 100% 100%;
-			background-position: center center;
-			background-repeat: no-repeat;
+			border: none;
+			outline: none;
 		}
 		#top .swiper-pagination{
 			position: relative;
@@ -66,24 +68,6 @@
 			text-align: center;
 			margin-top: 0.15rem;
 			background: #fff;
-			/*display: -webkit-box;display: -webkit-flex;display:flex;
-			-webkit-justify-content: center; justify-content: center;
-			-webkit-align-items: center; align-items: center;*/
-			/*display: -webkit-box;
-			display: -webkit-flex;
-			display:flex;
-
-			-webkit-box-orient: horizontal;
-			-webkit-flex-flow: row;
-			flex-flow: row;
-
-			-webkit-box-pack: center;
-			-webkit-justify-content: center;
-			justify-content: center;
-
-			-webkit-box-align: center;
-			-webkit-align-items: center;
-			align-items: center;*/
 		}
 		#top .swiper-pagination>span{
 			position:relative;
@@ -133,7 +117,6 @@
 			width: 0.72rem;
 			line-height: 0.38rem;
 			text-align: center;
-			/*margin-right: 0.08rem;*/
 			border-left: solid 1px #e3e3e3;
 			font-size: 0.2rem;font-family: PingFangSC-Regular, sans-serif;color: #8C8D8B;
 		}
@@ -143,15 +126,9 @@
 			top:0;
 			width: 4.5rem;
 			height: 0.54rem;
-			/*overflow-x:auto;*/
-			/*overflow: hidden;*/
 		}
 		#top>.noticeBanner>.bannerWrap2 .bannerWrap2_center .swiper-wrapper{
-
-			/*width:100%;*/
 			height: 100%;
-			/*overflow: auto;*/
-			/*margin-left:-3.0rem;*/
 			display: -webkit-box;
 			display: -webkit-flex;
 			display:flex;
@@ -167,16 +144,12 @@
 			-webkit-box-align: center;
 			-webkit-align-items: center;
 			align-items: center;
+
 		}
 		#top>.noticeBanner>.bannerWrap2 .bannerWrap2_center .swiper-slide{
-			/*-webkit-box-flex: 1;
-			-webkit-flex: 1;
-			flex: 1;*/
-			/*width:100%;*/
 			height: 0.52rem;
 			line-height: 0.52rem;
 			padding-left:0.3rem;
-			/*overflow:hidden;white-space:nowrap;text-overflow:ellipsis;*/
 			font-size: 0.24rem;font-family: PingFangSC-Regular, sans-serif;color: #595C58;
 		}
 		#top>.noticeBanner>.bannerWrap2 .bannerWrap2_center .swiper-slide p{
@@ -200,9 +173,7 @@
 			position: relative;
 			width: 100%;
 			height:100%;
-			/*display: -webkit-flex;display:flex;
-			-webkit-justify-content: space-between; justify-content: space-between;
-			-webkit-align-items: center; align-items: center;*/
+
 			display: -webkit-box;
 			display: -webkit-flex;
 			display:flex;
@@ -226,10 +197,7 @@
 			-webkit-box-flex: 1;
 			-webkit-flex: 1;
 			flex: 1;
-			/*display: -webkit-flex;display:flex;
-			-webkit-flex-direction: column; flex-direction: column;
-			-webkit-justify-content: center; justify-content: center;
-			-webkit-align-items: center; align-items: center;*/
+
 			display: -webkit-box;
 			display: -webkit-flex;
 			display:flex;
@@ -275,9 +243,7 @@
 			position: relative;
 			width: 100%;
 			height: 100%;
-			/*display: -webkit-flex;display:flex;
-			-webkit-justify-content: flex-start; justify-content: flex-start;
-			-webkit-align-items: center; align-items: center;*/
+
 			display: -webkit-box;
 			display: -webkit-flex;
 			display:flex;
@@ -309,8 +275,7 @@
 			left:0.07rem;
 			width: 0.8rem;
 			height: 0.8rem;
-			/*margin-left: 0.7rem;*/
-			/*background-image: url(../../image/home_weather_icon.png);*/
+
 			background-size: 100% 100%;
 			background-position: center center;
 			background-repeat: no-repeat;
@@ -325,11 +290,7 @@
 			position: relative;
 			left:0.02rem;
 			height: 100%;
-			/*margin-left: 0.8rem;*/
-			/*display: -webkit-flex;display:flex;
-			-webkit-flex-direction: column; flex-direction: column;
-			-webkit-justify-content: center; justify-content: center;
-			-webkit-align-items: left; align-items: left;*/
+
 			display: -webkit-box;
 			display: -webkit-flex;
 			display:flex;
@@ -357,13 +318,9 @@
 		}
 		#weather ul>li.home_weather_temp{
 			position: relative;
-			/*left:-0.01rem;*/
 			height: 100%;
 			padding-bottom:0.02rem;
-			/*display: -webkit-flex;display:flex;
-			-webkit-flex-direction: column; flex-direction: column;
-			-webkit-justify-content: center; justify-content: center;
-			-webkit-align-items: center; align-items: center;*/
+
 			display: -webkit-box;
 			display: -webkit-flex;
 			display:flex;
@@ -383,10 +340,6 @@
 		}
 		#weather ul>li.home_weather_temp>p:first-of-type{
 			position:relative;
-			/*top:-0.35rem;*/
-			/*display: -webkit-flex;display:flex;
-			-webkit-justify-content: center; justify-content: center;
-			-webkit-align-items: center; align-items: center;*/
 			margin-bottom:0.1rem;
 			display: -webkit-box;
 			display: -webkit-flex;
@@ -403,7 +356,6 @@
 			-webkit-box-align: center;
 			-webkit-align-items: center;
 			align-items: center;
-			/*margin-bottom: 0.12rem;*/
 		}
 		#weather ul>li.home_weather_temp>p:first-of-type span:first-of-type{
 			text-align:center;font-size: 0.32rem;font-family: PingFangSC-Regular, sans-serif;color: #FF6040;
@@ -413,7 +365,6 @@
 		}
 		#weather ul>li.home_weather_temp>p:last-of-type{
 			position:relative;
-			/*top:-0.38rem;*/
 			text-align:center;font-size: 0.22rem;font-family: PingFangSC-Regular, sans-serif;color: #747474;
 		}
 
@@ -426,9 +377,7 @@
 			width:100%;
 			height: 0.68rem;
 			padding: 0 0.2rem 0 0.16rem;
-			/*display: -webkit-flex;display:flex;
-			-webkit-justify-content: space-between; justify-content: space-between;
-			-webkit-align-items: center; align-items: center;*/
+
 			display: -webkit-box;
 			display: -webkit-flex;
 			display:flex;
@@ -455,7 +404,6 @@
 		}
 		#wrapper .transfer_head>div:first-of-type span{
 			position: relative;
-			/*top: -0.02rem;*/
 			border: solid 2px #00CA66;
 			height: 100%;
 			margin-right: 0.12rem;
@@ -464,9 +412,9 @@
 			padding:0.3rem 0;
 			height: 0.2rem;
 			line-height: 0.2rem;
+			margin-right: 0.1rem;
 			text-align:left;font-size: 0.2rem;font-family: PingFangSC-Regular, sans-serif;color: #00CA66;
-			/*display: -webkit-flex;display:flex;
-			-webkit-align-items: center; align-items: center;*/
+
 			display: -webkit-box;
 			display: -webkit-flex;
 			display:flex;
@@ -500,17 +448,15 @@
 		#wrapper .transfer_content, #transferInfo .transfer_content>ul{
 			position:relative;
 			width: 100%;
+			/*overflow-x: hidden;*/
 		}
 
 		#wrapper .transfer_content>ul>li{
 			position: relative;
 			width:100%;
-			height:1.46rem;
-			padding: 0.15rem 0.2rem 0 0.28rem;
+			/*height:1.46rem;*/
+			padding: 0.15rem 0.2rem 0.15rem 0.35rem;
 			border-top: solid 1px #f3f3f4;
-			/*display: -webkit-flex;display:flex;
-			-webkit-justify-content: space-between; justify-content: space-between;
-			-webkit-align-items: center; align-items: center;*/
 			display: -webkit-box;
 			display: -webkit-flex;
 			display:flex;
@@ -529,16 +475,18 @@
 		}
 		#wrapper .transfer_content>ul>li .transfer_content_left{
 			position: relative;
-			width: 4.27rem;
+			/*width: 4.27rem;*/
+			/*width: 100%;*/
 			height: 100%;
 		}
 		#wrapper .transfer_content>ul>li .transfer_content_left .transfer_content_info{
-			width: 100%;
+			/*width: 100%;*/
+			word-break:break-all; word-wrap:break-word ;
 		}
 		#wrapper .transfer_content>ul>li .transfer_content_left .transfer_content_info>p{
 			position: relative;
-			width: 100%;
-			height: 0.36rem;
+			/*width: 100%;*/
+			/*height: 0.36rem;*/
 			line-height: 0.36rem;
 			text-align:left;font-size: 0.26rem;font-family: PingFangSC-Regular, sans-serif;color: #747474;
 		}
@@ -557,19 +505,20 @@
 		#wrapper .transfer_content>ul>li .transfer_content_left .transfer_content_time>p{
 			height: 0.2rem;
 			line-height: 0.2rem;
-			margin-top: 0.55rem;
+			margin-top: 0.3rem;
 			text-align:left;font-size: 0.2rem;font-family: PingFangSC-Regular, sans-serif;color: #AEADAD;
 		}
 		#wrapper .transfer_content>ul>li .transfer_content_right{
-			width: 1.7rem;
+			/*width: 1.7rem;*/
 			height: 1.12rem;
 			position:relative;
 			top:-0.07rem;
 			left:-0.1rem;
 		}
 		#wrapper .transfer_content>ul>li .transfer_content_right img{
-			width: 100%;
+			width: 1.7rem;
 			height: 100%;
+			margin-top: 0.05rem;
 		}
 
 		#home_bc_word{
@@ -578,14 +527,9 @@
 			height: 1.0rem;
 			background: #f8f8f8;
 			padding-top:0.25rem;
-			/*margin-bottom: 0.4rem;*/
-			/*display:none;*/
 		}
 		#home_bc_word>div:first-of-type{
-			/*position: absolute;*/
-			/*bottom: 0;*/
 			margin: 0 auto;
-
 			width: 1.47rem;
 			height: 0.43rem;
 			background-image: url(../../image/home_bc_word.png);
@@ -593,21 +537,22 @@
 			background-position: center center;
 			background-repeat: no-repeat;
 		}
-		/*#home_bc_word>div:last-of-type{
-			position: absolute;
-			left:50%;
-			top:50%;
-			margin-left:-0.3rem;
-			margin-top:-0.3rem;
-			width: 0.6rem;
-			height: 0.6rem;
-			background-image: url(../../image/pull-up-reload.png);
-			background-size: 100% 100%;
-			background-position: center center;
-			background-repeat: no-repeat;
-			transform:rotate(180deg);
-		}*/
-
+		#home_totop_btn{
+			position: fixed;
+			bottom:0.5rem;
+			right:0.35rem;
+			width:1.1rem;
+			height:1.1rem;
+			line-height: 0.6rem;
+			font-size: 0.2rem;font-family: PingFangSC-Regular, sans-serif;color: #AEADAD;
+			text-align: center;
+			border: solid 1px #f2f2f2;
+			background: url("../../image/home_rocket_two.png") no-repeat center 0.05rem;
+			background-size: 0.4rem 0.7rem;
+			background-color: #fff;
+			border-radius: 6px;
+			display: none;
+		}
 		#screenWrap{
 			position:fixed;
 			z-index:999;
@@ -615,8 +560,7 @@
 			top:0;
 			right:0;
 			bottom:0;
-			/*background:#333333;
-			opacity:0.7;*/
+
 			background:rgba(0,0,0,0.5);
 			display:none;
 		}
@@ -647,147 +591,478 @@
 			background-repeat:no-repeat;
 			background-color:#fff;
 		}
+		.infoListWidth{
+				width:70%;
+		}
 	</style>
 
 </head>
 <body>
-
 	<div id="screenWrap">
-		<div></div>
-		<div></div>
+			<div></div>
+			<div></div>
 	</div>
+
 	<div id="top">
 		<div class="swiper-container bannerWrap1">
-			<div class="swiper-wrapper">
-				<div class="swiper-slide">
-					<div style="background-image: url(../../image/home_banner1.png);"></div>
+				<div class="swiper-wrapper">
 				</div>
-				<div class="swiper-slide">
-					<div style="background-image: url(../../image/home_banner2.png);"></div>
-				</div>
-				<div class="swiper-slide">
-					<div style="background-image: url(../../image/home_banner3.png);"></div>
-				</div>
-				<div class="swiper-slide">
-					<div style="background-image: url(../../image/home_banner4.png);"></div>
-				</div>
-				<div class="swiper-slide">
-					<div style="background-image: url(../../image/home_banner5.png);"></div>
-				</div>
-			</div>
 		</div>
 		<div class="swiper-pagination"></div>
-
 		<div class="noticeBanner">
-
-			<div  class="bannerWrap2">
-				<div class="bannerWrap2_left"></div>
-				<div class="swiper-container bannerWrap2_center">
-					<div class="swiper-wrapper">
-						<div class="swiper-slide">
-							号外！号外！慧种地重装上阵啦~~
+				<div  class="bannerWrap2">
+						<div class="bannerWrap2_left"></div>
+						<div class="swiper-container bannerWrap2_center" style="overflow-x:auto;">
+								<div class="swiper-wrapper">
+								</div>
 						</div>
-						<div class="swiper-slide">
-							号外！号外！慧种地重装上阵啦~~
-						</div>
-						<div class="swiper-slide">
-							号外！号外！慧种地重装上阵啦~~
-						</div>
-					</div>
+						<div class="bannerWrap2_right" onclick="openNoticelists()">更多</div>
 				</div>
-				<div class="bannerWrap2_right" onclick="openNoticelists()">更多</div>
-			</div>
-
 		</div>
 	</div>
 
 	<div id="home_nav">
-		<ul>
-			<li onclick="openPlantDetail()">
-				<div style="background-image: url(../../image/home_nav_plant.png);"></div>
-				<div>种植工单</div>
-			</li>
-			<li onclick="openFarmWork()">
-				<div style="background-image: url(../../image/home_nav_harvest.png);"></div>
-				<div>田间作业</div>
-			</li>
-			<li onclick="jobsheet()">
-				<div style="background-image: url(../../image/home_nav_detial.png);"></div>
-				<div>我的记工</div>
-			</li>
-			<!-- <li onclick="openCall()">
-				<div style="background-image: url(../../image/home_nav_tel.png);"></div>
-				<div>客服热线</div>
-			</li> -->
-			<li onclick="openCall()">
-				<div style="background-image: url(../../image/home_nav_dayi.png);"></div>
-				<div>问问专家</div>
-			</li>
-		</ul>
+			<ul>
+					<li onclick="openPlantDetail()">
+							<div style="background-image: url(../../image/home_nav_plant.png);"></div>
+							<div>种植工单</div>
+					</li>
+					<li onclick="openFarmWork()">
+							<div style="background-image: url(../../image/home_nav_harvest.png);"></div>
+							<div>田间作业</div>
+					</li>
+					<li onclick="jobsheet()">
+							<div style="background-image: url(../../image/home_nav_detial.png);"></div>
+							<div>我的记工</div>
+					</li>
+					<!-- <li onclick="openCall()">
+						<div style="background-image: url(../../image/home_nav_tel.png);"></div>
+						<div>客服热线</div>
+					</li> -->
+					<li onclick="openCall()">
+							<div style="background-image: url(../../image/che_img/wenwen.png);"></div>
+							<div>问问专家</div>
+					</li>
+			</ul>
 	</div>
 
 	<div id="weather">
-		<ul>
-			<li class="home_weather_bc"></li>
-			<li class="home_weather_icon">
-				<!--<img src=""/>-->
-			</li>
-			<li class="home_weather_info">
-				<p></p>
-				<p><span></span><span></span></p>
-			</li>
-			<li class="home_weather_temp">
-				<p><span></span><span></span></p>
-				<p></p>
-			</li>
-		</ul>
-	</div>
-	<div id="wrapper">
-		<div class="transfer_head">
-			<div><span></span>技术推广</div>
-			<div onclick="openTechlists()"><span style="color: #00cd5a">更多</span><span></span></div>
-		</div>
-		<div class="transfer_content scroller">
 			<ul>
-				<li onclick="openTechTransferInfo(1)">
-					<div class="transfer_content_left">
-						<div class="transfer_content_info">
-							<p>晚熟大王柑橘秋季管理要点：做好三点，带来丰产！<span>推荐</span></p>
-						</div>
-						<div class="transfer_content_time"><p>2017-07-25</p></div>
-					</div>
-					<div class="transfer_content_right"><img src="../../image/home_technology_transfer_03.png"></div>
-				</li>
-				<li onclick="openTechTransferInfo(2)">
-					<div class="transfer_content_left">
-						<div class="transfer_content_info">
-							<p>马铃薯种植管理收获技巧<span style="background-image: url(../../image/home_transfer_content_hot.png);color: #ed7154">热门</span></p>
-						</div>
-						<div class="transfer_content_time"><p>2017-07-25</p></div>
-					</div>
-					<div class="transfer_content_right"><img src="../../image/win_home_tech_transfer_info_img9.png"></div>
-				</li>
-
+					<li class="home_weather_bc"></li>
+					<li class="home_weather_icon"></li>
+					<li class="home_weather_info">
+							<p id="weather_text"></p>
+							<p><span id="weather_city"></span><span id="weather_area"></span></p>
+					</li>
+					<li class="home_weather_temp">
+							<p><span id="now_temp"></span><span></span></p>
+							<p id="all_temp"></p>
+					</li>
 			</ul>
+	</div>
 
-		</div>
+	<div id="wrapper">
+			<div class="transfer_head">
+					<div><span></span>技术推广</div>
+					<div onclick="openTechlists()"><span style="color: #00cd5a">更多</span><span></span></div>
+			</div>
+			<div class="transfer_content scroller">
+					<ul>
+					</ul>
+			</div>
 	</div>
 
 	<div id="home_bc_word">
-		<div></div>
+			<div></div>
 	</div>
-
+	<div id="home_totop_btn">
+			<span id="rocket_icon"></span>
+			<p id="totop_title">返回顶部</p>
+	</div>
 	<!-- 网络异常提示 -->
 	<iframe src="../connect-error.html" width="100%" height="35" frameborder="0" style="position:fixed;left:0;top:0;display:none;z-index:99;"></iframe>
 </body>
-
 
 <script type="text/javascript" src="../../script/common/swiper.min.js"></script>
 <script type="text/javascript" src="../../script/common/api.js"></script>
 <script type="text/javascript" src="../../script/common/jquery.min.js"></script>
 <script type="text/javascript" src="../../script/common/pds.ajax.js"></script>
+<script type="text/javascript" src="../../script/common/scrollToTop.js"></script>
 <script type="text/javascript">
-//	点击导航“种植工单”页面跳转******************************************************
+	apiready=function(){
+			//种植工单—数据渲染
+			refreshStatusList();
+			//监听页面scrollTop
+			scrollToTop();
+			//监听网络状态
+			onlineStatus();
+			//console.profile(homeBannerSwiper())
+			//轮播图****************************
+			homeBannerSwiper();
+			//公告信息列表
+			noticeData();
+			//技术推广数据
+			techTransferData();
+			//		实时定位获取位置，并获取天气信息****
+			var map = api.require('bMap');
+			getLocation(map);
+			//$api.clearStorage();
+	}
+
+	//创建轮播图对象*************************************************************
+	var initBannerFlag = false;//标记是否是第一次打开应用
+	function homeBannerSwiper(){
+			//获取本地缓存拿数据************************************************************************
+			var bannerAllData = $api.getStorage('banner_lists_urlObj');
+			//alert(JSON.stringify(bannerAllData));
+			if(bannerAllData != undefined && bannerAllData != "" && bannerAllData != null && bannerAllData != []){
+						//alert("本地有緩存数据")
+						console.log("**************************初始轮播图数据不不不不為空***************************");
+						//alert(JSON.stringify(bannerUrlArr));
+						//获取时间戳，与本地缓存记录时间作比较，判断是否重新加载数据
+						//当时间过了当天24点整时开始重新加载数据
+						var storage_history_time = bannerAllData.time;
+						var storage_history_Maxtime = bannerAllData.todayMaxTime;
+						var bannerUpdateFlag = bannerUpdateFlagFn(storage_history_time, storage_history_Maxtime);
+						//alert(bannerUpdateFlag)
+						if(bannerUpdateFlag){
+								//alert("******************************过了当天24点开始更新轮播图数据啦***************************************")
+								console.log("**************************过了当天24点开始更新轮播图数据啦***************************");
+								bannerData();
+								return;
+						};
+						//轮播数据处理
+						var bannerUrlArr = bannerAllData.bannerUrlData;//bannerData.bannerUrlData;//获取轮播图图片地址数据数组
+						//alert(111)
+						//alert(JSON.stringify(bannerUrlArr))
+						initBannerFlag = true;
+						bannerDataYesOrNo(bannerUrlArr);
+
+			}else{
+						//应用初始化没有轮播图数据时，执行此代码，加入数据缓存**************************************
+						//alert("欢迎进入慧种地首页")
+						api.toast({
+						    msg: '欢迎进入慧种地首页',
+						    duration: 1000,
+						    location: 'bottom'
+						});
+						console.log("**************************欢迎进入慧种地首页***************************")
+						bannerData();
+			};
+
+	};
+
+	//返回flag标记是否需要更新轮播图数据*********************************
+	var bannerDataUpdateFlag = null;
+	function bannerUpdateFlagFn(storage_history_time, storage_history_Maxtime){
+			//var myTime = new Date(new Date().toLocaleDateString()).getTime() + 24*60*60*1000;//获取当天零点时间戳+24*60*60*1000(获取24点时间戳)
+			var nowTime = new Date().getTime();//获取当前时间
+			bannerDataUpdateFlag = false;
+			if(nowTime >= storage_history_Maxtime){//说明过了前一天24点，重新请求数据
+					bannerDataUpdateFlag = true;
+			};
+			return bannerDataUpdateFlag;
+	};
+
+	//请求获取轮播图数据
+	function bannerData(){
+			//轮播图数据重新写入****************************************
+			//alert("开始发起轮播数据请求")
+	    pds.ajaxSubmit({
+					type: "GET",
+	        url:"/app/adv/homePageAdvList",
+	        success:function(e){
+	        		//alert("success");
+							//alert(JSON.stringify(e.data))
+							var bannerUrlArr = e.data;
+							bannerDataYesOrNo(bannerUrlArr);
+	        }
+	    });
+	};
+
+	//轮播图数据正确时调用
+	function bannerDataYesOrNo(bannerDataArr){
+		console.log("*********************轮播图数据正确处理*******************************")
+		var noSlideClass = null, loopAutoFlag = null, bannerUrlNewArr = [], bannerUrlDataObj = null;
+		if(bannerDataArr != null && bannerDataArr != [] && bannerDataArr != ""){
+					//alert("***************************轮播图發起數據請求成功啦，并且有数据啦**************************")
+					//alert(JSON.stringify(bannerDataArr))
+					if(bannerDataArr.length != 1){
+							noSlideClass = "";
+							loopAutoFlag = false;
+					}else{
+							noSlideClass = "swiper-no-swiping";//添加swiper禁止slider手动滑动的class类名
+							loopAutoFlag = true;//flag标记轮播图是否开启轮播，当只有一张图时不轮播（flag = false）
+					};
+					var bannerWrapStr = "";
+					for (var i = 0; i < bannerDataArr.length; i++) {
+							//创建缓存数据数组******************************************
+							if(initBannerFlag){
+									if(bannerDataArr[i].bannerUrl != "" && bannerDataArr[i].bannerUrl != null){
+											bannerUrlNewArr[i] = {
+													bannerUrl : bannerDataArr[i].bannerUrl
+											};
+									};
+									console.log(JSON.stringify(bannerUrlNewArr))
+									console.log(bannerDataArr[i].bannerUrl+"*************"+ i +"************")
+									bannerWrapStr += '<div class="swiper-slide'+ " " + noSlideClass +'">'+
+																			'<a href="#"><img src="'+ bannerDataArr[i].bannerUrl +'"/></a>'+
+																		'</div>';
+							}else{
+									if(bannerDataArr[i].pictureUrl != "" && bannerDataArr[i].pictureUrl != null){
+											bannerUrlNewArr[i] = {
+													bannerUrl : bannerDataArr[i].pictureUrl
+											};
+									};
+									//console.log(bannerUrlNewArr)
+									//console.log(bannerDataArr[i].pictureUrl+"*************"+ i +"************")
+									bannerWrapStr += '<div class="swiper-slide'+ " " + noSlideClass +'">'+
+																			'<a href="#"><img src="'+ bannerDataArr[i].pictureUrl +'"/></a>'+
+																	'</div>';
+							}
+
+					};
+					//alert(bannerWrapStr)
+					$("#top .bannerWrap1 .swiper-wrapper").html(bannerWrapStr);
+					//创建banner轮播**************************************************
+					setTimeout(function(){
+							bannerMove(loopAutoFlag);
+					});
+					//缓存数据
+					var curTime = new Date().getTime();//当前时间戳
+					var todayMaxTime = new Date(new Date().toLocaleDateString()).getTime() + 24*60*60*1000;//当天24点时间戳
+					bannerUrlDataObj = {
+							bannerUrlData : bannerUrlNewArr,
+							time : curTime,
+							todayMaxTime : todayMaxTime
+					};
+					$api.setStorage('banner_lists_urlObj', bannerUrlDataObj);
+			}else{
+					bannerErrorOrEmpty();
+			}
+	};
+	//轮播数据错误时处理
+	function bannerErrorOrEmpty(){
+			console.log("********************************轮播图错误处理并展示***********************************")
+			var bannerErrorUrl = "../../image/home_banner1.png";//错误处理
+			var bannerWrap1Str = "";
+			var bannerUrlEroArr = [];//轮播图数据初始数组
+			var bannerUrlDataErrorObj = null;//轮播图数据对象
+			//应用初始化没有轮播图数据时，执行此代码，加入数据缓存**************************************
+			bannerWrap1Str = '<div class="swiper-slide swiper-no-swiping">'+
+														'<a href="#"><img src="'+ bannerErrorUrl +'"/></a>'+
+											 '</div>';
+			$("#top .bannerWrap1 .swiper-wrapper").html(bannerWrap1Str);
+			setTimeout(function(){//开启轮播
+					bannerMove(true);
+			});
+			bannerUrlEroArr[0] = {
+											bannerUrl : bannerErrorUrl
+									};
+			var curTime = new Date().getTime();//当前时间戳
+			var todayMaxTime = new Date(new Date().toLocaleDateString()).getTime() + 24*60*60*1000;//当天24点时间戳
+			bannerUrlDataErrorObj = {
+					bannerUrlData : bannerUrlEroArr,
+					time : curTime,//当前时间戳
+					todayMaxTime : todayMaxTime//当天24点时间戳
+			};
+			$api.setStorage('banner_lists_urlObj', bannerUrlDataErrorObj);
+	};
+
+	//创建banner轮播
+	var mySwiper1;
+	function bannerMove(loopAutoFlag){
+			//alert(loopAutoFlag)
+			// setTimeout(function(){
+						//创建轮播对象
+						mySwiper1 = new Swiper('#top .bannerWrap1',{
+								loop : true,
+								autoplay : 3000,
+								noSwiping : true,//控制slide是否可手动滑动
+								// onlyExternal : true,
+								//updateOnImagesReady : true,//回调函数，所有内置图像加载完成后执行，同时“updateOnImagesReady”需设置为“true’。
+								//disableOnInteraction : true,
+								// allowSwipeToNext : false,
+								// allowSwipeToPrev : false,
+								observer:true,
+								preloadImages:true,
+								updateOnImagesReady : true,
+								speed:1000,
+								autoplayDisableOnInteraction : false,
+								effect : 'coverflow',
+								slidesPerView: 1.25,
+								centeredSlides: true,
+								spaceBetween : 0,
+								coverflow: {
+												rotate: 0,
+												stretch: -48,
+												depth: 200,
+												modifier: 1,
+												slideShadows : false
+								},
+								// 分页器
+								pagination : '#top .swiper-pagination',
+								paginationType : 'bullets',
+								uniqueNavElements :false,
+								paginationHide :true,
+
+						});
+						//根据flag标签判断是否开启轮播——只有一张图时不轮播
+						if(loopAutoFlag){
+								mySwiper1.stopAutoplay();
+								mySwiper1.lockSwipes();
+						}else{
+								mySwiper1.startAutoplay();
+								mySwiper1.unlockSwipes();
+						};
+			 //},500)
+	};
+
+	//获取公告数据
+	function noticeData(){
+		pds.ajaxSubmit({
+				type: "GET",
+				url:"/app/content/adviceContent",
+				success:function(e){
+						// alert("success");
+						// alert(JSON.stringify(e))
+						if(e.status == "ok"){
+							var noticeDataArr = e.data;
+							var noticeStr = "";
+							if(noticeDataArr != [] && noticeDataArr != "" && noticeDataArr != null){
+									for (var i = 0; i < noticeDataArr.length; i++) {
+										noticeStr += '<div class="swiper-slide">'+ noticeDataArr[i].title +'</div>'
+									};
+									noticeStr += '<div class="swiper-slide">'+ noticeDataArr[0].title +'</div>';
+									$("#top  .bannerWrap2 .swiper-wrapper").html(noticeStr);
+									//数据请求成功，开启公告轮播;
+									var noticeNum = noticeDataArr.length;
+									setTimeout(function(){
+										publickInfoTransfer(noticeNum); //启动公告轮播
+									},1500)
+							}
+						}else{
+
+						}
+
+				},
+				error:function(e){
+					 api.alert({msg:"服务器错误，请联系管理员!"});
+				}
+		});
+	}
+
+	//公告轮播*********************************************************************
+	function publickInfoTransfer(n){
+			var wrap2Width=$("#top>.noticeBanner>.bannerWrap2 .bannerWrap2_center").width();
+			$("#top>.noticeBanner>.bannerWrap2 .bannerWrap2_center .swiper-wrapper").width(wrap2Width*(n+1));
+			// $("#top>.noticeBanner>.bannerWrap2 .bannerWrap2_center .swiper-wrapper .swiper-slide").css({
+			// 	"-webkit-box-flex": "1",
+			// 	"-webkit-flex": "1",
+			// 	"flex": "1",
+			// });
+			$("#top>.noticeBanner>.bannerWrap2 .bannerWrap2_center .swiper-wrapper .swiper-slide").width(wrap2Width);
+			var marginLeftAdd=0;
+			function wrap2Move(){
+					marginLeftAdd+=3;
+					if(marginLeftAdd>=450*n){
+						marginLeftAdd=0
+					};
+					$("#top>.noticeBanner>.bannerWrap2 .bannerWrap2_center .swiper-wrapper").css({
+						"marginLeft":(-1*marginLeftAdd)/100+"rem"
+					})
+			};
+			var wrap2Timer;
+			clearInterval(wrap2Timer);
+			wrap2Timer=setInterval(wrap2Move,30);
+			$("#top>.noticeBanner>.bannerWrap2 .bannerWrap2_center").on("touchstart",function(){
+					clearInterval(wrap2Timer);
+			}).on("touchend",function(){
+					clearInterval(wrap2Timer);
+					wrap2Timer=setInterval(wrap2Move,30);
+			})
+	}
+
+	//技术推广数据
+	function techTransferData(){
+		pds.ajaxSubmit({
+				type: "GET",
+				url:"/app/content/techContent",
+				success:function(e){
+						// alert("success");
+						//alert(JSON.stringify(e))
+						if(e.status == "ok"){
+								var techDataArr = e.data;
+								var techDataStr = "";
+								var articleTypeName = "";
+								if(techDataArr != "" && techDataArr != [] && techDataArr != null){
+									for (var i = 0; i < techDataArr.length; i++) {
+										switch (techDataArr[i].articleType) {
+											case 11:
+												articleTypeName = "农业技术"
+												break;
+											case 12:
+												articleTypeName = "行业政策"
+												break;
+											case 13:
+												articleTypeName = "农村生活"
+												break;
+											//default:
+
+										};
+										var techDataImg = "", infoListWidth = "";
+										if(techDataArr[i].pictureUrl != "" && techDataArr[i].pictureUrl != null){
+												techDataImg = '<img style="" src="'+ techDataArr[i].pictureUrl +'">'
+												infoListWidth = "infoListWidth";
+										};
+										techDataStr += '<li onclick="openTechTransferInfo('+ techDataArr[i].contentId +')">'+
+																			'<div class="transfer_content_left'+ " " + infoListWidth +'">'+
+																					'<div class="transfer_content_info">'+
+																							'<p style="word-wrap:break-word;">'+ techDataArr[i].title +'</p>'+
+																					'</div>'+
+																					'<div class="transfer_content_time"><p><span>'+ articleTypeName +'</span><span style="margin-left:10px;">'+ (techDataArr[i].createTime).split(" ")[0] +'</span><span style="margin-left:20px;">作者：'+ techDataArr[i].author +'</span></p></div>'+
+																			'</div>'+
+																			'<div class="transfer_content_right">'+ techDataImg +'</div>'+
+																	'</li>';
+									};
+									$(".transfer_content ul").html(techDataStr);
+								}
+
+
+						}else{
+
+						}
+
+				},
+				error:function(e){
+					 api.alert({msg:"服务器错误，请联系管理员!"});
+				}
+		});
+	}
+
+	//页面回到顶部
+	function scrollToTop(){
+		window.addEventListener('scroll', function () {
+				var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+				if(scrollTop >= 100){
+					$("#home_totop_btn").show().off("click").on("click",function(){
+						var scrollTimer = setInterval(function(){
+							if(scrollTop>=0){
+								scrollTop -= 50;
+								$("body").scrollTop(scrollTop);
+							}else{
+								$("body").scrollTop(0);
+								clearInterval(scrollTimer);
+							}
+						},30)
+
+					})
+				}else{
+					$("#home_totop_btn").hide();
+				}
+		})
+	}
+	//点击导航“种植工单”页面跳转******************************************************
 	var gloableData; //请求数据并保存
 	function refreshStatusList(){
 	    pds.ajaxSubmit({
@@ -801,102 +1076,101 @@
 	        }
 	    });
 	}
+
 	function openPlantDetail(){
-		var userId = $api.getStorage("userId");
-		var tmpStatus ="CONFIRMING";  //$(obj).attr("workOrderStatus");
-		var convertObj = getObjByCondition(gloableData,tmpStatus);
-	 	var data = $.extend({}, convertObj,{executorId: userId});
-//	 	alert(JSON.stringify(data))
-	    // $api.openWin({
-	    //     name: 'win_orderList',
-	    //     url:  'widget://html/win_orderList.html',
-	    //     pageParam: data,
-	    //     slidBackEnabled:false,
-	    //     reload:true,
-	    //     animation:{
-	    //         type:"movein",                //动画类型（详见动画类型常量）
-	    //         subType:"from_right",       //动画子类型（详见动画子类型常量）
-	    //         duration:300                //动画过渡时间，默认300毫秒
-	    //     }
-	    // });
+			var userId = $api.getStorage("userId");
+			var tmpStatus ="CONFIRMING";  //$(obj).attr("workOrderStatus");
+			var convertObj = getObjByCondition(gloableData,tmpStatus);
+		 	var data = $.extend({}, convertObj,{executorId: userId});
+	    api.openWin({
+	        name: 'win_orderList',
+	        url:  'widget://html/win_orderList.html',
+	        pageParam: data,
+	        slidBackEnabled:false,
+	        reload:true,
+	        animation:{
+	            type:"movein",                //动画类型（详见动画类型常量）
+	            subType:"from_right",       //动画子类型（详见动画子类型常量）
+	            duration:300                //动画过渡时间，默认300毫秒
+	        }
+	    });
 	};
+
 	function getObjByCondition(gloableData,status){
-		if(!(gloableData && gloableData.length>0)){
-			return;
-		}
-		var tmpOrder = null;
-		for(var i=0;i<gloableData.length;i++){
-			var order = gloableData[i];
-			if(order.workOrderStatus == status){
-				tmpOrder = order;
-				break;
+			if(!(gloableData && gloableData.length>0)){
+					return;
 			}
-		}
-		return tmpOrder;
+			var tmpOrder = null;
+			for(var i=0;i<gloableData.length;i++){
+					var order = gloableData[i];
+					if(order.workOrderStatus == status){
+							tmpOrder = order;
+							break;
+					}
+			}
+			return tmpOrder;
 	};
 
 //	点击“田间作业”跳转页面***********************************************************
 	function openFarmWork(){
-		var farmId;
-		// api.execScript({
-		//     name: 'win_home',
-		//     frameName: 'farm_index',
-		//     script: "closeMap()"
-		// });
-		farmWorkData();
+			var farmId;
+			api.execScript({
+			    name: 'win_home',
+			    frameName: 'farm_index',
+			    script: "closeMap()"
+			});
+			farmWorkData();
 
 	};
 
 	function farmWorkData(){
 		 pds.ajaxSubmit({
-			 url:"app/farmingdataresource/list",
-			 success:function(e){
-				farmId=e.data[0].farmName;
-//				alert(JSON.stringify(farmId))
-				if(farmId=="" || farmId==null){
-				   api.alert({msg:"请选择基地"});
-				   return;
+				 url:"app/farmingdataresource/list",
+				 success:function(e){
+						farmId=e.data[0].farmName;
+		//				alert(JSON.stringify(farmId))
+						if(farmId=="" || farmId==null){
+						   api.alert({msg:"请选择基地"});
+						   return;
+						}
+
+						api.openWin({
+							name : 'agriculturalData',
+							url : 'widget://html/farmData/agriculturalData.html',
+							reload : true,
+							pageParam : {
+								farmId: farmId,
+								source: 'index'
+							},
+							selecteIndex:'2',
+							animation : {
+								type : "movein", //动画类型（详见动画类型常量）
+								subType : "from_right", //动画子类型（详见动画子类型常量）
+								duration : 300 //动画过渡时间，默认300毫秒
+							}
+						});
+				},
+				error:function(e){
+					 	api.alert({msg:"服务器异常，请联系管理员!!!!"});
 				}
-
-				// $api.openWin({
-				// 	name : 'agriculturalData',
-				// 	url : 'widget://html/farmData/agriculturalData.html',
-				// 	reload : true,
-				// 	pageParam : {
-				// 		farmId: farmId,
-				// 		source: 'index'
-				// 	},
-				// 	selecteIndex:'2',
-				// 	animation : {
-				// 		type : "movein", //动画类型（详见动画类型常量）
-				// 		subType : "from_right", //动画子类型（详见动画子类型常量）
-				// 		duration : 300 //动画过渡时间，默认300毫秒
-				// 	}
-				// });
-
-
-			},
-			error:function(e){
-				 api.alert({msg:"服务器异常，请联系管理员!!!!"});
-			}
 		});
 
 	}
 
 //	点击“我的记工”页面跳转
 	function jobsheet() {
-		// $api.openWin({
-		// 	name : "list_win",
-		// 	url : "widget://html/harvt/jobsheet/list_win.html",
-		// 	reload : true,
-		// 	selecteIndex : '3',
-		// 	slidBackEnabled : false,
-		// 	animation : {
-		// 		type : "movein", //动画类型（详见动画类型常量）
-		// 		subType : "from_right", //动画子类型（详见动画子类型常量）
-		// 		duration : 300 //动画过渡时间，默认300毫秒
-		// 	}
-		// });
+			api.openWin({
+					name : "list_win",
+					url : "widget://html/harvt/jobsheet/list_win.html",
+					reload : true,
+					selecteIndex : '3',
+					slidBackEnabled : false,
+					animation : {
+						type : "movein", //动画类型（详见动画类型常量）
+						subType : "from_right", //动画子类型（详见动画子类型常量）
+						duration : 300 //动画过渡时间，默认300毫秒
+					}
+			});
 	}
 
 
@@ -921,13 +1195,91 @@
 	// 	});
 	// }
 
+//点击“问问专家”入口
+function openCall(){
+		 api.openWin({
+          name : "questionlist_win",
+          url:"widget://html/che/expert/questionlist_win.html",
+					reload : true,
+					selecteIndex : '3',
+					slidBackEnabled : false,
+					animation : {
+						type : "movein", //动画类型（详见动画类型常量）
+						subType : "from_right", //动画子类型（详见动画子类型常量）
+						duration : 300 //动画过渡时间，默认300毫秒
+					}
+		  })
+	}
 
+//获取位置信息******************************
+function getLocation(map){
+		map.getLocation({
+				accuracy : '10m',
+				autoStop : true,
+				filter : 1
+		}, function(ret, err) {//localStorage.clear();
+				if (ret.status) {
+					var lon = ret.lon;
+					var lat = ret.lat;
+					getWeatherMsg(lon, lat);
+				} else {
+					api.alert({msg: "获取定位信息失败"});
+				}
+		});
 
-	//点击“问问专家”入口
-	function openCall(){
- $api.openWin({
-         name : "questionlist_win",
-         url:"widget://html/che/expert/questionlist_win.html",
+}
+
+// 根据经纬度从阿里获取天气数据*************************************************************
+var storageKey = "weather";
+var oldWeatherTimeKey = "oldTime";
+var addressKey = "address";
+function getWeatherMsg(lon, lat) {
+		var url = "https://ali-weather.showapi.com/gps-to-weather?from=5&lat=" + lat + "&lng=" + lon + "&need3HourForcast=0&needAlarm=0&needHourData=0&needIndex=0&needMoreDay=1";
+		$.ajax({
+				url : url,
+				type : "get",
+				beforeSend : function(req) {
+					req.setRequestHeader("Authorization", "APPCODE acacbfc4fac2472996b28490cd77c8be");
+				},
+				dataType : "json",
+				success : function(data) {
+					showWeatherMsg(data);
+				},
+				error : function(e) {
+					api.alert({msg:"网络异常，请重试!"});
+				}
+		});
+}
+
+//展示天气数据*********************************************************************
+function showWeatherMsg(data) {
+		var weather = data.showapi_res_body;
+		var now = weather.now;
+		var cityInfo = weather.cityInfo;
+		//alert(JSON.stringify(cityInfo))
+		// 得到区市名
+		$("#weather_city").text(cityInfo.c7);
+		//得到市区名
+		$("#weather_area").text(cityInfo.c3);
+		// 天气
+		$("#weather_text").text(now.weather);
+		// 天气小图标
+		$(".home_weather_icon").html("<img style='width:100%;height:100%;' src='" + now.weather_pic + "'/>");
+		// 实时温度
+		$("#now_temp").text(now.temperature+"℃");
+		// 展示一周的数据
+		var dateArray = ["f1", "f2", "f3", "f4", "f5", "f6", "f7"];
+		var html;
+		var w = weather.f1;
+		// 当天的最高和最低气温
+		$("#all_temp").html("<span>" + w.day_air_temperature + "°/" + w.night_air_temperature + "°</span>");
+};
+
+//打开技术推广页面***************************************************
+function openTechlists(){
+		api.openWin({
+			name : "frm_home_tech_transfer_list",
+			url : "widget://html/home/techTransfer/win_home_tech_transfer_list.html",
 			reload : true,
 			selecteIndex : '3',
 			slidBackEnabled : false,
@@ -936,255 +1288,71 @@
 				subType : "from_right", //动画子类型（详见动画子类型常量）
 				duration : 300 //动画过渡时间，默认300毫秒
 			}
-  })
-}
-
-	apiready=function(){
-//		种植工单—数据渲染
-		refreshStatusList();
-
-//		监听网络状态***************************************************
-		api.addEventListener({
-				name : 'offline'
-			}, function(ret, err) {
-				// 展示网络异常的样式！！！
-				$("iframe").show();
-			});
-		api.addEventListener({
-			name : 'online'
-		}, function(ret, err) {
-			location.reload([true]);
-			$("iframe").hide();
 		});
-//		轮播图*********************************************************
-		homeBannerSwiper();
-//		公告轮播部分*****************************************************
-		publickInfoTransfer();
-//		实时定位获取位置，并获取天气信息****************************************
-		var map = api.require('bMap');
-		getLocation(map);
-//
-	}
-
-
-//获取位置信息******************************
-function getLocation(map){
-		map.getLocation({
-			accuracy : '10m',
-			autoStop : true,
-			filter : 1
-		}, function(ret, err) {//localStorage.clear();
-			if (ret.status) {
-				var lon = ret.lon;
-				var lat = ret.lat;
-
-//					if (cacheWeather == null) {//alert(1);
-//						getWeatherMsg(lon, lat);
-//					} else {//alert(2)
-//						var nowTime = new Date();
-//						var cacheTime = 1800;
-//						// 缓存时间半小时
-//						// 缓存时间
-//						var oldTime = localStorage.getItem(oldWeatherTimeKey);
-//						if ((nowTime.getTime() - oldTime) / 1000 > cacheTime) {
-//							//alert(3)
-//							// 重新获取天气数据
-//							getWeatherMsg(lon, lat);
-//						} else {//alert(4)
-//							// 在缓存时间内展示旧数据
-//							showWeatherMsg(JSON.parse(cacheWeather));
-//							$(".home_weather_info p:last").text(cacheAddress);
-//						}
-//					}
-				getWeatherMsg(lon, lat);
-//					获取区县
-				map.getNameFromCoords({
-					lon : lon,
-					lat : lat
-				}, function(ret, err) {
-//					alert(JSON.stringify(ret))
-					if (ret.status) {
-						// 得到区县名
-						$(".home_weather_info p:last span:last").text(ret.district);
-//						得到市区名
-						$(".home_weather_info p:last span:first").text(ret.city);
-//							localStorage.setItem(addressKey, ret.district);
-					}
-					map.stopLocation();
-				});
-
-			} else {
-				api.alert({msg: "获取定位信息失败"});
-			}
-		});
-
-}
-
-//公告轮播*********************************************************************
-function publickInfoTransfer(){
-	var wrap2ListSum=2;  //此数据根据数据库轮播图个数决定
-	var wrap2Width=$("#top>.noticeBanner>.bannerWrap2 .bannerWrap2_center").width();
-	$("#top>.noticeBanner>.bannerWrap2 .bannerWrap2_center .swiper-wrapper").width(wrap2Width*(wrap2ListSum+1));
-	$("#top>.noticeBanner>.bannerWrap2 .bannerWrap2_center .swiper-wrapper .swiper-slide").css({
-		"-webkit-box-flex": "1",
-		"-webkit-flex": "1",
-		"flex": "1",
-	});
-	var marginLeftAdd=0;
-	function wrap2Move(){
-		marginLeftAdd+=3;
-		if(marginLeftAdd>=450*wrap2ListSum){
-			marginLeftAdd=0
-		};
-		$("#top>.noticeBanner>.bannerWrap2 .bannerWrap2_center .swiper-wrapper").css({
-			"marginLeft":-1*marginLeftAdd/100+"rem"
-		})
-	};
-	var wrap2Timer=setInterval(wrap2Move,30);
-	$("#top>.noticeBanner>.bannerWrap2 .bannerWrap2_center").on("touchstart",function(){
-		clearInterval(wrap2Timer);
-	}).on("touchend",function(){
-		clearInterval(wrap2Timer);
-		wrap2Timer=setInterval(wrap2Move,30);
-	})
-
-}
-
-//创建轮播图对象*************************************************************
-function homeBannerSwiper(){
-	var mySwiper1 = new Swiper('#top .bannerWrap1',{
-		loop : true,
-		autoplay : 2000,
-		speed:1000,
-		autoplayDisableOnInteraction : false,
-		effect : 'coverflow',
-		slidesPerView: 1.25,
-		centeredSlides: true,
-		spaceBetween : 0,
-		coverflow: {
-            rotate: 0,
-            stretch: -48,
-            depth: 200,
-            modifier: 1,
-            slideShadows : false
-		},
-		// 分页器
-		pagination : '#top .swiper-pagination',
-		paginationType : 'bullets',
-		uniqueNavElements :false,
-		paginationHide :true,
-	});
-}
-
-
-// 根据经纬度从阿里获取天气数据*************************************************************
-var storageKey = "weather";
-var oldWeatherTimeKey = "oldTime";
-var addressKey = "address";
-function getWeatherMsg(lon, lat) {
-	var url = "https://ali-weather.showapi.com/gps-to-weather?from=5&lat=" + lat + "&lng=" + lon + "&need3HourForcast=0&needAlarm=0&needHourData=0&needIndex=0&needMoreDay=1";
-	$.ajax({
-		url : url,
-		type : "get",
-		beforeSend : function(req) {
-			req.setRequestHeader("Authorization", "APPCODE acacbfc4fac2472996b28490cd77c8be");
-		},
-		dataType : "json",
-		success : function(data) {
-			// 加入缓存
-//			localStorage.setItem(storageKey, JSON.stringify(data));
-//			localStorage.setItem(oldWeatherTimeKey, new Date().getTime());
-			// 时间加入
-			//storage.setItem(oldWeatherTimeKey, new Date());
-			// 展示天气数据
-			showWeatherMsg(data);
-		},
-		error : function(e) {
-			alert("网络异常，请重试");
-		}
-	});
-}
-
-
-//展示天气数据*********************************************************************
-function showWeatherMsg(data) {
-	var weather = data.showapi_res_body;
-	var now = weather.now;
-//	alert(JSON.stringify(weather.cityInfo))
-	//城市
-//	$(".home_weather_info p:last span:first").text(weather.cityInfo.c5+"市");
-	// 天气
-	$(".home_weather_info p:first").html(now.weather);
-	// 天气小图标
-	$(".home_weather_icon").html("<img style='width:100%;height:100%;' src='" + now.weather_pic + "'/>");
-//	$(".home_weather_icon img").attr("src",now.weather_pic);
-	// 实时温度
-	$(".home_weather_temp p:first span:first").html(now.temperature+"℃");
-	// 展示一周的数据
-	var dateArray = ["f1", "f2", "f3", "f4", "f5", "f6", "f7"];
-	var html;
-	var w = weather.f1;
-	// 当天的最高和最低气温
-	$(".home_weather_temp p:last").html("<span>" + w.day_air_temperature + "°/" + w.night_air_temperature + "°</span>");
-}
-
-//打开技术推广页面***************************************************
-function openTechlists(){
-	$api.openWin({
-		name : "frm_home_tech_transfer_list",
-		url : "widget://html/home/techTransfer/win_home_tech_transfer_list.html",
-		reload : true,
-		selecteIndex : '3',
-		slidBackEnabled : false,
-		animation : {
-			type : "movein", //动画类型（详见动画类型常量）
-			subType : "from_right", //动画子类型（详见动画子类型常量）
-			duration : 300 //动画过渡时间，默认300毫秒
-		}
-	});
 };
 
 //打开技术详情页面***************************************************
 function openTechTransferInfo(id){
-	$api.openWin({
-		name : "frm_home_tech_transfer_info",
-		url : "widget://html/home/techTransfer/win_home_tech_transfer_info"+id+".html",
-		reload : true,
-		selecteIndex : '3',
-		slidBackEnabled : false,
-		animation : {
-			type : "movein", //动画类型（详见动画类型常量）
-			subType : "from_right", //动画子类型（详见动画子类型常量）
-			duration : 300 //动画过渡时间，默认300毫秒
-		}
-	});
+		api.openWin({
+			name : "frm_home_tech_transfer_info",
+			url : "widget://html/home/techTransfer/win_home_tech_transfer_info.html",
+			reload : true,
+			selecteIndex : '3',
+			slidBackEnabled : false,
+			pageParam : {
+				contentId : id
+			},
+			animation : {
+				type : "movein", //动画类型（详见动画类型常量）
+				subType : "from_right", //动画子类型（详见动画子类型常量）
+				duration : 300 //动画过渡时间，默认300毫秒
+			}
+		});
 };
 
 //打开公告页面***************************************************
 function openNoticelists(){
-	$api.openWin({
-		name : "win_home_notice_more_lists",
-		url : "widget://html/home/noticeMore/win_home_notice_more_lists.html",
-		reload : true,
-		selecteIndex : '3',
-		slidBackEnabled : false,
-		animation : {
-			type : "movein", //动画类型（详见动画类型常量）
-			subType : "from_right", //动画子类型（详见动画子类型常量）
-			duration : 300 //动画过渡时间，默认300毫秒
-		}
-	});
+		api.openWin({
+			name : "win_home_notice_more_lists",
+			url : "widget://html/home/noticeMore/win_home_notice_more_lists.html",
+			reload : true,
+			selecteIndex : '3',
+			slidBackEnabled : false,
+			animation : {
+				type : "movein", //动画类型（详见动画类型常量）
+				subType : "from_right", //动画子类型（详见动画子类型常量）
+				duration : 300 //动画过渡时间，默认300毫秒
+			}
+		});
 };
 
 //打开遮罩提醒***************************************************
 function openScreenWrap(){
-	$("#screenWrap").show();
-	$("#screenWrap").on("touchmove",function(ev){
-		ev.stopPropagation();
-	});
-	setTimeout(function(){
-		$("#screenWrap").hide();
-	},1000)
+		$("#screenWrap").show();
+		$("#screenWrap").on("touchmove",function(ev){
+			ev.stopPropagation();
+		});
+		setTimeout(function(){
+			$("#screenWrap").hide();
+		},1000)
+};
+
+
+//监听网络状态
+function onlineStatus(){
+		//监听网络状态***************************************************
+		api.addEventListener({
+				name : 'offline'
+		}, function(ret, err) {
+				// 展示网络异常的样式！！！
+				$("iframe").show();
+		});
+		api.addEventListener({
+				name : 'online'
+		}, function(ret, err) {
+				location.reload([true]);
+				$("iframe").hide();
+		});
 };
 </script>
 </html>

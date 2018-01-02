@@ -9,72 +9,22 @@
     <link rel="stylesheet" type="text/css" href="../../../css/common/reset.css"/>
     <script type="text/javascript" src="../../../script/common/rem.js"></script>
     <style>
-    	*{
-            box-sizing: border-box;
-        }
         html,body{
             width:100%;
             height:100%;
         }
         body{
             position: relative;
-            overflow-y: auto;
+            overflow-y: hidden;
             background-color: #f2f2f2;
             /*padding-top: 0.88rem;*/
         }
-
-        /*#top{
-            width: 100%;
-            height: 0.46rem;
-            background: #00c558;
-            margin-bottom: 0.82rem;
-            position: fixed;
-            left: 0;
-            top: 0;
-            z-index: 99;
-        }*/
-        /*header{
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height:0.88rem;
-            background: #00c558;
-            z-index: 99;
-        }
-        header #title{
-            position: relative;
-            width:100%;
-            height: 0.88rem;
-            line-height: 0.88rem;
-            text-align: center;
-            font-size: 0.36rem;font-family: PingFangSC-Regular, sans-serif;color: #fff;
-        }
-        header #title span{*/
-           /* display: inline-block;
-            position: absolute;
-            left: 0.25rem;
-            bottom: 0.28rem;
-            width: 0.16rem;
-            height: 0.28rem;
-            background-image: url(../../../image/harvest_back.png);
-            background-position: center;
-            background-size: 100% 100%;
-            background-repeat: no-repeat; */
-           /*display: inline-block;
-			position: absolute;
-			left: 13px;
-			bottom: 14px;
-			width: 12px;
-			height: 19px;
-			background-image: url(../../../image/harvest_back.png);
-			background-position: center;
-			background-size: 100% 100%;
-			background-repeat: no-repeat;
-        }*/
         #wrapper{
             width:100%;
-            padding-bottom: 1.94rem;
+            padding-bottom: 1.0rem;
+						height: 100%;
+						overflow-y: auto;
+
         }
         #wrapper .scroller,#wrapper .scroller>ul,#wrapper .scroller>ul>li{
             width:100%;
@@ -94,6 +44,7 @@
         #wrapper .scroller ul>li .noticeContent .noticeTitle{
             width: 100%;
             padding: 0.2rem 0;
+						text-align: center;
             font-size: 0.3rem;font-family: PingFangSC-Regular, sans-serif;color: #ef8233;
         }
         #wrapper .scroller ul>li .noticeContent .noticeWords{
@@ -105,9 +56,6 @@
             -webkit-box-orient: horizontal;
             -webkit-flex-flow: row;
             flex-flow: row;
-            /*-webkit-box-orient: vertical;
-            -webkit-flex-flow: column;
-            flex-flow: column;*/
 
             -webkit-box-pack: justify;
             -webkit-justify-content: space-between;
@@ -157,29 +105,69 @@
         }
         #wrapper .scroller ul>li .noticeContent .noticeImg{
             width:100%;
-            height: 3.15rem;
+            height: 3.65rem;
             padding: 0.25rem 0;
         }
         #wrapper .scroller ul>li .noticeContent .noticeImg img{
             height:100%;
             width:100%;
         }
+				#emptyPage{
+      			position: absolute;
+      			left:50%;
+      			top:50%;
+      			width:210px;
+      			height:220px;
+      			margin-left:-105px;
+      			margin-top:-110px;
+      			display:none;
+      		}
+      		#emptyPage .emptyBcImg{
+      			width:210px;
+      			height:145px;
+      			margin:0 auto;
+      			background-image: url(../../../image/emptyPageIcon.png);
+      			background-position: center;
+      			background-size: 100% 100%;
+      			background-repeat: no-repeat;
+      		}
+      		#emptyPage p{
+      			width:100%;
+      			height:20px;
+      			line-height:20px;
+      			text-align: center;
+      			font-size: 16px;font-family: PingFangSC-Regular, sans-serif;color: #999999;
+      		}
+
+					#body_totop_btn{
+	            position: fixed;
+	            bottom:0.5rem;
+	            right:0.2rem;
+	            width:1.2rem;
+	            height:1.2rem;
+	            z-index: 999;
+	            line-height: 2.25rem;
+	            font-size: 0.2rem;font-family: PingFangSC-Regular, sans-serif;color: #AEADAD;
+	            text-align: center;
+	            background: url("../../../image/rocket_up.png") no-repeat center 3px;
+	            background-size: 70% 70%;
+	            background-color: rgba(0,0,0,0);
+	            border-radius: 6px;
+	            font-size: 0.20rem;
+	            color: #20c714;
+	            display: none;
+	        }
     </style>
 </head>
-<body>
-	<!--<div id="top"></div>-->
-    <!--<header id="header">
-        <div id="title">
-            <span class="left" onclick="back()"></span>
-                                   通知公告
-        </div>
-    </header>-->
-
-
+<body id="body">
+		<div id="emptyPage">
+			<div class="emptyBcImg"></div>
+			<p>亲，还没有新的内容哦~</p>
+		</div>
     <div id="wrapper">
         <div class="scroller">
             <ul>
-                <li>
+                <!-- <li>
                    <div class="noticeTime">8月8日  10:00</div>
                    <div class="noticeContent"  onclick="openNoticeInfo()">
                        <div class="noticeTitle">号外！号外！慧种地重装上阵啦~~</div>
@@ -189,18 +177,7 @@
                        </div>
                        <div class="noticeImg"><img src="../../../image/home_notice_img1_03.png"/></div>
                    </div>
-                </li>
-               <!-- <li>
-                    <div class="noticeTime">8月8日  10:00</div>
-                   <div class="noticeContent">
-                       <div class="noticeTitle">号外！号外！慧种地重装上阵啦~~</div>
-                       <div class="noticeWords">
-                           <p>8月8日，今天是个好日子！心想的事儿心想的事儿心想的事儿心想的事儿</p>
-                           <div><span>查看详情</span><span></span></div>
-                       </div>
-                       <div class="noticeImg"><img src="../../../image/home_notice_img1_03.png"/></div>
-                   </div>
-                </li>-->
+                </li> -->
             </ul>
 
            <!--  <div class="more"><i class="pull_icon"></i><span style="font-size: 0.26rem;font-family: PingFangSC-Regular, sans-serif;color: #747474;">上拉加载...</span></div> -->
@@ -208,33 +185,92 @@
         </div>
     </div>
 
+		<div id="body_totop_btn">
+        返回顶部
+    </div>
 </body>
 <script type="text/javascript" src="../../../script/common/api.js"></script>
-
 <script type="text/javascript" src="../../../script/common/jquery.min.js"></script>
+<script type="text/javascript" src="../../../script/common/pds.ajax.js"></script>
 <script type="text/javascript">
 	apiready = function(){
-//		var header=$api.byId("header");
-//		$api.fixStatusBar(header);
-//		var headerH=$api.offset(header).h;
-//		alert(headerH);
+			noticeListData();
+			scrollToTop();
 	};
 
-//打开公告详情页面***************************************************
-function openNoticeInfo(){
-	$api.openWin({
-		name : "home_notice_more_info",
-		url : "widget://html/home/noticeMore/home_notice_more_info.html",
-		reload : true,
-		selecteIndex : '3',
-		slidBackEnabled : false,
-		animation : {
-			type : "movein", //动画类型（详见动画类型常量）
-			subType : "from_right", //动画子类型（详见动画子类型常量）
-			duration : 300 //动画过渡时间，默认300毫秒
-		}
-	});
-};
+	//页面回到顶部
+	function scrollToTop(){
+			$("#wrapper").on("scroll",function(){
+					var scrollTop = $("#wrapper").scrollTop();
+					if(scrollTop >= 300){
+							$("#body_totop_btn").show().off("click").on("click",function(){
+									$("#wrapper").animate({'scrollTop': '0px'}, 200);
+									//myScroll.scrollTo(0, 0, 300)
+							})
+					}else{
+							$("#body_totop_btn").hide();
+					}
+			})
+	};
+
+	//获取公告列表数据
+	function noticeListData(){
+			pds.ajaxSubmit({
+					url:"/app/content/adviceContentList",
+					success:function(e){
+						// alert("success")
+						//alert(JSON.stringify(e.data.length))
+						var noticeListArr = e.data;
+						var noticeListStr = "";
+						if(noticeListArr != null && noticeListArr != "" && noticeListArr != []){
+								$("#emptyPage").hide();
+								for (var i = 0; i < noticeListArr.length; i++) {
+									var dateDay = "", dataHour = "";
+									if(noticeListArr[i].createTime != "" && noticeListArr[i].createTime != null){
+											dateDay = ((noticeListArr[i].createTime).split(" ")[0]).split("-")[1] + "-" + ((noticeListArr[i].createTime).split(" ")[0]).split("-")[2];
+											dataHour = ((noticeListArr[i].createTime).split(" ")[1]).split(":")[0] + ":" + ((noticeListArr[i].createTime).split(" ")[1]).split(":")[1];
+									};
+									noticeListStr +=  '<li>'+
+										                   '<div class="noticeTime"><span>'+ dateDay +'</span><span style="margin-left:10px;">'+ dataHour +'</span></div>'+
+										                   '<div class="noticeContent"  onclick="openNoticeInfo('+ noticeListArr[i].contentId +')">'+
+										                       '<div class="noticeTitle">'+ noticeListArr[i].abstracts +'</div>'+
+										                       '<div class="noticeWords" >'+
+										                           '<p>'+ noticeListArr[i].title +'</p>'+
+										                           '<div><span>查看详情</span><span></span></div>'+
+										                       '</div>'+
+										                       '<div class="noticeImg"><img src="'+ noticeListArr[i].pictureUrl +'"/></div>'+
+										                   '</div>'+
+										                '</li>';
+
+								};
+								$("#wrapper ul").html(noticeListStr);
+						}else{
+								$("#emptyPage").show();
+						}
+					},
+					error:function(e){
+						 api.alert({msg:"服务器异常，请联系管理员!!!!"});
+					}
+			});
+	}
+	//打开公告详情页面***************************************************
+	function openNoticeInfo(id){
+		api.openWin({
+			name : "home_notice_more_info",
+			url : "widget://html/home/noticeMore/home_notice_more_info.html",
+			reload : true,
+			selecteIndex : '3',
+			slidBackEnabled : false,
+			pageParam : {
+				contentId : id
+			},
+			animation : {
+				type : "movein", //动画类型（详见动画类型常量）
+				subType : "from_right", //动画子类型（详见动画子类型常量）
+				duration : 300 //动画过渡时间，默认300毫秒
+			}
+		});
+	};
 
 //返回上一级********************************************************************
 	function back() {

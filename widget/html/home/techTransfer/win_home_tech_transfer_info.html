@@ -253,15 +253,23 @@
     <header id="header">
         <div id="title">
             <span class="left" onclick="back()"></span>
-            公告详情
+            技术详情
         </div>
     </header>
     <div id="content">
-			<!-- <img src="../../../image/home_notice_more_info1.html" style="height: 2.89rem"/>
-			<img src="../../../image/home_notice_more_info2.html" style="height: 3.41rem"/>
-			<img src="../../../image/home_notice_more_info3.html" style="height: 7.43rem"/>
-			<img src="../../../image/home_notice_more_info4.html" style="height: 6.94rem"/>
-			<img src="../../../image/home_notice_more_info5.html" style="height: 9.03rem"/> -->
+        <!-- <div class="mainInfo">
+            <div class="mainInfoTitle">
+                <p>晚熟大王沃柑秋季管理要点：做好三点带来丰产</p>
+                <p><span>慧种地</span><span>08-09</span><span>10:00</span></p>
+            </div>
+            <div class="mainInfoContent">
+                <div><img src="../../../image/win_home_tech_transfer_info_img1.png"/></div>
+                <p>沃柑是目前柑橘新品种中将高糖、易剥皮和晚熟三大特点集于一身的明星品种，被果农称为晚熟大王。</p>
+                <div><img src="http://mmbiz.qpic.cn/mmbiz_jpg/lPnEcs2En7N27IRRibGZiaZZ7ImwqtpFWtQuq06I3dSSJYDPjX4CfnFpkSEhqK3iaIXgfpTcpicJZS4g4oNghcoibew/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1"></div>
+                <p><span>图1沃柑</span><span>来源：网络</span></p>
+            </div>
+        </div> -->
+
     </div>
 
 </body>
@@ -274,7 +282,7 @@
 		var header=$api.byId("header");
         $api.fixStatusBar(header);
 		var contentId = api.pageParam.contentId
-		transInfoData(contentId)
+		transInfoData(contentId);
 	};
 
 	//技术推广详情数据
@@ -328,7 +336,13 @@
 											 		"width" : "20px",
 													"height" : "20px",
 													//"border":"solid 2px red"
-										 })
+										 });
+										 $(".transInfoContent").find(".info_child_img").css({
+													// 	"width":"100%",
+													// "height":"3.5rem",
+													// "border":"solid 2px red"
+										 });
+
                 }else{
 		                $("#emptyPage").show();
 								}

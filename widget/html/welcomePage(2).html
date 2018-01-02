@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<link rel="stylesheet" type="text/css" href="../css/common/reset.css">
+	<script type="text/javascript" src="../script/common/rem.js"></script>
+	<style type="text/css">
+		html,body{
+			width:100%;
+			height:100%;
+			position: fixed;
+			left:0;
+			top:0;
+			right:0;
+			bottom:0;
+			z-index: 999;
+			/*background: url("../image/init_begin_bc.png") no-repeat center center;*/
+			background-size: 100% 100%;
+			background-color: #fff;
+		}
+		body>img{
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+</head>
+<body>
+
+</body>
+<script type="text/javascript" src="../script/common/api.js"></script>
+<script type="text/javascript" src="../script/common/jquery.min.js"></script>
+<script type="text/javascript" src="../script/common/pds.ajax.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+			api.setFullScreen({
+					fullScreen:true
+			});
+			//$api.clearStorage();
+			adInit();
+
+	}
+
+	//启动页广告数据初始化
+	var initAdFlag = false;//标记应用是否第一次进入
+	function adInit(){
+			//开启登录页
+			openLogin();
+			//设置初始启动页
+			var adWrap1Str = null;
+			var adErrorUrl = "../image/init_begin_bc.png";//请求错误启动页
+			var adObj = {}, curTime = null, todayMaxTime = null;
+
+			var adDatasObj = $api.getStorage("adDatasObj");
+			//alert(JSON.stringify(adDatasObj));
+			if(adDatasObj != "" && adDatasObj != null && adDatasObj != [] && adDatasObj != undefined){
+						console.log("******************************初始化获得了启动页广告数据*********************************")
+						//alert("本地有緩存")
+						//获取时间戳，与本地缓存记录时间作比较，判断是否重新加载数据
+						//当时间过了当天24点整时开始重新加载数据
+						var storage_history_time = adDatasObj.time;
+						var storage_history_Maxtime = adDatasObj.todayMaxTime;
+						if( adUpdateFlag(storage_history_time, storage_history_Maxtime) ){
+								//alert("******************************过了当天24点开始更新启动页数据啦***************************************")
+								console.log("******************************过了当天24点需要重新请求数据*********************************")
+								getadDatasObj();
+								return;
+						};
+
+						var adUrl = adDatasObj.adUrlData;//bannerData.bannerUrlData;//获取广告图片地址数据数组
+						if(adUrl != "" && adUrl != [] && adUrl != null && adUrl !=undefined){
+								console.log('******************************启动页广告数据不为空啊**********************************')
+								adWrap1Str = '<img id="ad" src="'+ adUrl +'"/>';
+								$("body").html(adWrap1Str);
+						}else{
+								//没数据时做错误处理，并重新获取数据
+								adErrorOrEmpty();
+								//getadDatasObj();
+						}
+			}else{
+						console.log("******************************欢迎进入慧种地App*********************************")
+						//应用初始化没有启动页数据时，执行此代码，加入数据缓存**************************************
+						api.toast({
+						    msg: '欢迎进入慧种地App',
+						    duration: 5000,
+						    location: 'bottom'
+						});
+						getadDatasObj();
+			};
+
+
+
+	}
+
+	//返回flag标记是否需要更新轮播图数据*********************************
+	var adDatasObjUpdateFlag = null;
+	function adUpdateFlag(storage_history_time, storage_history_Maxtime){
+			//var myTime = new Date(new Date().toLocaleDateString()).getTime() + 24*60*60*1000;//获取当天零点时间戳+24*60*60*1000(获取24点时间戳)
+			var nowTime = new Date().getTime();//获取当前时间
+			adDatasObjUpdateFlag = false;
+			if(nowTime >= storage_history_Maxtime){//过了当天24点重新请求数据
+					adDatasObjUpdateFlag = true;
+			};
+			return adDatasObjUpdateFlag;
+	};
+
+	//获取启动页数据****************************************
+	function getadDatasObj(){
+			console.log('******************************发起了启动页广告数据请求**********************************')
+			//设置初始启动页
+			var adUrl = null,
+					adErrorUrl = "../image/init_begin_bc.png";//请求错误启动页
+			pds.ajaxSubmit({
+				 type : "get",
+				 url:"/app/adv/firstPageAdv",
+				 success:function(e){
+						 //alert("success-welcome")
+						 //alert(JSON.stringify(e))
+						 if(e.status == "ok"){
+								 if(e.data != null && e.data != ""){
+										adUrl = e.data.pictureUrl;
+										setAdStorage(adUrl);
+										var adWrap1Str = '<img id="ad" src="'+ adUrl +'"/>';
+										$("body").html(adWrap1Str);
+								 }else{
+									 	adErrorOrEmpty();
+								 }
+						 }else{
+								 adErrorOrEmpty();
+						 };
+
+				 }
+			});
+	}
+
+	//缓存处理函数
+	function setAdStorage(url){
+			console.log("******************开始缓存数据啦********************")
+			var curTime = new Date().getTime();//当前时间戳
+			var todayMaxTime = new Date(new Date().toLocaleDateString()).getTime() + 24*60*60*1000;//当天24点时间戳
+			var adObj = {
+					adUrlData : url,
+					time : curTime,//当前时间戳
+					todayMaxTime : todayMaxTime//当天24点时间戳
+			};
+			$api.setStorage('adDatasObj', adObj);
+	};
+
+	//广告数据请求失败处理
+	function adErrorOrEmpty(){
+			console.log("********************************ad错误处理并展示***********************************")
+			var adErrorUrl = "../image/init_begin_bc.png";//错误处理
+			var adWrap1Str = '<img id="ad" src="'+ adErrorUrl +'"/>';
+			$("body").html(adWrap1Str);
+			//应用初始化没有轮播图数据时，执行此代码，加入数据缓存**************************************
+			var adUrlDataErrorObj = null;//轮播图数据对象
+			var curTime = new Date().getTime();//当前时间戳
+			var todayMaxTime = new Date(new Date().toLocaleDateString()).getTime() + 24*60*60*1000;//当天24点时间戳
+			adUrlDataErrorObj = {
+					adUrlData : adErrorUrl,
+					time : curTime,//当前时间戳
+					todayMaxTime : todayMaxTime//当天24点时间戳
+			};
+			$api.setStorage('banner_list_url', adUrlDataErrorObj);
+	};
+
+	function openLogin(){
+		setTimeout(function(){
+				api.openWin({
+					name : "login_new",
+					url : "widget://html/login/login_new.html",
+					reload : true,
+					slidBackEnabled : false,
+					animation : {
+						type : "movein", //动画类型（详见动画类型常量）
+						subType : "from_right", //动画子类型（详见动画子类型常量）
+						duration : 400 //动画过渡时间，默认300毫秒
+					}
+				});
+		},5000)
+	}
+</script>
+</html>
