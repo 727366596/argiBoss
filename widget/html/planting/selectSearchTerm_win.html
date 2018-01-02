@@ -404,15 +404,22 @@ function cropGrowth() {
 		api.alert({msg:"请点击选择作物品种"});
 		return
 	}
-	// $api.setStorage('startDates',$("#date1").val())
-	// $api.setStorage('endDates',$("#date2").val())
-	// $api.setStorage('landIds',$("#idLand").val())
-	// $api.setStorage('categoryIds',$("#idCat").val())
-	// $api.setStorage('landNames',$("#nameLand").val())
-	// $api.setStorage('categorys',$("#nameCat").val())
+	$api.setStorage('startDates',$("#date1").val())
+	$api.setStorage('endDates',$("#date2").val())
+	$api.setStorage('farmIds',$("#idLand").val())
+	$api.setStorage('categoryIds',$("#idCat").val())
+	$api.setStorage('landNames',$("#nameLand").val())
+	$api.setStorage('categorys',$("#nameCat").val())
+	if(api.pageParam.pageId==1){
+		$api.setStorage('harvest',"1")
+	}
+	// api.execScript({
+  //   name: 'cropGrowth_win',
+  //   script: "initIn('"+$("#date1").val()+"','"+$("#date2").val()+"','"+$("#idLand").val()+"','"+$("#idCat").val()+"','"+$("#nameLand").val()+"','"+$("#nameCat").val()+"')"
+	// });
 	api.execScript({
-    name: 'cropGrowth_win',
-    script: "initIn('"+$("#date1").val()+"','"+$("#date2").val()+"','"+$("#idLand").val()+"','"+$("#idCat").val()+"','"+$("#nameLand").val()+"','"+$("#nameCat").val()+"')"
+	  name: 'root',
+	  script: "initIn()"
 	});
 	api.closeWin();
 }

@@ -243,13 +243,15 @@
     <section id="section1">
 				<ul>
 					<li>
-						<span>统计时间：</span>
-						<input id="time" type="text" value="2017年1月-2017年10月" readonly>
-					</li>
-					<li>
-						<span>地&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp块：</span>
+						<span>哪个基地：</span>
 						<input id="land"type="text" value="#1" readonly>
 						<input id="landId" type="hidden">
+					</li>
+					<li>
+						<span>统计时间：</span>
+						<input id="time" type="text" value="2017年1月-2017年10月" readonly>
+						<input id="startDate" type="hidden">
+						<input id="endDate" type="hidden">
 					</li>
 					<li>
 						<span>种的作物：</span>
@@ -288,21 +290,22 @@
 				<div class="xuan">
 					<span class="dikuai">地块：</span>
 					<span class="shuru">
-							<select class="shuru1">
+							<select id="shuru1" class="shuru1" onchange="jidiChange">
 								<option value="">一大队2号地</option>
 							</select>
 							<i></i>
 					</span>
 					<span class="dikuai">采收单位：</span>
 					<span class="shuru">
-							<select class="shuru2">
+							<select id="shuru2" class="shuru2" onchange="danweiChange">
 								<option value="">吨</option>
+								<option value="">斤</option>
 							</select>
 							<i></i>
 					</span>
 				</div>
 				<div class="biaoTitle">
-					<div class="titleContent">当日最大采收量：500吨</div>
+					<div id="today" class="titleContent">当日最大采收量：500吨</div>
 				</div>
 				<div class="container3">
 					<div  class="containerLeft">
@@ -315,11 +318,11 @@
 				<p id="nianyue" class="nianyue">2017年</p>
 				<div class="shuju">
 					<div class="jihuashuju">
-						<span id="dangricaishou">330吨</span>
+						<span id="max" id="dangricaishou">330吨</span>
 						<span class="shujuyuan">当日采收总量</span>
 					</div>
 					<div class="shijishuju">
-						<span>1500吨</span>
+						<span id="todayTotal">1500吨</span>
 						<span class="shujuyuan">累计采收总量</span>
 					</div>
 				</div>
@@ -374,27 +377,29 @@
 						name : 'selectSearchTerm_win',
 						url : './selectSearchTerm_win.html',
 						pageParam: {
-								farmId: api.pageParam.farmId
+								pageId: 1
 						}
 					});
 			})
 			initIn()
-			pieFen()
-			priFen()
-			caiLiang()
-			nowHarvest()
+			jidi()
 	}
-	function initIn(n){
-		back=n;
-		if(n){
+
+	function initIn(){
+		if($api.getStorage('harvest')){
 			var startDate=$api.getStorage('startDates')
 			var endDate=$api.getStorage('endDates')
-			var landId=$api.getStorage('landIds')
+			var farmId=$api.getStorage('farmIds')
 			var categoryId=$api.getStorage('categoryIds')
 			$("#time").val(startDate.substring(0,4)+"年"+startDate.substring(5,7)+"月-"+endDate.substring(0,4)+"年"+endDate.substring(5,7)+"月")
 			$("#land").val($api.getStorage('landNames'))
 			$("#crop").val($api.getStorage('categorys'))
-			showGrowth(api.pageParam.farmId,landId,categoryId,startDate,endDate)
+			$("#startDate").val(startDate)
+			$("#endDate").val(endDate)
+			$("#shuru1").val(farmId)
+			pieFen(startDate,endDate,farmId,categoryId)
+			priFen(startDate,endDate,farmId,categoryId)
+			danwei(startDate,endDate,categoryId,farmId)
 		}else{
 			var d = new Date(), y = d.getFullYear(), m = d.getMonth() + 1, r = d.getDate();
 			m < 10 ? m = "0" + m : m;
@@ -404,28 +409,30 @@
 			$("#time").val(y+"年0"+1+"月-"+y+"年"+m+"月")
 			api.ajax({
 				url:pds.defaultUri + 'app/crop/firstEnterCondition',
-				data:{values:{farmId:api.pageParam.farmId}}
 			},function(ret,err){
 				if (ret) {
 					if(!ret.data.land){
 						return
 					}
-					$("#land").val(ret.data.land.landName)
-					$("#crop").val(ret.data.category.catName)
-					$("#landId").val(ret.data.land.id)
-					$("#catId").val(ret.data.category.id)
-					showGrowth(api.pageParam.farmId,ret.data.land.id,ret.data.category.id,startDate,endDate)
-					//showGrowth(11,1,23,'2017-11-20','2017-12-04')
+					$("#land").val(ret.data.farmId)
+					$("#crop").val(ret.data.categoryName)
+					$("#landId").val(ret.data.farmName)
+					$("#catId").val(ret.data.categoryId)
+					$("#startDate").val(startDate)
+					$("#endDate").val(endDate)
+					pieFen(endDate,endDate,ret.data.farmId,ret.data.categoryId)
+					priFen(startDate,endDate,ret.data.farmId,ret.data.categoryId)
+					danwei(startDate,endDate,ret.data.categoryId,ret.data.farmId)
 				} else {
 					//api.alert({msg:JSON.stringify(err)});
 				};
 			});
 		}
 	}
-	function pieFen(){
+	function pieFen(startDate,endDate,farmId,categoryId){
 		api.ajax({
 		 url:pds.defaultUri + 'app/harvestStat/queryGradeOfHarvest',
-		 data:{values:{}}
+		 //data:{values:{startDate:startDate,endDate:endDate,farmId:farmId,categoryId:categoryId}}
 		},function(ret,err){
 		 if (ret) {
 			 //api.alert({msg:JSON.stringify(ret)});
@@ -505,10 +512,10 @@
 			}
 		})
 	}
-	function priFen(){
+	function priFen(startDate,endDate,farmId,categoryId){
 		api.ajax({
 		 url:pds.defaultUri + 'app/harvestStat/queryGradeOfHarvest',
-		 data:{values:{}}
+		 //data:{values:{startDate:startDate,endDate:endDate,farmId:farmId,categoryId:categoryId}}
 		},function(ret,err){
 		 if (ret) {
 			 //api.alert({msg:JSON.stringify(ret)});
@@ -696,17 +703,17 @@
   //       }]
   //   });
 
-function caiLiang(){
+function caiLiang(startDate,endDate,farmId,categoryId,numerator){
 	api.ajax({
 	 url:pds.defaultUri + 'app/harvestStat/queryAmountOfHarvest',
-	 data:{values:{}}
+	 //data:{values:{startDate:startDate,endDate:endDate,farmId:farmId,categoryId:categoryId,numerator:numerator}}
 	},function(ret,err){
 	 if (ret) {
 		 //api.alert({msg:JSON.stringify(ret)});
 		 var categories=[],harvestTotal=[]
 		 var date=ret.data,l=date.length
 		 for(var i=0;i<l;i++){
-			 categories.push(date[i].recordDate.substring(8,10))
+			 categories.push(date[i].recordDate)
 			 harvestTotal.push(date[i].harvestTotal)
 		 }
 		 $("#nianyue").html(date[0].recordDate.substring(0,4)+"年"+date[0].recordDate.substring(5,7)+"月-"+date[l-1].recordDate.substring(0,4)+"年"+date[l-1].recordDate.substring(5,7)+"月")
@@ -739,7 +746,9 @@ function caiLiang(){
 											fontSize: '0.26rem',
 											color:"#fff"
 									},
-
+									formatter: function () {
+									 return this.value.substring(8,10);
+							   }
 							}
 			 },
 			 yAxis: {
@@ -833,7 +842,9 @@ function caiLiang(){
 											fontSize: '0.26rem',
 											color:"#fff"
 									},
-
+									formatter: function () {
+									 return this.value.substring(8,10);
+							   }
 							}
 			 },
 			 yAxis: {
@@ -904,33 +915,90 @@ function jidi(){
 		},
 			url:pds.defaultUri + 'app/staff/farmland/get_farm_list',
 		},function(ret,err){
+			//api.alert({msg:JSON.stringify(ret)});
 			if (ret) {
 				var dt=ret.data,l=dt.length,land="";
 				if(!l){
 					return
 				}
 				for(var i=0; i<l; i++){
-					land+="<p id="+dt[i].id+">"+dt[i].farmName+"</p>"
+					land+="<option value="+dt[i].id+">"+dt[i].farmName+"</option>"
 				}
+				$("#shuru1").html(land)
+				land=null
 			} else {
 			 api.alert({msg:JSON.stringify(err)});
 		 }
 	 })
 }
-function nowHarvest(){
+function danwei(startDate,endDate,categoryId,farmId){
+	api.ajax({
+		headers : {
+				authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
+		},
+			url:pds.defaultUri + 'argi/app/harvestStat/units',
+			data:{value:{categoryId:categoryId,farmId:farmId}},
+			method:"get"
+		},function(ret,err){
+			//api.alert({msg:JSON.stringify(ret)});
+			if (ret) {
+				var dt=ret.data,l=dt.length,land="";
+				if(!l){
+					return
+				}
+				for(var i=0; i<l; i++){
+					land+="<option value="+dt[i].id+">"+dt[i].name+"</option>"
+				}
+				$("#shuru2").html(land)
+				land=null
+				caiLiang(startDate,endDate,farmId,categoryId,dt[0].id)
+				nowHarvest(categoryId,farmId,dt[0].id)
+			} else {
+			 api.alert({msg:JSON.stringify(err)});
+		 }
+	 })
+}
+function nowHarvest(categoryId,farmId,numerator){
 		api.ajax({
 			headers : {
 				authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
 		},
-		 url:pds.defaultUri + 'app/harvestStat/queryHarvestData',
-		 data:{values:{categoryId:"0",farmId:"1797",numerator:"斤"}}
+		 url:pds.defaultUri + 'argi/app/harvestStat/queryHarvestData',
+		 //data:{values:{categoryId:categoryId,farmId:farmId,numerator:numerator}}
 		},function(ret,err){
 		 if (ret) {
-			 api.alert({msg:JSON.stringify(ret)});
+			 //api.alert({msg:JSON.stringify(ret)});
+			 if((ret.data.total+"").length>16){
+				 ret.data.total=(ret.data.total+"").slice(0, -16)+"亿亿"
+			 }else if((ret.data.total+"").length>8&&(ret.data.total+"").length<=16){
+				 ret.data.total=(ret.data.total+"").slice(0, -8)+"."+(ret.data.total+"").slice(-8, -7)+"亿"
+			 }
+			//  else if((ret.data.total+"").length>4&&(ret.data.total+"").length<=8){
+			// 	 ret.data.total=(ret.data.total+"").slice(0, -4)+"万"
+			//  }
+			 if((ret.data.max+"").length>16){
+				 ret.data.max=(ret.data.max+"").slice(0, -16)+"亿亿"
+			 }else if((ret.data.max+"").length>8&&(ret.data.max+"").length<=16){
+				 ret.data.max=(ret.data.max+"").slice(0, -8)+"."+(ret.data.max+"").slice(-8, -7)+"亿"
+			 }
+			//  else if((ret.data.max+"").length>4&&(ret.data.max+"").length<=8){
+			// 	 ret.data.max=(ret.data.max+"").slice(0, -4)+"万"
+			//  }
+			 $("#today").html("当日最大采收量："+ret.data.today+$("#shuru2").find("option:selected").text())
+			 $("#todayTotal").html(ret.data.total+$("#shuru2").find("option:selected").text())
+			 $("#max").html(ret.data.max+$("#shuru2").find("option:selected").text())
 		 } else {
 			 api.alert({msg:JSON.stringify(err)});
 		 }
 	 })
+}
+function jidiChange(){
+	nowHarvest($("#catId").val(),$("#shuru1").val(),$("#shuru2").val())
+	caiLiang($("#startDate").val(),$("#endDate").val(),$("#shuru1").val(),$("#catId").val(),$("#shuru2").val())
+}
+function danweiChange(){
+	nowHarvest($("#catId").val(),$("#shuru1").val(),$("#shuru2").val())
+	caiLiang($("#startDate").val(),$("#endDate").val(),$("#shuru1").val(),$("#catId").val(),$("#shuru2").val())
 }
 </script>
 </body>
