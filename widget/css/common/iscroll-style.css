@@ -28,15 +28,15 @@ html{font-size:10px}
     -webkit-justify-content: center;
     justify-content: center;
 
-    -webkit-box-align: center; 
-    -webkit-align-items: center; 
+    -webkit-box-align: center;
+    -webkit-align-items: center;
     align-items: center;
 	color: #333;
 }
 .pull_icon{
 	width: 0.25rem;
 	height: 0.25rem;
-	background-image: url(../image/iscroll-pull.png);
+	background-image: url(../../image/iscroll-pull.png);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 100%;
@@ -57,7 +57,7 @@ html{font-size:10px}
 .loading{
 	width: 0.25rem;
 	height: 0.25rem;
-	background-image: url(../image/iscroll-loading.png);
+	background-image: url(../../image/iscroll-loading.png);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 100%;
