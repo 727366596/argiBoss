@@ -355,7 +355,7 @@
              },
              success:function(e){
                 //alert("success")
-                alert(JSON.stringify(e));
+                //alert(JSON.stringify(e));
                 var farm_name = []
                 var completeData = []
                 var confrimData = []
@@ -686,12 +686,11 @@
                     //  object.lineColor=col;
                     //  object.marker.fillColor=col;
                      col = null;
-
+                    
                      if (obj.hasOwnProperty(key)) {
                          for (var i = 0; i < obj[key].length; i++) {
                               var itemA = obj[key][i];
-                              var turn  = Number((itemA.time/3600).toFixed(2))
-                            //  turn= turn.toFixed(2)
+                              var turn  = Number((itemA.time/3600).toFixed(2));
                               object.data.push(turn);
                          }
                      }
