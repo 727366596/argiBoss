@@ -197,35 +197,12 @@ margin-right: 0.2rem;
   line-height: 0.6rem;
 }
 /*时间弹窗样式——————————————————————————————————————————————————————————-*/
-#timeContain{
-  padding-top: 0.25rem;
-  font-size: 0.3rem;
-  color:#666666;
-  text-align: center;
-  display: flex;
-}
-#timeContain{
 
-}
-#timeContain li{
-  text-align: center;
-
-}
-#timeContain li input{
-  float: left;
-}
 span{
   display: inline-block;
   position: relative;
 }
-/*input#time{
-  height: 0.7rem !important;
-  padding-left: 0.4rem;
-  font-size: 0.26rem;
-  color: #D1CDCD;
-  border-radius: 0.05rem !important;
-  border: 1px solid #B1BBB0;
-}*/
+
 .section-title{
     padding-top: 0.1rem;
     padding-bottom: 0.1rem;
@@ -310,9 +287,6 @@ i{
 #section2,#section3{
   display: none;
   position: absolute;
-  /*left:0;
-  top:1rem;
-  width: 80%;*/
   z-index: 22;
   font-size: 0.26rem;
   background-color: rgba(0,0,0,0.4);
@@ -326,23 +300,52 @@ i{
 #section2.active{
   display: block;
 }
-#section2 #timeContain{
+#timeContain{
+  width: 100%;
+  /*border: solid 3px blue;*/
+  /*display: -webkit-box;
+  display: -webkit-flex;
+  display:flex;*/
 
+  /*-webkit-box-orient: horizontal;
+  -webkit-flex-flow: row;
+  flex-flow: row;
+
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-around;
+  justify-content: space-around;
+
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  text-align: center;*/
 }
 #section2 #timeContain li{
-  float: left;
-  width: 40%;
+  /*flex:0.3;
   height: 0.7rem;
   line-height: 0.7rem;
   margin-left: 0.32rem;
   margin-right: 0.32rem;
   margin-bottom: 0.92rem;
+  background-color: red;*/
+  /*border: solid 1px red;*/
+  width: 40%;
+  /*margin-right: 0.32rem;*/
+  /*flex:1;*/
+}
+#section2 #timeContain li:nth-child(1){
+  float: left;
+  margin-left: 0.32rem;
+}
+#section2 #timeContain li:nth-child(2){
+  float: right;
+  margin-right: 0.32rem;
 }
 #section2 #timeContain li input{
   font-size: 0.28rem;
   color:#666666;
-  /*text-align: center;*/
   border-radius: 0px;
+
 }
 #section2 #timeContain li i{
   width: 0.34rem;
@@ -354,8 +357,8 @@ i{
   right:0.2rem;
   top:0.2rem;
 }
+
 #section2 .section-title,#section2 #timeContain{
-  display: block;
   background-color: #fff;
 }
 #section3{
