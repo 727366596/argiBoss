@@ -190,11 +190,7 @@
               });
 
           initIn();
-          //getOrder();
 
-          //getWorkOrder();
-
-          getlongNess();
 };
 
       function timeStyle(){
@@ -245,6 +241,7 @@
         }
         getWorkOrder(startDate,endDate,iDstring);
         getWorkTime(startDate,endDate,iDstring,flag);
+        getlongNess(startDate,endDate,iDstring,flag);
       }
 
       // 获取基地列表
@@ -276,6 +273,7 @@
                 var farmids = farmIDdata.join(',');
                 getWorkOrder(startDate,endDate,farmids);
                 getWorkTime(startDate,endDate,farmids,flag);
+                getlongNess(startDate,endDate,farmids,flag);
       			}else {
               //api.alert({msg:JSON.stringify(err)});
             };
@@ -354,8 +352,8 @@
                  farmIds:farmIds
              },
              success:function(e){
-                //alert("success")
-                //alert(JSON.stringify(e));
+                //alert("success1")
+                // alert(JSON.stringify(e));
                 var farm_name = []
                 var completeData = []
                 var confrimData = []
@@ -436,7 +434,7 @@
                           splitLine: {
                               show: false
                           },
-                          minInterval : 100
+                          minInterval : 20
                       },
                       yAxis: [
                               {
@@ -666,8 +664,8 @@
                   timeInterval:year
               },
               success:function(e){
-                alert("success")
-                alert(JSON.stringify(e));
+              //  alert("success2")
+                //alert(JSON.stringify(e));
                  var obj = e.data;
                  var resultTime=[];
                  var series=[];
@@ -686,7 +684,7 @@
                     //  object.lineColor=col;
                     //  object.marker.fillColor=col;
                      col = null;
-                    
+
                      if (obj.hasOwnProperty(key)) {
                          for (var i = 0; i < obj[key].length; i++) {
                               var itemA = obj[key][i];
@@ -780,113 +778,359 @@
 
 
          }
-          function getlongNess(){
-            var chart = Highcharts.chart('container3', {
-                 credits: {
-                      enabled: false
-                 },
-                 chart: {
-                     backgroundColor:"#e6f4f7",
-                 },
-                 title: {
-                     text: ''
-                 },
-                 xAxis: {
-                     title: {
-                         text: ''
-                     },
-                     color:'#fff',
-                     lineColor:'#fff',
-           					tickColor:'#fff',
-         						tickmarkPlacement: 'on',
-         						tickPosition: 'inside',
-         						categories: ['1', '2', '3', '4', '5', '6',
-         												 '7', '8', '9', '10', '11', '12'],
-         					 labels: {
-                            rotation: 0,
-                            style: {
-                                fontSize: '13px'
-                            },
-         									 y:-10
-                        }
-                 },
-                 yAxis: {
-         						min: 0,
-         						gridLineWidth:0,
-         						title: {
-         								text: ''
-         						},
-         						labels: {
-                         enabled: false
+         function getlongNess(startDate,endDate,farmIds,flag){
+           //alert(1)
+           //alert(JSON.stringify(farmIds))
+           var timeValue = $('#time').val();
+           $('.bottom_id').html(timeValue);
+           var paramObj ={};
+           var yearData =[];
+           var Start = parseInt(startDate.split('-')[0]);
+           var StartMonth = parseInt(startDate.split('-')[1]);
+           var StartDay = parseInt(startDate.split('-')[2]);
+
+           var end = parseInt(endDate.split('-')[0]);
+           var endMonth = parseInt(endDate.split('-')[1]);
+           var endDay = parseInt(endDate.split('-')[2]);
+           if(!result){
+             flag = 2
+             var gap =  endDate.split('-')[0] - startDate.split('-')[0];
+             for (var i = Start; i <= end; i++) {
+              yearData.push(i);
+             }
+            //  yearData=yearData.join(',')
+           }
+           if(result){
+             if(result <= 30){
+                 flag = 0;
+                //  如果是同一年
+                 if(Start==end){
+                  //  同一年 同一个月份
+                   if(StartMonth==endMonth){
+                     for (var i = StartDay; i <= endDay; i++) {
+                      yearData.push(i);
                      }
-                 },
-                 tooltip: {
-                     crosshairs: true,
-         						 crosshairs: [{            // 设置准星线样式
-         							    width: 20,
-         							    color: "rgba(255,255,255,0.4)",
-         									zIndex: 100
-         						}],
-                     shared: true
-                 },
-                 plotOptions: {
-                     spline: {
-                         marker: {
-                             radius: 4,
-                             lineColor: '#666666',
-                             lineWidth: 1
-                         },
-         								events: {
-         									 legendItemClick: function(e) {
-         											 return false; // 直接 return false 即可禁用图例点击事件
-         									 }
-         							 }
-                     },
-         						area: {
-         							 stacking: 'normal',
-         							 lineColor: '#666666',
-         							 lineWidth: 1,
-         							 marker: {
-         									 lineWidth: 1,
-         									 lineColor: ''
-         							 }
-         					 }
+                   }else{
+                    //  同一年 不同月份
+                    //如果日期相同
+                    if(StartDay==endDay){
+                      yearData.push(StartMonth)
+                      yearData.push(endMonth)
+                      flag = 1;
+                    }else{
+                      //如果日期不同
+                      for (var i = StartDay; i <= 31; i++) {
+                       yearData.push(i);
+                      }
+                      for (var i = 1; i <= endDay; i++) {
+                       yearData.push(i);
+                      }
+                    }
 
-                 },
-                 legend: {
-                     layout: 'vertical',
-                     align: 'center',
-                     verticalAlign: 'bottom'
-                 },
-                 series: [{
-                     name: '一号基地',
-                     marker: {
-                         symbol: 'circle',
-         								fillColor: '#72dbf3'
-                     },
-         						showInLegend: true,//不显示图例
+                   }
+                 }else{
+                  //  不同年(一定是不同月份)
+                   //如果具体的日子是相同
+                    if(StartDay==endDay){
+                       yearData.push(StartMonth)
+                       yearData.push(endMonth)
+                       flag = 1;
+                    }else{
+                      for (var i = StartDay; i <= 30; i++) {
+                       yearData.push(i);
+                      }
+                      for (var i = 1; i <= endDay; i++) {
+                       yearData.push(i);
+                      }
+                      alert(JSON.stringify(yearData));
+                    }
+                 }
 
-                     data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, {
-                         y: 26.5
-                     }, 23.3, 18.3, 13.9, 9.6],
-         						color:"#72dbf3",
-         						lineColor: '#72dbf3'
-                 }, {
-                     name: '二号基地',
-                     marker: {
-                         symbol: 'circle',
-         								fillColor: '#68bdf3'
-                     },
-         						showInLegend: true,
-                     data: [{
-                         y: 3.9
-                     }, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8],
-         						color:"#68bdf3",
-         						lineColor: '#68bdf3'
-                 }]
-               });
+             }else if(result <365 && result>30){
+               flag = 1;
+               var gap;
+              //  如果是同一年
+               if(Start == end){
+                  gap =  endMonth - StartMonth;
+                  var yearData = [];
+                  for (var i = StartMonth; i <= endMonth; i++) {
+                     yearData.push(i)
+                  }
+                //  alert(JSON.stringify(yearData));
+               }else{
+                //  如果是不同年
+                // 同一个月份(传年)
+                if(endMonth==StartMonth){
+                   flag =2
 
-          }
+                }else{
+                  // 不同月份
+                  for (var i = StartMonth; i <= 12; i++) {
+                     yearData.push(i)
+                  }
+                  for (var i = 1; i <= endMonth; i++) {
+                     yearData.push(i)
+                  }
+                }
+
+               }
+             }else{
+               flag = 2;
+               var gap =  endDate.split('-')[0] - startDate.split('-')[0];
+               //alert(gap)
+               var yearData = [];
+               for (var i = Start; i <= end; i++) {
+                yearData.push(i)
+               }
+
+             }
+           }
+           var year=yearData.join(",")
+          //alert(JSON.stringify(yearData))
+           paramObj.startDate = startDate;
+           paramObj.endDate = endDate;
+           paramObj.farmIds = farmIds;
+           paramObj.farmIds = farmIds;
+           paramObj.flag = flag;
+           paramObj.year = year;
+          // alert(JSON.stringify(paramObj))
+           pds.ajaxSubmit({
+              url:"app/plantStat/workDistanceAnalysis",
+              type : "GET",
+              data:{
+                  startDate:startDate,
+                  endDate:endDate,
+                  farmIds:farmIds,
+                  flag:flag,
+                  timeInterval:year
+              },
+              success:function(e){
+                //alert("success3")
+                //alert(JSON.stringify(e));
+                 var obj = e.data;
+                 var resultTime=[];
+                 var series=[];
+                 for (var key in obj) {
+                     var object={};
+                     object.data=[];
+                     object.name=key;
+                     object.marker={};
+                     object.legend={};
+                     object.marker.symbol='circle';
+                     object.showInLegend=false;
+                     object.legend.layout= 'vertical';
+                     object.legend.align= 'center';
+                     object.legend.verticalAlign= 'bottom';
+                     object.showInLegend= true;
+
+                     var c=['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'];
+                     var col="#"
+                  	 for(var j=0;j<6;j++){
+                  		 col+=c[parseInt(Math.random()*16)]
+                  	 }
+                    //  object.lineColor=col;
+                    //  object.marker.fillColor=col;
+                     col = null;
+                     if (obj.hasOwnProperty(key)) {
+                         for (var i = 0; i < obj[key].length; i++) {
+                              var itemA = obj[key][i];
+                              object.data.push(Number((itemA.distance/1000).toFixed(2)));
+                         }
+                     }
+                     series.push(object);
+                     //alert(JSON.stringify(series));
+                     object=null
+                   }
+                 var chart = Highcharts.chart('container3', {
+                      credits: {
+                           enabled: false
+                      },
+                      chart: {
+                          backgroundColor:"#e6f4f7",
+                      },
+                      title: {
+                          text: ''
+                      },
+                      xAxis: {
+                          title: {
+                              text: ''
+                          },
+                          color:'#fff',
+                          lineColor:'#fff',
+                					tickColor:'#fff',
+              						tickmarkPlacement: 'on',
+              						tickPosition: 'inside',
+              						categories:yearData,
+              					  labels: {
+                                 rotation: 0,
+                                 style: {
+                                     fontSize: '13px'
+                                 },
+              									 y:-10
+                             }
+                      },
+                      yAxis: {
+              						min: 0,
+              						gridLineWidth:0,
+              						title: {
+              								text: ''
+              						},
+              						labels: {
+                              enabled: false
+                          }
+                      },
+                      tooltip: {
+                          crosshairs: true,
+              						crosshairs: [{            // 设置准星线样式
+              							    width: 20,
+              							    color: "rgba(255,255,255,0.4)",
+              									zIndex: 100
+              						}],
+                          shared: true
+                      },
+                      series:series
+                      //  [{
+                      //     name: '一号基地',
+                      //     marker: {
+                      //         symbol: 'circle',
+              				// 				fillColor: '#72dbf3'
+                      //     },
+              				// 		showInLegend: false,//不显示图例
+                      //     data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, {
+                      //         y: 26.5
+                      //     }, 23.3, 18.3, 13.9, 9.6],
+              				// 		color:"#72dbf3",
+              				// 		lineColor: '#72dbf3'
+                      // }, {
+                      //     name: '二号基地',
+                      //     marker: {
+                      //         symbol: 'circle',
+              				// 				fillColor: '#68bdf3'
+                      //     },
+              				// 		showInLegend: false,
+                      //     data: [{
+                      //         y: 3.9
+                      //     }, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8],
+              				// 		color:"#68bdf3",
+              				// 		lineColor: '#68bdf3'
+                      // }]
+                    });
+              },
+              error:function(e){
+                 api.alert({msg:"服务器异常，请联系管理员!"});
+              }
+           });
+
+
+         }
+          // function getlongNess(){
+          //   var chart = Highcharts.chart('container3', {
+          //        credits: {
+          //             enabled: false
+          //        },
+          //        chart: {
+          //            backgroundColor:"#e6f4f7",
+          //        },
+          //        title: {
+          //            text: ''
+          //        },
+          //        xAxis: {
+          //            title: {
+          //                text: ''
+          //            },
+          //            color:'#fff',
+          //            lineColor:'#fff',
+          //  					tickColor:'#fff',
+         // 						tickmarkPlacement: 'on',
+         // 						tickPosition: 'inside',
+         // 						categories: ['1', '2', '3', '4', '5', '6',
+         // 												 '7', '8', '9', '10', '11', '12'],
+         // 					 labels: {
+          //                   rotation: 0,
+          //                   style: {
+          //                       fontSize: '13px'
+          //                   },
+         // 									 y:-10
+          //               }
+          //        },
+          //        yAxis: {
+         // 						min: 0,
+         // 						gridLineWidth:0,
+         // 						title: {
+         // 								text: ''
+         // 						},
+         // 						labels: {
+          //                enabled: false
+          //            }
+          //        },
+          //        tooltip: {
+          //            crosshairs: true,
+         // 						 crosshairs: [{            // 设置准星线样式
+         // 							    width: 20,
+         // 							    color: "rgba(255,255,255,0.4)",
+         // 									zIndex: 100
+         // 						}],
+          //            shared: true
+          //        },
+          //        plotOptions: {
+          //            spline: {
+          //                marker: {
+          //                    radius: 4,
+          //                    lineColor: '#666666',
+          //                    lineWidth: 1
+          //                },
+         // 								events: {
+         // 									 legendItemClick: function(e) {
+         // 											 return false; // 直接 return false 即可禁用图例点击事件
+         // 									 }
+         // 							 }
+          //            },
+         // 						area: {
+         // 							 stacking: 'normal',
+         // 							 lineColor: '#666666',
+         // 							 lineWidth: 1,
+         // 							 marker: {
+         // 									 lineWidth: 1,
+         // 									 lineColor: ''
+         // 							 }
+         // 					 }
+          //
+          //        },
+          //        legend: {
+          //            layout: 'vertical',
+          //            align: 'center',
+          //            verticalAlign: 'bottom'
+          	 //showInLegend: true,//不显示图例
+          //        },
+          //        series: [{
+          //            name: '一号基地',
+          //            marker: {
+          //                symbol: 'circle',
+         // 								fillColor: '#72dbf3'
+          //            },
+         //
+          //
+          //            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, {
+          //                y: 26.5
+          //            }, 23.3, 18.3, 13.9, 9.6],
+         // 						color:"#72dbf3",
+         // 						lineColor: '#72dbf3'
+          //        }, {
+          //            name: '二号基地',
+          //            marker: {
+          //                symbol: 'circle',
+         // 								fillColor: '#68bdf3'
+          //            },
+         // 						showInLegend: true,
+          //            data: [{
+          //                y: 3.9
+          //            }, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8],
+         // 						color:"#68bdf3",
+         // 						lineColor: '#68bdf3'
+          //        }]
+          //      });
+          //
+          // }
 
           /*
          * 获得时间差,时间格式为 年-月-日 小时:分钟:秒 或者 年/月/日 小时：分钟：秒
