@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <title>效率分析图</title>
+  		<link rel="stylesheet" href="../../../css/common/public.css" />
+  		<link rel="stylesheet" href="../../../css/common/header.css" />
+  		<link rel="stylesheet" href="../../../css/efficiency/efficiency_win.css" />
+      <script type="text/javascript" src="../../../script/common/rem.js"></script>
+      <link rel="stylesheet" type="text/css" href="../../../css/common/mui.min.css"/>
+  		<link rel="stylesheet" type="text/css" href="../../../css/common/mui.picker.min.css"/>
+  </head>
+  <body>
+
+    <article>
+        <section id="section1">
+            <ul>
+              <li>
+                <input class="dis_ipt" id="time" type="text" value="2017年1月-2017年10月" readonly onclick="timeStyle()">
+              </li>
+              <li>
+                <input class="dis_ipt" id="farm" type="text" value="一号基地一号基地一号基地" readonly onclick="farmStyle()">
+              </li>
+            </ul>
+        </section>
+        <!-- 时间弹窗 -->
+        <section id="section2">
+                <ul id="timeContain" class="clearfix">
+                  <li>
+                    <span id="time1">
+                      <input id="date1" type="text" placeholder="点击我选择时间" readonly>
+                      <i></i>
+                    </span>
+                  </li>
+                  <li>
+                    <span id="time2">
+                      <input id="date2" type="text" placeholder="点击我选择时间" readonly>
+                      <i></i>
+                    </span>
+                  </li>
+                </ul>
+                <div class="btns">
+                  <div class="time_btn" onclick="cropGrowth()">确定</div>
+                  <div class="time_btn" onclick="closeSection()">取消</div>
+                </div>
+        </section>
+        <!-- 基地弹窗 -->
+        <section id="section3">
+                <nav class="section-title title">
+                   <i></i><span>提示:最多可选择5个基地对比分析</span>
+                </nav>
+                <section id="section_special" class='clearfix'>
+
+                </section>
+                <div class="btns_farm" style="display:flex;">
+                  <div class="farm_btn" onclick="sendFarm()">确定</div>
+                  <div class="farm_btn" onclick="closeFarm()">取消</div>
+                </div>
+      	</section>
+
+        <div id="other">
+              <section>
+                   <div id="plan_content">
+                        <div class="plan_title" class="clearfix">
+                            <i></i><span>工单完成情况分析</span><i></i>
+                        </div>
+                   </div>
+                   <div class="showdow_box">
+                      <div id="container1"></div>
+                  </div>
+             </section>
+             <section>
+                 <div id="plan_content">
+                      <div class="plan_title" class="clearfix">
+                          <i></i><span>基地人员在岗时长</span><i></i>
+                      </div>
+                 </div>
+                 <div class="staffTime">
+                     <div id="container2"></div>
+                 </div>
+                   <div class="bottom_id"></div>
+             </section>
+           <section>
+                 <div id="plan_content">
+                      <div class="plan_title" class="clearfix">
+                          <i></i><span>基地人员公里数</span><i></i>
+                      </div>
+                 </div>
+                 <div class="staffTime">
+                   <div id="container3"></div>
+                 </div>
+                  <div class="bottom_id"></div>
+           </section>
+        </div>
+   </acticle>
+  </body>
+  <script type="text/javascript" src="../../../script/common/api.js"></script>
+  <script type="text/javascript" src="../../../script/common/jquery.min.js"></script>
+  <script type="text/javascript" src="../../../script/common/pds.ajax.js"></script>
+  <script type="text/javascript" src="../../../script/mui/mui.min.js"></script>
+  <script type="text/javascript" src="../../../script/mui/mui.picker.min.js"></script>
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script src="http://code.highcharts.com/highcharts-3d.js"></script>
+  <script src="https://cdn.bootcss.com/echarts/3.8.4/echarts.common.min.js"></script>
+  <script src="https://cdn.bootcss.com/echarts/3.8.4/echarts.js"></script>
+  <script src="https://cdn.bootcss.com/echarts/3.8.4/extension/dataTool.js"></script>
+  <script type="text/javascript">
+      apiready = function(){
+
+          show();
+          // 调用事件插件
+              $("#time1").bind("touchstart",function(){
+                  $("#time1").unbind("touchstart")
+                  mui.init()
+                  var texts = $( '#date1' )
+                  texts.on( 'tap', function () {
+                      api.setFrameAttr( {
+                       name: 'record_frm',//固定日历控件
+                       bounces: false
+                      } )
+
+                      var dtpicker = new mui.DtPicker( {
+                       type: 'date', //设置日历初始视图模式
+                       labels: [ '年', '月', '日' ], //设置默认标签区域提示语
+                      } )
+                      dtpicker.show(function(rs) {
+                       //console.log( JSON.stringify( rs ) );
+                       var dateValue = JSON.parse(JSON.stringify( rs ));
+
+                       //console.log(dateValue.value);
+                       var beginDate=rs.y.text + '-' + rs.m.text + '-' + rs.d.text;
+                       var endDate=$("#date2").val();
+                       var d1 = new Date(beginDate.replace(/\-/g, "\/"));
+                       var d2 = new Date(endDate.replace(/\-/g, "\/"));
+
+                       if(beginDate!=""&&endDate!=""&&d1 >d2)
+                       {
+                        alert("开始时间不能大于结束时间！");
+                        return false;
+                       }
+                       texts.val(rs.y.text + '-' + rs.m.text + '-' + rs.d.text)
+
+                       dtpicker.dispose()
+                       api.setFrameAttr( {
+                         name: 'record_frm',
+                         bounces: true
+                       } )
+                      } )
+                } )
+              });
+                $("#time2").on("touchstart",function(){
+                  $("#time2").unbind("touchstart");
+                  mui.init()
+                  var texts = $( '#date2' )
+                  texts.on( 'tap', function () {
+                      api.setFrameAttr( {
+                       name: 'record_frm',//固定日历控件
+                       bounces: false
+                      } )
+
+                      var dtpicker = new mui.DtPicker( {
+                       type: 'date', //设置日历初始视图模式
+                       labels: [ '年', '月', '日' ], //设置默认标签区域提示语
+                      } )
+                      dtpicker.show( function(rs){
+                       //console.log( JSON.stringify( rs ) );
+                       var dateValue = JSON.parse(JSON.stringify( rs ));
+
+                       //console.log(dateValue.value);
+                       var beginDate=$("#date1").val();
+                       var endDate=rs.y.text + '-' + rs.m.text + '-' + rs.d.text;
+                       var d1 = new Date(beginDate.replace(/\-/g, "\/"));
+                       var d2 = new Date(endDate.replace(/\-/g, "\/"));
+
+                      if(beginDate!=""&&endDate!=""&&d1 >d2)
+                       {
+                        alert("开始时间不能大于结束时间！");
+                        return false;
+                       }
+                       texts.val(rs.y.text + '-' + rs.m.text + '-' + rs.d.text)
+
+                       dtpicker.dispose()
+                       api.setFrameAttr( {
+                         name: 'record_frm',
+                         bounces: true
+                       })
+                      })
+                })
+              });
+
+          initIn();
+          //getOrder();
+
+          //getWorkOrder();
+
+          getlongNess();
+};
+
+      function timeStyle(){
+        $('#section2').toggleClass('active');
+        if($('#section3').hasClass("active")){
+          $('#section3').removeClass('active')
+        }
+      }
+      function farmStyle(){
+        $('#section3').toggleClass('active');
+        if($('#section2').hasClass("active")){
+          $('#section2').removeClass('active')
+        }
+      }
+
+      function cropGrowth() {
+      	if(!$("#date1").val()){
+      		api.alert({msg:"请点击选择开始时间"});
+      		return
+      	}
+      	if(!$("#date2").val()){
+      		api.alert({msg:"请点击选择结束时间"});
+      		return
+      	}
+      	$api.setStorage('startDates',$("#date1").val())
+      	$api.setStorage('endDates',$("#date2").val())
+        initIn(1)
+        $('#section2').removeClass('active')
+      }
+      function closeSection(){
+        $('#section2').removeClass('active')
+      }
+      function closeFarm(){
+        $('#section3').removeClass('active')
+      }
+      // 点击基地弹窗的确定键
+      function sendFarm(){
+         // alert(JSON.stringify(idArray))
+         //alert(JSON.stringify(nameArray))
+         var string = nameArray.join(",");
+         var iDstring = idArray.join(",");
+         $('#farm').val(string);
+         $('#section3').removeClass('active');
+        //  发请求
+        if(!iDstring){
+          alert('请先选择基地');
+          return;
+        }
+        getWorkOrder(startDate,endDate,iDstring);
+        getWorkTime(startDate,endDate,iDstring,flag);
+      }
+
+      // 获取基地列表
+     var fiveArray = [];
+      function show(){
+        api.ajax({
+          headers : {
+            authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
+        },
+          url:pds.defaultUri + 'app/staff/farmland/get_farm_list',
+        },function(ret,err){
+          if (ret) {
+      			  //  api.alert({msg:JSON.stringify(ret)});
+                fiveArray = ret.data.splice(0,5);
+                //alert(JSON.stringify(idArray));
+                var str=""
+                for(var i=0;i<ret.data.length;i++){
+                  str+= "<p id=id"+ret.data[i].id+" class=\"section-p\" onclick='changeColor(this)'>"+ret.data[i].farmName+"</p>"
+                }
+                $('#section_special').html(str);
+                // 一进来发ajax,默认时间和五个基地
+                startDate ='2016-01-01'
+                endDate ='2018-01-01'
+                var farmIDdata = [];
+                for (var i = 0; i < fiveArray.length; i++) {
+                   farmIDdata.push(fiveArray[i].id)
+                }
+                //alert(JSON.stringify(farmIDdata))
+                var farmids = farmIDdata.join(',');
+                getWorkOrder(startDate,endDate,farmids);
+                getWorkTime(startDate,endDate,farmids,flag);
+      			}else {
+              //api.alert({msg:JSON.stringify(err)});
+            };
+          });
+      }
+
+        var dian=0;
+        var idArray = [];
+        var nameArray = [];
+        var result='';
+        function changeColor(dom){
+          if($(dom).hasClass("you")){
+            $(dom).removeClass("you");
+            dom.style.backgroundColor="#fff";
+            var biaoshi = idArray.indexOf(id);
+            var biaoS = nameArray.indexOf(farmName);
+            if(biaoshi){
+               idArray.splice(biaoshi,1);
+            }
+            if(biaoS){
+               nameArray.splice(biaoS,1);
+            }
+            $(dom).find("span").remove();
+            //alert(JSON.stringify(nameArray));
+            dian--
+          }else{
+            if(dian>4){
+              return;
+            }
+            var id=dom.id.substring(2);
+            var farmName = $(dom).html();
+            //alert(farmName)
+            var p=document.getElementById("section_special").getElementsByTagName("p");
+            $(dom).addClass("you");
+            $(dom).html($(dom).html()+"<span class='ok'><span><span class='ic'></span>")
+            idArray.push(id);
+            nameArray.push(farmName);
+            //alert(JSON.stringify(nameArray));
+            dian++
+            dom.style.backgroundColor="#E4FFDD"
+          }
+        }
+          var startDate;
+          var endDate;
+          function initIn(n){
+        		back=n;
+        		if(n){
+        			startDate=$api.getStorage('startDates');
+        			endDate=$api.getStorage('endDates');
+        		//	console.log(startDate);
+        		//	console.log(endDate);
+        		  result = GetDateDiff(startDate, endDate, "day");
+        		//	console.log(result);
+        			$("#time").val(startDate.substring(0,4)+"."+startDate.substring(5,7)+"."+startDate.substring(8,10)+"-"+endDate.substring(0,4)+"."+endDate.substring(5,7)+"."+endDate.substring(8,10))
+        		}else{
+        			var d = new Date(), y = d.getFullYear(), m = d.getMonth() + 1, r = d.getDate(),s=2016;
+        			m < 10 ? m = "0" + m : m;
+        			r < 10 ? r = "0" + r : r;
+        			endDate=y + "-" + m + "-" + r;
+        			startDate=y + "-0" + 1 + "-0" + 1;
+        			$("#time").val(s+".0"+1+".0"+1+"-"+y+"."+m+"."+r)
+        		}
+        	}
+// 工单展示
+         function getWorkOrder(startDate,endDate,farmIds){
+          var paramObj ={};
+          paramObj.startDate = startDate;
+          paramObj.endDate = endDate;
+          paramObj.farmIds = farmIds;
+          pds.ajaxSubmit({
+             url:"app/plantStat/workOrderAnalysis",
+             type : "GET",
+             data:{
+                 startDate:startDate,
+                 endDate:endDate,
+                 farmIds:farmIds
+             },
+             success:function(e){
+                //alert("success")
+                alert(JSON.stringify(e));
+                var farm_name = []
+                var completeData = []
+                var confrimData = []
+                if(e.data!=[] && e.data != null && e.data != undefined){
+                  for (var i = 0; i <e.data.length; i++) {
+                    var item = e.data[i];
+                    farm_name.push(item.farmName);
+                    if(item.completeCount==null){
+                      completeData.push(0)
+                    }else{
+                      completeData.push(item.completeCount)
+                    }
+
+                    if(item.confrimCount==null){
+                      confrimData.push(0)
+                    }else{
+                      confrimData.push(item.confrimCount);
+                    }
+
+                  }
+                  // alert(JSON.stringify(farm_name))
+                  // alert(JSON.stringify(completeData))
+                  // alert(JSON.stringify(confrimData))
+                  var sendArray =[]
+                  for (var i = 0; i < completeData.length; i++) {
+                      var tempA = completeData[i]
+                      for (var i = 0; i < confrimData.length; i++) {
+                            var tempB = confrimData[i]
+                            var resultNum = tempA + tempB
+                            sendArray.push(resultNum);
+                      }
+                  }
+                  //alert(JSON.stringify(sendArray))
+
+                }
+                var option1 = {
+                      backgroundColor: '#ffffff',
+                      legend: {
+                          bottom: 0,
+                          textStyle:{
+                              color:'#666666',
+                          },
+                          data:[{name:'完成工单量',backgroundColor:'red'},
+                                {name:'派发工单量',backgroundColor:'#B5C334'}
+                          ],
+                      },
+                      grid: {
+                          left: '3%',
+                          right: '4%',
+                          bottom: '10%',
+                          containLabel: true
+                      },
+                      tooltip: {
+                           show:"false",
+                           trigger: 'axis',
+                           zIndex:"100",
+                           axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                               type: 'shadow',
+                               shadowStyle : {                       // 阴影指示器样式设置
+                                width: 'auto',                   // 阴影大小
+                                }// 默认为直线，可选为：'line' | 'shadow'
+                           }
+                       },
+                      xAxis:  {
+                          type: 'value',
+                          axisTick: {
+                              show: false
+                          },
+                          axisLine: {
+                            lineStyle: {
+                                color: '#c8cbc8',
+                                type:'dashed'
+                            }
+                          },
+                          axisLabel :{
+                            color: "#666666"
+                          },
+                          splitLine: {
+                              show: false
+                          },
+                          minInterval : 100
+                      },
+                      yAxis: [
+                              {
+                                  type: 'category',
+                                  axisTick : {
+                                    show: false
+                                  },
+                                  axisLine: {
+                                    lineStyle: {
+                                        color: '#c8cbc8',
+                                        type:'dashed'
+                                    }
+                                  },
+                                  axisLabel :{
+                                       inside:true,
+                                       verticalAlign:'bottom',
+                                       align:'top',
+                                       color: "#666666",
+                                       padding :[0,0,16,0]
+                                 },
+                                 tooltip: {
+                                      show:"false",
+                                      trigger: 'axis',
+                                      axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                          type: 'shadow',
+                                          shadowStyle : {                       // 阴影指示器样式设置
+                                           width: 'auto',                   // 阴影大小
+                                           }// 默认为直线，可选为：'line' | 'shadow'
+                                      }
+                                  },
+                                  data: farm_name
+                                },
+                               {
+                                  type: 'category',
+                                  axisTick : {
+                                    show: false
+                                  },
+                                  axisLine: {
+                                    show: false
+                                  },
+                                  axisLabel :{
+                                    show: false
+                                 },
+                                  data:  farm_name
+                              },
+
+                      ],
+                      series: [
+                          {
+                              name: '派发工单量',
+                              type: 'bar',
+                              yAxisIndex:1,
+                              itemStyle:{
+                                  normal: {
+                                      show: true,
+                                      color: function (params){
+                                          var colorList = ['#d6d3d3','#d6d3d3','#d6d3d3','#d6d3d3','#d6d3d3'];
+                                          return colorList[params.dataIndex];
+                                      },
+                                      barBorderRadius:50,
+                                      borderWidth:0,
+                                      borderColor:'#333',
+                                  }
+                              },
+                              barGap:'0%',
+                              barCategoryGap:'70%',
+                              data:sendArray
+                          },
+                          {
+                              name: '完成工单量',
+                              type: 'bar',
+                              itemStyle:{
+                                  normal: {
+                                      show: true,
+                                      color: function (params){
+                                          var colorList = ['#73c6e4','#8dbdf0','#eeb954','#98d73b','#6ec0de'];
+                                          return colorList[params.dataIndex];
+                                      },
+                                      barBorderRadius:50,
+                                      borderWidth:0,
+                                      borderColor:'#333',
+                                  }
+                              },
+                              barGap:'0%',
+                              barCategoryGap:'70%',
+                              data: completeData
+                          }
+
+                      ]
+                  };
+
+                 echarts.init(document.getElementById('container1')).setOption(option1);
+
+             },
+             error:function(e){
+                api.alert({msg:"服务器异常，请联系管理员!"});
+             }
+          });
+
+
+        }
+
+
+         var flag =2;
+         function getWorkTime(startDate,endDate,farmIds,flag){
+           var timeValue = $('#time').val();
+           $('.bottom_id').html(timeValue);
+           var paramObj ={};
+           var yearData =[];
+           var Start = parseInt(startDate.split('-')[0]);
+           var StartMonth = parseInt(startDate.split('-')[1]);
+           var StartDay = parseInt(startDate.split('-')[2]);
+
+           var end = parseInt(endDate.split('-')[0]);
+           var endMonth = parseInt(endDate.split('-')[1]);
+           var endDay = parseInt(endDate.split('-')[2]);
+           if(!result){
+             flag = 2
+             var gap =  endDate.split('-')[0] - startDate.split('-')[0];
+             for (var i = Start; i <= end; i++) {
+              yearData.push(i);
+             }
+            //  yearData=yearData.join(',')
+           }
+           if(result){
+             if(result <= 30){
+                 flag = 0;
+                //  如果是同一年
+                 if(Start==end){
+                  //  同一年 同一个月份
+                   if(StartMonth==endMonth){
+                     for (var i = StartDay; i <= endDay; i++) {
+                      yearData.push(i);
+                     }
+                   }else{
+                    //  同一年 不同月份
+                    //如果日期相同
+                    if(StartDay==endDay){
+                      yearData.push(StartMonth)
+                      yearData.push(endMonth)
+                      flag = 1;
+                    }else{
+                      //如果日期不同
+                      for (var i = StartDay; i <= 31; i++) {
+                       yearData.push(i);
+                      }
+                      for (var i = 1; i <= endDay; i++) {
+                       yearData.push(i);
+                      }
+                    }
+
+                   }
+                 }else{
+                  //  不同年(一定是不同月份)
+                   //如果具体的日子是相同
+                    if(StartDay==endDay){
+                       yearData.push(StartMonth)
+                       yearData.push(endMonth)
+                       flag = 1;
+                    }else{
+                      for (var i = StartDay; i <= 30; i++) {
+                       yearData.push(i);
+                      }
+                      for (var i = 1; i <= endDay; i++) {
+                       yearData.push(i);
+                      }
+                      alert(JSON.stringify(yearData));
+                    }
+                 }
+
+             }else if(result <365 && result>30){
+               flag = 1;
+               var gap;
+              //  如果是同一年
+               if(Start == end){
+                  gap =  endMonth - StartMonth;
+                  var yearData = [];
+                  for (var i = StartMonth; i <= endMonth; i++) {
+                     yearData.push(i)
+                  }
+                //  alert(JSON.stringify(yearData));
+               }else{
+                //  如果是不同年
+                // 同一个月份(传年)
+                if(endMonth==StartMonth){
+                   flag =2
+
+                }else{
+                  // 不同月份
+                  for (var i = StartMonth; i <= 12; i++) {
+                     yearData.push(i)
+                  }
+                  for (var i = 1; i <= endMonth; i++) {
+                     yearData.push(i)
+                  }
+                }
+
+               }
+             }else{
+               flag = 2;
+               var gap =  endDate.split('-')[0] - startDate.split('-')[0];
+               //alert(gap)
+               var yearData = [];
+               for (var i = Start; i <= end; i++) {
+                yearData.push(i)
+               }
+
+             }
+           }
+           var year=yearData.join(",")
+          //alert(JSON.stringify(yearData))
+           paramObj.startDate = startDate;
+           paramObj.endDate = endDate;
+           paramObj.farmIds = farmIds;
+           paramObj.farmIds = farmIds;
+           paramObj.flag = flag;
+           paramObj.year = year;
+          // alert(JSON.stringify(paramObj))
+           pds.ajaxSubmit({
+              url:"app/plantStat/workTimeAnalysis",
+              type : "GET",
+              data:{
+                  startDate:startDate,
+                  endDate:endDate,
+                  farmIds:farmIds,
+                  flag:flag,
+                  timeInterval:year
+              },
+              success:function(e){
+                alert("success")
+                alert(JSON.stringify(e));
+                 var obj = e.data;
+                 var resultTime=[];
+                 var series=[];
+                 for (var key in obj) {
+                     var object={};
+                     object.data=[];
+                     object.name=key;
+                     object.marker={};
+                     object.marker.symbol='circle';
+                     object.showInLegend=false;
+                     var c=['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'];
+                     var col="#"
+                  	 for(var j=0;j<6;j++){
+                  		 col+=c[parseInt(Math.random()*16)]
+                  	 }
+                    //  object.lineColor=col;
+                    //  object.marker.fillColor=col;
+                     col = null;
+
+                     if (obj.hasOwnProperty(key)) {
+                         for (var i = 0; i < obj[key].length; i++) {
+                              var itemA = obj[key][i];
+                              var turn  = Number((itemA.time/3600).toFixed(2))
+                            //  turn= turn.toFixed(2)
+                              object.data.push(turn);
+                         }
+                     }
+                     series.push(object)
+                     object=null
+                   }
+                  //alert(JSON.stringify(e));
+                 var chart = Highcharts.chart('container2', {
+                      credits: {
+                           enabled: false
+                      },
+                      chart: {
+                          backgroundColor:"#e6f4f7",
+                      },
+                      title: {
+                          text: ''
+                      },
+                      xAxis: {
+                          title: {
+                              text: ''
+                          },
+                          color:'#fff',
+                          lineColor:'#fff',
+                					tickColor:'#fff',
+              						tickmarkPlacement: 'on',
+              						tickPosition: 'inside',
+              						categories:yearData,
+              					 labels: {
+                                 rotation: 0,
+                                 style: {
+                                     fontSize: '13px'
+                                 },
+              									 y:-10
+                             }
+                      },
+                      yAxis: {
+              						min: 0,
+              						gridLineWidth:0,
+              						title: {
+              								text: ''
+              						},
+              						labels: {
+                              enabled: false
+                          }
+                      },
+                      tooltip: {
+                          crosshairs: true,
+              						crosshairs: [{            // 设置准星线样式
+              							    width: 20,
+              							    color: "rgba(255,255,255,0.4)",
+              									zIndex: 100
+              						}],
+                          shared: true
+                      },
+                      series:series
+                      //  [{
+                      //     name: '一号基地',
+                      //     marker: {
+                      //         symbol: 'circle',
+              				// 				fillColor: '#72dbf3'
+                      //     },
+              				// 		showInLegend: false,//不显示图例
+                      //     data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, {
+                      //         y: 26.5
+                      //     }, 23.3, 18.3, 13.9, 9.6],
+              				// 		color:"#72dbf3",
+              				// 		lineColor: '#72dbf3'
+                      // }, {
+                      //     name: '二号基地',
+                      //     marker: {
+                      //         symbol: 'circle',
+              				// 				fillColor: '#68bdf3'
+                      //     },
+              				// 		showInLegend: false,
+                      //     data: [{
+                      //         y: 3.9
+                      //     }, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8],
+              				// 		color:"#68bdf3",
+              				// 		lineColor: '#68bdf3'
+                      // }]
+                    });
+              },
+              error:function(e){
+                 api.alert({msg:"服务器异常，请联系管理员!"});
+              }
+           });
+
+
+         }
+          function getlongNess(){
+            var chart = Highcharts.chart('container3', {
+                 credits: {
+                      enabled: false
+                 },
+                 chart: {
+                     backgroundColor:"#e6f4f7",
+                 },
+                 title: {
+                     text: ''
+                 },
+                 xAxis: {
+                     title: {
+                         text: ''
+                     },
+                     color:'#fff',
+                     lineColor:'#fff',
+           					tickColor:'#fff',
+         						tickmarkPlacement: 'on',
+         						tickPosition: 'inside',
+         						categories: ['1', '2', '3', '4', '5', '6',
+         												 '7', '8', '9', '10', '11', '12'],
+         					 labels: {
+                            rotation: 0,
+                            style: {
+                                fontSize: '13px'
+                            },
+         									 y:-10
+                        }
+                 },
+                 yAxis: {
+         						min: 0,
+         						gridLineWidth:0,
+         						title: {
+         								text: ''
+         						},
+         						labels: {
+                         enabled: false
+                     }
+                 },
+                 tooltip: {
+                     crosshairs: true,
+         						 crosshairs: [{            // 设置准星线样式
+         							    width: 20,
+         							    color: "rgba(255,255,255,0.4)",
+         									zIndex: 100
+         						}],
+                     shared: true
+                 },
+                 plotOptions: {
+                     spline: {
+                         marker: {
+                             radius: 4,
+                             lineColor: '#666666',
+                             lineWidth: 1
+                         },
+         								events: {
+         									 legendItemClick: function(e) {
+         											 return false; // 直接 return false 即可禁用图例点击事件
+         									 }
+         							 }
+                     },
+         						area: {
+         							 stacking: 'normal',
+         							 lineColor: '#666666',
+         							 lineWidth: 1,
+         							 marker: {
+         									 lineWidth: 1,
+         									 lineColor: ''
+         							 }
+         					 }
+
+                 },
+                 legend: {
+                     layout: 'vertical',
+                     align: 'center',
+                     verticalAlign: 'bottom'
+                 },
+                 series: [{
+                     name: '一号基地',
+                     marker: {
+                         symbol: 'circle',
+         								fillColor: '#72dbf3'
+                     },
+         						showInLegend: true,//不显示图例
+
+                     data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, {
+                         y: 26.5
+                     }, 23.3, 18.3, 13.9, 9.6],
+         						color:"#72dbf3",
+         						lineColor: '#72dbf3'
+                 }, {
+                     name: '二号基地',
+                     marker: {
+                         symbol: 'circle',
+         								fillColor: '#68bdf3'
+                     },
+         						showInLegend: true,
+                     data: [{
+                         y: 3.9
+                     }, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8],
+         						color:"#68bdf3",
+         						lineColor: '#68bdf3'
+                 }]
+               });
+
+          }
+
+          /*
+         * 获得时间差,时间格式为 年-月-日 小时:分钟:秒 或者 年/月/日 小时：分钟：秒
+         * 其中，年月日为全格式，例如 ： 2010-10-12 01:00:00
+         * 返回精度为：秒，分，小时，天
+         */
+         function compare(property){
+               return function(a,b){
+                   var value1 = a[property];
+                   var value2 = b[property];
+                   return value1-value2;
+              }
+        }
+        //console.log(arr.sort(compare('age')))
+         function GetDateDiff(startTime, endTime, diffType) {
+             //将xxxx-xx-xx的时间格式，转换为 xxxx/xx/xx的格式
+             startTime = startTime.replace(/\-/g, "/");
+             endTime = endTime.replace(/\-/g, "/");
+
+             //将计算间隔类性字符转换为小写
+             diffType = diffType.toLowerCase();
+             var sTime = new Date(startTime);      //开始时间
+             var eTime = new Date(endTime);  //结束时间
+             //作为除数的数字
+             var divNum = 1;
+             switch (diffType) {
+                 case "second":
+                     divNum = 1000;
+                     break;
+                 case "minute":
+                     divNum = 1000 * 60;
+                     break;
+                 case "hour":
+                     divNum = 1000 * 3600;
+                     break;
+                 case "day":
+                     divNum = 1000 * 3600 * 24;
+                     break;
+                 default:
+                     break;
+             }
+             return parseInt((eTime.getTime() - sTime.getTime()) / parseInt(divNum));
+         }
+  </script>
+  </html>
