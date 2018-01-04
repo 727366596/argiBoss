@@ -13,6 +13,8 @@
 	<style type="text/css">
 		html,body{
 			width:100%;
+			height: 100%;
+			overflow-y: auto;
 		}
 		body{
 			overflow-x: hidden;
@@ -623,17 +625,17 @@
 
 	<div id="home_nav">
 			<ul>
-					<li onclick="openPlantDetail()">
+					<!-- <li onclick="openPlantDetail()">
 							<div style="background-image: url(../../image/home_nav_plant.png);"></div>
 							<div>种植工单</div>
-					</li>
-					<li onclick="openFarmWork()">
+					</li> -->
+					<li onclick="">
 							<div style="background-image: url(../../image/home_nav_harvest.png);"></div>
-							<div>田间作业</div>
+							<div>市场分析</div>
 					</li>
-					<li onclick="jobsheet()">
+					<li onclick="analysis()">
 							<div style="background-image: url(../../image/home_nav_detial.png);"></div>
-							<div>我的记工</div>
+							<div>人员效率分析</div>
 					</li>
 					<!-- <li onclick="openCall()">
 						<div style="background-image: url(../../image/home_nav_tel.png);"></div>
@@ -641,7 +643,7 @@
 					</li> -->
 					<li onclick="openCall()">
 							<div style="background-image: url(../../image/che_img/wenwen.png);"></div>
-							<div>问问专家</div>
+							<div>农化服务</div>
 					</li>
 			</ul>
 	</div>
@@ -675,12 +677,12 @@
 	<div id="home_bc_word">
 			<div></div>
 	</div>
-	<div id="home_totop_btn">
+	<!-- <div id="home_totop_btn">
 			<span id="rocket_icon"></span>
 			<p id="totop_title">返回顶部</p>
-	</div>
+	</div> -->
 	<!-- 网络异常提示 -->
-	<iframe src="../connect-error.html" width="100%" height="35" frameborder="0" style="position:fixed;left:0;top:0;display:none;z-index:99;"></iframe>
+	<!-- <iframe src="../connect-error.html" width="100%" height="35" frameborder="0" style="position:fixed;left:0;top:0;display:none;z-index:99;"></iframe> -->
 </body>
 
 <script type="text/javascript" src="../../script/common/swiper.min.js"></script>
@@ -1158,10 +1160,10 @@
 	}
 
 //	点击“我的记工”页面跳转
-	function jobsheet() {
+	function analysis() {
 			api.openWin({
 					name : "list_win",
-					url : "widget://html/harvt/jobsheet/list_win.html",
+					url : "widget://html/home/efficiency/efficiency_win.html",
 					reload : true,
 					selecteIndex : '3',
 					slidBackEnabled : false,
