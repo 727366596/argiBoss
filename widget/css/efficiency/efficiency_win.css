@@ -308,50 +308,26 @@ i{
 }
 #timeContain{
   width: 100%;
-  /*border: solid 3px blue;*/
-  /*display: -webkit-box;
-  display: -webkit-flex;
-  display:flex;*/
-
-  /*-webkit-box-orient: horizontal;
-  -webkit-flex-flow: row;
-  flex-flow: row;
-
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-around;
-  justify-content: space-around;
-
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  align-items: center;
-  text-align: center;*/
 }
 #section2 #timeContain li{
-  /*flex:0.3;
-  height: 0.7rem;
-  line-height: 0.7rem;
-  margin-left: 0.32rem;
-  margin-right: 0.32rem;
-  margin-bottom: 0.92rem;
-  background-color: red;*/
-  /*border: solid 1px red;*/
-  width: 40%;
-  /*margin-right: 0.32rem;*/
-  /*flex:1;*/
+ /*border: 1px solid #000;*/
+  width: 45%;
+
 }
 #section2 #timeContain li:nth-child(1){
-  float: left;
-  margin-left: 0.32rem;
+   display: inline-block;
+   position: relative;
+   margin-left: 4%;
+   margin-right: 2%;
 }
 #section2 #timeContain li:nth-child(2){
-  float: right;
-  margin-right: 0.32rem;
+ display: inline-block;
+ position: relative;
 }
 #section2 #timeContain li input{
   font-size: 0.28rem;
   color:#666666;
   border-radius: 0px;
-
 }
 #section2 #timeContain li i{
   width: 0.34rem;
