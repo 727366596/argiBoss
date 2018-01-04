@@ -100,11 +100,14 @@
   <script type="text/javascript" src="../../../script/common/pds.ajax.js"></script>
   <script type="text/javascript" src="../../../script/mui/mui.min.js"></script>
   <script type="text/javascript" src="../../../script/mui/mui.picker.min.js"></script>
-  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script type="text/javascript" src="../../../script/planting/echarts.common.min.js"></script>
+  <script type="text/javascript" src="../../../script/planting/highcharts.js"></script>
+  <script type="text/javascript" src="../../../script/planting/highcharts-3d.js"></script>
+  <!-- <script src="http://code.highcharts.com/highcharts.js"></script>
   <script src="http://code.highcharts.com/highcharts-3d.js"></script>
   <script src="https://cdn.bootcss.com/echarts/3.8.4/echarts.common.min.js"></script>
   <script src="https://cdn.bootcss.com/echarts/3.8.4/echarts.js"></script>
-  <script src="https://cdn.bootcss.com/echarts/3.8.4/extension/dataTool.js"></script>
+  <script src="https://cdn.bootcss.com/echarts/3.8.4/extension/dataTool.js"></script> -->
   <script type="text/javascript">
       apiready = function(){
 
@@ -280,6 +283,7 @@
                 }
                 //alert(JSON.stringify(farmIDdata))
                 var farmids = farmIDdata.join(',');
+                $('#farm').val(farmids);
                 getWorkOrder(startDate,endDate,farmids);
                 getWorkTime(startDate,endDate,farmids,flag);
                 getlongNess(startDate,endDate,farmids,flag);
