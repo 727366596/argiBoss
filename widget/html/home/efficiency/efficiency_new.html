@@ -266,7 +266,7 @@
           url:pds.defaultUri + 'app/staff/farmland/get_farm_list',
         },function(ret,err){
           if (ret) {
-      			  //  api.alert({msg:JSON.stringify(ret)});
+      			   //api.alert({msg:JSON.stringify(ret)});
                 fiveArray = ret.data.splice(0,5);
                 //alert(JSON.stringify(idArray));
                 var str=""
@@ -278,12 +278,18 @@
                 startDate ='2016-01-01'
                 endDate ='2018-01-01'
                 var farmIDdata = [];
+                var farmNamedata = [];
                 for (var i = 0; i < fiveArray.length; i++) {
                    farmIDdata.push(fiveArray[i].id)
                 }
+                for (var i = 0; i < fiveArray.length; i++) {
+                   farmNamedata.push(fiveArray[i].farmName)
+                }
                 //alert(JSON.stringify(farmIDdata))
                 var farmids = farmIDdata.join(',');
-                $('#farm').val(farmids);
+                var farmNames = farmNamedata.join(',');
+
+                $('#farm').val(farmNames);
                 getWorkOrder(startDate,endDate,farmids);
                 getWorkTime(startDate,endDate,farmids,flag);
                 getlongNess(startDate,endDate,farmids,flag);
