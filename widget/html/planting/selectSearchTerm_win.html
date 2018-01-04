@@ -410,7 +410,7 @@ function cropGrowth() {
 	$api.setStorage('categoryIds',$("#idCat").val())
 	$api.setStorage('landNames',$("#nameLand").val())
 	$api.setStorage('categorys',$("#nameCat").val())
-	if(api.pageParam.pageId==1){
+	if(api.pageParam.pageId==2){
 		$api.setStorage('harvest',"1")
 		api.execScript({
 		  name: 'win_home',
@@ -426,6 +426,8 @@ function cropGrowth() {
 			script: "initIn()"
 		});
 	}
+
+
 	// api.execScript({
   //   name: 'cropGrowth_win',
   //   script: "initIn('"+$("#date1").val()+"','"+$("#date2").val()+"','"+$("#idLand").val()+"','"+$("#idCat").val()+"','"+$("#nameLand").val()+"','"+$("#nameCat").val()+"')"
