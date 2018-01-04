@@ -260,7 +260,7 @@
 </head>
 <body>
 <div id="header">
-        <div class="headerLeft" onclick="api.closeWin()"></div>
+        <div class="headerLeft" style="background:none"></div>
         <div class="headerCenter">采收统计</div>
         <div class="headerRight"></div>
 </div>
@@ -444,9 +444,6 @@
 			},function(ret,err){
 				if (ret) {
 					//alert(JSON.stringify(ret))
-					if(!ret.data.category){
-						return
-					}
 					$("#land").val(ret.data.farm.farmName)
 					$("#crop").val(ret.data.category.catName)
 					$("#landId").val(ret.data.farm.id)
@@ -1052,8 +1049,9 @@ function scrollToTop(){
 						$("#body_totop_btn").show().off("click").on("click",function(){
 								$("#wrapper").animate({'scrollTop': '0px'}, 1000);
 								//myScroll.scrollTo(0, 0, 300)
-								$("#body_totop_btn").animate({'bottom': '10rem'}, 800);
-								$("#body_totop_btn").css("bottom","0.5rem")
+								// $("#body_totop_btn").animate({'bottom': '10rem'}, 800,function(){
+								// 		$("#body_totop_btn").css("bottom","0.5rem")
+								// });
 						})
 				}else{
 						$("#body_totop_btn").hide();
