@@ -124,32 +124,38 @@ margin-right: 0.2rem;
   margin: 0 auto;
 }
 #plan_content .plan_title span{
-   float: left;
+   /*float: left;*/
    font-size: 0.28rem;
    color:#666666;
+   position: relative;
+   padding-left: 0.3rem;
+   padding-right: 0.3rem;
 }
 #plan_content .plan_title i{
   margin-top: 0.1rem;
 }
-#plan_content .plan_title i:nth-child(1){
-   float: left;
+#plan_content .plan_title span i:nth-child(1){
+   /*float: left;*/
    display: block;
    width: 0.24rem;
    height: 0.14rem;
    background: url('../../image/home/choose_l.png') no-repeat center center;
    background-size: 100% 100%;
-   margin-left: -0.3rem;
    vertical-align: middle;
+   position: absolute;
+   left:0;
 }
-#plan_content .plan_title i:nth-child(3){
-   float: left;
+#plan_content .plan_title span i:nth-child(2){
+   /*float: left;*/
    display: block;
    width: 0.24rem;
    height: 0.14rem;
    background: url('../../image/home/choose_r.png') no-repeat center center;
    background-size: 100% 100%;
-   margin-left: 2.4rem;
    vertical-align: middle;
+   position: absolute;
+   right:0;
+   top:0;
 }
 #container1,#container2,#container3{
   margin: 0 auto;
