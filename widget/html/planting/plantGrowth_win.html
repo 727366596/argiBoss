@@ -494,7 +494,7 @@
 						<input id="catId" type="hidden">
 					</li>
 				</ul>
-				<button>点我选择</button>
+				<button id="select">点我选择</button>
     </section>
 		<section>
 			<div class="xuanxiang">
@@ -534,7 +534,7 @@
 			</div>
 			<div id="wrap" class="wrap">
 				<div id="slider" class="slider">
-					<span>1月</span>
+					<span id="first">1月</span>
 					<span>2月</span>
 					<span>3月</span>
 					<span>4月</span>
@@ -727,8 +727,18 @@
 				$("#partA1").hide()
 			}
 		})
+		$("#select").on("touchstart",function(){
+				api.openWin({
+					name : 'selectSearchTerm_win',
+					url : './selectSearchTerm_win.html',
+					pageParam: {
+							pageId: 1
+					}
+				});
+		})
 		plan()
 		qiu()
+
 		api.ajax({
 			headers : {
 				authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
@@ -737,23 +747,22 @@
 			data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
 		},function(ret,err){
 			if(ret){
-				api.alert({msg:JSON.stringify(ret)});
+				//api.alert({msg:JSON.stringify(ret)});
 			} else {
 				//api.alert({msg:JSON.stringify(err)});
 			};
 		});
 	}
-	function initIn(n){
-		back=n;
-		if(n){
+	function initIn(){
+		if($api.getStorage('plant')){
 			var startDate=$api.getStorage('startDates')
 			var endDate=$api.getStorage('endDates')
-			var landId=$api.getStorage('landIds')
+			var farmId=$api.getStorage('farmIds')
 			var categoryId=$api.getStorage('categoryIds')
 			$("#time").val(startDate.substring(0,4)+"年"+startDate.substring(5,7)+"月-"+endDate.substring(0,4)+"年"+endDate.substring(5,7)+"月")
 			$("#land").val($api.getStorage('landNames'))
 			$("#crop").val($api.getStorage('categorys'))
-			//showGrowth(api.pageParam.farmId,landId,categoryId,startDate,endDate)
+
 		}else{
 			var d = new Date(), y = d.getFullYear(), m = d.getMonth() + 1, r = d.getDate();
 			m < 10 ? m = "0" + m : m;
@@ -763,18 +772,16 @@
 			$("#time").val(y+"年0"+1+"月-"+y+"年"+m+"月")
 			api.ajax({
 				url:pds.defaultUri + 'app/crop/firstEnterCondition',
-				data:{values:{farmId:api.pageParam.farmId}}
 			},function(ret,err){
 				if (ret) {
 					if(!ret.data.land){
 						return
 					}
-					$("#land").val(ret.data.land.landName)
-					$("#crop").val(ret.data.category.catName)
-					$("#landId").val(ret.data.land.id)
-					$("#catId").val(ret.data.category.id)
-					//showGrowth(api.pageParam.farmId,ret.data.land.id,ret.data.category.id,startDate,endDate)
-					//showGrowth(11,1,23,'2017-11-20','2017-12-04')
+					$("#land").val(ret.data.farmId)
+					$("#crop").val(ret.data.categoryName)
+					$("#landId").val(ret.data.farmName)
+					$("#catId").val(ret.data.categoryId)
+
 				} else {
 					//api.alert({msg:JSON.stringify(err)});
 				};

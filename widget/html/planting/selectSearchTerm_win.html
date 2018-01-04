@@ -412,15 +412,25 @@ function cropGrowth() {
 	$api.setStorage('categorys',$("#nameCat").val())
 	if(api.pageParam.pageId==1){
 		$api.setStorage('harvest',"1")
+		api.execScript({
+		  name: 'win_home',
+			frameName:'harvestingStatistics',
+		  script: "initIn()"
+		});
+	}
+	if(api.pageParam.pageId==1){
+		$api.setStorage('plant',"1")
+		api.execScript({
+			name: 'win_home',
+			frameName:'plantGrowth_win',
+			script: "initIn()"
+		});
 	}
 	// api.execScript({
   //   name: 'cropGrowth_win',
   //   script: "initIn('"+$("#date1").val()+"','"+$("#date2").val()+"','"+$("#idLand").val()+"','"+$("#idCat").val()+"','"+$("#nameLand").val()+"','"+$("#nameCat").val()+"')"
 	// });
-	api.execScript({
-	  name: 'root',
-	  script: "initIn()"
-	});
+
 	api.closeWin();
 }
 // 调用事件插件
