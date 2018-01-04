@@ -110,7 +110,7 @@
 
           show();
           // 调用事件插件
-              $("#time1").bind("touchstart",function(){
+              $("#time1").bind("touchstart",function(event){
                   $("#time1").unbind("touchstart")
                   mui.init()
                   var texts = $( '#date1' )
@@ -148,8 +148,10 @@
                        } )
                       } )
                 } )
+                //return false
               });
                 $("#time2").on("touchstart",function(){
+                  //event.stopPropagation();
                   $("#time2").unbind("touchstart");
                   mui.init()
                   var texts = $( '#date2' )
@@ -166,7 +168,6 @@
                       dtpicker.show( function(rs){
                        //console.log( JSON.stringify( rs ) );
                        var dateValue = JSON.parse(JSON.stringify( rs ));
-
                        //console.log(dateValue.value);
                        var beginDate=$("#date1").val();
                        var endDate=rs.y.text + '-' + rs.m.text + '-' + rs.d.text;
@@ -187,8 +188,14 @@
                        })
                       })
                 })
+                //return false
               });
-
+              $('#section2').click(function(){
+                  $('#section2').removeClass('active')
+              })
+              $('#section3').click(function(){
+                  $('#section3').removeClass('active')
+              })
           initIn();
 
 };
@@ -207,6 +214,7 @@
       }
 
       function cropGrowth() {
+        event.stopPropagation();
       	if(!$("#date1").val()){
       		api.alert({msg:"请点击选择开始时间"});
       		return
@@ -228,17 +236,18 @@
       }
       // 点击基地弹窗的确定键
       function sendFarm(){
-         // alert(JSON.stringify(idArray))
-         //alert(JSON.stringify(nameArray))
+         event.stopPropagation();
          var string = nameArray.join(",");
          var iDstring = idArray.join(",");
          $('#farm').val(string);
-         $('#section3').removeClass('active');
+
         //  发请求
         if(!iDstring){
           alert('请先选择基地');
-          return;
+          return
         }
+         $('#section3').removeClass('active');
+
         getWorkOrder(startDate,endDate,iDstring);
         getWorkTime(startDate,endDate,iDstring,flag);
         getlongNess(startDate,endDate,iDstring,flag);
@@ -285,6 +294,7 @@
         var nameArray = [];
         var result='';
         function changeColor(dom){
+          event.stopPropagation();
           if($(dom).hasClass("you")){
             $(dom).removeClass("you");
             dom.style.backgroundColor="#fff";
@@ -353,11 +363,11 @@
              },
              success:function(e){
                 //alert("success1")
-                // alert(JSON.stringify(e));
+                //alert(JSON.stringify(e));
                 var farm_name = []
                 var completeData = []
                 var confrimData = []
-                if(e.data!=[] && e.data != null && e.data != undefined){
+                if(e.data.length > 0){
                   for (var i = 0; i <e.data.length; i++) {
                     var item = e.data[i];
                     farm_name.push(item.farmName);
@@ -386,8 +396,14 @@
                             sendArray.push(resultNum);
                       }
                   }
-                  //alert(JSON.stringify(sendArray))
 
+
+                }else{
+                  // ___________________________________________________删除————————————————————————————————————————————————————————————
+                     farm_name = ['一号基地','二号基地','三号基地']
+                     sendArray = [12,20,31]
+                     completeData = [10,2,11]
+                     // ___________________________________________________删除————————————————————————————————————————————————————————————
                 }
                 var option1 = {
                       backgroundColor: '#ffffff',
@@ -453,7 +469,8 @@
                                        verticalAlign:'bottom',
                                        align:'top',
                                        color: "#666666",
-                                       padding :[0,0,16,0]
+                                       //padding :[0,0,16,0]
+                                       padding :[0,0,20,0]
                                  },
                                  tooltip: {
                                       show:"false",
@@ -494,13 +511,16 @@
                                           var colorList = ['#d6d3d3','#d6d3d3','#d6d3d3','#d6d3d3','#d6d3d3'];
                                           return colorList[params.dataIndex];
                                       },
-                                      barBorderRadius:50,
+                                      barBorderRadius:5,
                                       borderWidth:0,
                                       borderColor:'#333',
+                                      barMinHeight:1,
+                                      barMaxHeight:1,
+                                      barWidth:1
                                   }
                               },
                               barGap:'0%',
-                              barCategoryGap:'70%',
+                              barCategoryGap:'80%',
                               data:sendArray
                           },
                           {
@@ -513,13 +533,16 @@
                                           var colorList = ['#73c6e4','#8dbdf0','#eeb954','#98d73b','#6ec0de'];
                                           return colorList[params.dataIndex];
                                       },
-                                      barBorderRadius:50,
+                                      barBorderRadius:5,
                                       borderWidth:0,
                                       borderColor:'#333',
+                                      barMinHeight:1,
+                                      barMaxHeight:1,
+                                      barWidth:1
                                   }
                               },
                               barGap:'0%',
-                              barCategoryGap:'70%',
+                              barCategoryGap:'80%',
                               data: completeData
                           }
 
@@ -669,6 +692,7 @@
                  var obj = e.data;
                  var resultTime=[];
                  var series=[];
+                if(JSON.stringify(obj) != "{}"){
                  for (var key in obj) {
                      var object={};
                      object.data=[];
@@ -695,6 +719,35 @@
                      series.push(object)
                      object=null
                    }
+                 }else{
+                     series= [{
+                           name: '一号基地',
+                           marker: {
+                               symbol: 'circle',
+               								fillColor: '#72dbf3'
+                           },
+               						showInLegend: false,//不显示图例
+                           data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, {
+                               y: 26.5
+                           }, 23.3, 18.3, 13.9, 9.6],
+               						color:"#72dbf3",
+               						lineColor: '#72dbf3'
+                       }, {
+                           name: '二号基地',
+                           marker: {
+                               symbol: 'circle',
+               								fillColor: '#68bdf3'
+                           },
+               						showInLegend: false,
+                           data: [{
+                               y: 3.9
+                           }, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8],
+               						color:"#68bdf3",
+               						lineColor: '#68bdf3'
+                       }]
+                     yearData=[1,2,3,4,5,6,7,8,9,10,11,12]
+
+                 }
                   //alert(JSON.stringify(e));
                  var chart = Highcharts.chart('container2', {
                       credits: {
@@ -744,31 +797,7 @@
                           shared: true
                       },
                       series:series
-                      //  [{
-                      //     name: '一号基地',
-                      //     marker: {
-                      //         symbol: 'circle',
-              				// 				fillColor: '#72dbf3'
-                      //     },
-              				// 		showInLegend: false,//不显示图例
-                      //     data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, {
-                      //         y: 26.5
-                      //     }, 23.3, 18.3, 13.9, 9.6],
-              				// 		color:"#72dbf3",
-              				// 		lineColor: '#72dbf3'
-                      // }, {
-                      //     name: '二号基地',
-                      //     marker: {
-                      //         symbol: 'circle',
-              				// 				fillColor: '#68bdf3'
-                      //     },
-              				// 		showInLegend: false,
-                      //     data: [{
-                      //         y: 3.9
-                      //     }, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8],
-              				// 		color:"#68bdf3",
-              				// 		lineColor: '#68bdf3'
-                      // }]
+
                     });
               },
               error:function(e){
@@ -910,6 +939,7 @@
                  var obj = e.data;
                  var resultTime=[];
                  var series=[];
+              if(JSON.stringify(obj) != "{}"){
                  for (var key in obj) {
                      var object={};
                      object.data=[];
@@ -941,6 +971,34 @@
                      //alert(JSON.stringify(series));
                      object=null
                    }
+                 }else{
+                   series= [{
+                         name: '一号基地',
+                         marker: {
+                             symbol: 'circle',
+                            fillColor: '#72dbf3'
+                         },
+                        showInLegend: true,//不显示图例
+                         data: [2, 7, 10, 1, 12, 22,11, {
+                             y: 26.5
+                         }, 2.3, 6.3, 8.9, 3.6],
+                        color:"#72dbf3",
+                        lineColor: '#72dbf3'
+                     }, {
+                         name: '二号基地',
+                         marker: {
+                             symbol: 'circle',
+                            fillColor: '#68bdf3'
+                         },
+                        showInLegend: true,
+                         data: [{
+                             y: 3.9
+                         }, 1.2, 5.7, 12.5, 21.9, 10.2, 11.0, 11.6, 13.2, 20.3, 11.6, 9.8],
+                        color:"#68bdf3",
+                        lineColor: '#68bdf3'
+                     }]
+                   yearData=[1,2,3,4,5,6,7,8,9,10,11,12]
+                 }
                  var chart = Highcharts.chart('container3', {
                       credits: {
                            enabled: false
