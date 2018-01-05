@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>员工轨迹列表搜索</title>
+    <title>技术推广列表搜索</title>
     <link rel="stylesheet" type="text/css" href="../../../css/common/public.css" />
     <link rel="stylesheet" type="text/css" href="../../../css/common/header.css" />
 		<link rel="stylesheet" type="text/css" href="../../../css/common/iscroll-style.css" />
@@ -420,7 +420,7 @@
 
 
 	//请求数据***************************************
-	var page = 1, pageSize = 4;
+	var page = 1, pageSize = 10;
 	function pathListData(page, searchStr){
 
 				//page++;
@@ -495,7 +495,7 @@
 																$('.pull_icon').addClass('loading');
 																// alert(page);
 																setTimeout(function(){
-																		pathListData(page,name);
+																		pathListData(page,searchStr);
 																},500)
 
 														});
