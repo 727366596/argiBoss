@@ -180,8 +180,10 @@ margin-right: 0.2rem;
 }
 .staffTime{
   width: 90%;
+  height: 6.5rem;
   overflow-x: scroll;
   margin:0 auto;
+  overflow-y: hidden;
 }
 #container2{
   height: 5.5rem;
@@ -436,4 +438,7 @@ i{
 			z-index: 990;
       /*border: 1px
        solid #000;*/
+}
+#container2,#container3{
+  height: 100%;
 }
