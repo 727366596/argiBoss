@@ -455,15 +455,19 @@
 				line-height: 0.4rem;
 				overflow: hidden;
 				text-overflow:ellipsis;
-				white-space: nowrap;
-				width:100%;
+				white-space: wrap;
+				width:100%;padding: 0.2rem 0;
+				color: #74c09e;
 			}
 			.jutiwenzi-all{
 				white-space: nowrap;
+				color: #666666;
 			}
 			.more{
 				color: #4198e1;
 				padding: 0.1rem 0;
+			}
+			.hide{
 				display: none;
 			}
 			#partA1{
@@ -851,6 +855,36 @@
 				$("#part2").show()
 				$("#partA2").show()
 				$("#partA1").hide()
+				//处理折行问题
+				$(".jutiwenzi").removeClass("jutiwenzi-all");
+				$(".more").addClass("hide");
+				setTimeout(function(){
+						$(".jutiwenzi").each(function(index, el){
+
+								var this_ = $(this);
+								var pHeight = $(this).height();
+								if (pHeight > 20) {
+										$(this).addClass("jutiwenzi-all");
+										$(this).next("span").removeClass("hide");
+								}else{
+									$(this).removeClass("jutiwenzi-all").css({"color":"#666666"});
+									$(this).next("span").addClass("hide");
+								};
+						});
+						$(".more").on("touchend",function(){
+								var this_ = $(this);
+								var thisP = $(this).prev("p");
+								$(this).toggleClass("hide").prev("p").toggleClass("jutiwenzi-all");
+								if (!thisP.hasClass("jutiwenzi-all")) {
+										thisP.on("touchend",function(){
+												$(this).off("touchend");
+												thisP.toggleClass("jutiwenzi-all");
+												this_.toggleClass("hide");
+										})
+								}
+						})
+
+				},0)
 			}
 		})
 		plan()
@@ -896,14 +930,15 @@
 																		//此状态说明有处于该工序阶段的地块存在
 																		infoNum++;
 																		var infoMain = dataObj.landNames.join("、");
+																		//var infoMain = ["地块1","地块2","地块3","地块4","地块5","地块6","地块7","地块8","地块9"].join("、")
 																		infoStr_ += '	<div class="period">'+
 	 									 													  '			<div class="process">'+
 	 									 													  '					<span class="xuhao">'+ infoNum +'</span>'+
 	 									 													  '					<span class="chuli">'+ dataObj.proName +'</span>'+
 	 									 													  '			</div>'+
 	 									 													  '			<div class="jutineirong">'+
-	 									 													  '					<p id="jutiwenzi'+ i +'" class="jutiwenzi">'+ infoMain +'</p>'+
-	 									 													  '					<span class="more">查看更多</span>'+
+	 									 													  '					<p id="jutiwenzi'+ j +'" class="jutiwenzi">处于该工序阶段的：'+ infoMain +'</p>'+
+	 									 													  '					<span class="hide more">查看更多</span>'+
 	 									 													  '			</div>'+
 	 									 													  '	</div>';
 
@@ -945,11 +980,13 @@
 									};
 
 									$("#part2").append(datasStr);
-									(function(){
-										swiperInit("swiperWrap"+i);
+									swiperInit("swiperWrap"+i);
 
-									})();
+									// (function(){
+									// 		swiperInit("swiperWrap"+i);
+									// })();
 							};
+
 
 					 }
 				}
