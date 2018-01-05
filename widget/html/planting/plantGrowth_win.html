@@ -11,11 +11,18 @@
 		<link rel="stylesheet" href="../../css/common/swiper.min.css" />
     <style>
 				article{
+					position: absolute;
 					padding-top: 0.2rem;
 					padding-left: 0.2rem;
 					padding-right: 0.2rem;
 					padding-bottom: 0.6rem;
 					background-color: #f3f4f4;
+					left: 0;
+					right: 0;
+					top: 1.4rem;
+					bottom: 0;
+					overflow-y: auto;
+					z-index: 1;
 				}
 				section{
 					margin-top: 0.2rem;
@@ -74,7 +81,9 @@
 					text-align: center;
 				}
 				.xuanxiang{
+					position: relative;
 					border-bottom: 1px solid #f6f3f3;
+					background-color: #fff;
 				}
 				.plantA{
 					display: inline-block;;
@@ -307,13 +316,13 @@
 				top: 0.3rem;
 				left: -0.3rem;
 			 	height: 0.6rem;
-				width: 1.4rem;
+				width: 1.5rem;
 				text-align: right;
 			 	font-size: 0.6rem;
 			 }
 			 .danWei{
 			 	position: absolute;
-				right: 0;
+				right: -0.1rem;
 				bottom: -0.2rem;
 			 	height: 0.6rem;
 				width: 0.3rem;
@@ -322,7 +331,7 @@
 			 }
 			 .zhanBi{
 			 	position: absolute;
-				top: 0.12rem;
+				top: 0.1rem;
 				right: 0.2rem;
 			 	height: 0.26rem;
 				width: 0.26rem;
@@ -455,15 +464,19 @@
 				line-height: 0.4rem;
 				overflow: hidden;
 				text-overflow:ellipsis;
-				white-space: nowrap;
-				width:100%;
+				white-space: wrap;
+				width:100%;padding: 0.2rem 0;
+				color: #74c09e;
 			}
 			.jutiwenzi-all{
 				white-space: nowrap;
+				color: #666666;
 			}
 			.more{
 				color: #4198e1;
 				padding: 0.1rem 0;
+			}
+			.hide{
 				display: none;
 			}
 			#partA1{
@@ -588,25 +601,53 @@
 				width: 100%;
 				margin-bottom: 0.3rem;
 			}
+			#body_totop_btn{
+					position: fixed;
+					bottom:0.5rem;
+					right:0.2rem;
+					width:1.2rem;
+					height:1.2rem;
+					z-index: 999;
+					line-height: 2.25rem;
+					font-size: 0.2rem;font-family: PingFangSC-Regular, sans-serif;color: #AEADAD;
+					text-align: center;
+					background: url("../../image/planting/top.png") no-repeat center 3px;
+					background-size: 70% 70%;
+					background-color: rgba(0,0,0,0);
+					border-radius: 6px;
+					font-size: 0.20rem;
+					color: #20c714;
+					display: none;
+			}
+			.you{
+				position: fixed;
+				top: 1.4rem;
+				right: 0;
+				left: 0;
+				width: 100%;
+				background-color: #fff;
+			}
     </style>
 </head>
 <body>
 <div id="header">
-    <div class="headerLeft" onclick="api.closeWin()"></div>
+    <div class="headerLeft" style="background:none;"></div>
     <div class="headerCenter">投入和长势</div>
     <div class="headerRight"></div>
 </div>
-<article>
+<article id="wrapper">
     <section id="section1">
 				<ul>
 					<li>
-						<span>统计时间：</span>
-						<input id="time" type="text" value="2017年1月-2017年10月" readonly>
-					</li>
-					<li>
-						<span>地&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp块：</span>
+						<span>哪个基地：</span>
 						<input id="land"type="text" value="#1" readonly>
 						<input id="landId" type="hidden">
+					</li>
+					<li>
+						<span>统计时间：</span>
+						<input id="time" type="text" value="" readonly>
+						<input id="startDate" type="hidden">
+						<input id="endDate" type="hidden">
 					</li>
 					<li>
 						<span>种的作物：</span>
@@ -614,10 +655,11 @@
 						<input id="catId" type="hidden">
 					</li>
 				</ul>
-				<button>点我选择</button>
+				<button id="select">点我选择</button>
     </section>
 		<section>
-			<div class="xuanxiang">
+			<div id="zhan"></div>
+			<div id="xuanxiang" class="xuanxiang">
 				<div id="partA" class="plantA">
 					种植成本分析
 					<span id="partA1"></span>
@@ -636,11 +678,11 @@
 			<div id="container1"></div>
 			<div class="shuju">
 				<div class="jihuashuju">
-					<span id="plan">￥1700</span>
+					<span id="plan">￥</span>
 					<span class="shujuyuan">打算花多少钱</span>
 				</div>
 				<div class="shijishuju">
-					<span id="real">￥2000</span>
+					<span id="real">￥</span>
 					<span class="shujuyuan">实际花多少钱</span>
 				</div>
 			</div>
@@ -780,6 +822,9 @@
 				</div> -->
 		</div>
 </article>
+<div id="body_totop_btn">
+    返回顶部
+</div>
 <script type="text/javascript" src="../../script/common/api.js"></script>
 <script type="text/javascript" src="../../script/common/zepto-1.2.0.min.js"></script>
 <script type="text/javascript" src="../../script/common/jquery.min.js"></script>
@@ -809,10 +854,9 @@
 			$api.fixStatusBar(header);
 			var headerH = $api.offset(header).h;
 			$("body").css({"paddingTop":headerH+"px"});
-			initIn()
-			$("#slider>span").eq(0).css("backgroundColor","#A2C446")
-			$("#slider>span").eq(0).css("color","#fff")
-			$("#slider>span").eq(0).css("border","0")
+			// $("#slider>span").eq(0).css("backgroundColor","#A2C446")
+			// $("#slider>span").eq(0).css("color","#fff")
+			// $("#slider>span").eq(0).css("border","0")
 			le=$("#slider>span").length
 			for(var k=0; k<le; k++){
 				$("#slider>span").eq(k).on("touchstart",function(){
@@ -822,6 +866,11 @@
 					$(this).css("backgroundColor","#A2C446")
 					$(this).css("color","#fff")
 					$(this).css("border","0")
+					var m=$(this).html().replace(/[^0-9]/ig,"")
+					m < 10 ? m = "0" + m : m;
+					var startDate=$("#nianfen").html()+"-"+m+"-01"
+					var endDate=$("#nianfen").html()+"-"+m+"-31"
+					qiu($("#catId").val(),$("#landId").val(),startDate,endDate)
 				})
 		 }
 		 $("#sanjiao1").on("touchstart",function(){
@@ -851,124 +900,67 @@
 				$("#part2").show()
 				$("#partA2").show()
 				$("#partA1").hide()
+				//处理折行问题
+				$(".jutiwenzi").removeClass("jutiwenzi-all");
+				$(".more").addClass("hide");
+				setTimeout(function(){
+						$(".jutiwenzi").each(function(index, el){
+
+								var this_ = $(this);
+								var pHeight = $(this).height();
+								if (pHeight > 20) {
+										$(this).addClass("jutiwenzi-all");
+										$(this).next("span").removeClass("hide");
+								}else{
+									$(this).removeClass("jutiwenzi-all").css({"color":"#666666"});
+									$(this).next("span").addClass("hide");
+								};
+						});
+						$(".more").on("touchend",function(){
+								var this_ = $(this);
+								var thisP = $(this).prev("p");
+								$(this).toggleClass("hide").prev("p").toggleClass("jutiwenzi-all");
+								if (!thisP.hasClass("jutiwenzi-all")) {
+										thisP.on("touchend",function(){
+												$(this).off("touchend");
+												thisP.toggleClass("jutiwenzi-all");
+												this_.toggleClass("hide");
+										})
+								}
+						})
+
+				},0)
 			}
 		})
-		plan()
-		qiu()
-		api.ajax({
-			headers : {
-				authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
-		},
-			url:pds.defaultUri + 'app/plantStat/selectProcess',
-			data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
-		},function(ret,err){
-			//api.alert({msg:JSON.stringify(ret)});
-			if(ret){
-				if (ret.status == "ok") {
-					 var datasArr = ret.data;
-					 if (datasArr != [] && datasArr != "" && datasArr != null) {
-							//整体循环
-					 		for (var i = 0; i < datasArr.length; i++) {
-								  var datasStr = "";
-					 				var datasObjs = datasArr[i];
-									if (datasObjs != [] && datasObjs != "" && datasObjs != null) {
-										  var objHtml = "";
-											var categoryName = "";
-											var datasTime = "";
-											//swiper-slide循环
-											objHtml = (function(){
-													var objStr_ = "";
-													var infoStr_ = "";
-													var infoNum = 0;
-													for (var j = 0; j < datasObjs.length; j++) {
-														 var dataObj = datasObjs[j];
-														 var statusImgUrl = "../../image/planting/proName.png";
-														 var statusTextColorClass = "";
-														 var statusImgClass = "";
-														 datasTime = dataObj.date.split(" ")[0];
-														 if (dataObj.categoryName != "" && dataObj.categoryName != null && dataObj.proName != "" && dataObj.proName != null) {
-																 categoryName = dataObj.categoryName;
-																 if (dataObj.landNames != [] && dataObj.landNames != "" && dataObj.landNames != null && dataObj.landNames.length > 0) {
-																		statusImgUrl = "../../image/planting/proName-active.png";
-																		statusTextColorClass = "swiper-slide-bottom-active";
-																		statusImgClass = "sliderImg-active";
-
-																		//此状态说明有处于该工序阶段的地块存在
-																		infoNum++;
-																		var infoMain = dataObj.landNames.join("、");
-																		infoStr_ += '	<div class="period">'+
-	 									 													  '			<div class="process">'+
-	 									 													  '					<span class="xuhao">'+ infoNum +'</span>'+
-	 									 													  '					<span class="chuli">'+ dataObj.proName +'</span>'+
-	 									 													  '			</div>'+
-	 									 													  '			<div class="jutineirong">'+
-	 									 													  '					<p id="jutiwenzi'+ i +'" class="jutiwenzi">'+ infoMain +'</p>'+
-	 									 													  '					<span class="more">查看更多</span>'+
-	 									 													  '			</div>'+
-	 									 													  '	</div>';
-
-
-																 };
-																 objStr_ +=  '<div class="swiper-slide">'+
-																								'<div class="swiper-slide-top">'+
-																										'<span class="swiper-slide-top-icon">'+
-																											'<img class="'+ statusImgClass +'" src="'+ statusImgUrl +'" alt="">'+
-																										'</span>'+
-																								'</div>'+
-																								'<div class="swiper-slide-bottom">'+
-																										'<p class='+ statusTextColorClass +'>'+ dataObj.proName +'</p>'+
-																								'</div>'+
-																						'</div>';
-
-														 }
-													}
-													return {
-															objStr : objStr_,
-															infoStr: infoStr_
-													}
-											})();
-											//alert(JSON.stringify(objStr))
-											datasStr = '<div class="part2Content">'+
-													'						<div class="cropFiled">'+
-													'								<p class="cropName">'+ categoryName +'</p>'+
-													'								<p class="plantTime">定植时间：'+ datasTime +'</p>'+
-													'						</div>'+
-													'						<div class="swiper-container swiperWrap'+ i +'" style="overflow-x:auto;">'+
-													'								<div class="swiper-wrapper">'+
-																							objHtml.objStr+
-													'								</div>'+
-													'								<div class="swiper-button-prev swiper-button-black" style="background-image:url(../../image/planting/swiper-button-prev.png);margin-left:-0.2rem;z-index:99999;position:absolute;"></div>'+
-													'								<div class="swiper-button-next swiper-button-black" style="background-image:url(../../image/planting/swiper-button-next.png);margin-right:-0.2rem;z-index:99999;position:absolute;"></div>'+
-													'						</div>'+
-																			objHtml.infoStr+
-													'				</div>';
-									};
-
-									$("#part2").append(datasStr);
-									(function(){
-										swiperInit("swiperWrap"+i);
-
-									})();
-							};
-
-					 }
-				}
-			} else {
-				//api.alert({msg:JSON.stringify(err)});
-			};
-		});
+		$("#select").on("touchstart",function(){
+				api.openWin({
+					name : 'selectSearchTerm_win',
+					url : './selectSearchTerm_win.html',
+					pageParam: {
+							pageId: 1
+					}
+				});
+		})
+		initIn()
+		scrollToTop()
 	}
-	function initIn(n){
-		back=n;
-		if(n){
+	function initIn(){
+		if($api.getStorage('plant')){
 			var startDate=$api.getStorage('startDates')
 			var endDate=$api.getStorage('endDates')
-			var landId=$api.getStorage('landIds')
+			var farmId=$api.getStorage('farmIds')
 			var categoryId=$api.getStorage('categoryIds')
 			$("#time").val(startDate.substring(0,4)+"年"+startDate.substring(5,7)+"月-"+endDate.substring(0,4)+"年"+endDate.substring(5,7)+"月")
 			$("#land").val($api.getStorage('landNames'))
 			$("#crop").val($api.getStorage('categorys'))
-			//showGrowth(api.pageParam.farmId,landId,categoryId,startDate,endDate)
+			$("#landId").val(farmId)
+			$("#catId").val(categoryId)
+			$("#startDate").val(startDate)
+			$("#endDate").val(endDate)
+			$("#shuru1").val(farmId)
+			plan(categoryId,farmId,startDate,endDate)
+			qiu(categoryId,farmId,startDate,endDate)
+			gongxu(categoryId,farmId,startDate,endDate)
 		}else{
 			var d = new Date(), y = d.getFullYear(), m = d.getMonth() + 1, r = d.getDate();
 			m < 10 ? m = "0" + m : m;
@@ -977,32 +969,38 @@
 			var startDate=y + "-0" + 1 + "-0" + 1;
 			$("#time").val(y+"年0"+1+"月-"+y+"年"+m+"月")
 			api.ajax({
-				url:pds.defaultUri + 'app/crop/firstEnterCondition',
-				data:{values:{farmId:api.pageParam.farmId}}
+				headers : {
+						authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
+				},
+				url:pds.defaultUri + 'app/commons/stat/firstEnterQueryParam',
 			},function(ret,err){
 				if (ret) {
-					if(!ret.data.land){
-						return
-					}
-					$("#land").val(ret.data.land.landName)
+					//alert(JSON.stringify(ret))
+					var farmId=ret.data.farm.id
+					var categoryId=ret.data.category.id
+					$("#land").val(ret.data.farm.farmName)
 					$("#crop").val(ret.data.category.catName)
-					$("#landId").val(ret.data.land.id)
+					$("#landId").val(ret.data.farm.id)
 					$("#catId").val(ret.data.category.id)
-					//showGrowth(api.pageParam.farmId,ret.data.land.id,ret.data.category.id,startDate,endDate)
-					//showGrowth(11,1,23,'2017-11-20','2017-12-04')
+					$("#startDate").val(startDate)
+					$("#endDate").val(endDate)
+					plan(categoryId,farmId,startDate,endDate)
+					qiu(categoryId,farmId,startDate,endDate)
+					gongxu(categoryId,farmId,startDate,endDate)
 				} else {
 					//api.alert({msg:JSON.stringify(err)});
 				};
 			});
 		}
 	}
-	function plan(){
+	function plan(categoryId,farmId,startDate,endDate){
 		api.ajax({
 			headers : {
 				authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
 		},
 			url:pds.defaultUri + 'app/plantStat/planInvestment',
-			data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
+			data:{values:{categoryId:categoryId,farmId:farmId,startDate:startDate,endDate:endDate}}
+			//data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
 		},function(ret,err){
 			if(ret){
 							var plan=ret.data
@@ -1011,10 +1009,15 @@
 									authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
 							},
 								url:pds.defaultUri + 'app/plantStat/realInvestment',
-								data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
+								data:{values:{categoryId:categoryId,farmId:farmId,startDate:startDate,endDate:endDate}}
+								//data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
 							},function(ret,err){
 								if(ret){
 										//api.alert({msg:JSON.stringify(ret)});
+										if(!plan&&!real){
+											$("#container1").html("<span style='font-size:0.26rem;text-align:center;line-height:6rem'>请完善PC端数据</span>")
+											return
+										}
 										var real=ret.data
 										$('#container1').highcharts({
 											credits: { enabled: false },
@@ -1056,7 +1059,7 @@
 
 													tickWidth:1,
 													lineWidth:1,
-													gridLineWidth:0
+													gridLineWidth:1
 											 },
 											 xAxis: {
 														type: 'category',
@@ -1069,7 +1072,7 @@
 															 y:20
 													 },
 													 tickWidth:0,
-													 gridLineWidth:0
+													 gridLineWidth:1
 											 },
 											 legend: {
 														enabled: false,
@@ -1090,10 +1093,9 @@
 															enabled:true,
 															verticalAlign: top,
 															useHTML:true,
-															y:-50,
 															x:35,
 															formatter: function() {
-																	return '<span style="color:'+this.color+';font-size:0.3rem">'+this.y+'元</span>';
+																	return '<span style="margin-top:-1rem;color:'+this.color+';font-size:0.3rem">'+this.y+'元</span>';
 															}
 														}
 													},
@@ -1138,16 +1140,20 @@
 				};
 		});
 	}
-	function qiu(){
+	function qiu(categoryId,farmId,startDate,endDate){
 		api.ajax({
 			headers : {
 				authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
 		},
 			url:pds.defaultUri + 'app/plantStat/costAnalysis',
-			data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
+			data:{values:{categoryId:categoryId,farmId:farmId,startDate:startDate,endDate:endDate}}
+			//data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
 			},function(ret,err){
 				if(ret){
 					//api.alert({msg:JSON.stringify(ret)});
+					if(!ret.data.length){
+						$("#container2").html("<span style='font-size:0.26rem;text-align:center;line-height:6rem'>请完善PC端数据</span>")
+					}
 					var shi=ret.data,l=ret.data.length,zhan=0,str=""
 					for(var i=0;i<l;i++){
 						zhan+=parseInt(shi[i].money)
@@ -1213,8 +1219,141 @@
 				};
 		});
 	}
+	function gongxu(categoryId,farmId,startDate,endDate){
+		api.ajax({
+			headers : {
+				authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
+		},
+			url:pds.defaultUri + 'app/plantStat/selectProcess',
+			data:{values:{categoryId:categoryId,farmId:farmId,startDate:startDate,endDate:endDate}}
+			//data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
+		},function(ret,err){
+			//api.alert({msg:JSON.stringify(ret)});
+			if(ret){
+				if(!ret.data){
+					$("#part2").html("<span style='font-size:0.26rem;text-align:center;line-height:6rem'>请完善PC端数据</span>")
+				}
+				if (ret.status == "ok") {
+					 var datasArr = ret.data;
+					 if (datasArr != [] && datasArr != "" && datasArr != null) {
+							//整体循环
+							for (var i = 0; i < datasArr.length; i++) {
+									var datasStr = "";
+									var datasObjs = datasArr[i];
+									if (datasObjs != [] && datasObjs != "" && datasObjs != null) {
+											var objHtml = "";
+											var categoryName = "";
+											var datasTime = "";
+											//swiper-slide循环
+											objHtml = (function(){
+													var objStr_ = "";
+													var infoStr_ = "";
+													var infoNum = 0;
+													for (var j = 0; j < datasObjs.length; j++) {
+														 var dataObj = datasObjs[j];
+														 var statusImgUrl = "../../image/planting/proName.png";
+														 var statusTextColorClass = "";
+														 var statusImgClass = "";
+														 datasTime = dataObj.date.split(" ")[0];
+														 if (dataObj.categoryName != "" && dataObj.categoryName != null && dataObj.proName != "" && dataObj.proName != null) {
+																 categoryName = dataObj.categoryName;
+																 if (dataObj.landNames != [] && dataObj.landNames != "" && dataObj.landNames != null && dataObj.landNames.length > 0) {
+																		statusImgUrl = "../../image/planting/proName-active.png";
+																		statusTextColorClass = "swiper-slide-bottom-active";
+																		statusImgClass = "sliderImg-active";
+
+																		//此状态说明有处于该工序阶段的地块存在
+																		infoNum++;
+																		var infoMain = dataObj.landNames.join("、");
+																		//var infoMain = ["地块1","地块2","地块3","地块4","地块5","地块6","地块7","地块8","地块9"].join("、")
+																		infoStr_ += '	<div class="period">'+
+																								'			<div class="process">'+
+																								'					<span class="xuhao">'+ infoNum +'</span>'+
+																								'					<span class="chuli">'+ dataObj.proName +'</span>'+
+																								'			</div>'+
+																								'			<div class="jutineirong">'+
+																								'					<p id="jutiwenzi'+ j +'" class="jutiwenzi">处于该工序阶段的：'+ infoMain +'</p>'+
+																								'					<span class="hide more">查看更多</span>'+
+																								'			</div>'+
+																								'	</div>';
 
 
+																 };
+																 objStr_ +=  '<div class="swiper-slide">'+
+																								'<div class="swiper-slide-top">'+
+																										'<span class="swiper-slide-top-icon">'+
+																											'<img class="'+ statusImgClass +'" src="'+ statusImgUrl +'" alt="">'+
+																										'</span>'+
+																								'</div>'+
+																								'<div class="swiper-slide-bottom">'+
+																										'<p class='+ statusTextColorClass +'>'+ dataObj.proName +'</p>'+
+																								'</div>'+
+																						'</div>';
+
+														 }
+													}
+													return {
+															objStr : objStr_,
+															infoStr: infoStr_
+													}
+											})();
+											//alert(JSON.stringify(objStr))
+											datasStr = '<div class="part2Content">'+
+													'						<div class="cropFiled">'+
+													'								<p class="cropName">'+ categoryName +'</p>'+
+													'								<p class="plantTime">定植时间：'+ datasTime +'</p>'+
+													'						</div>'+
+													'						<div class="swiper-container swiperWrap'+ i +'" style="overflow-x:auto;">'+
+													'								<div class="swiper-wrapper">'+
+																							objHtml.objStr+
+													'								</div>'+
+													'								<div class="swiper-button-prev swiper-button-black" style="background-image:url(../../image/planting/swiper-button-prev.png);margin-left:-0.2rem;z-index:99999;position:absolute;top:0.6rem;"></div>'+
+													'								<div class="swiper-button-next swiper-button-black" style="background-image:url(../../image/planting/swiper-button-next.png);margin-right:-0.2rem;z-index:99999;position:absolute;top:0.6rem;"></div>'+
+													'						</div>'+
+																			objHtml.infoStr+
+													'				</div>';
+									};
+
+									$("#part2").append(datasStr);
+									swiperInit("swiperWrap"+i);
+
+									// (function(){
+									// 		swiperInit("swiperWrap"+i);
+									// })();
+							};
+
+
+					 }
+				}
+			} else {
+				//api.alert({msg:JSON.stringify(err)});
+			};
+		});
+	}
+	//页面回到顶部
+	function scrollToTop(){
+			$("#wrapper").on("scroll",function(){
+					var scrollTop = $("#wrapper").scrollTop();
+					if(scrollTop >= 223){
+						$("#xuanxiang").addClass("you")
+						$("#zhan").css("height","1rem")
+					}else{
+						$("#xuanxiang").removeClass("you")
+						$("#zhan").css("height","0")
+					}
+					if(scrollTop >= 200){
+							$("#body_totop_btn").show().off("click").on("click",function(){
+									$("#wrapper").animate({'scrollTop': '0px'}, 1000);
+									//myScroll.scrollTo(0, 0, 300)
+									// $("#body_totop_btn").animate({'bottom': '10rem'}, 800,function(){
+									// 		$("#body_totop_btn").css("bottom","0.5rem")
+									// });
+							})
+					}else{
+							$("#body_totop_btn").hide();
+					}
+			})
+	};
 
 </script>
 </body>

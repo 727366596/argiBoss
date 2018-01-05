@@ -90,23 +90,24 @@
 				.containerLeft{
 					position: absolute;
 					width: 0.8rem;
-					height: 6rem;
+					height: 100%;
 					overflow: hidden;
 				}
 				.containerRight{
 					position: absolute;
 					left: 0.8rem;
 					width: 81%;
-					height: 6rem;
+					height: 100%;
 					overflow-x: scroll;
+					overflow-y: hidden;
 				}
 				#container3{
 					width: 20rem;
-					height: 6rem;
+					height: 100%;
 				}
 				#container4{
 					width: 20.8rem;
-					height: 6rem;
+					height: 100%;
 				}
 				#part2{
 					display: none;
@@ -122,7 +123,9 @@
 					background-color: #fafafa;
 				}
 				.xuanxiang{
+					position: relative;
 					border-bottom: 1px solid #f6f3f3;
+					background-color: #fff;
 				}
 				.plantA{
 					display: inline-block;;
@@ -256,6 +259,15 @@
 						color: #20c714;
 						display: none;
 				}
+				.you{
+					position: fixed;
+					top: 1.4rem;
+					right: 0;
+					left: 0;
+					width: 100%;
+					background-color: #fff;
+					z-index: 9999;
+				}
     </style>
 </head>
 <body>
@@ -269,25 +281,26 @@
 				<ul>
 					<li>
 						<span>哪个基地：</span>
-						<input id="land"type="text" value="虚拟数据" readonly>
+						<input id="land"type="text" value="" readonly>
 						<input id="landId" type="hidden">
 					</li>
 					<li>
 						<span>统计时间：</span>
-						<input id="time" type="text" value="2017年1月-2017年10月" readonly>
+						<input id="time" type="text" value="" readonly>
 						<input id="startDate" type="hidden">
 						<input id="endDate" type="hidden">
 					</li>
 					<li>
 						<span>种的作物：</span>
-						<input id="crop" type="text" value="玉米一号" readonly>
+						<input id="crop" type="text" value="" readonly>
 						<input id="catId" type="hidden">
 					</li>
 				</ul>
 				<button id="select">点我选择</button>
     </section>
 		<section>
-			<div class="xuanxiang">
+			<div id="zhan"></div>
+			<div id="xuanxiang" class="xuanxiang">
 				<div id="partA" class="plantA">
 					采收品类分布
 					<span id="partA1"></span>
@@ -422,6 +435,8 @@
 			$("#time").val(startDate.substring(0,4)+"年"+startDate.substring(5,7)+"月-"+endDate.substring(0,4)+"年"+endDate.substring(5,7)+"月")
 			$("#land").val($api.getStorage('landNames'))
 			$("#crop").val($api.getStorage('categorys'))
+			$("#landId").val(farmId)
+			$("#catId").val(categoryId)
 			$("#startDate").val(startDate)
 			$("#endDate").val(endDate)
 			$("#shuru1").val(farmId)
@@ -484,7 +499,7 @@
 				option1 = {
 				    tooltip : {
 				        trigger: 'item',
-				        formatter: "{a} <br/>{b} : {c} 吨({d}%)"
+				        formatter: "<span style='z-index:0'>{a} <br/>{b} : {c} 吨({d}%)</span>"
 				    },
 						//color:['#FFC65C','#EE6B67','#32D6C5','#4198E1'],
 						color:color,
@@ -1044,6 +1059,13 @@ function danweiChange(){
 function scrollToTop(){
 		$("#wrapper").on("scroll",function(){
 				var scrollTop = $("#wrapper").scrollTop();
+				if(scrollTop >= 223){
+					$("#xuanxiang").addClass("you")
+					$("#zhan").css("height","1rem")
+				}else{
+					$("#xuanxiang").removeClass("you")
+					$("#zhan").css("height","0")
+				}
 				if(scrollTop >= 200){
 						$("#body_totop_btn").show().off("click").on("click",function(){
 								$("#wrapper").animate({'scrollTop': '0px'}, 1000);

@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="../../css/common/header.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/mui/css/mui.min.css"/>
 		<link rel="stylesheet" type="text/css" href="../../css/mui/css/mui.picker.min.css"/>
+		<script language=javascript>window.onerror=function(){return true;} </script>
     <style>
 		body{
 			background-color: #f3f4f4;
@@ -410,8 +411,9 @@ function cropGrowth() {
 	$api.setStorage('categoryIds',$("#idCat").val())
 	$api.setStorage('landNames',$("#nameLand").val())
 	$api.setStorage('categorys',$("#nameCat").val())
+
 	if(api.pageParam.pageId==2){
-		$api.setStorage('harvest',"1")
+		$api.setStorage('harvest','1')
 		api.execScript({
 		  name: 'win_home',
 			frameName:'harvestingStatistics',
@@ -419,10 +421,10 @@ function cropGrowth() {
 		});
 	}
 	if(api.pageParam.pageId==1){
-		$api.setStorage('plant',"1")
+		$api.setStorage('plant','1')
 		api.execScript({
 			name: 'win_home',
-			frameName:'plantGrowth_win',
+			frameName:'plant_index',
 			script: "initIn()"
 		});
 	}
