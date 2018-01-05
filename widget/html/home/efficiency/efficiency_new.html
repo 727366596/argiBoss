@@ -703,23 +703,20 @@
                  var obj = e.data;
                  var resultTime=[];
                  var series=[];
+
                 if(JSON.stringify(obj) != "{}"){
+                   var j=5
                  for (var key in obj) {
                      var object={};
                      object.data=[];
                      object.name=key;
                      object.marker={};
                      object.marker.symbol='circle';
-                     object.showInLegend=false;
-                     var c=['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'];
-                     var col="#"
-                  	 for(var j=0;j<6;j++){
-                  		 col+=c[parseInt(Math.random()*16)]
-                  	 }
-                    //  object.lineColor=col;
-                    //  object.marker.fillColor=col;
-                     col = null;
+                     object.showInLegend=true;
 
+                     var colorArr =['#93b1da','#72dbf3','#eda69f','#68bdf3','#93d432'];
+                     object.color=colorArr[j];
+                     j--
                      if (obj.hasOwnProperty(key)) {
                          for (var i = 0; i < obj[key].length; i++) {
                               var itemA = obj[key][i];
@@ -780,7 +777,7 @@
               						tickmarkPlacement: 'on',
               						tickPosition: 'inside',
               						categories:yearData,
-              					 labels: {
+              					  labels: {
                                  rotation: 0,
                                  style: {
                                      fontSize: '13px'
@@ -950,13 +947,16 @@
                  var obj = e.data;
                  var resultTime=[];
                  var series=[];
+                 var j=0
               if(JSON.stringify(obj) != "{}"){
+
                  for (var key in obj) {
                      var object={};
                      object.data=[];
                      object.name=key;
                      object.marker={};
                      object.legend={};
+                     object.color = "";
                      object.marker.symbol='circle';
                      object.showInLegend=false;
                      object.legend.layout= 'vertical';
@@ -964,22 +964,25 @@
                      object.legend.verticalAlign= 'bottom';
                      object.showInLegend= true;
 
-                     var c=['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'];
-                     var col="#"
-                  	 for(var j=0;j<6;j++){
-                  		 col+=c[parseInt(Math.random()*16)]
-                  	 }
+                    //  var c=['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'];
+                    //  var col="#"
+                  	//  for(var j=0;j<6;j++){
+                  	// 	 col+=c[parseInt(Math.random()*16)]
+                  	//  }
                     //  object.lineColor=col;
                     //  object.marker.fillColor=col;
-                     col = null;
-                     if (obj.hasOwnProperty(key)) {
+                    //  col = null;
+                    var colorArr =['#93b1da','#72dbf3','#eda69f','#68bdf3','#93d432'];
+                    object.color=colorArr[j];
+                    j++
+                    if (obj.hasOwnProperty(key)) {
                          for (var i = 0; i < obj[key].length; i++) {
                               var itemA = obj[key][i];
                               object.data.push(Number((itemA.distance/1000).toFixed(2)));
+
                          }
                      }
                      series.push(object);
-                     //alert(JSON.stringify(series));
                      object=null
                    }
                  }else{
