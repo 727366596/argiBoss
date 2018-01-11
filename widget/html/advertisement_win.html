@@ -20,14 +20,16 @@
 	<script type="text/javascript" src="../script/common/api.js"></script>
 		<script type="text/javascript">
 			apiready = function() {
+
+				// alert(api.pageParam.url)
 				api.parseTapmode();
 				var header = $api.byId('header');
 				$api.fixStatusBar(header);
 				var headerPos = $api.offset(header);
 				var body_h = $api.offset($api.dom('body')).h;
 				api.openFrame({
-					name : 'ask_frm',
-					url : api.pageparm,
+					name : 'advertisement_win',
+					url : api.pageParam.url,
 					rect : {
 						x : 0,
 						y : headerPos.h,
@@ -35,10 +37,11 @@
 						h : 'auto'
 					}
 				})
-				function closeWin() {
-						api.closeWin({
-						});
-				})
+
+			}
+			function closeWin() {
+					api.closeWin({
+					});
 			}
 		</script>
 	</html>
