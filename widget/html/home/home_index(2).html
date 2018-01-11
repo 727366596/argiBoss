@@ -37,6 +37,8 @@
 			width:100%;
 			height: 100%;
 			border: none;
+			padding: 10px 0;
+			box-sizing: border-box;
 		}
 
 		#top>.bannerWrap1 .swiper-wrapper{
@@ -607,8 +609,8 @@
 
 	<div id="top">
 		<div class="swiper-container bannerWrap1">
-				<div class="swiper-wrapper">
-				</div>
+				<!-- <div class="swiper-wrapper">
+				</div> -->
 		</div>
 		<div class="swiper-pagination"></div>
 		<div class="noticeBanner">
@@ -666,7 +668,7 @@
 	<div id="wrapper">
 			<div class="transfer_head">
 					<div><span></span>技术推广</div>
-					<div onclick="openTechlists()"><span style="color: #00cd5a">更多</span><span></span></div>
+					<div onclick="goToList()"><span style="color: #00cd5a">更多</span><span></span></div>
 			</div>
 			<div class="transfer_content scroller">
 					<ul>
@@ -699,8 +701,6 @@
 			//监听网络状态
 			onlineStatus();
 			//console.profile(homeBannerSwiper())
-			//轮播图****************************
-			homeBannerSwiper();
 			//公告信息列表
 			noticeData();
 			//技术推广数据
@@ -709,216 +709,349 @@
 			var map = api.require('bMap');
 			getLocation(map);
 			//$api.clearStorage();
+
+			//轮播图****************************
+			homeBanner();
+
+			// 获取首页列表数据渲染HTML
+			getHomeList()
 	}
 
-	//创建轮播图对象*************************************************************
-	var initBannerFlag = false;//标记是否是第一次打开应用
-	function homeBannerSwiper(){
-			//获取本地缓存拿数据************************************************************************
-			var bannerAllData = $api.getStorage('banner_lists_urlObj');
-			//alert(JSON.stringify(bannerAllData));
-			if(bannerAllData != undefined && bannerAllData != "" && bannerAllData != null && bannerAllData != []){
-						//alert("本地有緩存数据")
-						console.log("**************************初始轮播图数据不不不不為空***************************");
-						//alert(JSON.stringify(bannerUrlArr));
-						//获取时间戳，与本地缓存记录时间作比较，判断是否重新加载数据
-						//当时间过了当天24点整时开始重新加载数据
-						var storage_history_time = bannerAllData.time;
-						var storage_history_Maxtime = bannerAllData.todayMaxTime;
-						var bannerUpdateFlag = bannerUpdateFlagFn(storage_history_time, storage_history_Maxtime);
-						//alert(bannerUpdateFlag)
-						if(bannerUpdateFlag){
-								//alert("******************************过了当天24点开始更新轮播图数据啦***************************************")
-								console.log("**************************过了当天24点开始更新轮播图数据啦***************************");
-								bannerData();
-								return;
-						};
-						//轮播数据处理
-						var bannerUrlArr = bannerAllData.bannerUrlData;//bannerData.bannerUrlData;//获取轮播图图片地址数据数组
-						//alert(111)
-						//alert(JSON.stringify(bannerUrlArr))
-						initBannerFlag = true;
-						bannerDataYesOrNo(bannerUrlArr);
+// 轮播
+function homeBanner(){
 
-			}else{
-						//应用初始化没有轮播图数据时，执行此代码，加入数据缓存**************************************
-						//alert("欢迎进入慧种地首页")
-						api.toast({
-						    msg: '欢迎进入慧种地首页',
-						    duration: 1000,
-						    location: 'bottom'
-						});
-						console.log("**************************欢迎进入慧种地首页***************************")
-						bannerData();
-			};
+	var data = {
+		code:'b411e3844a7044009ed9998c1a2f92e6',
+		place:'home'
+	}
+alert(1)
 
-	};
-
-	//返回flag标记是否需要更新轮播图数据*********************************
-	var bannerDataUpdateFlag = null;
-	function bannerUpdateFlagFn(storage_history_time, storage_history_Maxtime){
-			//var myTime = new Date(new Date().toLocaleDateString()).getTime() + 24*60*60*1000;//获取当天零点时间戳+24*60*60*1000(获取24点时间戳)
-			var nowTime = new Date().getTime();//获取当前时间
-			bannerDataUpdateFlag = false;
-			if(nowTime >= storage_history_Maxtime){//说明过了前一天24点，重新请求数据
-					bannerDataUpdateFlag = true;
-			};
-			return bannerDataUpdateFlag;
-	};
-
-	//请求获取轮播图数据
-	function bannerData(){
-			//轮播图数据重新写入****************************************
-			//alert("开始发起轮播数据请求")
-	    pds.ajaxSubmit({
-					type: "GET",
-	        url:"/app/adv/homePageAdvList",
-	        success:function(e){
-	        		//alert("success");
-							//alert(JSON.stringify(e.data))
-							var bannerUrlArr = e.data;
-							bannerDataYesOrNo(bannerUrlArr);
+api.ajax({
+    url: '/app/commons/get_adv',
+    method: 'post',
+    data: data,
+		function(ret, err) {
+	    if (ret) {
+	        api.alert({ msg: JSON.stringify(ret) });
+	    } else {
+	        api.alert({ msg: '轮播失败' });
+	    }
+		}
+});
+	// pds.ajaxSubmit({
+	// 		type: "POST",
+  //     url:"/app/commons/get_adv",
+	// 			data:JSON.stringify(data),
+  //     success:function(e){
+  //     		//alert("success");
+	// 				alert(JSON.stringify(e.data))
+  //     },
+	// 		error:function(e) {
+	// 			alert('轮播失败')
+	// 		}
+  // });
+	var UIScrollPicture = api.require('UIScrollPicture');
+	UIScrollPicture.open({
+	    rect: {
+	        x: 30,
+	        y: 35,
+	        w: api.winWidth-60,
+	        h: api.winHeight / 4
+	    },
+	    data: {
+	        paths: [
+	            '../../image/home_banner1.png',
+	            '../../image/home_banner1.png',
+	            '../../image/home_banner1.png',
+	            '../../image/home_banner1.png'
+	        ]
+	    },
+	    styles: {
+	        caption: {
+	        },
+	        indicator: {
+	           dot:{
+	             w:10,
+	             h:10,
+	             r:5,
+	             margin:20
+	          },
+	            align: 'center',
+	            color: '#eee',
+	            activeColor: '#999'
 	        }
-	    });
-	};
+	    },
+	    placeholderImg: '../../image/home_banner1.png',
+	    contentMode: 'scaleToFill',
+	    interval: 3,
+	    fixedOn: api.frameName,
+	    loop: true,
+	    fixed: false
+	}, function(ret, err) {
+	    if (ret.status) {
+	        // alert(JSON.stringify(ret));
+					if(ret.eventType == 'click'){
+						// alert(ret.index)
+						var obj = {
+							url : "https://www.baidu.com/"
+						}
+						api.openWin({
+							name:'advertisement_win',
+							url:'../advertisement_win.html',
+							pageParam:obj
+						})
+					}
 
-	//轮播图数据正确时调用
-	function bannerDataYesOrNo(bannerDataArr){
-		console.log("*********************轮播图数据正确处理*******************************")
-		var noSlideClass = null, loopAutoFlag = null, bannerUrlNewArr = [], bannerUrlDataObj = null;
-		if(bannerDataArr != null && bannerDataArr != [] && bannerDataArr != ""){
-					//alert("***************************轮播图發起數據請求成功啦，并且有数据啦**************************")
-					//alert(JSON.stringify(bannerDataArr))
-					if(bannerDataArr.length != 1){
-							noSlideClass = "";
-							loopAutoFlag = false;
-					}else{
-							noSlideClass = "swiper-no-swiping";//添加swiper禁止slider手动滑动的class类名
-							loopAutoFlag = true;//flag标记轮播图是否开启轮播，当只有一张图时不轮播（flag = false）
-					};
-					var bannerWrapStr = "";
-					for (var i = 0; i < bannerDataArr.length; i++) {
-							//创建缓存数据数组******************************************
-							if(initBannerFlag){
-									if(bannerDataArr[i].bannerUrl != "" && bannerDataArr[i].bannerUrl != null){
-											bannerUrlNewArr[i] = {
-													bannerUrl : bannerDataArr[i].bannerUrl
-											};
-									};
-									console.log(JSON.stringify(bannerUrlNewArr))
-									console.log(bannerDataArr[i].bannerUrl+"*************"+ i +"************")
-									bannerWrapStr += '<div class="swiper-slide'+ " " + noSlideClass +'">'+
-																			'<a href="#"><img src="'+ bannerDataArr[i].bannerUrl +'"/></a>'+
-																		'</div>';
-							}else{
-									if(bannerDataArr[i].pictureUrl != "" && bannerDataArr[i].pictureUrl != null){
-											bannerUrlNewArr[i] = {
-													bannerUrl : bannerDataArr[i].pictureUrl
-											};
-									};
-									//console.log(bannerUrlNewArr)
-									//console.log(bannerDataArr[i].pictureUrl+"*************"+ i +"************")
-									bannerWrapStr += '<div class="swiper-slide'+ " " + noSlideClass +'">'+
-																			'<a href="#"><img src="'+ bannerDataArr[i].pictureUrl +'"/></a>'+
-																	'</div>';
-							}
+	    } else {
+	        // alert(JSON.stringify(err));
+	    }
+	});
+}
 
-					};
-					//alert(bannerWrapStr)
-					$("#top .bannerWrap1 .swiper-wrapper").html(bannerWrapStr);
-					//创建banner轮播**************************************************
-					setTimeout(function(){
-							bannerMove(loopAutoFlag);
-					});
-					//缓存数据
-					var curTime = new Date().getTime();//当前时间戳
-					var todayMaxTime = new Date(new Date().toLocaleDateString()).getTime() + 24*60*60*1000;//当天24点时间戳
-					bannerUrlDataObj = {
-							bannerUrlData : bannerUrlNewArr,
-							time : curTime,
-							todayMaxTime : todayMaxTime
-					};
-					$api.setStorage('banner_lists_urlObj', bannerUrlDataObj);
-			}else{
-					bannerErrorOrEmpty();
-			}
-	};
-	//轮播数据错误时处理
-	function bannerErrorOrEmpty(){
-			console.log("********************************轮播图错误处理并展示***********************************")
-			var bannerErrorUrl = "../../image/home_banner1.png";//错误处理
-			var bannerWrap1Str = "";
-			var bannerUrlEroArr = [];//轮播图数据初始数组
-			var bannerUrlDataErrorObj = null;//轮播图数据对象
-			//应用初始化没有轮播图数据时，执行此代码，加入数据缓存**************************************
-			bannerWrap1Str = '<div class="swiper-slide swiper-no-swiping">'+
-														'<a href="#"><img src="'+ bannerErrorUrl +'"/></a>'+
-											 '</div>';
-			$("#top .bannerWrap1 .swiper-wrapper").html(bannerWrap1Str);
-			setTimeout(function(){//开启轮播
-					bannerMove(true);
-			});
-			bannerUrlEroArr[0] = {
-											bannerUrl : bannerErrorUrl
-									};
-			var curTime = new Date().getTime();//当前时间戳
-			var todayMaxTime = new Date(new Date().toLocaleDateString()).getTime() + 24*60*60*1000;//当天24点时间戳
-			bannerUrlDataErrorObj = {
-					bannerUrlData : bannerUrlEroArr,
-					time : curTime,//当前时间戳
-					todayMaxTime : todayMaxTime//当天24点时间戳
-			};
-			$api.setStorage('banner_lists_urlObj', bannerUrlDataErrorObj);
-	};
+// 点击更多跳转列表
+function goToList(){
 
-	//创建banner轮播
-	var mySwiper1;
-	function bannerMove(loopAutoFlag){
-			//alert(loopAutoFlag)
-			// setTimeout(function(){
-						//创建轮播对象
-						mySwiper1 = new Swiper('#top .bannerWrap1',{
-								loop : true,
-								autoplay : 3000,
-								noSwiping : true,//控制slide是否可手动滑动
-								// onlyExternal : true,
-								//updateOnImagesReady : true,//回调函数，所有内置图像加载完成后执行，同时“updateOnImagesReady”需设置为“true’。
-								//disableOnInteraction : true,
-								// allowSwipeToNext : false,
-								// allowSwipeToPrev : false,
-								observer:true,
-								preloadImages:true,
-								updateOnImagesReady : true,
-								speed:1000,
-								autoplayDisableOnInteraction : false,
-								effect : 'coverflow',
-								slidesPerView: 1.25,
-								centeredSlides: true,
-								spaceBetween : 0,
-								coverflow: {
-												rotate: 0,
-												stretch: -48,
-												depth: 200,
-												modifier: 1,
-												slideShadows : false
-								},
-								// 分页器
-								pagination : '#top .swiper-pagination',
-								paginationType : 'bullets',
-								uniqueNavElements :false,
-								paginationHide :true,
+	api.openWin({
+		name:'a-list_win',
+		url:'./a-list_win.html',
+		slidBackEnabled : false,
+		animation : {
+			type : "movein", //动画类型（详见动画类型常量）
+			subType : "from_right", //动画子类型（详见动画子类型常量）
+			duration : 300 //动画过渡时间，默认300毫秒
+		}
+	})
 
-						});
-						//根据flag标签判断是否开启轮播——只有一张图时不轮播
-						if(loopAutoFlag){
-								mySwiper1.stopAutoplay();
-								mySwiper1.lockSwipes();
-						}else{
-								mySwiper1.startAutoplay();
-								mySwiper1.unlockSwipes();
-						};
-			 //},500)
-	};
+}
+
+// 获取首页列表数据渲染HTML
+function getHomeList() {
+
+
+}
+// 首页列表点击跳转
+function goToDetail() {
+	api.openWin({
+		name:'advertisement_win',
+		url:'../advertisement_win.html',
+		pageParam:'',
+		slidBackEnabled : false,
+		animation : {
+			type : "movein", //动画类型（详见动画类型常量）
+			subType : "from_right", //动画子类型（详见动画子类型常量）
+			duration : 300 //动画过渡时间，默认300毫秒
+		}
+	})
+}
+
+	// //创建轮播图对象*************************************************************
+	// var initBannerFlag = false;//标记是否是第一次打开应用
+	// function homeBannerSwiper(){
+	// 		//获取本地缓存拿数据************************************************************************
+	// 		var bannerAllData = $api.getStorage('banner_lists_urlObj');
+	// 		//alert(JSON.stringify(bannerAllData));
+	// 		if(bannerAllData != undefined && bannerAllData != "" && bannerAllData != null && bannerAllData != []){
+	// 					//alert("本地有緩存数据")
+	// 					console.log("**************************初始轮播图数据不不不不為空***************************");
+	// 					//alert(JSON.stringify(bannerUrlArr));
+	// 					//获取时间戳，与本地缓存记录时间作比较，判断是否重新加载数据
+	// 					//当时间过了当天24点整时开始重新加载数据
+	// 					var storage_history_time = bannerAllData.time;
+	// 					var storage_history_Maxtime = bannerAllData.todayMaxTime;
+	// 					var bannerUpdateFlag = bannerUpdateFlagFn(storage_history_time, storage_history_Maxtime);
+	// 					//alert(bannerUpdateFlag)
+	// 					if(bannerUpdateFlag){
+	// 							//alert("******************************过了当天24点开始更新轮播图数据啦***************************************")
+	// 							console.log("**************************过了当天24点开始更新轮播图数据啦***************************");
+	// 							bannerData();
+	// 							return;
+	// 					};
+	// 					//轮播数据处理
+	// 					var bannerUrlArr = bannerAllData.bannerUrlData;//bannerData.bannerUrlData;//获取轮播图图片地址数据数组
+	// 					//alert(111)
+	// 					//alert(JSON.stringify(bannerUrlArr))
+	// 					initBannerFlag = true;
+	// 					bannerDataYesOrNo(bannerUrlArr);
+	//
+	// 		}else{
+	// 					//应用初始化没有轮播图数据时，执行此代码，加入数据缓存**************************************
+	// 					//alert("欢迎进入慧种地首页")
+	// 					api.toast({
+	// 					    msg: '欢迎进入慧种地首页',
+	// 					    duration: 1000,
+	// 					    location: 'bottom'
+	// 					});
+	// 					console.log("**************************欢迎进入慧种地首页***************************")
+	// 					bannerData();
+	// 		};
+	//
+	// };
+	//
+	// //返回flag标记是否需要更新轮播图数据*********************************
+	// var bannerDataUpdateFlag = null;
+	// function bannerUpdateFlagFn(storage_history_time, storage_history_Maxtime){
+	// 		//var myTime = new Date(new Date().toLocaleDateString()).getTime() + 24*60*60*1000;//获取当天零点时间戳+24*60*60*1000(获取24点时间戳)
+	// 		var nowTime = new Date().getTime();//获取当前时间
+	// 		bannerDataUpdateFlag = false;
+	// 		if(nowTime >= storage_history_Maxtime){//说明过了前一天24点，重新请求数据
+	// 				bannerDataUpdateFlag = true;
+	// 		};
+	// 		return bannerDataUpdateFlag;
+	// };
+	//
+	// //请求获取轮播图数据
+	// function bannerData(){
+	// 		//轮播图数据重新写入****************************************
+	// 		//alert("开始发起轮播数据请求")
+	//     pds.ajaxSubmit({
+	// 				type: "GET",
+	//         url:"/app/adv/homePageAdvList",
+	//         success:function(e){
+	//         		//alert("success");
+	// 						//alert(JSON.stringify(e.data))
+	// 						var bannerUrlArr = e.data;
+	// 						bannerDataYesOrNo(bannerUrlArr);
+	//         }
+	//     });
+	// };
+	//
+	// //轮播图数据正确时调用
+	// function bannerDataYesOrNo(bannerDataArr){
+	// 	console.log("*********************轮播图数据正确处理*******************************")
+	// 	var noSlideClass = null, loopAutoFlag = null, bannerUrlNewArr = [], bannerUrlDataObj = null;
+	// 	if(bannerDataArr != null && bannerDataArr != [] && bannerDataArr != ""){
+	// 				//alert("***************************轮播图發起數據請求成功啦，并且有数据啦**************************")
+	// 				//alert(JSON.stringify(bannerDataArr))
+	// 				if(bannerDataArr.length != 1){
+	// 						noSlideClass = "";
+	// 						loopAutoFlag = false;
+	// 				}else{
+	// 						noSlideClass = "swiper-no-swiping";//添加swiper禁止slider手动滑动的class类名
+	// 						loopAutoFlag = true;//flag标记轮播图是否开启轮播，当只有一张图时不轮播（flag = false）
+	// 				};
+	// 				var bannerWrapStr = "";
+	// 				for (var i = 0; i < bannerDataArr.length; i++) {
+	// 						//创建缓存数据数组******************************************
+	// 						if(initBannerFlag){
+	// 								if(bannerDataArr[i].bannerUrl != "" && bannerDataArr[i].bannerUrl != null){
+	// 										bannerUrlNewArr[i] = {
+	// 												bannerUrl : bannerDataArr[i].bannerUrl
+	// 										};
+	// 								};
+	// 								console.log(JSON.stringify(bannerUrlNewArr))
+	// 								console.log(bannerDataArr[i].bannerUrl+"*************"+ i +"************")
+	// 								bannerWrapStr += '<div class="swiper-slide'+ " " + noSlideClass +'">'+
+	// 																		'<a href="#"><img src="'+ bannerDataArr[i].bannerUrl +'"/></a>'+
+	// 																	'</div>';
+	// 						}else{
+	// 								if(bannerDataArr[i].pictureUrl != "" && bannerDataArr[i].pictureUrl != null){
+	// 										bannerUrlNewArr[i] = {
+	// 												bannerUrl : bannerDataArr[i].pictureUrl
+	// 										};
+	// 								};
+	// 								//console.log(bannerUrlNewArr)
+	// 								//console.log(bannerDataArr[i].pictureUrl+"*************"+ i +"************")
+	// 								bannerWrapStr += '<div class="swiper-slide'+ " " + noSlideClass +'">'+
+	// 																		'<a href="#"><img src="'+ bannerDataArr[i].pictureUrl +'"/></a>'+
+	// 																'</div>';
+	// 						}
+	//
+	// 				};
+	// 				//alert(bannerWrapStr)
+	// 				$("#top .bannerWrap1 .swiper-wrapper").html(bannerWrapStr);
+	// 				//创建banner轮播**************************************************
+	// 				setTimeout(function(){
+	// 						bannerMove(loopAutoFlag);
+	// 				});
+	// 				//缓存数据
+	// 				var curTime = new Date().getTime();//当前时间戳
+	// 				var todayMaxTime = new Date(new Date().toLocaleDateString()).getTime() + 24*60*60*1000;//当天24点时间戳
+	// 				bannerUrlDataObj = {
+	// 						bannerUrlData : bannerUrlNewArr,
+	// 						time : curTime,
+	// 						todayMaxTime : todayMaxTime
+	// 				};
+	// 				$api.setStorage('banner_lists_urlObj', bannerUrlDataObj);
+	// 		}else{
+	// 				bannerErrorOrEmpty();
+	// 		}
+	// };
+	// //轮播数据错误时处理
+	// function bannerErrorOrEmpty(){
+	// 		console.log("********************************轮播图错误处理并展示***********************************")
+	// 		var bannerErrorUrl = "../../image/home_banner1.png";//错误处理
+	// 		var bannerWrap1Str = "";
+	// 		var bannerUrlEroArr = [];//轮播图数据初始数组
+	// 		var bannerUrlDataErrorObj = null;//轮播图数据对象
+	// 		//应用初始化没有轮播图数据时，执行此代码，加入数据缓存**************************************
+	// 		bannerWrap1Str = '<div class="swiper-slide swiper-no-swiping">'+
+	// 													'<a href="#"><img src="'+ bannerErrorUrl +'"/></a>'+
+	// 										 '</div>';
+	// 		$("#top .bannerWrap1 .swiper-wrapper").html(bannerWrap1Str);
+	// 		setTimeout(function(){//开启轮播
+	// 				bannerMove(true);
+	// 		});
+	// 		bannerUrlEroArr[0] = {
+	// 										bannerUrl : bannerErrorUrl
+	// 								};
+	// 		var curTime = new Date().getTime();//当前时间戳
+	// 		var todayMaxTime = new Date(new Date().toLocaleDateString()).getTime() + 24*60*60*1000;//当天24点时间戳
+	// 		bannerUrlDataErrorObj = {
+	// 				bannerUrlData : bannerUrlEroArr,
+	// 				time : curTime,//当前时间戳
+	// 				todayMaxTime : todayMaxTime//当天24点时间戳
+	// 		};
+	// 		$api.setStorage('banner_lists_urlObj', bannerUrlDataErrorObj);
+	// };
+	//
+	// //创建banner轮播
+	// var mySwiper1;
+	// function bannerMove(loopAutoFlag){
+	// 		//alert(loopAutoFlag)
+	// 		// setTimeout(function(){
+	// 					//创建轮播对象
+	// 					mySwiper1 = new Swiper('#top .bannerWrap1',{
+	// 							loop : true,
+	// 							autoplay : 3000,
+	// 							noSwiping : true,//控制slide是否可手动滑动
+	// 							// onlyExternal : true,
+	// 							//updateOnImagesReady : true,//回调函数，所有内置图像加载完成后执行，同时“updateOnImagesReady”需设置为“true’。
+	// 							//disableOnInteraction : true,
+	// 							// allowSwipeToNext : false,
+	// 							// allowSwipeToPrev : false,
+	// 							observer:true,
+	// 							preloadImages:true,
+	// 							updateOnImagesReady : true,
+	// 							speed:1000,
+	// 							autoplayDisableOnInteraction : false,
+	// 							effect : 'coverflow',
+	// 							slidesPerView: 1.25,
+	// 							centeredSlides: true,
+	// 							spaceBetween : 0,
+	// 							coverflow: {
+	// 											rotate: 0,
+	// 											stretch: -48,
+	// 											depth: 200,
+	// 											modifier: 1,
+	// 											slideShadows : false
+	// 							},
+	// 							// 分页器
+	// 							pagination : '#top .swiper-pagination',
+	// 							paginationType : 'bullets',
+	// 							uniqueNavElements :false,
+	// 							paginationHide :true,
+	//
+	// 					});
+	// 					//根据flag标签判断是否开启轮播——只有一张图时不轮播
+	// 					if(loopAutoFlag){
+	// 							mySwiper1.stopAutoplay();
+	// 							mySwiper1.lockSwipes();
+	// 					}else{
+	// 							mySwiper1.startAutoplay();
+	// 							mySwiper1.unlockSwipes();
+	// 					};
+	// 		 //},500)
+	// };
 
 	//获取公告数据
 	function noticeData(){
@@ -1024,7 +1157,7 @@
 																					'</div>'+
 																					'<div class="transfer_content_time"><p><span>'+ articleTypeName +'</span><span style="margin-left:10px;">'+ (techDataArr[i].createTime).split(" ")[0] +'</span><span style="margin-left:20px;">作者：'+ techDataArr[i].author +'</span></p></div>'+
 																			'</div>'+
-																			'<div class="transfer_content_right">'+ techDataImg +'</div>'+
+																			'<div class="transfer_content_right"> '+ techDataImg +'</div>'+
 																	'</li>';
 									};
 									$(".transfer_content ul").html(techDataStr);
