@@ -694,6 +694,13 @@
 <script type="text/javascript" src="../../script/common/scrollToTop.js"></script>
 <script type="text/javascript">
 	apiready=function(){
+
+			//轮播图****************************
+			homeBanner();
+
+			// 获取首页列表数据渲染HTML
+			getHomeList()
+
 			//种植工单—数据渲染
 			refreshStatusList();
 			//监听页面scrollTop
@@ -709,29 +716,23 @@
 			var map = api.require('bMap');
 			getLocation(map);
 			//$api.clearStorage();
-
-			//轮播图****************************
-			homeBanner();
-
-			// 获取首页列表数据渲染HTML
-			getHomeList()
 	}
 
+
 // 轮播 （请求后台数据）
+var pictureUrlData = []
 function homeBanner(){
-alert(1)
-	var pictureUrlData = []
 	pds.ajaxSubmit({
 	 url:"app/sys/get_adv",
 	 data:{"code":'003',"place":'home'},
 	 success:function(e){
-				alert(JSON.stringify(e.data.data))
+				// alert(JSON.stringify(e.data.data))
 				if(e.data !== null && e.data !== ''){
 
-					var data = e.data.data || ''
+					var data = e.data.data || '';
 					if(data.length > 0){
 						for(var i = 0; i < data.length; i++){
-							pictureUrlData.push(data[i].pictureUrl
+							pictureUrlData.push(data[i].pictureUrl)
 						}
 					}else {
 						pictureUrlData = ['../../image/home_banner1.png']
@@ -747,7 +748,8 @@ alert(1)
 	});
 }
 // 轮播（页面渲染加跳转）
-function showPic(data){
+function showPic(data) {
+
 	var UIScrollPicture = api.require('UIScrollPicture');
 	UIScrollPicture.open({
 			rect: {
@@ -788,7 +790,7 @@ function showPic(data){
 						var obj = {
 							url : data[ret.index].url
 						}
-							// alert(JSON.stringify(obj));
+							// alert(data[ret.index].url);
 						api.openWin({
 							name:'advertisement_win',
 							url:'../advertisement_win.html',
@@ -826,7 +828,32 @@ function getHomeList() {
 	 url:"app/sys/get_adv",
 	 data:{"code":'003',"place":'list'},
 	 success:function(e){
-				alert(JSON.stringify(e.data.data))
+
+				if(e.data !== null && e.data !== ''){
+
+					var data = e.data.data || '';
+					alert(JSON.stringify(data))
+					if(data.length > 0){
+						var techDataStr = ''
+						for(var i = 0; i < data.length; i++){
+
+							techDataStr += '<li onclick="goToDetail('+ data[i].url +')">'+
+																'<div class="transfer_content_left'+ " " + infoListWidth +'">'+
+																		'<div class="transfer_content_info">'+
+																				'<p style="word-wrap:break-word;">'+ data[i].title +'</p>'+
+																		'</div>'+
+																		'<div class="transfer_content_time"><p><span>'+ articleTypeName +'</span><span style="margin-left:10px;">'+ (techDataArr[i].createTime).split(" ")[0] +'</span><span style="margin-left:20px;">作者：'+ techDataArr[i].author +'</span></p></div>'+
+																'</div>'+
+																'<div class="transfer_content_right"><img style="" src="'+ data[i].pictureUrl +'"></div>'+
+														'</li>';
+						}
+
+						$(".transfer_content ul").html(techDataStr)
+
+					}else {
+
+					}
+				}
 	 },
 	 error:function(e){
 		 api.alert({msg:"服务器错误，请联系管理员!"});
@@ -834,6 +861,7 @@ function getHomeList() {
 	});
 
 }
+
 // 首页列表点击跳转
 function goToDetail() {
 	api.openWin({
@@ -1124,61 +1152,61 @@ function goToDetail() {
 	}
 
 	//技术推广数据
-	function techTransferData(){
-		pds.ajaxSubmit({
-				type: "GET",
-				url:"/app/content/techContent",
-				success:function(e){
-						// alert("success");
-						//alert(JSON.stringify(e))
-						if(e.status == "ok"){
-								var techDataArr = e.data;
-								var techDataStr = "";
-								var articleTypeName = "";
-								if(techDataArr != "" && techDataArr != [] && techDataArr != null){
-									for (var i = 0; i < techDataArr.length; i++) {
-										switch (techDataArr[i].articleType) {
-											case 11:
-												articleTypeName = "农业技术"
-												break;
-											case 12:
-												articleTypeName = "行业政策"
-												break;
-											case 13:
-												articleTypeName = "农村生活"
-												break;
-											//default:
-
-										};
-										var techDataImg = "", infoListWidth = "";
-										if(techDataArr[i].pictureUrl != "" && techDataArr[i].pictureUrl != null){
-												techDataImg = '<img style="" src="'+ techDataArr[i].pictureUrl +'">'
-												infoListWidth = "infoListWidth";
-										};
-										techDataStr += '<li onclick="openTechTransferInfo('+ techDataArr[i].contentId +')">'+
-																			'<div class="transfer_content_left'+ " " + infoListWidth +'">'+
-																					'<div class="transfer_content_info">'+
-																							'<p style="word-wrap:break-word;">'+ techDataArr[i].title +'</p>'+
-																					'</div>'+
-																					'<div class="transfer_content_time"><p><span>'+ articleTypeName +'</span><span style="margin-left:10px;">'+ (techDataArr[i].createTime).split(" ")[0] +'</span><span style="margin-left:20px;">作者：'+ techDataArr[i].author +'</span></p></div>'+
-																			'</div>'+
-																			'<div class="transfer_content_right"> '+ techDataImg +'</div>'+
-																	'</li>';
-									};
-									$(".transfer_content ul").html(techDataStr);
-								}
-
-
-						}else{
-
-						}
-
-				},
-				error:function(e){
-					 api.alert({msg:"服务器错误，请联系管理员!"});
-				}
-		});
-	}
+	// function techTransferData(){
+	// 	pds.ajaxSubmit({
+	// 			type: "GET",
+	// 			url:"/app/content/techContent",
+	// 			success:function(e){
+	// 					// alert("success");
+	// 					//alert(JSON.stringify(e))
+	// 					if(e.status == "ok"){
+	// 							var techDataArr = e.data;
+	// 							var techDataStr = "";
+	// 							var articleTypeName = "";
+	// 							if(techDataArr != "" && techDataArr != [] && techDataArr != null){
+	// 								for (var i = 0; i < techDataArr.length; i++) {
+	// 									switch (techDataArr[i].articleType) {
+	// 										case 11:
+	// 											articleTypeName = "农业技术"
+	// 											break;
+	// 										case 12:
+	// 											articleTypeName = "行业政策"
+	// 											break;
+	// 										case 13:
+	// 											articleTypeName = "农村生活"
+	// 											break;
+	// 										//default:
+	//
+	// 									};
+	// 									var techDataImg = "", infoListWidth = "";
+	// 									if(techDataArr[i].pictureUrl != "" && techDataArr[i].pictureUrl != null){
+	// 											techDataImg = '<img style="" src="'+ techDataArr[i].pictureUrl +'">'
+	// 											infoListWidth = "infoListWidth";
+	// 									};
+	// 									techDataStr += '<li onclick="openTechTransferInfo('+ techDataArr[i].contentId +')">'+
+	// 																		'<div class="transfer_content_left'+ " " + infoListWidth +'">'+
+	// 																				'<div class="transfer_content_info">'+
+	// 																						'<p style="word-wrap:break-word;">'+ techDataArr[i].title +'</p>'+
+	// 																				'</div>'+
+	// 																				'<div class="transfer_content_time"><p><span>'+ articleTypeName +'</span><span style="margin-left:10px;">'+ (techDataArr[i].createTime).split(" ")[0] +'</span><span style="margin-left:20px;">作者：'+ techDataArr[i].author +'</span></p></div>'+
+	// 																		'</div>'+
+	// 																		'<div class="transfer_content_right"> '+ techDataImg +'</div>'+
+	// 																'</li>';
+	// 								};
+	// 								$(".transfer_content ul").html(techDataStr);
+	// 							}
+	//
+	//
+	// 					}else{
+	//
+	// 					}
+	//
+	// 			},
+	// 			error:function(e){
+	// 				 api.alert({msg:"服务器错误，请联系管理员!"});
+	// 			}
+	// 	});
+	// }
 
 	//页面回到顶部
 	function scrollToTop(){
