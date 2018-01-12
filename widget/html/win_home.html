@@ -102,7 +102,7 @@ apiready = function(){
 
 	if(flag){
 		obj = api.require('tabBar');
-
+    var index;
 		obj.open({
 		    bgImg:'widget://image/home_nav_bc.jpg',
 		    selectImg:'widget://res/selecte_tabBar.png',
@@ -117,6 +117,10 @@ apiready = function(){
 		    perScreenBtn:5,
 		    h:'50'
 		},function(ret,err){
+			  if(index===ret.index){
+					return;
+				}
+				index=ret.index;
 		    //var headerHtml = ""
 		    var frameName    = "";
 		    var frameUrl     = "";
