@@ -7,7 +7,7 @@
 	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
 	<link rel="stylesheet" type="text/css" href="../../css/common/reset.css">
 	<link rel="stylesheet" type="text/css" href="../../css/common/api.css"/>
-	<link rel="stylesheet" type="text/css" href="../../css/common/swiper.min.css"/>
+	<!-- <link rel="stylesheet" type="text/css" href="../../css/common/swiper.min.css"/> -->
 	<!--<link rel="stylesheet" type="text/css" href="../../css/iscroll-style.css"/>-->
 	<script type="text/javascript" src="../../script/common/rem.js"></script>
 	<style type="text/css">
@@ -687,7 +687,7 @@
 	<!-- <iframe src="../connect-error.html" width="100%" height="35" frameborder="0" style="position:fixed;left:0;top:0;display:none;z-index:99;"></iframe> -->
 </body>
 
-<script type="text/javascript" src="../../script/common/swiper.min.js"></script>
+<!-- <script type="text/javascript" src="../../script/common/swiper.min.js"></script> -->
 <script type="text/javascript" src="../../script/common/api.js"></script>
 <script type="text/javascript" src="../../script/common/jquery.min.js"></script>
 <script type="text/javascript" src="../../script/common/pds.ajax.js"></script>
@@ -717,84 +717,78 @@
 			getHomeList()
 	}
 
-// 轮播
+// 轮播 （请求后台数据）
 function homeBanner(){
-
-	var data = {
-		code:'b411e3844a7044009ed9998c1a2f92e6',
-		place:'home'
-	}
 alert(1)
+	var pictureUrlData = []
+	pds.ajaxSubmit({
+	 url:"app/sys/get_adv",
+	 data:{"code":'003',"place":'home'},
+	 success:function(e){
+				alert(JSON.stringify(e.data.data))
+				if(e.data !== null && e.data !== ''){
 
-api.ajax({
-    url: '/app/commons/get_adv',
-    method: 'post',
-    data: data,
-		function(ret, err) {
-	    if (ret) {
-	        api.alert({ msg: JSON.stringify(ret) });
-	    } else {
-	        api.alert({ msg: '轮播失败' });
-	    }
-		}
-});
-	// pds.ajaxSubmit({
-	// 		type: "POST",
-  //     url:"/app/commons/get_adv",
-	// 			data:JSON.stringify(data),
-  //     success:function(e){
-  //     		//alert("success");
-	// 				alert(JSON.stringify(e.data))
-  //     },
-	// 		error:function(e) {
-	// 			alert('轮播失败')
-	// 		}
-  // });
+					var data = e.data.data || ''
+					if(data.length > 0){
+						for(var i = 0; i < data.length; i++){
+							pictureUrlData.push(data[i].pictureUrl
+						}
+					}else {
+						pictureUrlData = ['../../image/home_banner1.png']
+					}
+
+					showPic(data)
+					// alert(JSON.stringify(pictureUrlData))
+				}
+	 },
+	 error:function(e){
+		 api.alert({msg:"服务器错误，请联系管理员!"});
+	 }
+	});
+}
+// 轮播（页面渲染加跳转）
+function showPic(data){
 	var UIScrollPicture = api.require('UIScrollPicture');
 	UIScrollPicture.open({
-	    rect: {
-	        x: 30,
-	        y: 35,
-	        w: api.winWidth-60,
-	        h: api.winHeight / 4
-	    },
-	    data: {
-	        paths: [
-	            '../../image/home_banner1.png',
-	            '../../image/home_banner1.png',
-	            '../../image/home_banner1.png',
-	            '../../image/home_banner1.png'
-	        ]
-	    },
-	    styles: {
-	        caption: {
-	        },
-	        indicator: {
-	           dot:{
-	             w:10,
-	             h:10,
-	             r:5,
-	             margin:20
-	          },
-	            align: 'center',
-	            color: '#eee',
-	            activeColor: '#999'
-	        }
-	    },
-	    placeholderImg: '../../image/home_banner1.png',
-	    contentMode: 'scaleToFill',
-	    interval: 3,
-	    fixedOn: api.frameName,
-	    loop: true,
-	    fixed: false
+			rect: {
+					x: 30,
+					y: 35,
+					w: api.winWidth-60,
+					h: api.winHeight / 4
+			},
+			data: {
+					paths: pictureUrlData
+			},
+			styles: {
+					caption: {
+					},
+					indicator: {
+						 dot:{
+							 w:10,
+							 h:10,
+							 r:5,
+							 margin:20
+						},
+							align: 'center',
+							color: '#eee',
+							activeColor: '#999'
+					}
+			},
+			placeholderImg: '',
+			contentMode: 'scaleToFill',
+			interval: 3,
+			fixedOn: api.frameName,
+			loop: true,
+			fixed: false
 	}, function(ret, err) {
-	    if (ret.status) {
-	        // alert(JSON.stringify(ret));
+			if (ret.status) {
+					// alert(JSON.stringify(ret));
 					if(ret.eventType == 'click'){
 						// alert(ret.index)
 						var obj = {
-							url : "https://www.baidu.com/"
+							url : data[ret.index].url
 						}
+							// alert(JSON.stringify(obj));
 						api.openWin({
 							name:'advertisement_win',
 							url:'../advertisement_win.html',
@@ -802,11 +796,12 @@ api.ajax({
 						})
 					}
 
-	    } else {
-	        // alert(JSON.stringify(err));
-	    }
+			} else {
+					// alert(JSON.stringify(err));
+			}
 	});
 }
+
 
 // 点击更多跳转列表
 function goToList(){
@@ -827,6 +822,16 @@ function goToList(){
 // 获取首页列表数据渲染HTML
 function getHomeList() {
 
+	pds.ajaxSubmit({
+	 url:"app/sys/get_adv",
+	 data:{"code":'003',"place":'list'},
+	 success:function(e){
+				alert(JSON.stringify(e.data.data))
+	 },
+	 error:function(e){
+		 api.alert({msg:"服务器错误，请联系管理员!"});
+	 }
+	});
 
 }
 // 首页列表点击跳转
