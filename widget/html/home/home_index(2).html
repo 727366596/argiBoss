@@ -631,7 +631,7 @@
 							<div style="background-image: url(../../image/home_nav_plant.png);"></div>
 							<div>种植工单</div>
 					</li> -->
-					<li onclick="">
+					<li onclick="openMarketInfo()">
 							<div style="background-image: url(../../image/home_nav_harvest.png);"></div>
 							<div>市场分析</div>
 					</li>
@@ -711,7 +711,7 @@
 			//公告信息列表
 			noticeData();
 			//技术推广数据
-			techTransferData();
+			//techTransferData();
 			//		实时定位获取位置，并获取天气信息****
 			var map = api.require('bMap');
 			getLocation(map);
@@ -804,6 +804,20 @@ function showPic(data) {
 	});
 }
 
+
+//点击跳转市场分析
+function openMarketInfo(){
+		api.openWin({
+			name:'market-index-win',
+			url:'./marketInfo/market-index-win.html',
+			slidBackEnabled : false,
+			animation : {
+				type : "movein", //动画类型（详见动画类型常量）
+				subType : "from_right", //动画子类型（详见动画子类型常量）
+				duration : 300 //动画过渡时间，默认300毫秒
+			}
+		})
+}
 
 // 点击更多跳转列表
 function goToList(){
