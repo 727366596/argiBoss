@@ -198,27 +198,25 @@
 <script type="text/javascript" src="../../../script/common/pds.ajax.js"></script>
 <script type="text/javascript" src="../../../script/planting/echarts.common.min.js"></script>
 <script type="text/javascript">
-	var myChart = null;
-	var marketArr = [];//保存默认市场数据*******************************
-
+	//var myChart = null;
+	//var marketArr = [];//保存默认市场数据*******************************
+	// var chartOptionObj = {	//保存chart配置项参数
+	// 		xAxisData : [],
+	// 		yAxisName : "",
+	// 		series : [],
+	// 		legend : []
+	// };
+	var chartH = null;//chart盒子高
+	var chartW = null;//chart盒子宽
 	apiready = function(){
 			api.parseTapmode();
 			//初始化图表
-			myChart = echarts.init(document.getElementById("myChart"));
-			//显示加载进度
-			myChart.showLoading({
-					default: {
-						// text: 'loading',
-						color: '#c23531',
-						textColor: '#000',
-						maskColor: 'rgba(255, 255, 255, 0.8)',
-						zlevel: 0
-					}
-			});
+			chartH = $('.chartBox').height();//chart盒子高
+			chartW = $('.chartBox').width();//chart盒子宽
 			//作物Id赋值
 			plantDo(api.pageParam.plantId, api.pageParam.plantName);
 			//获取历史市场
-			var marketObjs = $api.getStorage('markets');
+			var marketObjs = $api.getStorage('markets');//alert("本地市场数据缓存************"+JSON.stringify(marketObjs))
 			if (marketObjs != undefined && marketObjs != "" && marketObjs != null && marketObjs != {}) {
 					$(".market-date").each(function(index,el){
 							var marketName = marketObjs[index].marketName;
@@ -236,13 +234,13 @@
 					//打开默认市场
 					getMarket();
 			};
-			//初始化数据
-			dataInit();
+
+			dataInit()
+
 
 	};
 
 	//请求默认市场数据
-
 	function getMarket(){
 			pds.ajaxSubmit({
 					type: "GET",
@@ -254,19 +252,21 @@
 									if (e.data != "" && e.data != null && e.data != {}) {
 											var marketsData = e.data;
 											$(".market-date").each(function(index,el){
-													var marketName = marketsData[index].abbreviation;
-													var marketId = marketsData[index].id;
-													var provinceId = marketsData[index].provinceId;
-													var obj = $(this).attr("id");
+													(function(i, this_){
+															var marketName = marketsData[i].abbreviation;
+															var marketId = marketsData[i].id;
+															var provinceId = marketsData[i].provinceId;
+															var boxId = $(this_).attr("id");
 
-													if (marketName != "" && marketName != null && marketId != "" && marketId != null && provinceId != "" && provinceId != null) {
-															//写入市场名字，并写入缓存
-															nameDo(obj, marketName, marketId, provinceId);
-													}else {
-															$(this).text("选择市场").attr("data-id","").attr("data-provinceId","");
-													};
+															if (marketName != "" && marketName != null && marketId != "" && marketId != null && provinceId != "" && provinceId != null) {
+																	//写入市场名字，并写入缓存
+																	nameDo(boxId, marketName, marketId, provinceId);
+															}else {
+																	$(this).text("选择市场").attr("data-id","").attr("data-provinceId","");
+															};
+													})(index,el)
 											});
-											$api.setStorage('markets', marketArr);
+											//$api.setStorage('markets', marketArr);
 									}else{
 											$(".market-date").each(function(index,el){
 													$(this).text("选择市场").attr("data-id","").attr("data-provinceId","");
@@ -290,21 +290,32 @@
 	}
 
 	//市场框赋值
-	function nameDo(nameBox, name, id, provinceId){
-			$("#"+nameBox).text(name).attr("data-id",id).attr("data-provinceId",provinceId);
+	function nameDo(nameBox, marketName, marketId, provinceId){
+			$("#"+nameBox).text(marketName).attr("data-id",marketId).attr("data-provinceId",provinceId);
+			//var index = parseInt(nameBox[6]);
+			//var plantId = $("#plantId").val();
+			//var statDays = 7;
 			//创建缓存
-			$(".market-date").each(function(index, el){
-					var name_ = $(this).text();
-					var id_ = $(this).attr("data-id");
-					var provinceId_ = $(this).attr("data-provinceId");
-					var marketObj = {
-							marketName : name_,
-							marketId : id_,
-							provinceId : provinceId_
-					};
-					marketArr[index] = marketObj;
-			});
+			var marketArr = (function(){
+				  var marketArr_ = [];
+					$(".market-date").each(function(index, el){
+							var name_ = $(this).text();
+							var id_ = $(this).attr("data-id");
+							var provinceId_ = $(this).attr("data-provinceId");
+							var marketObj = {
+									marketName : name_,
+									marketId : id_,
+									provinceId : provinceId_
+							};
+							marketArr_[index] = marketObj;
+					});
+					return marketArr_;
+			})()
+			//alert(JSON.stringify(marketArr))
 			$api.setStorage('markets', marketArr);
+			//数据修改
+			//myChartInit(nameBox, plantId, marketId, marketName, statDays, index);
+
 
 	};
 
@@ -319,124 +330,167 @@
 	};
 
 	//创建折线图
-	var chartH = $('.chartBox').height();//chart盒子高
-	var chartW = $('.chartBox').width();//chart盒子宽
-	// var chartOptionObj = {	//保存chart配置项参数
-	// 		xAxisData : [],
-	// 		yAxisName : "",
-	// 		series : [],
-	// 		legend : []
-	// };
+	//**************************************************************
 	function dataInit(){
-			var chartOptionObj = {	//保存chart配置项参数
-					xAxisData : [],
-					yAxisName : "",
-					series : [],
-					legend : []
-			};
-			//**************************************************************
+			var statDays = 10;
 			var chartBoxs = $("#myChart").attr("id");
 			var plantId = $("#plantId").val();//获取作物id
-			$(".market-date").each(function(index, el){
-					var name_ = $(this).text();//市场名字
-					var id_ = $(this).attr("data-id");//市场id
-					var statDays = $(this).attr("data-date");
-					var provinceId_ = $(this).attr("data-provinceId");
-					myChartInit(chartOptionObj, chartBoxs, plantId, id_, name_, statDays, index)
-			});
-			setTimeout(function(){
-					alert(JSON.stringify(chartOptionObj))
-					if (chartOptionObj.series.length = 0) {
-							$("#myChart").html('<span class="chartEmpty">暂无价格对比信息，换个条件看看吧~</span>');
-					}else{
-							createChart("myChart", chartOptionObj)
-					}
-			},1500)
+			var marketId0 = parseInt($("#market0").attr("data-id"));
+			var marketId1 = parseInt($("#market1").attr("data-id"));
+			var marketId2 = parseInt($("#market2").attr("data-id"));
+
+			var marketInfo = {
+					marketIds : [],
+					marketNames : []
+			};
+			if (marketId0 != "") {
+					marketInfo.marketIds.push(marketId0);
+					var marketName1 = $("#market0").text();
+					marketInfo.marketNames.push(marketName1);
+
+			};
+			if (marketId1 != "") {
+					marketInfo.marketIds.push(marketId1);
+					var marketName2 = $("#market1").text();
+					marketInfo.marketNames.push(marketName2);
+			};
+			if (marketId2 != "") {
+					marketInfo.marketIds.push(marketId2);
+					var marketName3 = $("#market2").text();
+					marketInfo.marketNames.push(marketName3);
+			};
+			myChartInit(chartBoxs, plantId, statDays, marketInfo)
+
 	};
 
-	//绘制图表
-	function myChartInit(chartOptionObj, boxId, plantId, marketId, marketName, statDays, index){
-			//获取chart数据data
-			getChartData(chartOptionObj, boxId, plantId, marketId, marketName, statDays, index);
-	}
-
 	//或取图表数据
-	function getChartData(chartOptionObj, boxId, plantId, marketId, marketName, statDays, index){
-			//alert(plantId+"********"+marketId+"*******"+statDays+"********"+url)
+	function myChartInit(boxId, plantId, statDays, marketInfo){
+			//alert(plantId+"********"+marketId+"*******"+statDays+"********"+index)
+			var myChart = echarts.init(document.getElementById("myChart"));
+			//显示加载进度
+			myChart.showLoading({
+					default: {
+						// text: 'loading',
+						color: '#c23531',
+						textColor: '#000',
+						maskColor: 'rgba(255, 255, 255, 0.8)',
+						zlevel: 0
+					}
+			});
+			//marketInfo.marketIds = [204,205,58];
 			var option = {
-					marketId : marketId,
-					categoryId : plantId,
-					statDays : statDays
+					marketIds : marketInfo.marketIds,
+					categoryId : 1,
+					statDays : 10
 			};
 			//alert(JSON.stringify(option))
 			pds.ajaxSubmit({
 					type: "GET",
-					url : "app/price/dayStat",
-					data : option,
+					url : "app/price/multiMarketDayStat",
+					data:{
+						 data : JSON.stringify(option),
+					},
+					//data : option,
 					success:function(e){
 							//alert("success");
 							//alert(JSON.stringify(e));
 							myChart.hideLoading();
 							if (e.status == "ok") {
 									if (e.data != "" && e.data != null && e.data != {}) {
-											createData(e.data, statDays, boxId, marketName, chartOptionObj, index);
+											var option_ = createData(e.data, statDays, boxId, myChart, marketInfo);
+											createChart(option_, myChart)
 									}else{
-											//$("#"+boxId).html('<span class="chartEmpty">暂无价格信息，换个条件看看吧~</span>')
+											$("#"+boxId).html('<span class="chartEmpty">暂无近期价格对比信息，换个条件看看吧~</span>')
 									}
 							}else {
 									//api.alert({msg: '获取数据失败，请重试！'});
-									//$("#"+boxId).html('<span class="chartEmpty">暂无价格信息，换个条件看看吧~</span>')
+									$("#"+boxId).html('<span class="chartEmpty">暂无近期价格对比信息，换个条件看看吧~</span>')
 
 							}
 
 					},
 					error : function(e){
 							//api.alert({msg: '获取数据失败，请重试！'});
-							//$("#"+boxId).html('<span class="chartEmpty">暂无价格信息，换个条件看看吧~</span>')
+							$("#"+boxId).html('<span class="chartEmpty">暂无近期价格对比信息，换个条件看看吧~</span>')
 
 					}
 			});
 	};
 
 	//解析数据
-	function createData(data, statDays, boxId, marketName, chartOptionObj, index){
+	function createData(data, statDays, boxId, myChart, marketInfo){
+			//alert(boxId+"********"+marketName+"*******"+statDays+"********"+index)
+			var chartOptionObj = {	//保存chart配置项参数
+					xAxisData : [],
+					yAxisName : "",
+					series : [],
+					legend : []
+			};
 			var dataList = data.list;
 			if (dataList != "" && dataList != null && dataList != []) {
 					//console.log("有数据啦*****************")
-					var seriesData = [];						//折线数据
 					for (var i = 0; i < dataList.length; i++) {
-							var date = dataList[i].statDate;
-							chartOptionObj.xAxisData[i] = date;//*********************
-							var price = dataList[i].price;
-							if (price == null) {
-									price = "无";
-							}else{
-									price = price.toFixed(2); //输出结果为两位小数
+							var lineData = dataList[i];//alert(JSON.stringify(lineData))
+							var seriesData = [];
+							var name = "";
+							if (lineData != "" && lineData != null && lineData != []) {
+									for (var j = 0; j < lineData.length; j++) {
+											//legend赋值
+											if (lineData[j].marketId != "" && lineData[j].marketId != null) {
+													var marketIds = marketInfo.marketIds;
+													var marketName = "";
+
+													name = (function(marketName_){
+															for (var k = 0; k < marketIds.length; k++) {
+																	if (marketIds[k] == lineData[j].marketId) {
+																			chartOptionObj.legend.push(marketInfo.marketNames[k]);
+																			marketName_ = marketInfo.marketNames[k];
+																	}
+															};
+															return marketName_
+													})(marketName);
+													//横纵坐标赋值
+													chartOptionObj.xAxisData[j] = lineData[j].statDate;
+													chartOptionObj.yAxisName = lineData[j].unit;
+													//series赋值
+
+													var price = lineData[j].price;
+													if (price == null) {
+															price = "无";
+													}else{
+															price = price.toFixed(2); //输出结果为两位小数
+													};
+													seriesData[j] = price;
+											};
+									}
+							}
+
+
+							var priceObj = {
+									name : name,
+									type :'line',
+									//stack : '总量',
+									data : seriesData
 							};
-							seriesData[i] = price;
-							chartOptionObj.yAxisName = dataList[i].unit;//************
+							chartOptionObj.series.push(priceObj);//*********************
 					};
 
-
-					chartOptionObj.legend[index] = marketName;//*********************
-					var priceObj = {
-							name : marketName,
-							type :'line',
-							stack : '总量',
-							data : seriesData
-					};
-					chartOptionObj.series[index] = priceObj;//*********************
 			}else{
 					console.log("空空如也")
 					//$("#"+boxId).html('<span class="chartEmpty">暂无近'+ statDays +'天价格对比，换个条件看看吧~</span>')
-			}
+			};
+			return chartOptionObj;
 
 	}
 
 	//创建图表
-	function createChart(boxId, chartOptionObj){
-			//alert(JSON.stringify(chartOptionObj));
+	function createChart(chartOptionObj, myChart){
+			//alert("chart数据***************"+JSON.stringify(chartOptionObj.series))
 			//alert(JSON.stringify(series));
+			if (chartOptionObj.series.length == 0 || chartOptionObj.xAxisData.length == 0) {
+					$("#myChart").html('<span class="chartEmpty">暂无近'+ 7 +'天价格对比，换个条件看看吧~</span>')
+					return;
+			};
 			//参数配置
 			var myOption = {
 					tooltip: {//弹窗
