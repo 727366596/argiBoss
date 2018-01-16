@@ -7,26 +7,51 @@
 		<title>内容详情页</title>
 		<link rel="stylesheet" href="../../css/common/public.css" />
 		<script type="text/javascript" src="../../script/common/rem.js"></script>
-		<script type="text/javascript" src="../../script/common/jquery.min.js"></script>
-
+		<script type="text/javascript" src="../../script/common/api.js"></script>
+		<style media="screen">
+			#box{
+				width: 100%;
+				overflow: hidden;
+				font-size: 0.28rem;
+					text-align: center;
+			}
+			#time{
+				text-align: right;
+		    padding: 0.1rem 0.4rem;
+		    box-sizing: border-box;
+			}
+			#author{
+				line-height: 0.6rem;
+		    font-size: 0.4rem;
+		    padding-top: 0.2rem;
+		    box-sizing: border-box;
+			}
+			.top{
+				margin-bottom: 0.2rem;
+		    border: 1px solid #ddd;
+			}
+		</style>
 
 
 	</head>
 	<body>
 		<div id="box">
-
-
+				<div class="top">
+					<div id="author">眼光</div>
+					<div id="time">2017-1-1</div>
+				</div>
+				<div id="content">111111111</div>
 
 		</div>
 
 		<script>
-				$(function(){
+		apiready = function() {
+				$api.html($api.byId('author'),api.pageParam.author)
+				$api.html($api.byId('time'),api.pageParam.time)
+				$api.html($api.byId('content'),api.pageParam.content)
 
+		}
 
-
-
-
-				})
 
 		</script>
 
