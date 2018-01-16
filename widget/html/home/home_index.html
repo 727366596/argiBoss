@@ -163,6 +163,9 @@
 			top:0;
 			width: 4.5rem;
 			height: 0.54rem;
+			font-size: 0.24rem;
+			line-height: 0.54rem;
+			color: #595C58;
 		}
 		#top>.noticeBanner>.bannerWrap2 .bannerWrap2_center .swiper-wrapper{
 			height: 100%;
@@ -657,11 +660,10 @@
 		<div class="noticeBanner">
 				<div  class="bannerWrap2">
 						<div class="bannerWrap2_left"></div>
-						<div class="swiper-container bannerWrap2_center" style="overflow-x:auto;">
-								<div class="swiper-wrapper">
-								</div>
+						<div class="bannerWrap2_center">
+							<marquee direction="left" ><div id="noticeTitle" style="color: #ccc;"></div></marquee>
 						</div>
-						<div class="bannerWrap2_right" onclick="openNoticelists()">更多</div>
+						<div class="bannerWrap2_right" id="noticeListMore">更多</div>
 				</div>
 		</div>
 	</div>
@@ -738,7 +740,7 @@
 			//轮播图****************************
 			homeBannerGet();
 			// 轮播（图片点击跳转页面）
-			JumpPage()
+			//JumpPage()
 			// 获取首页列表数据渲染HTML
 			getHomeList()
 
@@ -755,6 +757,7 @@
 			var map = api.require('bMap');
 			getLocation(map);
 			//$api.clearStorage();
+			getNoticeContent();
 	}
 
 	// 轮播 （请求后台数据）
@@ -965,6 +968,43 @@
 		}
 
 	}
+
+
+	//公告内容获取
+		function getNoticeContent(){
+			pds.ajaxSubmit({
+				url:"app/sys/get_adv",
+				data:{"code":'454e004d8db946d2969826bdaa41ff49',"place":'notice'},
+				success:function(e){
+					console.log('eeeeee'+JSON.stringify(e))
+					var data=e.data.data||[];
+					if(data.length>0){
+					   $('#noticeTitle').html(data[0].title)
+						 var dataList=data
+						 $('#noticeListMore').on('click',function(){
+							 noticeListMore(dataList)
+						 })
+					}
+				},
+				error:function(e){
+					api.alert({msg:"服务器错误，请联系管理员!"});
+				}
+			});
+		}
+
+		function noticeListMore(list){
+			api.openWin({
+				name:'noticeList_win',
+				url:'./noticeList_win.html',
+				slidBackEnabled : false,
+				pageParam:list,
+				animation : {
+					type : "movein", //动画类型（详见动画类型常量）
+					subType : "from_right", //动画子类型（详见动画子类型常量）
+					duration : 300 //动画过渡时间，默认300毫秒
+				}
+			})
+		}
 
 	//获取公告数据
 	function noticeData(){
