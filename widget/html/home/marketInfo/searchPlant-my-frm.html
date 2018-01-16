@@ -75,13 +75,20 @@
                               name: 'market-index-win',
                               script: 'plantDo("'+ plantName +'","'+ plantId +'")'
                           });
+                          api.execScript({
+                              name: 'market-index-win',
+                              frameName: api.pageParam.frmName,
+                              script: 'plantDo("'+ plantId +'","'+ plantName +'")'
+                          });
                           //调用win页面获取数据方法
                           api.execScript({
                               name: 'market-index-win',
                               frameName: api.pageParam.frmName,
                               script: 'dataInit()'
                           });
-                          api.closeWin();
+                          setTimeout(function(){
+                              api.closeWin();
+                          },500)
 
                       });
                   }else{

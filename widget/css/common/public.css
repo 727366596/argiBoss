@@ -1,5 +1,6 @@
 *{
-		font-family:PingFang SC Regular;
+		/*font-family:PingFang SC Regular;*/
+		font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
 		box-sizing:border-box;
 		margin: 0;
 		padding: 0;
