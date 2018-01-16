@@ -14,6 +14,8 @@
 				width: 100%;
 		    overflow: hidden;
 		    position: relative;
+				padding: 0 20px;
+				box-sizing: border-box;
 			}
 			.img_box{
 				overflow: hidden;
@@ -23,7 +25,9 @@
 			}
 			.img_box img{
 			width:100%;
+      height: 100%;
 			position:absolute;
+			border-radius: 20px;
 			}
 			.point{
 				list-style: none;
@@ -410,7 +414,7 @@
 			width:100%;
 			height: 0.68rem;
 			padding: 0 0.2rem 0 0.16rem;
-
+			box
 			display: -webkit-box;
 			display: -webkit-flex;
 			display:flex;
@@ -730,6 +734,7 @@
 <script type="text/javascript">
 
 	apiready=function(){
+
 			//轮播图****************************
 			homeBannerGet();
 			// 轮播（图片点击跳转页面）
@@ -754,11 +759,11 @@
 
 	// 轮播 （请求后台数据）
 	function homeBannerGet(){
-
 		pds.ajaxSubmit({
 			url:"app/sys/get_adv",
 			data:{"code":'003',"place":'home'},
 			success:function(e){
+					// alert(JSON.stringify(e))
 				// alert(JSON.stringify(e.data.data))
 				if(e.data !== null && e.data !== ''){
 					var data = e.data.data || '';
@@ -837,20 +842,24 @@
 	}
 
 	// 轮播（图片点击跳转页面）
-	function JumpPage() {
+	function JumpPage(url) {
+
 		$('.img_box').on('click','img',function() {
-			api.openWin({
-				name:'advertisement_win',
-				url:'../advertisement_win.html',
-				pageParam:{
-					url:$(this).attr('data-id')
-				}
-			})
-	})
+			if($(this).attr('data-id')){
+				// alert($(this).attr('data-id'))
+				api.openWin({
+					name:'advertisement_win',
+					url:'../advertisement_win.html',
+					pageParam:{
+						url:$(this).attr('data-id')
+					}
+				})
+			}else {
+				// alert('meiyou ')
+			}
 
-
+		})
 	}
-
 
 	// 点击更多跳转列表
 	function goToList(){
@@ -875,7 +884,7 @@
 			url:"app/sys/get_adv",
 			data:{"code":'003',"place":'list'},
 			success:function(e){
-
+						// alert(JSON.stringify(e))
 				if(e.data !== null && e.data !== ''){
 
 					var data = e.data.data || '';
@@ -884,15 +893,22 @@
 						var techDataStr = ''
 						for(var i = 0; i <= 1; i++){
 
-							techDataStr += '<li data-id="'+ data[i].url +'" onclick="goToDetail(this)">'+
+							if(data[i].contentTypeName == ''){
+								data[i].contentTypeName = '广告'
+							}
+
+							techDataStr += '<li type="'+ data[i].type +'" onclick="goToDetail(this)">'+
 								'<div class="transfer_content_left">'+
+									'<div class="data-content" style="display:none;">'+ data[i].content +'</div>'+
+									'<div class="data-url" style="display:none;">'+ data[i].url +'</div>'+
+									'<div class="data-author" style="display:none;">'+ data[i].author +'</div>'+
 									'<div class="transfer_content_info">'+
-										'<p style="word-wrap:break-word;">'+ data[i].title +'</p>'+
+										'<p style="word-wrap:break-word;" class="data-title">'+ data[i].title +'</p>'+
 										'</div>'+
-										'<div class="transfer_content_time"><p><span></span><span style="margin-left:10px;">'+ (data[i].publishDate).split(" ")[0] +'</span><span style="margin-left:20px;"></span></p></div>'+
+										'<div class="transfer_content_time"><p><span>'+ data[i].contentTypeName +'</span><span style="margin-left:10px;" class="data-date">'+ (data[i].publishDate).split(" ")[0] +'</span><span style="margin-left:20px;"></span></p></div>'+
 										'</div>'+
 										'<div class="transfer_content_right"><img style="" src="'+ data[i].pictureUrl +'"></div>'+
-										'</li>';
+										'</li>'
 									}
 
 									$(".transfer_content ul").html(techDataStr)
@@ -909,21 +925,45 @@
 
 	// 首页列表点击跳转
 	function goToDetail(node) {
-		alert(111111111111)
-		var obj ={
-			url:$('#'+node).attr('data-id')
-		}
-		api.openWin({
-			name:'advertisement_win',
-			url:'../advertisement_win.html',
-			pageParam:obj,
-			slidBackEnabled : false,
-			animation : {
-				type : "movein", //动画类型（详见动画类型常量）
-				subType : "from_right", //动画子类型（详见动画子类型常量）
-				duration : 300 //动画过渡时间，默认300毫秒
+		// alert($(node).attr('type'))
+		var type = $(node).attr('type')
+		if(type == 'news_adv'){
+		// 跳转内容
+			var obj ={
+				content:$(node).find('.data-content').html(),
+				title:$(node).find('.data-title').html(),
+				author:$(node).find('.data-author').html(),
+				time:$(node).find('.data-date').html()
 			}
-		})
+			api.openWin({
+				name:'content-detail_win',
+				url:'./content-detail_win.html',
+				pageParam:obj,
+				slidBackEnabled : false,
+				animation : {
+					type : "movein", //动画类型（详见动画类型常量）
+					subType : "from_right", //动画子类型（详见动画子类型常量）
+					duration : 300 //动画过渡时间，默认300毫秒
+				}
+			})
+		}else {
+		// 跳转url
+			var obj ={
+				url:$(node).find('.data-url').html()
+			}
+			api.openWin({
+				name:'advertisement_win',
+				url:'../advertisement_win.html',
+				pageParam:obj,
+				slidBackEnabled : false,
+				animation : {
+					type : "movein", //动画类型（详见动画类型常量）
+					subType : "from_right", //动画子类型（详见动画子类型常量）
+					duration : 300 //动画过渡时间，默认300毫秒
+				}
+			})
+		}
+
 	}
 
 	//获取公告数据
