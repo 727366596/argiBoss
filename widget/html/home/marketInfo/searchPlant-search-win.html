@@ -364,17 +364,17 @@
 															frameName: api.pageParam.frmName,
 															script: 'plantDo("'+ plantId +'","'+ plantName +'")'
 													});
+													//调用win页面获取数据方法
+													api.execScript({
+															name: 'market-index-win',
+															frameName: api.pageParam.frmName,
+															script: 'dataInit()'
+													});
 													setTimeout(function(){
-															//调用win页面获取数据方法
-															api.execScript({
-																	name: 'market-index-win',
-																	frameName: api.pageParam.frmName,
-																	script: 'dataInit()'
-															});
 															api.closeToWin({
 															    name: 'market-index-win'
 															});
-													},300)
+													},500)
 
 											});
 									}else{

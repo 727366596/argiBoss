@@ -235,7 +235,7 @@
 					getMarket();
 			};
 
-			dataInit()
+			dataInit();
 
 
 	};
@@ -331,7 +331,8 @@
 
 	//创建折线图
 	//**************************************************************
-	function dataInit(){
+	function dataInit(){//alert("morePrice")
+		  $("#myChart").html('');
 			var statDays = 10;
 			var chartBoxs = $("#myChart").attr("id");
 			var plantId = $("#plantId").val();//获取作物id
@@ -339,26 +340,25 @@
 			var marketId1 = parseInt($("#market1").attr("data-id"));
 			var marketId2 = parseInt($("#market2").attr("data-id"));
 
-			var marketInfo = {
-					marketIds : [],
-					marketNames : []
-			};
+			var marketInfo = {};
 			if (marketId0 != "") {
-					marketInfo.marketIds.push(marketId0);
+					//marketInfo.marketIds.push(marketId0);
 					var marketName1 = $("#market0").text();
-					marketInfo.marketNames.push(marketName1);
-
+					//marketInfo.marketNames.push(marketName1);
+					marketInfo[marketId0] = marketName1;
 			};
 			if (marketId1 != "") {
-					marketInfo.marketIds.push(marketId1);
+					//marketInfo.marketIds.push(marketId0);
 					var marketName2 = $("#market1").text();
-					marketInfo.marketNames.push(marketName2);
+					//marketInfo.marketNames.push(marketName1);
+					marketInfo[marketId1] = marketName2;
 			};
 			if (marketId2 != "") {
-					marketInfo.marketIds.push(marketId2);
+					//marketInfo.marketIds.push(marketId0);
 					var marketName3 = $("#market2").text();
-					marketInfo.marketNames.push(marketName3);
-			};
+					//marketInfo.marketNames.push(marketName1);
+					marketInfo[marketId2] = marketName3;
+			};//alert(JSON.stringify(marketInfo))
 			myChartInit(chartBoxs, plantId, statDays, marketInfo)
 
 	};
@@ -367,6 +367,7 @@
 	function myChartInit(boxId, plantId, statDays, marketInfo){
 			//alert(plantId+"********"+marketId+"*******"+statDays+"********"+index)
 			var myChart = echarts.init(document.getElementById("myChart"));
+			myChart.clear();//创建echart实例后，先清空实例（实例依然可用，只是清除数据）；
 			//显示加载进度
 			myChart.showLoading({
 					default: {
@@ -377,9 +378,9 @@
 						zlevel: 0
 					}
 			});
-			//marketInfo.marketIds = [204,205,58];
+			var marketIds = Object.keys(marketInfo);
 			var option = {
-					marketIds : marketInfo.marketIds,
+					marketIds : marketIds,
 					categoryId : 1,
 					statDays : 10
 			};
@@ -397,21 +398,26 @@
 							myChart.hideLoading();
 							if (e.status == "ok") {
 									if (e.data != "" && e.data != null && e.data != {}) {
+											//获得图表数据
 											var option_ = createData(e.data, statDays, boxId, myChart, marketInfo);
+											//调用图表绘制方法
 											createChart(option_, myChart)
 									}else{
+											myChart.dispose();
 											$("#"+boxId).html('<span class="chartEmpty">暂无近期价格对比信息，换个条件看看吧~</span>')
 									}
 							}else {
+									myChart.dispose();
 									//api.alert({msg: '获取数据失败，请重试！'});
-									$("#"+boxId).html('<span class="chartEmpty">暂无近期价格对比信息，换个条件看看吧~</span>')
+									$("#"+boxId).html('<span class="chartEmpty">获取数据失败，请重试~</span>')
 
 							}
 
 					},
 					error : function(e){
+							myChart.dispose();
 							//api.alert({msg: '获取数据失败，请重试！'});
-							$("#"+boxId).html('<span class="chartEmpty">暂无近期价格对比信息，换个条件看看吧~</span>')
+							$("#"+boxId).html('<span class="chartEmpty">获取数据失败，请重试~</span>')
 
 					}
 			});
@@ -437,18 +443,9 @@
 									for (var j = 0; j < lineData.length; j++) {
 											//legend赋值
 											if (lineData[j].marketId != "" && lineData[j].marketId != null) {
-													var marketIds = marketInfo.marketIds;
-													var marketName = "";
-
-													name = (function(marketName_){
-															for (var k = 0; k < marketIds.length; k++) {
-																	if (marketIds[k] == lineData[j].marketId) {
-																			chartOptionObj.legend.push(marketInfo.marketNames[k]);
-																			marketName_ = marketInfo.marketNames[k];
-																	}
-															};
-															return marketName_
-													})(marketName);
+													var marketId = lineData[j].marketId;
+													var marketName = marketInfo[marketId];
+													chartOptionObj.legend[i] = marketName;
 													//横纵坐标赋值
 													chartOptionObj.xAxisData[j] = lineData[j].statDate;
 													chartOptionObj.yAxisName = lineData[j].unit;
@@ -465,29 +462,31 @@
 									}
 							}
 
-
+							//变量保存chart——series数据
 							var priceObj = {
 									name : name,
 									type :'line',
 									//stack : '总量',
 									data : seriesData
 							};
-							chartOptionObj.series.push(priceObj);//*********************
+							chartOptionObj.series[i] = priceObj;//*********************
 					};
 
 			}else{
 					console.log("空空如也")
 					//$("#"+boxId).html('<span class="chartEmpty">暂无近'+ statDays +'天价格对比，换个条件看看吧~</span>')
 			};
+			//数据处理完毕，返回图表所需数据对象
 			return chartOptionObj;
 
 	}
 
 	//创建图表
 	function createChart(chartOptionObj, myChart){
-			//alert("chart数据***************"+JSON.stringify(chartOptionObj.series))
-			//alert(JSON.stringify(series));
+			//alert("chart数据***************"+JSON.stringify(chartOptionObj))
 			if (chartOptionObj.series.length == 0 || chartOptionObj.xAxisData.length == 0) {
+					//如果空值，则不绘制图表，并销毁之前创建echart实例；很重要，否则数据该表后，新绘制的图表展现不出来；
+					myChart.dispose();
 					$("#myChart").html('<span class="chartEmpty">暂无近'+ 7 +'天价格对比，换个条件看看吧~</span>')
 					return;
 			};
@@ -543,10 +542,6 @@
 					width : chartW,
 					height : chartH
 			});
-			// setTimeout(function(){
-			// 		myChart.hideLoading();
-			// },1500);
-
 	};
 
 	//打开市场页面***************************************************

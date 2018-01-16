@@ -303,7 +303,7 @@
 
 	//创建折线图
 
-	function dataInit(){
+	function dataInit(){//alert("marketPrice")
 			var chartBoxs = $(".chartBox");
 			var plantId = $("#plantId").val();//获取作物id
 			//var plantId = $api.getStorage('plant').id;
@@ -356,9 +356,10 @@
 
 	//或取图表数据
 	function getChartData(boxId, plantId, marketId, statDays, url){
-			//console.log(plantId+"********"+marketId+"*******"+statDays+"********"+url)
-			//初始化图表
+			console.log(plantId+"********"+marketId+"*******"+statDays+"********"+url)
+			// //初始化图表
 			var myChart = echarts.init(document.getElementById(boxId));
+			myChart.clear();
 			//显示加载进度
 			myChart.showLoading({
 					default: {
@@ -394,18 +395,22 @@
 							if (e.status == "ok") {
 									if (e.data != "" && e.data != null && e.data != {}) {
 											var optionData = createData(e.data, statDays, boxId, myChart);
-											createChart(boxId, optionData, myChart)
+											//alert(JSON.stringify(optionData));
+											createChart(boxId, optionData, myChart, statDays)
 									}else{
-											$("#"+boxId).html('<span class="chartEmpty">暂无价格信息，换个条件看看吧~</span>')
+											myChart.dispose();
+											$("#"+boxId).html('<span class="chartEmpty">暂无同期价格信息，换个条件看看吧~</span>')
 									}
 							}else {
-									api.alert({msg: '获取数据失败，请重试！'});
+									myChart.dispose();
+									//api.alert({msg: '获取数据失败，请重试！'});
 									$("#"+boxId).html('<span class="chartEmpty">获取数据失败，请重试~</span>')
 							}
 
 					},
 					error : function(e){
-							api.alert({msg: '获取数据失败，请重试！'});
+							myChart.dispose();
+							//api.alert({msg: '获取数据失败，请重试！'});
 							$("#"+boxId).html('<span class="chartEmpty">获取数据失败，请重试~</span>')
 					}
 			});
@@ -422,11 +427,6 @@
 			if (statDays == "") {//去年同期
 					//console.log("去年同期啦*****************")
 					var thisYearList = data.thisYear;//今年数据
-
-					// var xAxisData = [], 						//X轴数据
-					// 		series = [], 								//折线数组
-					// 		legend = [],								//图例数据
-					// 		yAxisName = "";	//Y轴顶部单位
 					//今年统计数据
 					if (thisYearList != "" && thisYearList != null && thisYearList != []) {
 							var thisYearSeriesData = [];//今年折线数据
@@ -518,9 +518,19 @@
 	}
 
 	//创建图表
-	function createChart(boxId, chartOptionObj, myChart){
-			//alert(JSON.stringify(xAxisData));
+	function createChart(boxId, chartOptionObj, myChart, statDays){
 			//alert(boxId+"***************"+JSON.stringify(chartOptionObj));
+			if (chartOptionObj.series.length == 0 || chartOptionObj.xAxisData.length == 0) {console.log("哈哈")
+					//如果空值，则不绘制图表，并销毁之前创建echart实例；很重要，否则数据该表后，新绘制的图表展现不出来；
+					myChart.dispose();
+					if (statDays == "") {
+							statDays = "去年同期";
+					}else{
+							statDays = "近"+statDays+"天";
+					};
+					$("#"+boxId).html('<span class="chartEmpty">暂无'+ statDays +'价格信息，换个条件看看吧~</span>')
+					return;
+			};
 			//参数配置
 			var myOption = {
 					tooltip: {//弹窗
@@ -568,15 +578,11 @@
 			// 使用刚指定的option配置项和数据显示图表。
 			myChart.setOption(myOption);
 			//固定图表大小
-			console.log(boxId+"***************"+chartW+"******"+chartH)
+			//console.log(boxId+"***************"+chartW+"******"+chartH)
 			myChart.resize({
 					width : chartW,
 					height : chartH
 			});
-			// setTimeout(function(){
-			// 		myChart.hideLoading();
-			// },2000);
-
 	}
 
 	//打开市场页面***************************************************
