@@ -7,44 +7,24 @@
 	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
 	<link rel="stylesheet" type="text/css" href="../../css/common/reset.css">
 	<link rel="stylesheet" type="text/css" href="../../css/common/api.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/common/swipeslider.css">
 	<script type="text/javascript" src="../../script/common/rem.js"></script>
 	<style type="text/css">
-	/*轮播*/
-			.banner{
+   	/***************DW*****************************************************************************/
+			.fixed-top{
+					position: fixed;
+					top:0;
+					width: 100%;
+					height: 0.48rem;
+					background: #f3f3f3;
+					z-index: 999999;
+			}
+   	/*轮播*/
+			.swipslider .sw-slide img{
 				width: 100%;
-		    overflow: hidden;
-		    position: relative;
-				padding: 0 20px;
-				box-sizing: border-box;
+				height: 100%;
 			}
-			.img_box{
-				overflow: hidden;
-				width: 100%;
-				height: 3.4rem;
-				position: relative;
-			}
-			.img_box img{
-			width:100%;
-      height: 100%;
-			position:absolute;
-			border-radius: 20px;
-			}
-			.point{
-				list-style: none;
-		    position: absolute;
-		    left: 50%;
-		    top: 89%;
-		    overflow: hidden;
-			}
-			.point li{
-				float: left;
-				margin:0 0.15rem;
-				width: 0.2rem;
-				height: 0.2rem;
-				border-radius: 50%;
-				background: #eee;
-			}
-
+	  /***************DW*****************************************************************************/
 			body{
 				overflow-x: hidden;
 				background: #f8f8f8;
@@ -54,10 +34,10 @@
 			position: relative;
 			width:100%;
 			height: 3.97rem;
-			background-image: url(../../image/home_banner_bc2.jpg);
+			/*background-image: url(../../image/home_banner_bc2.jpg);
 			background-size: 100% 100%;
 			background-position: center center;
-			background-repeat: no-repeat;
+			background-repeat: no-repeat;*/
 			padding-top: 0.48rem;
 			padding-bottom: 0.17rem;
 		}
@@ -644,18 +624,29 @@
 	</div>
 
 	<div id="top">
+		<!--**************DW**************************************************************************** -->
+		<div class="fixed-top"></div>
 		<!-- <div class="swiper-container bannerWrap1">
 				<div class="swiper-wrapper">
 				</div>
 		</div> -->
-		<div class="banner">
-				<!-- 轮播图 -->
-				<div class="img_box">
-					<img src="../../image/home_banner1.png" />
-				</div>
-				 <ul class="point" >
-				</ul>
-		</div>
+
+			<article class="container" style="height:3.4rem;overflow:hidden;">
+		    <section style="height: 100%;">
+		      <figure id="full_feature" class="swipslider">
+		        <ul class="sw-slides">
+   						<li class="sw-slide">
+								<img src="../../image/home_banner1.png" />
+							</li>
+
+		        </ul>
+		      </figure>
+
+		    </section>
+
+		  </article>
+			<!--**************DW**************************************************************************** -->
+
 		<!-- <div class="swiper-pagination"></div> -->
 		<div class="noticeBanner">
 				<div  class="bannerWrap2">
@@ -732,6 +723,7 @@
 <script type="text/javascript" src="../../script/common/api.js"></script>
 <script type="text/javascript" src="../../script/common/jquery.min.js"></script>
 <script type="text/javascript" src="../../script/common/pds.ajax.js"></script>
+	<script type="text/javascript" src="../../script/common/swipeslider.min.js"></script>
 <!-- <script type="text/javascript" src="../../script/common/scrollToTop.js"></script> -->
 <script type="text/javascript">
 
@@ -759,9 +751,10 @@
 			//$api.clearStorage();
 			getNoticeContent();
 	}
-
+//**************DW****************************************************************************//
 	// 轮播 （请求后台数据）
 	function homeBannerGet(){
+
 		pds.ajaxSubmit({
 			url:"app/sys/get_adv",
 			data:{"code":'003',"place":'home'},
@@ -773,11 +766,17 @@
 					if(data.length > 0){
 						var img = ''
 						for(var i = 0; i < data.length; i++){
-							img +='<img data-id="'+data[i].url+'" src="'+data[i].pictureUrl+'" />'
+							img += '<li class="sw-slide"><img data-id="'+data[i].url+'" src="'+data[i].pictureUrl+'"></li>'
 						}
-						$('.img_box').html(img)
+						$('.sw-slides').html(img)
 						// img渲染成功后调用轮播功能
-						Banner()
+						$('#full_feature').swipeslider({
+			        transitionDuration: 600,
+			        autoPlayTimeout: 3000,
+			        sliderHeight: '300px',
+			        prevNextButtons:false
+			      });
+
 					}
 				}
 			},
@@ -787,74 +786,17 @@
 		});
 	}
 
-	// 轮播功能
-	function Banner(){
-		var img=$(".img_box img");
-		var divW=$(".img_box").width();
-		var len=$(".img_box img").length;
-		for(var i = 0; i < len;i++){
-			$('.point').append('<li></li>')
-		}
-		var li=$(".point li");
-
-		$('.point').css('marginLeft',-$('.point').width()/2)
-
-		img.css("left",divW);
-		img.eq(0).css("left",0);
-		li.eq(0).css("background","#333");
-		var index=0;
-		var next=0;
-		function show(){
-			next++;
-			if(next==len){
-				next=0;
-			}
-			img.eq(next).css("left",divW);
-			img.eq(index).animate({"left":-divW});
-			img.eq(next).animate({"left":0});
-			li.eq(next).css("background","#333");
-			li.eq(index).css("background","#eee");
-			index=next;
-		}
-		t=setInterval(show,3000);
-		//小圆点 点击
-		li.click(function(){
-			num=$(this).index();
-			if(num==next){
-				return;
-			}else if(num<next){
-				// clearInterval(t);
-				img.eq(num).css("left",-divW);
-				img.eq(index).animate({"left":divW});
-				img.eq(num).animate({"left":0});
-				li.eq(num).css("background","#333");
-				li.eq(index).css("background","#eee");
-				index=num;
-				next=num;
-			}else if(num>next){
-				// clearInterval(t);
-				img.eq(num).css("left",divW);
-				img.eq(index).animate({"left":-divW});
-				img.eq(num).animate({"left":0});
-				li.eq(num).css("background","#333");
-				li.eq(index).css("background","#eee");
-				index=num;
-				next=num;
-			}
-		})
-	}
-
 	// 轮播（图片点击跳转页面）
-	function JumpPage(url) {
+	function JumpPage() {
 
-		$('.img_box').on('click','img',function() {
-			if($(this).attr('data-id')){
+		 $('.sw-slides').on('click','.sw-slide',function() {
+			if($(this).find('img').attr('data-id')){
 				// alert($(this).attr('data-id'))
 				api.openWin({
 					name:'advertisement_win',
 					url:'../advertisement_win.html',
 					pageParam:{
-						url:$(this).attr('data-id')
+						url:$(this).find('img').attr('data-id')
 					}
 				})
 			}else {
@@ -969,7 +911,7 @@
 
 	}
 
-
+//**************DW****************************************************************************//
 	//公告内容获取
 		function getNoticeContent(){
 			pds.ajaxSubmit({
