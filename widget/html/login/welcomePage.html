@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>启动页</title>
+	<style media="screen">
+		html,
+		body {
+			width: 100%;
+			height: 100%;
+			background: #fdfdfd;
+			overflow: hidden;
+			margin: 0;
+			padding: 0;
+		}
+
+		.jump {
+			position: absolute;
+			top: 30px;
+			right: 10px;
+			background: #cdcdcd;
+			width: 40px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 14px;
+			text-align: center;
+			border-radius: 50%;
+		}
+
+		span {
+			display: inline-block;
+		}
+
+		img {
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+	<script type="text/javascript" src="../../script/common/rem.js"></script>
+	<script type="text/javascript" src="../../script/common/api.js"></script>
+	<script type="text/javascript" src="../../script/common/jquery.min.js"></script>
+	<script type="text/javascript" src="../../script/common/pds.ajax.js"></script>
+</head>
+
+<body>
+	<img src="../../image/start.jpg" alt="">
+	<div class="jump">跳过</div>
+</body>
+
+<script type="text/javascript">
+	apiready = function() {
+		api.parseTapmode();
+		api.setFullScreen({
+			fullScreen: true
+		});
+		jumpLogin()
+	 	advImg()
+		api.addEventListener({
+			name: 'openLogin'
+		}, function(ret, err) {
+			if (ret) {
+				jumpSlogin()
+			}
+		});
+
+	};
+  var url
+	function advImg() {
+		var systemType = api.systemType;
+		pds.ajaxSubmit({
+			url: "app/sys/get_adv",
+			data: {
+				"code": '003',
+				"place": 'start'
+			},
+			success: function(e) {
+				console.log('++++++++' + JSON.stringify(e))
+				var data = e.data.data || []
+				if (data.length > 0) {
+					var pictureUrl = data[0].pictureUrl
+					url = data[0].url
+					$('img').attr('src', pictureUrl)
+					$('img').on('click', jumpPage)
+				}
+			},
+			error: function(e) {
+				api.alert({
+					msg: "服务器错误，请联系管理员!"
+				});
+			}
+		});
+
+	}
+	var settime;
+
+	function jumpLogin() {
+		settime = setTimeout(function() {
+			api.openWin({
+				name: "login_new",
+				url: "widget://html/login/login_new.html",
+				reload: true,
+				slidBackEnabled: false,
+				animation: {
+					type: "movein", //动画类型（详见动画类型常量）
+					subType: "from_right", //动画子类型（详见动画子类型常量）
+					duration: 400 //动画过渡时间，默认300毫秒
+				}
+			});
+		}, 5000)
+	}
+
+	function jumpSlogin() {
+		api.openWin({
+			name: "login_new",
+			url: "widget://html/login/login_new.html",
+			reload: true,
+			slidBackEnabled: false,
+			animation: {
+				type: "movein", //动画类型（详见动画类型常量）
+				subType: "from_right", //动画子类型（详见动画子类型常量）
+				duration: 400 //动画过渡时间，默认300毫秒
+			}
+		});
+	}
+	$('.jump').on('click', jumpSlogin)
+
+	function jumpPage() {
+		api.openWin({
+			name: 'startPage_win',
+			url: './startPage.html',
+			pageParam: {
+				url: url
+			},
+			animation: {
+				type: "movein", //动画类型（详见动画类型常量）
+				subType: "from_right", //动画子类型（详见动画子类型常量）
+				duration: 400 //动画过渡时间，默认300毫秒
+			}
+		});
+		clearTimeout(settime)
+	}
+</script>
+
+</html>
