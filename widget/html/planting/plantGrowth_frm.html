@@ -995,8 +995,8 @@
 				authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
 		},
 			url:pds.defaultUri + 'app/plantStat/planInvestment',
-			//data:{values:{categoryId:categoryId,farmId:farmId,startDate:startDate,endDate:endDate}}
-			data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
+			data:{values:{categoryId:categoryId,farmId:farmId,startDate:startDate,endDate:endDate}}
+			//data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
 		},function(ret,err){
 			if(ret){
 							var plan=ret.data
