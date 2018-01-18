@@ -5,10 +5,11 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
 	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	
+	<script type="text/javascript" src="../../script/common/rem.js"></script>
 	<link rel="stylesheet" type="text/css" href="../../css/common/reset.css">
 	<link rel="stylesheet" type="text/css" href="../../css/common/api.css"/>
 	<link rel="stylesheet" type="text/css" href="../../css/common/swipeslider.css">
-	<script type="text/javascript" src="../../script/common/rem.js"></script>
 	<style type="text/css">
    	/***************DW*****************************************************************************/
 			.fixed-top{
@@ -702,7 +703,7 @@
 	<div id="wrapper">
 			<div class="transfer_head">
 					<div><span></span>技术推广</div>
-					<div onclick="goToList()"><span style="color: #00cd5a">更多</span><span></span></div>
+					<div id="gotolist"><span style="color: #00cd5a">更多</span><span></span></div>
 			</div>
 			<div class="transfer_content scroller">
 					<ul>
@@ -744,6 +745,11 @@
 			JumpPage()
 			// 获取首页列表数据渲染HTML
 			getHomeList(code)
+			// 点击更多跳转列表
+			$('#gotolist').on('click',function(){
+				goToList(code)
+			})
+
 
 			//种植工单—数据渲染
 			refreshStatusList();
@@ -769,7 +775,7 @@
 			data:{"code":code,"place":'home'},
 			success:function(e){
 					// alert(JSON.stringify(e))
-				// alert(JSON.stringify(e.data.data))
+				console.log('hhhhhhhhhhhhhhhhhhhhhhh'+JSON.stringify(e.data.data))
 				if(e.data !== null && e.data !== ''){
 					var data = e.data.data || '';
 					if(data.length > 0){
@@ -778,13 +784,15 @@
 							img += '<li class="sw-slide"><img data-id="'+data[i].url+'" src="'+data[i].pictureUrl+'"></li>'
 						}
 						$('.sw-slides').html(img)
-						// img渲染成功后调用轮播功能
-						$('#full_feature').swipeslider({
-			        transitionDuration: 600,
-			        autoPlayTimeout: 3000,
-			        sliderHeight: '300px',
-			        prevNextButtons:false
-			      });
+						if(data.length >1){
+							// img渲染成功后调用轮播功能
+							$('#full_feature').swipeslider({
+								transitionDuration: 600,
+								autoPlayTimeout: 3000,
+								sliderHeight: '300px',
+								prevNextButtons:false
+							});
+						}
 
 					}
 				}
@@ -813,22 +821,6 @@
 			}
 
 		})
-	}
-
-	// 点击更多跳转列表
-	function goToList(){
-
-		api.openWin({
-			name:'a-list_win',
-			url:'./a-list_win.html',
-			slidBackEnabled : false,
-			animation : {
-				type : "movein", //动画类型（详见动画类型常量）
-				subType : "from_right", //动画子类型（详见动画子类型常量）
-				duration : 300 //动画过渡时间，默认300毫秒
-			}
-		})
-
 	}
 
 	// 获取首页列表数据渲染HTML
@@ -919,6 +911,26 @@
 		}
 
 	}
+
+	// 点击更多跳转列表
+	function goToList(code){
+
+		api.openWin({
+			name:'a-list_win',
+			url:'./a-list_win.html',
+			pageParam:{
+				code:code
+			},
+			slidBackEnabled : false,
+			animation : {
+				type : "movein", //动画类型（详见动画类型常量）
+				subType : "from_right", //动画子类型（详见动画子类型常量）
+				duration : 300 //动画过渡时间，默认300毫秒
+			}
+		})
+
+	}
+
 
 //**************DW****************************************************************************//
 	//公告内容获取

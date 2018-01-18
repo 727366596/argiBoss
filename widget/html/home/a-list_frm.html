@@ -96,16 +96,17 @@
 	<script type="text/javascript">
 
 		apiready=function(){
-
+				var code = api.pageParam.code
+				// alert(code)
 				// 获取首页列表数据渲染HTML
-				getHomeList()
+				getHomeList(code)
 		}
 		// 获取首页列表数据渲染HTML
-		function getHomeList() {
+		function getHomeList(code) {
 
 			pds.ajaxSubmit({
 				url:"app/sys/get_adv",
-				data:{"code":'003',"place":'list'},
+				data:{"code":code,"place":'list'},
 				success:function(e){
 							// alert(JSON.stringify(e))
 					if(e.data !== null && e.data !== ''){
