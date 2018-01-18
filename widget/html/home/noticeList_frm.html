@@ -95,7 +95,7 @@
 		var html = ''
 		for (var i = 0, len = data.length; i < len; i++) {
 			var time = data[i].pubdate.split(' ')[0];
-			html += '<li  onclick="checkdetail(this)"><div class="left_img"><span class="none">'+data[i].content+'</span></div><div class="right_content"><div class="title">' +
+			html += '<li id="'+data[i].id+'" onclick="checkdetail(this)"><div class="left_img"><span class="none">'+data[i].content+'</span></div><div class="right_content"><div class="title">' +
 				'<span class="left name">' + data[i].author + '</span>' +
 				'<span class="right time">' + time + '</span>' +
 				'</div><div class="title header">' + data[i].title + '</div></div></li>'
@@ -108,7 +108,8 @@
 			content:$(obj).find('.none').html(),
       title:$(obj).find('.header').html(),
 			author:$(obj).find('.name').html(),
-			time:$(obj).find('.time').html()
+			time:$(obj).find('.time').html(),
+			id:$(obj).attr('id')
 		}
 		api.openWin({
 			name:'content-detail_win',

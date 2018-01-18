@@ -760,7 +760,7 @@
 			data:{"code":'003',"place":'home'},
 			success:function(e){
 					// alert(JSON.stringify(e))
-				// alert(JSON.stringify(e.data.data))
+				alert(JSON.stringify(e.data.data))
 				if(e.data !== null && e.data !== ''){
 					var data = e.data.data || '';
 					if(data.length > 0){
@@ -829,7 +829,7 @@
 			url:"app/sys/get_adv",
 			data:{"code":'003',"place":'list'},
 			success:function(e){
-						// alert(JSON.stringify(e))
+						alert(JSON.stringify(e))
 				if(e.data !== null && e.data !== ''){
 
 					var data = e.data.data || '';
@@ -842,7 +842,7 @@
 								data[i].contentTypeName = '广告'
 							}
 
-							techDataStr += '<li type="'+ data[i].type +'" onclick="goToDetail(this)">'+
+							techDataStr += '<li type="'+ data[i].type +'" id="'+data[i].id+'" onclick="goToDetail(this)">'+
 								'<div class="transfer_content_left">'+
 									'<div class="data-content" style="display:none;">'+ data[i].content +'</div>'+
 									'<div class="data-url" style="display:none;">'+ data[i].url +'</div>'+
@@ -878,7 +878,8 @@
 				content:$(node).find('.data-content').html(),
 				title:$(node).find('.data-title').html(),
 				author:$(node).find('.data-author').html(),
-				time:$(node).find('.data-date').html()
+				time:$(node).find('.data-date').html(),
+				id:$(node).attr('id')
 			}
 			api.openWin({
 				name:'content-detail_win',
