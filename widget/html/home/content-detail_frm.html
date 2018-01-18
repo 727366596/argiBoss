@@ -14,17 +14,15 @@
 				overflow: hidden;
 				font-size: 0.28rem;
 			}
-			#time{
-				text-align: right;
-		    padding: 0.1rem 0.4rem;
-		    box-sizing: border-box;
-			}
-			#author{
+			#title{
 				line-height: 0.6rem;
 		    font-size: 0.4rem;
 		    padding-top: 0.2rem;
 		    box-sizing: border-box;
 					text-align: center;
+			}
+			#author{
+		    margin-right: 0.4rem;
 			}
 			.top{
 				margin-bottom: 0.2rem;
@@ -34,6 +32,16 @@
 				padding: 0 0.2rem;
 				box-sizing: border-box;
 			}
+			.center{
+				width: 100%;
+				line-height: 1rem;
+				padding: 0 0.4rem;
+				box-sizing: border-box;
+				text-align: right;
+			}
+			.center div{
+				display: inline-block;
+			}
 		</style>
 
 
@@ -41,8 +49,12 @@
 	<body>
 		<div id="box">
 				<div class="top">
-					<div id="author"></div>
-					<div id="time"></div>
+					<div id="title"></div>
+					<div class="center">
+						<div id="author"></div>
+						<div id="time"></div>
+					</div>
+
 				</div>
 				<div id="content"></div>
 
@@ -53,6 +65,7 @@
 				$api.html($api.byId('author'),api.pageParam.author)
 				$api.html($api.byId('time'),api.pageParam.time)
 				$api.html($api.byId('content'),api.pageParam.content)
+				$api.html($api.byId('title'),api.pageParam.title)
 
 		}
 

@@ -75,6 +75,8 @@
 					position:relative;
 					top:-0.07rem;
 					left:-0.1rem;
+					padding-left:0.2rem;
+					box-sizing: border-box;
 				}
 				 .transfer_content>ul>li .transfer_content_right img{
 					width: 1.7rem;
@@ -120,7 +122,7 @@
 									data[i].contentTypeName = '广告'
 								}
 
-								techDataStr += '<li type="'+ data[i].type +'" onclick="goToDetail(this)">'+
+								techDataStr += '<li type="'+ data[i].type +'"  id="'+data[i].contentId+'" onclick="goToDetail(this)">'+
 									'<div class="transfer_content_left">'+
 										'<div class="data-content" style="display:none;">'+ data[i].content +'</div>'+
 										'<div class="data-url" style="display:none;">'+ data[i].url +'</div>'+
@@ -128,7 +130,7 @@
 										'<div class="transfer_content_info">'+
 											'<p style="word-wrap:break-word;" class="data-title">'+ data[i].title +'</p>'+
 											'</div>'+
-											'<div class="transfer_content_time"><p><span>'+ data[i].contentTypeName +'</span><span style="margin-left:10px;" class="data-date">'+ (data[i].publishDate).split(" ")[0] +'</span><span style="margin-left:20px;"></span></p></div>'+
+											'<div class="transfer_content_time"><p><span class="contentTypeName">'+ data[i].contentTypeName +'</span><span style="margin-left:10px;" class="data-date">'+ (data[i].publishDate).split(" ")[0] +'</span><span style="margin-left:20px;"></span></p></div>'+
 											'</div>'+
 											'<div class="transfer_content_right"><img style="" src="'+ data[i].pictureUrl +'"></div>'+
 											'</li>'
@@ -152,12 +154,14 @@
 			var type = $(node).attr('type')
 			if(type == 'news_adv'){
 			// 跳转内容
-			var obj ={
-				content:$(node).find('.data-content').html(),
-				title:$(node).find('.data-title').html(),
-				author:$(node).find('.data-author').html(),
-				time:$(node).find('.data-date').html()
-			}
+				var obj ={
+					content:$(node).find('.data-content').html(),
+					title:$(node).find('.data-title').html(),
+					author:$(node).find('.data-author').html(),
+					time:$(node).find('.data-date').html(),
+					id:$(node).attr('id'),
+					type:$(node).find('.contentTypeName').html()
+				}
 				api.openWin({
 					name:'content-detail_win',
 					url:'./content-detail_win.html',
@@ -172,7 +176,8 @@
 			}else {
 			// 跳转url
 				var obj ={
-					url:$(node).find('.data-url').html()
+					url:$(node).find('.data-url').html(),
+					title:$(node).find('.data-title').html()
 				}
 				api.openWin({
 					name:'advertisement_win',

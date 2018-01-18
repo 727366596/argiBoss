@@ -8,18 +8,26 @@
 		<script type="text/javascript" src="../script/common/rem.js"></script>
 		<link rel="stylesheet" href="../css/common/public.css" />
 		<link rel="stylesheet" href="../css/common/header.css" />
-
+		<style media="screen">
+			#title{
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: block;
+			}
+		</style>
 	</head>
 	<body>
 	     <header id="header">
 	        <div class="headerLeft"  onclick="closeWin()"></div>
-	        <div class="headerCenter" ></div>
+	        <div class="headerCenter" id="title" ></div>
 					<div class="headerRight"></div>
 	     </header>
 	</body>
 	<script type="text/javascript" src="../script/common/api.js"></script>
 		<script type="text/javascript">
 			apiready = function() {
+				$api.html($api.byId('title'),api.pageParam.title)
 
 				// alert(api.pageParam.url)
 				api.parseTapmode();

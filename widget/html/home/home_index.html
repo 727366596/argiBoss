@@ -147,6 +147,9 @@
 			font-size: 0.24rem;
 			line-height: 0.54rem;
 			color: #595C58;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
 		#top>.noticeBanner>.bannerWrap2 .bannerWrap2_center .swiper-wrapper{
 			height: 100%;
@@ -535,6 +538,8 @@
 			position:relative;
 			top:-0.07rem;
 			left:-0.1rem;
+			padding-left:0.2rem;
+			box-sizing: border-box;
 		}
 		#wrapper .transfer_content>ul>li .transfer_content_right img{
 			width: 1.7rem;
@@ -653,7 +658,8 @@
 				<div  class="bannerWrap2">
 						<div class="bannerWrap2_left"></div>
 						<div class="bannerWrap2_center">
-							<marquee direction="left" ><div id="noticeTitle" style="color: #ccc;"></div></marquee>
+							<div id="noticeTitle" style="color: #ccc;"></div>
+							<!-- <marquee direction="left" ><div id="noticeTitle" style="color: #ccc;"></div></marquee> -->
 						</div>
 						<div class="bannerWrap2_right" id="noticeListMore">更多</div>
 				</div>
@@ -702,7 +708,7 @@
 
 	<div id="wrapper">
 			<div class="transfer_head">
-					<div><span></span>技术推广</div>
+					<div><span></span>相关推荐</div>
 					<div id="gotolist"><span style="color: #00cd5a">更多</span><span></span></div>
 			</div>
 			<div class="transfer_content scroller">
@@ -776,12 +782,13 @@
 			success:function(e){
 					// alert(JSON.stringify(e))
 				// console.log('hhhhhhhhhhhhhhhhhhhhhhh'+JSON.stringify(e.data.data))
+
 				if(e.data !== null && e.data !== ''){
 					var data = e.data.data || '';
 					if(data.length > 0){
 						var img = ''
 						for(var i = 0; i < data.length; i++){
-							img += '<li class="sw-slide"><img data-id="'+data[i].url+'" src="'+data[i].pictureUrl+'"></li>'
+							img += '<li class="sw-slide" data-id="'+data[i].title+'"><img data-id="'+data[i].url+'" src="'+data[i].pictureUrl+'"></li>'
 						}
 						$('.sw-slides').html(img)
 						if(data.length >1){
@@ -813,7 +820,8 @@
 					name:'advertisement_win',
 					url:'../advertisement_win.html',
 					pageParam:{
-						url:$(this).find('img').attr('data-id')
+						url:$(this).find('img').attr('data-id'),
+						title:$(this).attr('data-id')
 					}
 				})
 			}else {
@@ -842,7 +850,7 @@
 								data[i].contentTypeName = '广告'
 							}
 
-							techDataStr += '<li type="'+ data[i].type +'" id="'+data[i].id+'" onclick="goToDetail(this)">'+
+							techDataStr += '<li type="'+ data[i].type +'" id="'+data[i].contentId+'" onclick="goToDetail(this)">'+
 								'<div class="transfer_content_left">'+
 									'<div class="data-content" style="display:none;">'+ data[i].content +'</div>'+
 									'<div class="data-url" style="display:none;">'+ data[i].url +'</div>'+
@@ -850,7 +858,7 @@
 									'<div class="transfer_content_info">'+
 										'<p style="word-wrap:break-word;" class="data-title">'+ data[i].title +'</p>'+
 										'</div>'+
-										'<div class="transfer_content_time"><p><span>'+ data[i].contentTypeName +'</span><span style="margin-left:10px;" class="data-date">'+ (data[i].publishDate).split(" ")[0] +'</span><span style="margin-left:20px;"></span></p></div>'+
+										'<div class="transfer_content_time"><p><span class="contentTypeName">'+ data[i].contentTypeName +'</span><span style="margin-left:10px;" class="data-date">'+ (data[i].publishDate).split(" ")[0] +'</span><span style="margin-left:20px;"></span></p></div>'+
 										'</div>'+
 										'<div class="transfer_content_right"><img style="" src="'+ data[i].pictureUrl +'"></div>'+
 										'</li>'
@@ -879,7 +887,8 @@
 				title:$(node).find('.data-title').html(),
 				author:$(node).find('.data-author').html(),
 				time:$(node).find('.data-date').html(),
-				id:$(node).attr('id')
+				id:$(node).attr('id'),
+				type:$(node).find('.contentTypeName').html()
 			}
 			api.openWin({
 				name:'content-detail_win',
@@ -895,7 +904,8 @@
 		}else {
 		// 跳转url
 			var obj ={
-				url:$(node).find('.data-url').html()
+				url:$(node).find('.data-url').html(),
+				title:$(node).find('.data-title').html()
 			}
 			api.openWin({
 				name:'advertisement_win',
@@ -939,7 +949,7 @@
 				url:"app/sys/get_adv",
 				data:{"code":code,"place":'notice'},
 				success:function(e){
-					console.log('eeeeee'+JSON.stringify(e))
+					//console.log('eeeeee'+JSON.stringify(e))
 					var data=e.data.data||[];
 					if(data.length>0){
 					   $('#noticeTitle').html(data[0].title)
@@ -948,7 +958,7 @@
 									 content:data[0].content,
 									 title:data[0].title,
 									 author:data[0].author,
-									 time:data[0].time,
+									 time:data[0].pubdate.split(' ')[0],
 									 id:data[0].id
 								 }
 								 api.openWin({

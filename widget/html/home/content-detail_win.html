@@ -30,18 +30,23 @@
 		<script type="text/javascript">
 			apiready = function() {
 				// alert(JSON.stringify(api.pageParam.id))
+
 				pds.ajaxSubmit({
 					url:"app/sys/update_read_nums",
 					data:{"contentId":api.pageParam.id},
 					success:function(e){
-								alert(JSON.stringify(e))
+								// alert(JSON.stringify(e))
 					},
 					error:function(e){
 						api.alert({msg:"服务器错误，请联系管理员!"});
 					}
 				});
+				if(!api.pageParam.type){
+						$api.html($api.byId('title'),'系统公告')
+				}else{
+						$api.html($api.byId('title'),api.pageParam.type)
+				}
 
-				$api.html($api.byId('title'),api.pageParam.title)
 
 				api.parseTapmode();
 				var header = $api.byId('header');
