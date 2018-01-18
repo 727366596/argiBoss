@@ -121,7 +121,6 @@
 		<div class="rightBox">
 				<ul class="box">
 						<!-- <li>新发地农贸批新发地农贸批新发地农贸批新发地农贸批发市场发市场<span class="select"><i></i></span></li> -->
-						<li style="border:solid 1px #999999;color:#999999;">点击左侧导航获取市场列表</li>
 				</ul>
 		</div>
 		<!-- <div id="body_totop_btn">
@@ -169,6 +168,8 @@
 													};
 											};
 											$(".nav").html(provinceListStr);
+											$(".box").html('<li style="border:solid 1px #999999;color:#999999;">点击左侧导航获取市场列表</li>');
+
 											//启动省份导航
 											tabCheck(obj, provinceId, marketId);
 
