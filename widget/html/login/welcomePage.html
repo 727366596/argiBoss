@@ -25,7 +25,7 @@
 			width: 40px;
 			height: 40px;
 			line-height: 40px;
-			font-size: 14px;
+			font-size: 24px;
 			text-align: center;
 			border-radius: 50%;
 		}
@@ -47,7 +47,7 @@
 
 <body>
 	<img src="../../image/start.jpg" alt="">
-	<div class="jump">跳过</div>
+	<div class="jump">3</div>
 </body>
 
 <script type="text/javascript">
@@ -56,6 +56,7 @@
 		api.setFullScreen({
 			fullScreen: true
 		});
+
 		jumpLogin()
 	 	advImg()
 		api.addEventListener({
@@ -85,6 +86,17 @@
 			},
 			success: function(e) {
 				console.log('++++++++' + JSON.stringify(e))
+				setTimeout(function(){
+					var number=3;
+					var time=setInterval(function(){
+						 number--;
+						 if(number>=0){
+								 $('.jump').text(number)
+						 }else {
+								clearInterval(time)
+						 }
+					 },1000)
+				},1500)
 				var data = e.data.data || []
 				if (data.length > 0) {
 					var pictureUrl = data[0].pictureUrl
