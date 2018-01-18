@@ -764,7 +764,7 @@
 			var map = api.require('bMap');
 			getLocation(map);
 			//$api.clearStorage();
-			getNoticeContent();
+			getNoticeContent(code);
 	}
 //**************DW****************************************************************************//
 	// 轮播 （请求后台数据）
@@ -934,10 +934,10 @@
 
 //**************DW****************************************************************************//
 	//公告内容获取
-		function getNoticeContent(){
+		function getNoticeContent(code){
 			pds.ajaxSubmit({
 				url:"app/sys/get_adv",
-				data:{"code":'454e004d8db946d2969826bdaa41ff49',"place":'notice'},
+				data:{"code":code,"place":'notice'},
 				success:function(e){
 					console.log('eeeeee'+JSON.stringify(e))
 					var data=e.data.data||[];

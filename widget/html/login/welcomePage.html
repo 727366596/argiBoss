@@ -70,10 +70,17 @@
   var url
 	function advImg() {
 		var systemType = api.systemType;
+		var code=''
+		if(systemType==='ios'){
+     code="e9b66e519c6944e595f47af8a7e45497"
+	 }else if(systemType==='android'){
+		 code="fca9b5db26b24e32b2743950578661c1"
+	 }
+
 		pds.ajaxSubmit({
 			url: "app/sys/get_adv",
 			data: {
-				"code": '003',
+				"code": code,
 				"place": 'start'
 			},
 			success: function(e) {
