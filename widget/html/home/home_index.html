@@ -923,6 +923,25 @@
 					var data=e.data.data||[];
 					if(data.length>0){
 					   $('#noticeTitle').html(data[0].title)
+						 $('#noticeTitle').on('click',function(){
+								 var obj={
+									 content:data[0].content,
+									 title:data[0].title,
+									 author:data[0].author,
+									 time:data[0].time
+								 }
+								 api.openWin({
+									 name:'content-detail_win',
+									 url:'./content-detail_win.html',
+									 slidBackEnabled : false,
+									 pageParam:obj,
+									 animation : {
+										 type : "movein", //动画类型（详见动画类型常量）
+										 subType : "from_right", //动画子类型（详见动画子类型常量）
+										 duration : 300 //动画过渡时间，默认300毫秒
+									 }
+								 })
+						 })
 						 var dataList=data
 						 $('#noticeListMore').on('click',function(){
 							 noticeListMore(dataList)
