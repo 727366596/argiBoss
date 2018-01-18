@@ -729,12 +729,21 @@
 
 	apiready=function(){
 
+			//判断终端传设备码
+			var code = ''
+			var systemType = api.systemType;
+			// alert(systemType)
+			if(systemType == 'ios'){
+				code = 'e9b66e519c6944e595f47af8a7e45497'
+			}else {
+				code = 'fca9b5db26b24e32b2743950578661c1'
+			}
 			//轮播图****************************
-			homeBannerGet();
+			homeBannerGet(code);
 			// 轮播（图片点击跳转页面）
 			JumpPage()
 			// 获取首页列表数据渲染HTML
-			getHomeList()
+			getHomeList(code)
 
 			//种植工单—数据渲染
 			refreshStatusList();
@@ -753,14 +762,14 @@
 	}
 //**************DW****************************************************************************//
 	// 轮播 （请求后台数据）
-	function homeBannerGet(){
+	function homeBannerGet(code){
 
 		pds.ajaxSubmit({
 			url:"app/sys/get_adv",
-			data:{"code":'003',"place":'home'},
+			data:{"code":code,"place":'home'},
 			success:function(e){
 					// alert(JSON.stringify(e))
-				alert(JSON.stringify(e.data.data))
+				// alert(JSON.stringify(e.data.data))
 				if(e.data !== null && e.data !== ''){
 					var data = e.data.data || '';
 					if(data.length > 0){
@@ -823,13 +832,12 @@
 	}
 
 	// 获取首页列表数据渲染HTML
-	function getHomeList() {
-
+	function getHomeList(code) {
 		pds.ajaxSubmit({
 			url:"app/sys/get_adv",
-			data:{"code":'003',"place":'list'},
+			data:{"code":code,"place":'list'},
 			success:function(e){
-						alert(JSON.stringify(e))
+						// alert(JSON.stringify(e))
 				if(e.data !== null && e.data !== ''){
 
 					var data = e.data.data || '';
