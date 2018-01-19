@@ -68,7 +68,7 @@
 		});
 
 	};
-  var url
+
 	function advImg() {
 		var systemType = api.systemType;
 		var code=''
@@ -100,9 +100,11 @@
 				var data = e.data.data || []
 				if (data.length > 0) {
 					var pictureUrl = data[0].pictureUrl
-					url = data[0].url
+					// var url= data[0].url
 					$('img').attr('src', pictureUrl)
-					$('img').on('click', jumpPage)
+					$('img').on('click', function(){
+						jumpPage(data[0].title,data[0].url)
+					})
 				}
 			},
 			error: function(e) {
@@ -146,11 +148,12 @@
 	}
 	$('.jump').on('click', jumpSlogin)
 
-	function jumpPage() {
+	function jumpPage(title,url) {
 		api.openWin({
 			name: 'startPage_win',
 			url: './startPage.html',
 			pageParam: {
+				title:title,
 				url: url
 			},
 			animation: {

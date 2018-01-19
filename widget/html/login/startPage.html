@@ -15,20 +15,19 @@
 <body>
 	<header id="header">
 		<div class="headerLeft" onclick="closeWin()"></div>
-		<div class="headerCenter"></div>
+		<div class="headerCenter" id="title"></div>
 		<div class="headerRight"></div>
 	</header>
 </body>
 <script type="text/javascript" src="../../script/common/api.js"></script>
 <script type="text/javascript">
 	apiready = function() {
-
-		// alert(api.pageParam.url)
 		api.parseTapmode();
 		var header = $api.byId('header');
 		$api.fixStatusBar(header);
 		var headerPos = $api.offset(header);
 		var body_h = $api.offset($api.dom('body')).h;
+		$api.text($api.byId('title'),api.pageParam.title)
 		api.openFrame({
 			name: 'startPage_win',
 			url: api.pageParam.url,
