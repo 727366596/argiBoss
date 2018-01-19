@@ -853,6 +853,9 @@ var openMap = function openMap() {
 var landFirstId = '';
 var landFirstIds = [];
 var landColors = ["rgba(65,152,225,0.2)", "rgba(202,110,255,0.2)", "rgba(255,198, 92, 0.2)", "rgba(158,221,49,0.2)", "rgba(255,81,68,0.2)", "rgba(0,252,255,0.2)", "rgba(255,246,2,0.2)", "rgba(238,150,12,0.3)", "rgba(24,128,29,0.3)", "rgba(129,76,76,0.3)"];
+
+var pointLon = ''; //中心点
+var pointLat = ''; //中心点
 var ready = function ready(farmId) {
   bMap.removeOverlay({
     ids: landFirstIds
@@ -861,8 +864,6 @@ var ready = function ready(farmId) {
     ids: landFirstIds
   });
 
-  var pointLon = ''; //中心点
-  var pointLat = ''; //中心点
   landFirstIds = []; //地块名ids
   var url = "/staff/farmland/get_map_home";
   _Ajax2.default.postJson(url, {
@@ -962,10 +963,10 @@ var openSumFrm = function openSumFrm() {
 var openMyPosition = function openMyPosition() {
   api.openFrame({
     name: 'myposition_frm',
-    url: '../../../html/farmLand/index/myposition_frm.html',
+    url: './myposition_frm.html',
     rect: {
       x: api.winWidth - 60,
-      y: api.winHeight - 190,
+      y: api.winHeight - 240,
       w: 250,
       h: 120
     },
@@ -979,7 +980,7 @@ var openMyPosition = function openMyPosition() {
 var openFarmBase = function openFarmBase(farmId) {
   api.openFrame({
     name: 'farm_frm',
-    url: '../../../html/farmLand/index/farm_frm.html',
+    url: './farm_frm.html',
     rect: {
       x: 0,
       y: 6,
@@ -999,7 +1000,7 @@ var openFarmBase = function openFarmBase(farmId) {
 var openPunchFrm = function openPunchFrm() {
   api.openFrame({
     name: 'punch_frm',
-    url: '../../../html/farmLand/index/punch_frm.html',
+    url: './punch_frm.html',
     rect: {
       x: 0,
       y: api.winHeight - 97,
@@ -1170,6 +1171,12 @@ var receiveEvents = function receiveEvents() {
     name: 'onOwnPositionEvent'
   }, function (ret, err) {
     ownPositionEvent();
+  });
+  /*切换地图位置接收事件*/
+  api.addEventListener({
+    name: 'onSwitchMapEvent'
+  }, function (ret, err) {
+    farmPositionEvent(pointLon, pointLat);
   });
   /*没干的活接收事件*/
   api.addEventListener({

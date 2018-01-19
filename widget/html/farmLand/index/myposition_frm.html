@@ -12,26 +12,37 @@
     span{
       display: inline-block;
     }
-    .location{
+    .content{
 				position: absolute;
         width:1.1rem;
-        height:1.5rem;
+        height:3.0rem;
         overflow: hidden;
 				color:#333;
 				font-size: 0.24rem;
 				text-align: center;
 				line-height: 0.3rem;
 			}
-			.location img{
+      .location{
+        width:1.1rem;
+        height:1.5rem;
+        overflow: hidden;
+      }
+		  img{
         width: 1.1rem;
 				height: 1.1rem;
       }
 </style>
 <body>
+    <div class="content">
+      <div class="location"  id="switchMap">
+       <img src="../../../image/farmLand/map.png" alt="">
+       <span>返回地块</span>
+      </div>
       <div class="location" id="location">
        <img src="../../../image/farmLand/myposition.png" alt="">
        <span>我的位置</span>
       </div>
+    </div>
 <script data-me>/******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -3203,6 +3214,15 @@ var ownPositionEvent = function ownPositionEvent() {
 
 
 (0, _jq2.default)('#location').on('click', ownPositionEvent);
+
+/*切换地图点击事件*/
+var switchMapEvent = function switchMapEvent() {
+  api.sendEvent({
+    name: 'onSwitchMapEvent'
+  });
+};
+
+(0, _jq2.default)('#switchMap').on('click', switchMapEvent);
 
 window.apiready = function () {
   api.parseTapmode();
