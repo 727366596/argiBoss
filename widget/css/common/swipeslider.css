@@ -86,18 +86,19 @@
 
 .sw-bullet {
   position: absolute;
-  bottom: 44%;
+  bottom: 49%;
   list-style: none;
   display: block;
   width: 100%;
   text-align: center;
-  padding: 0;
+  padding:0;
   margin: 0;
   z-index: 999999999;
 }
   .sw-bullet li {
     width: 10px;
     height: 10px;
+    /*margin-bottom: 20px;*/
     background-color: rgba(160, 160, 160, 0.53);
     border-radius: 50%;
     display: inline-block;
