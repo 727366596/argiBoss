@@ -764,8 +764,7 @@
 			//监听网络状态
 			onlineStatus();
 			//console.profile(homeBannerSwiper())
-			//公告信息列表
-			// noticeData();
+
 			//		实时定位获取位置，并获取天气信息****
 			var map = api.require('bMap');
 			getLocation(map);
@@ -780,7 +779,7 @@
 			url:"app/sys/get_adv",
 			data:{"code":code,"place":'home'},
 			success:function(e){
-					// alert(JSON.stringify(e))
+					// alert('hhhhhhh'+JSON.stringify(e))
 				// console.log('hhhhhhhhhhhhhhhhhhhhhhh'+JSON.stringify(e.data.data))
 
 				if(e.data !== null && e.data !== ''){
@@ -998,71 +997,6 @@
 				}
 			})
 		}
-
-	//获取公告数据
-	function noticeData(){
-		pds.ajaxSubmit({
-			type: "GET",
-			url:"/app/content/adviceContent",
-			success:function(e){
-				// alert("success");
-				// alert(JSON.stringify(e))
-				if(e.status == "ok"){
-					var noticeDataArr = e.data;
-					var noticeStr = "";
-					if(noticeDataArr != [] && noticeDataArr != "" && noticeDataArr != null){
-						for (var i = 0; i < noticeDataArr.length; i++) {
-							noticeStr += '<div class="swiper-slide">'+ noticeDataArr[i].title +'</div>'
-						};
-						noticeStr += '<div class="swiper-slide">'+ noticeDataArr[0].title +'</div>';
-						$("#top  .bannerWrap2 .swiper-wrapper").html(noticeStr);
-						//数据请求成功，开启公告轮播;
-						var noticeNum = noticeDataArr.length;
-						setTimeout(function(){
-							publickInfoTransfer(noticeNum); //启动公告轮播
-						},1500)
-					}
-				}else{
-
-				}
-
-			},
-			error:function(e){
-				api.alert({msg:"服务器错误，请联系管理员!"});
-			}
-		});
-	}
-
-	//公告轮播*********************************************************************
-	function publickInfoTransfer(n){
-		var wrap2Width=$("#top>.noticeBanner>.bannerWrap2 .bannerWrap2_center").width();
-		$("#top>.noticeBanner>.bannerWrap2 .bannerWrap2_center .swiper-wrapper").width(wrap2Width*(n+1));
-		// $("#top>.noticeBanner>.bannerWrap2 .bannerWrap2_center .swiper-wrapper .swiper-slide").css({
-		// 	"-webkit-box-flex": "1",
-		// 	"-webkit-flex": "1",
-		// 	"flex": "1",
-		// });
-		$("#top>.noticeBanner>.bannerWrap2 .bannerWrap2_center .swiper-wrapper .swiper-slide").width(wrap2Width);
-		var marginLeftAdd=0;
-		function wrap2Move(){
-			marginLeftAdd+=3;
-			if(marginLeftAdd>=450*n){
-				marginLeftAdd=0
-			};
-			$("#top>.noticeBanner>.bannerWrap2 .bannerWrap2_center .swiper-wrapper").css({
-				"marginLeft":(-1*marginLeftAdd)/100+"rem"
-			})
-		};
-		var wrap2Timer;
-		clearInterval(wrap2Timer);
-		wrap2Timer=setInterval(wrap2Move,30);
-		$("#top>.noticeBanner>.bannerWrap2 .bannerWrap2_center").on("touchstart",function(){
-			clearInterval(wrap2Timer);
-		}).on("touchend",function(){
-			clearInterval(wrap2Timer);
-			wrap2Timer=setInterval(wrap2Move,30);
-		})
-	}
 
 	//页面回到顶部
 	function scrollToTop(){
