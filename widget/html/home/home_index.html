@@ -688,7 +688,7 @@
 							<div style="background-image: url(../../image/home_nav_plant.png);"></div>
 							<div>种植工单</div>
 					</li> -->
-					<li onclick="">
+					<li onclick="openMarketInfo()">
 							<div style="background-image: url(../../image/home_nav_harvest.png);"></div>
 							<div>市场分析</div>
 					</li>
@@ -702,7 +702,7 @@
 					</li> -->
 					<li onclick="openCall()">
 							<div style="background-image: url(../../image/che_img/wenwen.png);"></div>
-							<div>农化服务</div>
+							<div>问问专家</div>
 					</li>
 			</ul>
 	</div>
@@ -1261,6 +1261,20 @@
 			}
 		});
 	};
+
+	//点击跳转市场分析
+	function openMarketInfo(){
+			api.openWin({
+				name:'market-index-win',
+				url:'./marketInfo/market-index-win.html',
+				slidBackEnabled : false,
+				animation : {
+					type : "movein", //动画类型（详见动画类型常量）
+					subType : "from_right", //动画子类型（详见动画子类型常量）
+					duration : 300 //动画过渡时间，默认300毫秒
+				}
+			})
+	}
 
 	//打开公告页面***************************************************
 	function openNoticelists(){

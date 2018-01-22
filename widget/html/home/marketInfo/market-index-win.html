@@ -7,7 +7,6 @@
     <title>市场分析</title>
     <link rel="stylesheet" type="text/css" href="../../../css/common/public.css" />
     <link rel="stylesheet" type="text/css" href="../../../css/common/header.css" />
-		<link rel="stylesheet" type="text/css" href="../../../css/common/iscroll-style.css" />
     <script type="text/javascript" src="../../../script/common/rem.js"></script>
     <style>
 				body{
@@ -154,8 +153,6 @@
 </body>
 <script type="text/javascript" src="../../../script/common/api.js"></script>
 <script type="text/javascript" src="../../../script/common/jquery.min.js"></script>
-<!-- <script type="text/javascript" src="../../script/common/zepto-1.2.0.min.js"></script> -->
-<script type="text/javascript" src="../../../script/common/iscroll.js"></script>
 <script type="text/javascript" src="../../../script/common/pds.ajax.js"></script>
 <script type="text/javascript">
 
@@ -182,8 +179,7 @@
 		openFrmGroup(topHeight);
 		//导航切换
 		tabCheck();
-		//默认触发今日
-		$("#localPrice").trigger('touchend');
+
 	};
 
 	//获取作物初始默认值
@@ -193,7 +189,7 @@
 					url : "app/price/defaultStatCategory",
 					success:function(e){
 							//alert("success");
-							alert(JSON.stringify(e));
+							//alert(JSON.stringify(e));
 							if (e.status == "ok") {
 									if (e.data != "" && e.data != null && e.data != {}) {
 											var plantName = e.data.categoryName;
@@ -230,6 +226,7 @@
 			        h: 'auto'
 			    },
 					scrollEnabled:true,
+					index:1,
 			    frames: [{
 			        name: 'empty-frm',
 			        url: '../../empty-frm.html',
@@ -282,6 +279,9 @@
 					    index: index
 					});
 			});
+
+			//默认触发今日
+			$("#marketPrice").trigger('touchend');
 
 	};
 

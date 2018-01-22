@@ -14,6 +14,7 @@
 					height: 100%;width: 100%;
 					overflow-x: hidden;
 					overflow-y: auto;
+					-webkit-overflow-scrolling:touch;
 					background-color: #fff;
 				}
 				body>div,body>ul{
@@ -48,6 +49,7 @@
 						overflow-x: auto;
 						overflow-y: hidden;
 						white-space: nowrap;
+						text-overflow: ellipsis;
 				}
 				.marketTitleBox .marketTitle-icon{
 						width:15px;height: 8px;margin-left: 5px;
@@ -116,17 +118,17 @@
 				}
 				.content{
 						width: 100%;
-						height: 6.0rem;
+						/*height: 6.0rem;*/
 						position: relative;
 				}
 				.content>div.contentBox{
 						width: 100%;
-						height: 100%;
+						height: 6.0rem;
 						padding: 0.1rem 0.2rem 0.5rem 0.2rem;
 						background-color: #fff;
-						position: absolute;
+						/*position: absolute;
 						left: 0;
-						top: 0;
+						top: 0;*/
 						display: none;
 				}
 				.content>div.contentBox>div.chartBox{
@@ -189,7 +191,7 @@
 <script type="text/javascript" src="../../../script/common/pds.ajax.js"></script>
 <script type="text/javascript" src="../../../script/planting/echarts.common.min.js"></script>
 <script type="text/javascript">
-
+	var color = ['#75a1fa', '#f5c130'];//echart颜色合集；'#f5c130',
 	var chartH = null;//chart盒子高
 	var chartW = null;//chart盒子宽
 	apiready = function(){
@@ -224,7 +226,7 @@
 							//alert(JSON.stringify(e));
 							if (e.status == "ok") {
 									if (e.data != "" && e.data != null && e.data != {}) {
-											var marketName = e.data.abbreviation;
+											var marketName = e.data.name;
 											var marketId = e.data.id;
 											var provinceId = e.data.provinceId;
 											if (marketName != "" && marketName != null && marketId != "" && marketId != null && provinceId != "" && provinceId != null) {
@@ -310,8 +312,8 @@
 			if (plantId == "" || plantId == null) {
 					api.toast({
 					    msg: '请选择作物',
-					    duration: 3000,
-					    location: 'bottom'
+					    duration: 2000,
+					    location: 'middle'
 					});
 					chartBoxs.each(function(index,el){
 							var dataBoxId = $(this).attr("id");//chart盒子ID
@@ -333,8 +335,6 @@
 					return;
 			};
 			//区分数据请求地址
-
-			//alert(plantId+"************"+marketId)
 			var chartDataUrl = "";
 			chartBoxs.each(function(index, el){
 					var dataBoxId = $(this).attr("id");//chart盒子ID
@@ -344,15 +344,11 @@
 					}else{
 							chartDataUrl = "app/price/monthStat";
 					};
-					myChartInit(dataBoxId, plantId, marketId, statDays, chartDataUrl);
+					getChartData(dataBoxId, plantId, marketId, statDays, chartDataUrl);
 			})
-	};
 
-	//绘制图表
-	function myChartInit(boxId, plantId, marketId, statDays, url){
-			//获取chart数据data
-			getChartData(boxId, plantId, marketId, statDays, url);
-	}
+
+	};
 
 	//或取图表数据
 	function getChartData(boxId, plantId, marketId, statDays, url){
@@ -395,8 +391,7 @@
 							if (e.status == "ok") {
 									if (e.data != "" && e.data != null && e.data != {}) {
 											var optionData = createData(e.data, statDays, boxId, myChart);
-											//alert(JSON.stringify(optionData));
-											createChart(boxId, optionData, myChart, statDays)
+											createChart(boxId, optionData, statDays, myChart)
 									}else{
 											myChart.dispose();
 											$("#"+boxId).html('<span class="chartEmpty">暂无同期价格信息，换个条件看看吧~</span>')
@@ -448,6 +443,11 @@
 									name : thisName,
 									type :'line',
 									//stack : '总量',
+									lineStyle : {
+											narmal : {
+													width : 1
+											}
+									},
 									data : thisYearSeriesData
 							};
 							chartOptionObj.series.push(priceObj);
@@ -475,13 +475,18 @@
 									name : thisName_,
 									type :'line',
 									//stack : '总量',
+									lineStyle : {
+											narmal : {
+													width : 1
+											}
+									},
 									data : lastYearSeriesData_
 							};
 							chartOptionObj.series.push(priceObj_);
 							//创建图表
 							//createChart(boxId, xAxisData, series, legend, yAxisName, myChart)
 					}else{
-							$("#"+boxId).html('<span class="chartEmpty">暂无价格信息，换个条件看看吧~</span>')
+							//$("#"+boxId).html('<span class="chartEmpty">暂无价格信息，换个条件看看吧~</span>')
 					};
 
 
@@ -491,8 +496,9 @@
 							//console.log("有数据啦*****************")
 							var seriesData = [];
 							for (var i = 0; i < dataList.length; i++) {
-									var date = dataList[i].statDate;
-									chartOptionObj.xAxisData.push(date);
+									var date = dataList[i].statDate.split("-");
+									var data_ = date[1]+"-"+date[2];
+									chartOptionObj.xAxisData.push(data_);
 									var price = dataList[i].price;
 									if (price == null) {
 											price = "无";
@@ -506,6 +512,11 @@
 									name : "价格",
 									type :'line',
 									//stack : '总量',
+									lineStyle : {
+											narmal : {
+													width : 1
+											}
+									},
 									data : seriesData
 							};
 							chartOptionObj.series.push(priceObj);
@@ -518,8 +529,9 @@
 	}
 
 	//创建图表
-	function createChart(boxId, chartOptionObj, myChart, statDays){
+	function createChart(boxId, chartOptionObj, statDays, myChart){
 			//alert(boxId+"***************"+JSON.stringify(chartOptionObj));
+			//var myChart = echarts.init(document.getElementById(boxId));
 			if (chartOptionObj.series.length == 0 || chartOptionObj.xAxisData.length == 0) {console.log("哈哈")
 					//如果空值，则不绘制图表，并销毁之前创建echart实例；很重要，否则数据该表后，新绘制的图表展现不出来；
 					myChart.dispose();
@@ -541,9 +553,11 @@
 					　　		align:'left'
 					　　}
 					},
+					color : color,
 					legend: {//图例
 							data : chartOptionObj.legend,
 							//bottom : 10
+							top : '3%'
 					},
 					grid: {
 							left: '7%',
@@ -558,7 +572,7 @@
 							axisLine:{
 									lineStyle:{
 											color : '#f09d71',
-											shadowBlur: 10
+											//shadowBlur: 10
 									}
 							},
 							data: chartOptionObj.xAxisData
@@ -566,16 +580,16 @@
 					yAxis: {//Y轴
 							type: 'value',
 							name: chartOptionObj.yAxisName,
+							boundaryGap: ['20%', '20%'],
 							axisLine:{
 									lineStyle:{
 											color : '#f09d71',
-											shadowBlur: 10
+											//shadowBlur: 10
 									}
 							},
 					},
 					series: chartOptionObj.series
 			};
-			// 使用刚指定的option配置项和数据显示图表。
 			myChart.setOption(myOption);
 			//固定图表大小
 			//console.log(boxId+"***************"+chartW+"******"+chartH)
