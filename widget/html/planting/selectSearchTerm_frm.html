@@ -202,6 +202,12 @@ apiready=function(){
 	// 	var headerH = $api.offset(header).h;
 	// 	$("body").css({"paddingTop":headerH+"px"});
 	  showLand()
+		if($api.getStorage('startDates')){
+			$("#date1").val($api.getStorage('startDates'))
+		}
+		if($api.getStorage('endDates')){
+			$("#date2").val($api.getStorage('endDates'))
+		}
 }
 function showLand(){
 	api.ajax({
