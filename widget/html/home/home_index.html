@@ -620,6 +620,22 @@
 		.infoListWidth{
 				width:70%;
 		}
+		/**/
+		.more-list{
+			width: 100%;
+			overflow: hidden;
+			padding: 0.2rem;
+			box-sizing: border-box;
+		}
+		.more-list span{
+			width: 100%;
+			line-height: 0.6rem;
+			text-align: center;
+			background: #eee;
+			border-radius: 5px;
+			font-size: 0.28rem;
+			color: #999;
+		}
 	</style>
 
 </head>
@@ -709,17 +725,17 @@
 	<div id="wrapper">
 			<div class="transfer_head">
 					<div><span></span>相关推荐</div>
-					<div id="gotolist"><span style="color: #00cd5a">更多</span><span></span></div>
 			</div>
 			<div class="transfer_content scroller">
 					<ul>
 					</ul>
 			</div>
+				<div id="gotolist" class="more-list"><span >点击查看更多内容</span></div>
 	</div>
 
-	<div id="home_bc_word">
+	<!-- <div id="home_bc_word">
 			<div></div>
-	</div>
+	</div> -->
 	<!-- <div id="home_totop_btn">
 			<span id="rocket_icon"></span>
 			<p id="totop_title">返回顶部</p>

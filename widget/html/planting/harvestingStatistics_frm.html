@@ -75,7 +75,15 @@
 					width: 140%;
 					height: 140%;*/
 					width: 100%;
-					height: 100%;
+					height: 6rem;
+				}
+				#container5{
+					/*margin-top: -20%;
+					margin-left: -20%;
+					width: 140%;
+					height: 140%;*/
+					width: 7.2rem;
+					height: 6rem;
 				}
 				#container2{
 					width: 100%;
@@ -87,7 +95,7 @@
 					width: 100%;
 					height: 6rem;
 				}
-				.containerLeft{
+				/*.containerLeft{
 					position: absolute;
 					width: 0.8rem;
 					height: 100%;
@@ -108,7 +116,7 @@
 				#container4{
 					width: 20.8rem;
 					height: 100%;
-				}
+				}*/
 				#part2{
 					display: none;
 				}
@@ -341,13 +349,8 @@
 				<div class="biaoTitle">
 					<div id="today" class="titleContent">当日最大采收量：500吨</div>
 				</div>
-				<div class="container3">
-					<div  class="containerLeft">
-						<div id="container3"></div>
-					</div>
-					<div  class="containerRight">
-						<div id="container4"></div>
-					</div>
+				<div class="container1">
+					<div id="container5"></div>
 				</div>
 				<p id="nianyue" class="nianyue">2017年</p>
 				<div class="shuju">
@@ -367,15 +370,16 @@
     返回顶部
 </div>
 <script type="text/javascript" src="../../script/common/api.js"></script>
-<script type="text/javascript" src="../../script/common/zepto-1.2.0.min.js"></script>
 <script type="text/javascript" src="../../script/common/jquery.min.js"></script>
 <script type="text/javascript" src="../../script/common/pds.ajax.js"></script>
-<script type="text/javascript" src="../../script/planting/echarts.common.min.js"></script>
-<script type="text/javascript" src="../../script/planting/highcharts.js"></script>
-<!-- <script src="https://img.hcharts.cn/highcharts/modules/variable-pie.js"></script>
-<script src="https://img.hcharts.cn/highcharts/modules/funnel.js"></script> -->
+<script type="text/javascript" src="../../script/planting/echarts.min.js"></script>
+<!-- <script type="text/javascript" src="../../script/planting/highcharts.js"></script> -->
 
-<script src="https://www.fusioncharts.com/lib/fcassets/3.12.2/fusioncharts.js"></script>
+<script type="text/javascript" src="../../script/planting/fusioncharts.js"></script>
+<script type="text/javascript" src="../../script/planting/fusioncharts.theme.fint.js"></script>
+<script type="text/javascript" src="../../script/planting/fusioncharts.widgets.js"></script>
+
+<!-- <script src="https://www.fusioncharts.com/lib/fcassets/3.12.2/fusioncharts.js"></script> -->
 
 
 <script>
@@ -436,9 +440,11 @@
 			$("#startDate").val(startDate)
 			$("#endDate").val(endDate)
 			$("#shuru1").val(farmId)
-			pieFen(startDate,endDate,farmId,categoryId)
-			priFen(startDate,endDate,farmId,categoryId)
-			danwei(startDate,endDate,categoryId,farmId)
+			// setTimeout(function(){
+				pieFen(startDate,endDate,farmId,categoryId)
+				priFen(startDate,endDate,farmId,categoryId)
+				danwei(startDate,endDate,categoryId,farmId)
+			// },300)
 		}else{
 			var d = new Date(), y = d.getFullYear(), m = d.getMonth() + 1, r = d.getDate();
 			m < 10 ? m = "0" + m : m;
@@ -460,9 +466,11 @@
 					$("#catId").val(ret.data.category.id)
 					$("#startDate").val(startDate)
 					$("#endDate").val(endDate)
-					pieFen(endDate,endDate,ret.data.farmId,ret.data.categoryId)
-					priFen(startDate,endDate,ret.data.farmId,ret.data.categoryId)
-					danwei(startDate,endDate,ret.data.categoryId,ret.data.farmId)
+					// setTimeout(function(){
+						pieFen(endDate,endDate,ret.data.farmId,ret.data.categoryId)
+						priFen(startDate,endDate,ret.data.farmId,ret.data.categoryId)
+						danwei(startDate,endDate,ret.data.categoryId,ret.data.farmId)
+					// },300)
 				} else {
 					//api.alert({msg:JSON.stringify(err)});
 				};
@@ -477,8 +485,8 @@
 		 if (ret) {
 			 //api.alert({msg:JSON.stringify(ret)});
 			 if(!ret.data.length){
-				 $("#container1").html("<span style='font-size:0.26rem;text-align:center;line-height:6rem'>请完善PC端数据</span>")
-				 return
+				//  $("#container1").html("<span style='font-size:0.26rem;text-align:center;line-height:6rem'>请完善PC端数据</span>")
+				//  return
 			 }
 			 var gradeName=[],harvestTotal=[],color=['#FFC65C','#EE6B67','#32D6C5','#4198E1','#a1c345','#a864ab']
 			 var date=ret.data,l=date.length;
@@ -564,8 +572,8 @@
 		 if (ret) {
 			 //api.alert({msg:JSON.stringify(ret)});
 			 if(!ret.data.length){
-				$("#container2").html("<span style='font-size:0.26rem;text-align:center;line-height:6rem'>请完善PC端数据</span>")
-				return
+				// $("#container2").html("<span style='font-size:0.26rem;text-align:center;line-height:6rem'>请完善PC端数据</span>")
+				// return
 			}
 			 var pri=[];
 			 var date=ret.data,l=date.length;
@@ -619,39 +627,7 @@
 													"showborder": "0"
 											},
 											"data":pri.sort(function (a, b) { return a.value - b.value; })
-											// "data": [
-											// 		{
-											// 				"value": "40",
-											// 				"name": "出口",
-											// 				"color": "ED6A66",
-											// 				"cleanValue": 40
-											// 		},
-											// 		{
-											// 				"value": "80",
-											// 				"name": "5量以上",
-											// 				"color": "A864A8",
-											// 				"cleanValue": 80
-											// 		},
-											// 		{
-											// 				"value": "100",
-											// 				"name": "3-4量",
-											// 				"color": "A1C345",
-											// 				"issliced": "1",
-											// 				"cleanValue": 100
-											// 		},
-											// 		{
-											// 				"value": "120",
-											// 				"name": "2-3量",
-											// 				"color": "61D7C5",
-											// 				"cleanValue": 120
-											// 		},
-											// 		{
-											// 				"value": "160",
-											// 				"name": "1-2量",
-											// 				"color": "3C81BF",
-											// 				"cleanValue": 160
-											// 		}
-											// ]
+
 									}
 						});
 
@@ -663,94 +639,6 @@
 			}
 		})
 	}
-	// Highcharts.setOptions({
-	// 		colors: ['#3C81BF', '#61D7C5', '#A1C345', '#A864A8', '#ED6A66']
-	// });
-	// $('#container1').highcharts({
-	// 	  credits: { enabled: false },
-	//     chart: {
-	//         type: 'variablepie',
-	//     },
-	//     title: {
-	//         text: ''
-	//     },
-	//     tooltip: {
-	//         headerFormat: '',
-	//         pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
-	//         '产量: <b>{point.y}吨</b><br/>'
-	//     },
-	// 		plotOptions: {
-	// 				 series: {
-	// 					 allowPointSelect: true, //选中某块区域是否允许分离
-	// 					 cursor: 'pointer',
-	// 					 dataLabels: {
-	// 							enabled: true //是否直接呈现数据 也就是外围显示数据与否
-	// 					 },
-	// 					 showInLegend: true
-	// 				 }
-	// 		 },
-	// 		series: [{
-  //       minPointSize: 10,
-  //       // innerSize: '20%',
-  //       zMin: 0,
-  //       name: '重量',
-  //       data: [{
-  //           name: '5量',
-  //           y: 50,
-	// 					color:'#FFC65C',
-  //           z: 2
-  //       }, {
-  //           name: '3-4量',
-  //           y: 100,
-	// 					color:'#EE6B67',
-  //           z: 3
-  //       }, {
-  //           name: '1-2量',
-  //           y: 100,
-	// 					color:'#32D6C5',
-  //           z: 4
-  //       }, {
-  //           name: '1量以下',
-  //           y: 150,
-	// 					color:'#4198E1',
-  //           z: 5
-  //       }]
-  //   }]
-	//  });
-	//  $('#container2').highcharts({
-	// 	    credits: { enabled: false },
-  //       chart: {
-  //           type: 'pyramid',
-  //       },
-  //       title: {
-  //           text: '',
-  //           x: -50
-  //       },
-  //       plotOptions: {
-  //           series: {
-  //               dataLabels: {
-  //                   enabled: true,
-  //                   format: '<b>{point.name} {point.y}吨</b>',
-  //                   color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
-  //                   softConnector: true
-  //               }
-  //           }
-  //       },
-  //       legend: {
-  //           enabled: false
-  //       },
-  //       series: [{
-  //           name: '总量',
-  //           data: [
-  //               ['1-2量', 100],
-  //               ['2-3量', 90],
-  //               ['3-4量', 80],
-  //               ['4-5量', 70],
-  //               ['5量以上',60]
-  //           ]
-  //       }]
-  //   });
-
 function caiLiang(startDate,endDate,farmId,categoryId,numerator){
 	api.ajax({
 	 url:pds.defaultUri + 'app/harvestStat/queryAmountOfHarvest',
@@ -770,191 +658,255 @@ function caiLiang(startDate,endDate,farmId,categoryId,numerator){
 		 }
 		 $("#nianyue").html(date[0].recordDate.substring(0,4)+"年"+date[0].recordDate.substring(5,7)+"月-"+date[l-1].recordDate.substring(0,4)+"年"+date[l-1].recordDate.substring(5,7)+"月")
 		 //api.alert({msg:JSON.stringify(categories)});
-		 $('#container3').highcharts({
-			 credits: {
-						enabled: false
-			 },
-			 chart: {
-					 type: 'area',
-					 spacingTop: 30,
-					 backgroundColor:"#21bbef",
-			 },
-			 title: {
-					 text: ''
-			 },
-			 xAxis: {
-					 tickmarkPlacement: 'on',
-					 tickPosition: 'inside',
-					 lineColor:'#fff',
-					 tickColor:'#fff',
-					 zIndex:100,
-					 title: {
-							 text: ''
+		 option = {
+			  backgroundColor: '#21bbef',
+				grid:{
+					x:10,
+					y:10,
+					x2:10,
+					y2:10
+				},
+			  tooltip : {
+						trigger: 'axis',
+				},
+				dataZoom: [
+					 {
+							 show: true,
+							 realtime: true,
+							 borderColor:"#fff",
+							 start: 65,
+							 end: 85
 					 },
-					 categories: categories,
-					labels: {
-									//rotation: 45,
-									style: {
-											fontSize: '0.26rem',
-											color:"#fff"
-									},
-									formatter: function () {
-									 return this.value.substring(8,10);
-							   }
-							}
-			 },
-			 yAxis: {
-					 min: 0,
-					 lineColor:'#fff',
-					 tickmarkPlacement: 'on',
-					 gridLineWidth:0,
-					 tickWidth:1,
-					 lineWidth:1,
-					 tickColor:'#fff',
-					 title: {
-							 text: ''
-					 },
-					 labels: {
-							 style: {
-									 fontSize: '0.26rem',
-									 color:'#fff',
-									 fontFamily: 'Verdana, sans-serif',
-						 }
+					 {
+							 type: 'inside',
+							 realtime: true,
+							 start: 65,
+							 end: 85
 					 }
-			 },
-			 tooltip: {
-					 crosshairs: true,
-					 crosshairs:[{
-						 width:28,
-						 color:"rgba(250,250,250,0.2)",
-						 zIndex: 100
-					 }],
-
-					 shared: true
-			 },
-			 plotOptions: {
-					 spline: {
-							 marker: {
-									 radius: 4,
-									 lineColor: '#666666',
-									 lineWidth: 1
-							 }
-					 },
-					 area: {
-							stacking: 'normal',
-							lineColor: '#666666',
-							lineWidth: 1,
-							marker: {
-									lineWidth: 1,
-									lineColor: '#fff'
-							}
-					}
-
-			 },
-			 series: [{
-					 name: '一号地块',
-					 marker: {
-							 symbol: 'circle',
-					 },
-					 showInLegend: false,//不显示图例
-					 //data: [30,45,55,70,90,110,200,300,320,280,230,180,30,45,55,70,90,110,200,300,320,280,230,180,30,45,55,70,90,110,200],
-					 data:harvestTotal,
-					 color:'#21bbef',
-					 lineColor: '#fff'
-			 }]
-		 });
-
-		 $('#container4').highcharts({
-			 credits: {
-						enabled: false
-			 },
-			 chart: {
-					 type: 'area',
-					 spacingTop: 30,
-					 backgroundColor:"#21bbef",
-					 spacingLeft:0,
-					 spacingRight: 50
-			 },
-			 title: {
-					 text: ''
-			 },
-			 xAxis: {
-					 tickmarkPlacement: 'on',
-					 tickPosition: 'inside',
-					 lineColor:'#fff',
-					 tickColor:'#fff',
-					 zIndex:100,
-					 title: {
-							 text: ''
-					 },
-					 categories: categories,
-					labels: {
-									//rotation: 45,
-									style: {
-											fontSize: '0.26rem',
-											color:"#fff"
-									},
-									formatter: function () {
-									 return this.value.substring(8,10);
-							   }
-							}
-			 },
-			 yAxis: {
-				 tickmarkPlacement: 'on',
-				 gridLineWidth:0,
-				 title: {
-						 text: ''
-				 },
-					labels:{
-							enabled: false
-					}
-			 },
-			 tooltip: {
-					 crosshairs: true,
-					 crosshairs:[{
-						 width:28,
-						 color:"rgba(250,250,250,0.2)",
-						 zIndex: 100
-					 }],
-
-					 shared: true
-			 },
-			 plotOptions: {
-					 spline: {
-							 marker: {
-									 radius: 4,
-									 lineColor: '#666666',
-									 lineWidth: 1
-							 },
-					 },
-					 area: {
-							stacking: 'normal',
-							lineColor: '#666666',
-							lineWidth: 1,
-							marker: {
-									lineWidth: 1,
-									lineColor: '#fff'
-							}
-					}
-
-			 },
-			 series: [{
-					 name: '一号地块',
-					 // events: {
-					 // 		 click: function(e) {
-					 // 				 $("#dangricaishou").html(e.point.y+"吨");
-					 // 		 }
-					 //  },
-					 marker: {
-							 symbol: 'circle',
-					 },
-					 showInLegend: false,//不显示图例
-					 //data: [30,45,55,70,90,110,200,300,320,280,230,180,30,45,55,70,90,110,200,300,320,280,230,180,30,45,55,70,90,110,200],
-					 data:harvestTotal,
-					 color:'#21bbef',
-					 lineColor: '#fff'
-			 }]
-		 });
+			 ],
+		    xAxis: {
+						splitLine:{show: false},
+		        type: 'category',
+		        data: categories,
+						axisLine:{
+									 lineStyle:{
+											 color:'#fff',
+											 width:1
+									 }
+						}
+		    },
+		    yAxis: {
+						show:false,
+						splitLine:{show: false},
+		        type: 'log',
+						axisLine:{
+									 lineStyle:{
+											 color:'#fff',
+											 width:1
+									 }
+						}
+		    },
+		    series: [{
+		        data: harvestTotal,
+		        type: 'line',
+						symbol:'emptyCircle',
+						symbolSize: 5,
+						itemStyle: {
+		        normal: {
+		            color: "#fff",
+		            lineStyle: {
+		                color: "#fff"
+		            }
+		        }
+		    	},
+		    }]
+		};
+		echarts.init(document.getElementById('container5')).setOption(option)
+		//  $('#container3').highcharts({
+		// 	 credits: {
+		// 				enabled: false
+		// 	 },
+		// 	 chart: {
+		// 			 type: 'area',
+		// 			 spacingTop: 30,
+		// 			 backgroundColor:"#21bbef",
+		// 	 },
+		// 	 title: {
+		// 			 text: ''
+		// 	 },
+		// 	 xAxis: {
+		// 			 tickmarkPlacement: 'on',
+		// 			 tickPosition: 'inside',
+		// 			 lineColor:'#fff',
+		// 			 tickColor:'#fff',
+		// 			 zIndex:100,
+		// 			 title: {
+		// 					 text: ''
+		// 			 },
+		// 			 categories: categories,
+		// 			labels: {
+		// 							//rotation: 45,
+		// 							style: {
+		// 									fontSize: '0.26rem',
+		// 									color:"#fff"
+		// 							},
+		// 							formatter: function () {
+		// 							 return this.value.substring(8,10);
+		// 					   }
+		// 					}
+		// 	 },
+		// 	 yAxis: {
+		// 			 min: 0,
+		// 			 lineColor:'#fff',
+		// 			 tickmarkPlacement: 'on',
+		// 			 gridLineWidth:0,
+		// 			 tickWidth:1,
+		// 			 lineWidth:1,
+		// 			 tickColor:'#fff',
+		// 			 title: {
+		// 					 text: ''
+		// 			 },
+		// 			 labels: {
+		// 					 style: {
+		// 							 fontSize: '0.26rem',
+		// 							 color:'#fff',
+		// 							 fontFamily: 'Verdana, sans-serif',
+		// 				 }
+		// 			 }
+		// 	 },
+		// 	 tooltip: {
+		// 			 crosshairs: true,
+		// 			 crosshairs:[{
+		// 				 width:28,
+		// 				 color:"rgba(250,250,250,0.2)",
+		// 				 zIndex: 100
+		// 			 }],
+		 //
+		// 			 shared: true
+		// 	 },
+		// 	 plotOptions: {
+		// 			 spline: {
+		// 					 marker: {
+		// 							 radius: 4,
+		// 							 lineColor: '#666666',
+		// 							 lineWidth: 1
+		// 					 }
+		// 			 },
+		// 			 area: {
+		// 					stacking: 'normal',
+		// 					lineColor: '#666666',
+		// 					lineWidth: 1,
+		// 					marker: {
+		// 							lineWidth: 1,
+		// 							lineColor: '#fff'
+		// 					}
+		// 			}
+		 //
+		// 	 },
+		// 	 series: [{
+		// 			 name: '一号地块',
+		// 			 marker: {
+		// 					 symbol: 'circle',
+		// 			 },
+		// 			 showInLegend: false,//不显示图例
+		// 			 //data: [30,45,55,70,90,110,200,300,320,280,230,180,30,45,55,70,90,110,200,300,320,280,230,180,30,45,55,70,90,110,200],
+		// 			 data:harvestTotal,
+		// 			 color:'#21bbef',
+		// 			 lineColor: '#fff'
+		// 	 }]
+		//  });
+		 //
+		//  $('#container4').highcharts({
+		// 	 credits: {
+		// 				enabled: false
+		// 	 },
+		// 	 chart: {
+		// 			 type: 'area',
+		// 			 spacingTop: 30,
+		// 			 backgroundColor:"#21bbef",
+		// 			 spacingLeft:0,
+		// 			 spacingRight: 50
+		// 	 },
+		// 	 title: {
+		// 			 text: ''
+		// 	 },
+		// 	 xAxis: {
+		// 			 tickmarkPlacement: 'on',
+		// 			 tickPosition: 'inside',
+		// 			 lineColor:'#fff',
+		// 			 tickColor:'#fff',
+		// 			 zIndex:100,
+		// 			 title: {
+		// 					 text: ''
+		// 			 },
+		// 			 categories: categories,
+		// 			labels: {
+		// 							//rotation: 45,
+		// 							style: {
+		// 									fontSize: '0.26rem',
+		// 									color:"#fff"
+		// 							},
+		// 							formatter: function () {
+		// 							 return this.value.substring(8,10);
+		// 					   }
+		// 					}
+		// 	 },
+		// 	 yAxis: {
+		// 		 tickmarkPlacement: 'on',
+		// 		 gridLineWidth:0,
+		// 		 title: {
+		// 				 text: ''
+		// 		 },
+		// 			labels:{
+		// 					enabled: false
+		// 			}
+		// 	 },
+		// 	 tooltip: {
+		// 			 crosshairs: true,
+		// 			 crosshairs:[{
+		// 				 width:28,
+		// 				 color:"rgba(250,250,250,0.2)",
+		// 				 zIndex: 100
+		// 			 }],
+		 //
+		// 			 shared: true
+		// 	 },
+		// 	 plotOptions: {
+		// 			 spline: {
+		// 					 marker: {
+		// 							 radius: 4,
+		// 							 lineColor: '#666666',
+		// 							 lineWidth: 1
+		// 					 },
+		// 			 },
+		// 			 area: {
+		// 					stacking: 'normal',
+		// 					lineColor: '#666666',
+		// 					lineWidth: 1,
+		// 					marker: {
+		// 							lineWidth: 1,
+		// 							lineColor: '#fff'
+		// 					}
+		// 			}
+		 //
+		// 	 },
+		// 	 series: [{
+		// 			 name: '一号地块',
+		// 			 // events: {
+		// 			 // 		 click: function(e) {
+		// 			 // 				 $("#dangricaishou").html(e.point.y+"吨");
+		// 			 // 		 }
+		// 			 //  },
+		// 			 marker: {
+		// 					 symbol: 'circle',
+		// 			 },
+		// 			 showInLegend: false,//不显示图例
+		// 			 //data: [30,45,55,70,90,110,200,300,320,280,230,180,30,45,55,70,90,110,200,300,320,280,230,180,30,45,55,70,90,110,200],
+		// 			 data:harvestTotal,
+		// 			 color:'#21bbef',
+		// 			 lineColor: '#fff'
+		// 	 }]
+		//  });
 	 } else {
 		 //api.alert({msg:JSON.stringify(err)});
 	 }
@@ -1053,15 +1005,18 @@ function danweiChange(){
 }
 //页面回到顶部
 function scrollToTop(){
+		var systemType = api.systemType;
 		$("#wrapper").on("scroll",function(){
 				var scrollTop = $("#wrapper").scrollTop();
-				if(scrollTop >= 223){
-					$("#xuanxiang").addClass("you")
-					$("#zhan").css("height","1rem")
-				}else{
-					$("#xuanxiang").removeClass("you")
-					$("#zhan").css("height","0")
-				}
+				if(systemType!="ios"){
+					if(scrollTop >= 223){
+						$("#xuanxiang").addClass("you")
+						$("#zhan").css("height","1rem")
+					}else{
+						$("#xuanxiang").removeClass("you")
+						$("#zhan").css("height","0")
+					}
+			  }
 				if(scrollTop >= 200){
 						$("#body_totop_btn").show().off("click").on("click",function(){
 								$("#wrapper").animate({'scrollTop': '0px'}, 1000);
