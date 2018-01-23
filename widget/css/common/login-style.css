@@ -62,7 +62,7 @@ html, body{
 /*--------滚动---------*/
 .menu1{
 	z-index: 99999;
-	
+
 }
 .menu1 li {
 	width: 100%;
@@ -213,7 +213,7 @@ html, body{
   position: relative;
 }
 .hvr-bubble-right:before {
-	margin-left: 20px; 
+	margin-left: 20px;
   pointer-events: none;
   position: absolute;
   z-index: -1;
@@ -229,7 +229,7 @@ html, body{
   border-color: transparent transparent transparent #f00;
 }
 .hvr-bubble-right:hover:before, .hvr-bubble-right:focus:before, .hvr-bubble-right:active:before {
-  margin-left: 20px; 
+  margin-left: 20px;
   -webkit-transform: translateX(10px);
   transform: translateX(10px);
   z-index: 9999;
@@ -238,8 +238,8 @@ html, body{
 
 
 .login-img-container{
-	width: 170px;
-	height: 85px;
+	width: 120px;
+	height: 70px;
 	/*border-radius: 50%;
 /* 	border: 2px solid #9AD19A; */
 	margin:5% 0px 8%;
@@ -264,7 +264,7 @@ html, body{
 	width: 80%;
 	height: auto;
 	margin: 0px auto;
-	
+
 }
 .login-input-ta-container{
 	width: 100%;
@@ -333,7 +333,7 @@ html, body{
 	float: right;
 	width: 85%;
 	height: 100%;
-	padding: 0px 0px 0px 5px; 
+	padding: 0px 0px 0px 5px;
 	color: #666;
 }
 .login-input-ta-paddingtop{
@@ -345,7 +345,7 @@ html, body{
 	float: right;
 	width: 85%;
 	height: 100%;
-	padding: 0px 12px; 
+	padding: 0px 12px;
 	color: #aaa;
 }
 .register-input-ta{
@@ -354,7 +354,7 @@ html, body{
 	float: right;
 	width: 75%;
 	height: 100%;
-	padding: 0px 12px; 
+	padding: 0px 12px;
 	color: #666;
 }
 .login-input-img{
@@ -385,7 +385,7 @@ html, body{
 	height: auto;
 }
 .register-input-img3{
-	padding-top: 12px; 
+	padding-top: 12px;
 	display: inline-block;
 	width: 30px;
 	height: auto;
@@ -537,84 +537,84 @@ html, body{
 }
 /*---------cityDom-----------*/
 .city-container{
-	position: fixed; 
+	position: fixed;
 	width: 100%;
 	height: 100%;
 	top: 0px;
 	left: 0px;
 	z-index: 10000;
 }
-._citys { 
-	/*position: absolute; 
+._citys {
+	/*position: absolute;
 	top: 0px;
 	left: 0px;*/
-	width: 100%; 
+	width: 100%;
 	height: 100%;
 
-	display: inline-block; 
-	border: 2px solid #eee; 
-	padding: 5px; 
-	
+	display: inline-block;
+	border: 2px solid #eee;
+	padding: 5px;
+
 }
-._citys span { 
-	color: rgb(18,139,3); 
-	height: 15px; 
-	width: 15px; 
-	line-height: 15px; 
-	text-align: center; 
-	border-radius: 3px; 
-	position: absolute; 
-	right: 10px; 
-	top: 10px; 
+._citys span {
+	color: rgb(18,139,3);
+	height: 15px;
+	width: 15px;
+	line-height: 15px;
+	text-align: center;
+	border-radius: 3px;
+	position: absolute;
+	right: 10px;
+	top: 10px;
 	border: 1px solid #66BB6A;
-	cursor: pointer; 
+	cursor: pointer;
 }
-._citys0 { 
-	width: 100%; 
-	height: 34px; 
-	display: inline-block; 
+._citys0 {
+	width: 100%;
+	height: 34px;
+	display: inline-block;
 	border-bottom: 2px solid #66BB6A;
-	padding: 0; 
-	margin: 0; 
+	padding: 0;
+	margin: 0;
 }
-._citys0 li { 
-	display: inline-block; 
-	line-height: 34px; 
-	font-size: 15px; 
-	color: #888; 
-	width: 80px; 
-	text-align: center; 
-	cursor: pointer; 
+._citys0 li {
+	display: inline-block;
+	line-height: 34px;
+	font-size: 15px;
+	color: #888;
+	width: 80px;
+	text-align: center;
+	cursor: pointer;
 }
-.citySel { 
+.citySel {
 	background-color: #66BB6A;
-	color: #fff !important; 
+	color: #fff !important;
 }
-._citys1 { 
-	width: 100%; 
-	display: inline-block; 
-	padding: 10px 0; 
+._citys1 {
+	width: 100%;
+	display: inline-block;
+	padding: 10px 0;
 }
-._citys1 a { 
-	width: 83px; 
-	height: 35px; 
-	display: inline-block; 
-	background-color: #f5f5f5; 
-	color: #666; 
-	margin-left: 6px; 
-	margin-top: 3px; 
-	line-height: 35px; 
-	text-align: center; 
-	cursor: pointer; 
-	font-size: 13px; 
+._citys1 a {
+	width: 83px;
+	height: 35px;
+	display: inline-block;
+	background-color: #f5f5f5;
+	color: #666;
+	margin-left: 6px;
+	margin-top: 3px;
+	line-height: 35px;
+	text-align: center;
+	cursor: pointer;
+	font-size: 13px;
 	overflow: hidden; }
-._citys1 a:hover { 
-	color: #fff; 
-	background-color: rgb(18,139,3); 
+._citys1 a:hover {
+	color: #fff;
+	background-color: rgb(18,139,3);
 }
-.AreaS { 
-	background-color: rgb(18,139,3) !important; 
-	color: #fff !important; 
+.AreaS {
+	background-color: rgb(18,139,3) !important;
+	color: #fff !important;
 }
 /*--------banner----------*/
 
@@ -678,4 +678,3 @@ html, body{
 .margin-l-20{
 	margin-left: 20px;
 }
-
