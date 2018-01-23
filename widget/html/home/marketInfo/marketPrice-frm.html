@@ -305,7 +305,7 @@
 
 	//创建折线图
 
-	function dataInit(){//alert("marketPrice")
+	function dataInit(){
 			var chartBoxs = $(".chartBox");
 			var plantId = $("#plantId").val();//获取作物id
 			//var plantId = $api.getStorage('plant').id;
@@ -547,7 +547,7 @@
 			var myOption = {
 					tooltip: {//弹窗
 							trigger: 'axis',
-							triggerOn : 'click',//'mousemove|click'
+							triggerOn : 'mousemove|click',//'mousemove|click'
 							backgroundColor : 'rgba(50,50,50,0.7)',
 							textStyle:{
 					　　		align:'left'

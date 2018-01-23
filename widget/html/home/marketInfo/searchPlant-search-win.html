@@ -360,21 +360,36 @@
 															script: 'plantDo("'+ plantName +'","'+ plantId +'")'
 													});
 													api.execScript({
-															name: 'market-index-win',
-															frameName: api.pageParam.frmName,
-															script: 'plantDo("'+ plantId +'","'+ plantName +'")'
-													});
+                              name: 'market-index-win',
+                              frameName: 'morePrice-frm',
+                              script: 'plantDo("'+ plantId +'","'+ plantName +'")'
+                          });
+                          api.execScript({
+                              name: 'market-index-win',
+                              frameName: 'marketPrice-frm',
+                              script: 'plantDo("'+ plantId +'","'+ plantName +'")'
+                          });
 													//调用win页面获取数据方法
-													api.execScript({
-															name: 'market-index-win',
-															frameName: api.pageParam.frmName,
-															script: 'dataInit()'
-													});
+													// api.execScript({
+													// 		name: 'market-index-win',
+													// 		frameName: api.pageParam.frmName,
+													// 		script: 'dataInit()'
+													// });
 													setTimeout(function(){
+															api.execScript({
+																name: 'market-index-win',
+																frameName: 'morePrice-frm',
+																script: 'dataInit()'
+															});
+															api.execScript({
+																name: 'market-index-win',
+																frameName: 'marketPrice-frm',
+																script: 'dataInit()'
+															});
 															api.closeToWin({
 															    name: 'market-index-win'
 															});
-													},500)
+													},300)
 
 											});
 									}else{

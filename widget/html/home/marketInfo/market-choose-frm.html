@@ -64,7 +64,7 @@
 					height: 0.8rem;
 					line-height: 0.8rem;text-align: left;border: solid 1px #00c558;
 					border-radius: 4px;
-					overflow-x: auto;overflow-y: hidden;text-overflow: ellipsis;
+					overflow-x: hidden;overflow-y: hidden;text-overflow: ellipsis;
 					white-space:nowrap; padding: 0 0.25rem;background-color: #fff;
 					font-size: 0.3rem;color: #00c558;margin-bottom: 0.3rem;
 				}
@@ -161,6 +161,9 @@
 																	if (data[i].name == "中国") {
 																			province_ = "全国";
 																			continue;
+																	};
+																	if (data[i].name == "黑龙江省") {
+																			province_ = (data[i].name).slice(0,3);
 																	};
 																	provinceListStr += '<li data-provinceId="'+ data[i].id +'">'+ province_ +'</li>'
 															}else{

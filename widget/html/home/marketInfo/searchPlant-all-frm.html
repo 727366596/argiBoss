@@ -185,19 +185,34 @@
                           });
                           api.execScript({
                               name: 'market-index-win',
-                              frameName: api.pageParam.frmName,
+                              frameName: 'morePrice-frm',
+                              script: 'plantDo("'+ plantId +'","'+ plantName +'")'
+                          });
+                          api.execScript({
+                              name: 'market-index-win',
+                              frameName: 'marketPrice-frm',
                               script: 'plantDo("'+ plantId +'","'+ plantName +'")'
                           });
                           //调用win页面获取数据方法
                           console.log("allPlant*****************"+api.pageParam.frmName)
-                          api.execScript({
-                              name: 'market-index-win',
-                              frameName: api.pageParam.frmName,
-                              script: 'dataInit()'
-                          });
+                          // api.execScript({
+                          //     name: 'market-index-win',
+                          //     frameName: api.pageParam.frmName,
+                          //     script: 'dataInit()'
+                          // });
                           setTimeout(function(){
+                              api.execScript({
+                                name: 'market-index-win',
+                                frameName: 'morePrice-frm',
+                                script: 'dataInit()'
+                              });
+                              api.execScript({
+                                name: 'market-index-win',
+                                frameName: 'marketPrice-frm',
+                                script: 'dataInit()'
+                              });
                               api.closeWin();
-                          },500)
+                          },300)
                       });
                       //启动字母导航
                       $(".nav").html(navStr);
