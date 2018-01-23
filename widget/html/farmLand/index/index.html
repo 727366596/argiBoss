@@ -1120,42 +1120,44 @@ var ownPositionEvent = function ownPositionEvent() {
 
 /*在线人数点击事件*/
 var onlineEvent = function onlineEvent() {
-  alert('在线人数点击');
   closePunch();
+  api.openWin({
+    name: 'employeePath_online_win',
+    slidBackEnabled: false,
+    url: '../../EmployeePath/employeePath_online_win.html'
+  });
 };
-window.closePunch = function () {}
-//  api.closeFrame( {
-//    name: 'punch_frm'
-//  } )
-//  api.closeFrame( {
-//    name: 'farm_frm'
-//  } )
-//  api.closeFrame( {
-//    name: 'myposition_frm'
-//  } )
-//  closeMap()
-//  api.closeWin( {} )
-
+window.closePunch = function () {
+  api.closeFrame({
+    name: 'punch_frm'
+  });
+  api.closeFrame({
+    name: 'farm_frm'
+  });
+  api.closeFrame({
+    name: 'myposition_frm'
+  });
+  closeMap();
+  //  api.closeWin( {} )
+};
 
 /*给员工派活点击事件*/
-;var notWorkEvent = function notWorkEvent() {
-  alert('作物长势');
+var notWorkEvent = function notWorkEvent() {
   closePunch();
-
-  //api.openWin( {
-  //  name: 'jobList_win',
-  //  url: '../../../html/farmLand/not-finish/notfinish_win.html'
-  //} )
+  api.openWin({
+    name: 'cropGrowth_win',
+    slidBackEnabled: false,
+    url: '../../management/cropGrowth_win.html'
+  });
 };
 /*田间管理点击事件*/
 var doneWorkEvent = function doneWorkEvent() {
-  alert('员工活动轨迹');
   closePunch();
-
-  //api.openWin( {
-  //  name: 'listShow_win',
-  //  url: '../../../html/farmLand/finished/finish_win.html'
-  //} )
+  api.openWin({
+    name: 'employeePath_list_win',
+    slidBackEnabled: false,
+    url: '../../EmployeePath/employeePath_list_win.html'
+  });
 };
 
 /*页面接收事件方法*/
