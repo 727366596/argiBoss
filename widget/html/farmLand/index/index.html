@@ -3669,6 +3669,7 @@ var staffEvent = function staffEvent(farmId) {
     var data = res.data || [];
     if (data.length !== 0) {
       var staffListArr = [];
+      var systemType = api.systemType;
       for (var i = 0; i < data.length; i++) {
 
         var staffId = data[i].id;
@@ -3685,7 +3686,13 @@ var staffEvent = function staffEvent(farmId) {
         staffObj.lon = data[i].longitude;
         staffObj.lat = data[i].latitude;
 
-        getPersonNameEvent(staffListArr, staffId, staffObj, staffName);
+        var bgImg = '';
+        if (systemType === 'ios') {
+          bgImg = 'widget://image/farmLand/ios.png';
+        } else {
+          bgImg = 'widget://image/farmLand/qipao.png';
+        }
+        getPersonNameEvent(bgImg, staffListArr, staffId, staffObj, staffName);
       }
     }
   });
@@ -3817,12 +3824,12 @@ var getLandNameEvent = function getLandNameEvent(id, obj, name) {
 };
 
 /*地图添加人名小红旗事件*/
-var getPersonNameEvent = function getPersonNameEvent(arr, id, obj, name) {
+var getPersonNameEvent = function getPersonNameEvent(img, arr, id, obj, name) {
   /*添加气泡信息*/
   bMap.addBillboard({
     id: id,
     coords: obj,
-    bgImg: 'widget://image/farmLand/qipao.png',
+    bgImg: img,
     content: {
       title: name
     },
