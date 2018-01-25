@@ -277,6 +277,11 @@
 					background-color: #fff;
 					z-index: 9999;
 				}
+				#noPic1,#noPic2,#noPic3{
+					display: none;
+					width: 100%;
+					height: 5.77rem;
+				}
     </style>
 </head>
 <body>
@@ -319,12 +324,14 @@
 				<div class="titleContent">当日品类分布</div>
 			</div>
 			<div class="container1">
+				<img id="noPic1" src="../../image/planting/noPic.png" alt="">
 				<div id="container1"></div>
 			</div>
 			<div class="biaoTitle">
 				<div class="titleContent">累积品类分布</div>
 			</div>
 			<div class="container2">
+				<img id="noPic2" src="../../image/planting/noPic.png" alt="">
 				<div id="container2"></div>
 				</div>
 			</div>
@@ -350,16 +357,17 @@
 					<div id="today" class="titleContent">当日最大采收量：500吨</div>
 				</div>
 				<div class="container1">
+					<img id="noPic3" src="../../image/planting/noPic.png" alt="">
 					<div id="container5"></div>
 				</div>
-				<p id="nianyue" class="nianyue">2017年</p>
+				<p id="nianyue" class="nianyue"></p>
 				<div class="shuju">
 					<div class="jihuashuju">
-						<span id="dangricaishou">330吨</span>
-						<span class="shujuyuan">当日采收总量</span>
+						<span id="dangricaishou"></span>
+						<span id="shujuyuan" class="shujuyuan">当日采收总量</span>
 					</div>
 					<div class="shijishuju">
-						<span id="todayTotal">1500吨</span>
+						<span id="todayTotal"></span>
 						<span class="shujuyuan">累计采收总量</span>
 					</div>
 				</div>
@@ -383,7 +391,524 @@
 
 
 <script>
-eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('4o=l(){r b=1;$("#1C").Y("1B",l(){b||(b=1,$("#1C").1l("1k","1Q"),$("#1z").1l("1k","2B"),$("#2F").F(),$("#24").13(),$("#2s").F(),$("#2t").13())});$("#1z").Y("1B",l(){b&&(b=17,$("#1C").1l("1k","2B"),$("#1z").1l("1k","1Q"),$("#2F").13(),$("#24").F(),$("#2t").F(),$("#2s").13())});$("#31").Y("1B",l(){n.4u({14:"21",I:"./21.K",3q:{4e:2}})});2d();2e();2r()};l 2d(){u($n.s("4p")){r b=$n.s("4q"),d=$n.s("51"),e=$n.s("32"),a=$n.s("48");$("#1R").j(b.23(/\\-/g,".")+"-"+d.23(/\\-/g,"."));$("#25").j($n.s("4y"));$("#26").j($n.s("2U"));$("#28").j(e);$("#S").j(a);$("#1j").j(b);$("#1n").j(d);$("#U").j(e);1F(b,d,e,a);1u(b,d,e,a);1x(b,d,a,e)}1m{r c=1P 2N,e=c.2O(),a=c.2P()+1,c=c.2S();10>a?a="0"+a:a;10>c?c="0"+c:c;d=e+"-"+a+"-"+c;b=e+"-19-19";$("#1R").j(e+".19.19-"+e+"."+a+"."+c);n.O({1b:{1o:1h 0==$n.s("J")?17:$n.s("J")},I:P.M+"N/4F/4G/4M"},l(a,c){a&&($("#25").j(a.i.2h.2k),$("#26").j(a.i.1G.2Q),$("#28").j(a.i.2h.V),$("#S").j(a.i.1G.V),$("#1j").j(b),$("#1n").j(d),1F(d,d,a.i.1v,a.i.1w),1u(b,d,a.i.1v,a.i.1w),1x(b,d,a.i.1w,a.i.1v))})}}l 1F(b,d,e,a){n.O({I:P.M+"N/11/1N"},l(a,b){u(a){b=[];r c=[],d="#3r #3u #3x #3P #3T #3V".3W(" ");a=a.i;W(r e=a.o,f=0;f<e;f++)1S<a[f].L||22>a[f].L||(b.R(a[f].1D),c.R({q:a[f].L,14:a[f].1D}),5<e&&d.R("4O("+1I(1r*1g.1f())+","+1I(1r*1g.1f())+","+1I(1r*1g.1f())+")"));1M={2f:{2g:"2Z",1e:"<2i 3j=\'z-3n:0\'>{a} <3o/>{b} : {c} \\1c({d}%)</2i>"},G:d,3s:{F:!1,3t:1a,w:3C,3D:{3E:[0,1]}},3K:{3N:"3O",x:"3Q",i:b},2y:[{14:"\\2z\\2A\\41\\42\\46\\47",A:"4d",2D:"1a%",4f:["4g%","50%"],i:c.2E(l(a,c){D a.q-c.q}),4r:"2D",4t:{1E:{4v:"4x",1e:"{c} \\1c"}},1O:{1E:{2M:1q,4H:"1H(0, 0, 0, 0.4)"}},4R:"4T",4U:"4V",4Y:l(a){D 1T*1g.1f()}}]};1U.1V(1W.1X("2R")).1Y(1M)}})}l 1u(b,d,e,a){n.O({I:P.M+"N/11/1N"},l(a,b){u(a){r d=[];a=a.i;b=a.o;W(r c=0;c<b;c++)1S<a[c].L||22>a[c].L||d.R({q:a[c].L,14:a[c].1D,2T:a[c].L});1Z.2V(l(){(1P 1Z({A:"2W",2X:"2Y",T:"1s%",1t:"33%",35:"36",37:{38:{39:"3a",3b:"",3c:"3d",3e:"0",3f:"0",3g:"\\1c",3h:"50",3i:"20",3k:"0"},i:d.2E(l(a,b){D a.q-b.q})}})).3l()})}})}l 1d(b,d,e,a,c){n.O({I:P.M+"N/11/3m"},l(a,b){u(a){b=[];r c=[];a=a.i;W(r d=a.o,e=0;e<d;e++)b.R(a[e].Z.X(2,10)),c.R(a[e].L);$("#3p").K(a[0].Z.X(0,4)+"\\27"+a[0].Z.X(5,7)+"\\29-"+a[d-1].Z.X(0,4)+"\\27"+a[d-1].Z.X(5,7)+"\\29");B={2b:"#3v",3w:{x:40,y:20,3y:30,3z:45},2f:{2g:"3A",3B:{A:"2c",1i:{G:"1H(1A,1A,1A,0.4)",T:34,A:"3F"},3G:{G:"#3H",T:1,A:"3I"},3J:{G:"1H(1q,1q,1q,0.3)",T:"3L",A:"3M"}},1e:l(a){16<(a[0].q+"").o?a[0].q=(a[0].q+"").v(0,-16)+"\\C\\C":8<(a[0].q+"").o&&16>=(a[0].q+"").o&&(a[0].q=(a[0].q+"").v(0,-8)+"."+(a[0].q+"").v(-8,-7)+"\\C");$("#3R").K(a[0].q+"\\1c")}},3S:[{F:!1,2j:!0,3U:"#Q",2l:!0,3X:!1,3Y:"#Q",2b:"#3Z",2m:1a,2n:1s},{A:"43",2j:!0,2l:!0,2m:1a,2n:1s}],44:{2o:{F:!1},A:"1G",i:b,2p:{1i:{G:"#Q",T:1}},2q:{49:0,4a:-40}},4b:{2o:{F:!1},A:"4c",2p:{1i:{G:"#Q",T:1}},2q:{1e:l(a){a+="";u(3>=a.o)D a;u(3<a.o&&6>=a.o)D a.v(0,-3)+"k";u(6<a.o&&9>=a.o)D a.v(0,-6)+"m";u(9<a.o&&12>=a.o)D a.v(0,-9)+"b";u(12<a.o&&15>=a.o)D a.v(0,-12)+"t";u(15<a.o&&18>=a.o)D a.v(0,-15)+"p"}}},2y:[{i:c,A:"2c",4h:"4i",4j:5,1O:{1E:{G:"#Q",1i:{G:"#Q"}}}}]};1U.1V(1W.1X("4k")).1Y(B)}})}l 2e(){n.O({1b:{1o:1h 0==$n.s("J")?17:$n.s("J")},I:P.M+"N/4l/4m/4n"},l(b,d){u(b){b=b.i;d=b.o;r e="";u(d){W(r a=0;a<d;a++)e+="<B q="+b[a].V+">"+b[a].2k+"</B>";$("#U").K(e)}}1m n.2u({2v:2w.2x(d)})})}l 1x(b,d,e,a){n.O({1b:{1o:1h 0==$n.s("J")?17:$n.s("J")},I:P.M+"N/11/4s"},l(c,f){u(c){c=c.i;f=c.o;r h="";u(f){W(r g=0;g<f;g++)h+="<B q="+c[g].V+">"+c[g].14+"</B>";$("#H").K(h);1d(b,d,a,e,c[0].V);1p(e,a,c[0].V)}}1m n.2u({2v:2w.2x(f)})})}l 1p(b,d,e){n.O({1b:{1o:1h 0==$n.s("J")?17:$n.s("J")},I:P.M+"N/11/4w"},l(a,b){a&&(16<(a.i.E+"").o?a.i.E=(a.i.E+"").v(0,-16)+"\\C\\C":8<(a.i.E+"").o&&16>=(a.i.E+"").o&&(a.i.E=(a.i.E+"").v(0,-8)+"."+(a.i.E+"").v(-8,-7)+"\\C"),16<(a.i.w+"").o?a.i.w=(a.i.w+"").v(0,-16)+"\\C\\C":8<(a.i.w+"").o&&16>=(a.i.w+"").o&&(a.i.w=(a.i.w+"").v(0,-8)+"."+(a.i.w+"").v(-8,-7)+"\\C"),$("#2C").K("\\4z\\4A\\4B\\4C\\2z\\2A\\4D\\4E"+a.i.2C+$("#H").1J("B:1K").1L()),$("#4I").K(a.i.E+$("#H").1J("B:1K").1L()),$("#w").K(a.i.w+$("#H").1J("B:1K").1L()))})}l 4J(){1p($("#S").j(),$("#U").j(),$("#H").j());1d($("#1j").j(),$("#1n").j(),$("#U").j(),$("#S").j(),$("#H").j())}l 4K(){1p($("#S").j(),$("#U").j(),$("#H").j());1d($("#1j").j(),$("#1n").j(),$("#U").j(),$("#S").j(),$("#H").j())}l 2r(){r b=n.4L;$("#1y").Y("4N",l(){r d=$("#1y").2G();"4P"!=b&&(4Q<=d?($("#2H").4S("2I"),$("#2J").2K("1t","4W")):($("#2H").4X("2I"),$("#2J").2K("1t","0")));u(1T<=d)$("#2L").F().4Z("2a").Y("2a",l(){$("#1y").52({2G:"53"},54)});1m $("#2L").13()})};',62,315,'||||||||||||||||||data|val||function||api|length||value|var|getStorage||if|slice|max||||type|option|u4ebf|return|total|show|color|shuru2|url|userId|html|harvestTotal|defaultUri|app|ajax|pds|fff|push|catId|width|shuru1|id|for|substring|on|recordDate||harvestStat||hide|name|||null||01|80|headers|u5428|caiLiang|formatter|random|Math|void|lineStyle|startDate|class|attr|else|endDate|authorization|nowHarvest|150|257|100|height|priFen|farmId|categoryId|danwei|wrapper|partB|250|touchstart|partA|gradeName|normal|pieFen|category|rgba|parseInt|find|selected|text|option1|queryGradeOfHarvest|itemStyle|new|plantA|time|1E4|200|echarts|init|document|getElementById|setOption|FusionCharts||selectSearchTerm_win|3E3|replace|part2|land|crop|u5e74|landId|u6708|click|backgroundColor|line|initIn|jidi|tooltip|trigger|farm|span|realtime|farmName|zoomLock|start|end|splitLine|axisLine|axisLabel|scrollToTop|partA1|partA2|alert|msg|JSON|stringify|series|u91c7|u6536|plantB|today|radius|sort|part1|scrollTop|xuanxiang|you|zhan|css|body_totop_btn|shadowBlur|Date|getFullYear|getMonth|catName|container1|getDate|cleanValue|categorys|ready|pyramid|renderAt|container2|item||select|farmIds|105||dataFormat|json|dataSource|chart|bgcolor|FFFFFF|caption|basefontcolor|333333|decimals|showToolTip|numbersuffix|pyramidyscale|chartbottommargin|style|showborder|render|queryAmountOfHarvest|index|br|nianyue|pageParam|FFC65C|visualMap|min|EE6B67|21bbef|grid|32D6C5|x2|y2|axis|axisPointer|600|inRange|colorLightness|solid|crossStyle|1e90ff|dashed|shadowStyle|legend|auto|default|orient|vertical|4198E1|left|dangricaishou|dataZoom|a1c345|handleColor|a864ab|split|showDetail|borderColor|ccc||u54c1|u7c7b|inside|xAxis||u5206|u5e03|categoryIds|interval|rotate|yAxis|log|pie|pageId|center|60|symbol|emptyCircle|symbolSize|container5|staff|farmland|get_farm_list|apiready|harvest|startDates|roseType|units|label|openWin|position|queryHarvestData|inner|landNames|u5f53|u65e5|u6700|u5927|u91cf|uff1a|commons|stat|shadowColor|todayTotal|jidiChange|danweiChange|systemType|firstEnterQueryParam|scroll|rgb|ios|223|animationType|addClass|scale|animationEasing|elasticOut|1rem|removeClass|animationDelay|off||endDates|animate|0px|1E3'.split('|'),0,{}))
+
+	apiready=function(){
+		// var header = $api.byId('header');
+		// 	$api.fixStatusBar(header);
+		// 	var headerH = $api.offset(header).h;
+		// 	$("body").css({"paddingTop":headerH+"px"});
+			var show=1
+			$("#partA").on("touchstart",function(){
+				if(!show){
+					show=1
+					$("#partA").attr("class","plantA")
+					$("#partB").attr("class","plantB")
+					$("#part1").show()
+					$("#part2").hide()
+					$("#partA1").show()
+					$("#partA2").hide()
+				}
+			})
+			$("#partB").on("touchstart",function(){
+				if(show){
+					show=null
+					$("#partA").attr("class","plantB")
+					$("#partB").attr("class","plantA")
+					$("#part1").hide()
+					$("#part2").show()
+					$("#partA2").show()
+					$("#partA1").hide()
+				}
+			})
+			$("#select").on("touchstart",function(){
+					api.openWin({
+						name : 'selectSearchTerm_win',
+						url : './selectSearchTerm_win.html',
+						pageParam: {
+								pageId: 2
+						}
+					});
+			})
+			initIn()
+			jidi()
+			scrollToTop()
+	}
+
+	function initIn(){
+		if($api.getStorage('harvest')){
+			var startDate=$api.getStorage('startDates')
+			var endDate=$api.getStorage('endDates')
+			var farmId=$api.getStorage('farmIds')
+			var categoryId=$api.getStorage('categoryIds')
+			$("#time").val(startDate.replace(/\-/g, '.')+"-"+endDate.replace(/\-/g, '.'))
+			$("#land").val($api.getStorage('landNames'))
+			$("#crop").val($api.getStorage('categorys'))
+			$("#landId").val(farmId)
+			$("#catId").val(categoryId)
+			$("#startDate").val(startDate)
+			$("#endDate").val(endDate)
+			$("#shuru1").val(farmId)
+			// setTimeout(function(){
+				pieFen(startDate,endDate,farmId,categoryId)
+				priFen(startDate,endDate,farmId,categoryId)
+				danwei(startDate,endDate,categoryId,farmId)
+			// },300)
+		}else{
+			var d = new Date(), y = d.getFullYear(), m = d.getMonth() + 1, r = d.getDate();
+			m < 10 ? m = "0" + m : m;
+			r < 10 ? r = "0" + r : r;
+			var endDate=y + "-" + m + "-" + r;
+			var startDate=y + "-0" + 1 + "-0" + 1;
+			$("#time").val(y+".01.01"+"-"+y + "." + m + "." + r)
+			api.ajax({
+				headers : {
+						authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
+				},
+				url:pds.defaultUri + 'app/commons/stat/firstEnterQueryParam',
+			},function(ret,err){
+				if (ret) {
+					//alert(JSON.stringify(ret))
+					$("#land").val(ret.data.farm.farmName)
+					$("#crop").val(ret.data.category.catName)
+					$("#landId").val(ret.data.farm.id)
+					$("#catId").val(ret.data.category.id)
+					$("#startDate").val(startDate)
+					$("#endDate").val(endDate)
+					// setTimeout(function(){
+						pieFen(endDate,endDate,ret.data.farmId,ret.data.categoryId)
+						priFen(startDate,endDate,ret.data.farmId,ret.data.categoryId)
+						danwei(startDate,endDate,ret.data.categoryId,ret.data.farmId)
+					// },300)
+				} else {
+					//api.alert({msg:JSON.stringify(err)});
+				};
+			});
+		}
+	}
+	function pieFen(startDate,endDate,farmId,categoryId){
+		api.ajax({
+		 url:pds.defaultUri + 'app/harvestStat/queryGradeOfHarvest',
+		 data:{values:{startDate:startDate,endDate:endDate,farmId:farmId,categoryId:categoryId}}
+		},function(ret,err){
+		 if (ret) {
+			 //api.alert({msg:JSON.stringify(ret)});
+			 if(!ret.data.length){
+				 $("#noPic1").show()
+				 $("#container1").hide()
+				 return
+			 }else{
+				 $("#noPic1").hide()
+				 $("#container1").show()
+			 }
+			 var gradeName=[],harvestTotal=[],color=['#FFC65C','#EE6B67','#32D6C5','#4198E1','#a1c345','#a864ab']
+			 var date=ret.data,l=date.length;
+			 for(var i=0;i<l;i++){
+				 if(date[i].harvestTotal>10000||date[i].harvestTotal<3000){
+					 continue
+				 }
+				 gradeName.push(date[i].gradeName)
+				 harvestTotal.push({"value":date[i].harvestTotal,"name":date[i].gradeName})
+				 if(l>5){
+				 	color.push("rgb("+parseInt(Math.random()*257)+","+parseInt(Math.random()*257)+","+parseInt(Math.random()*257)+")")
+				 }
+			 }
+				option1 = {
+				    tooltip : {
+				        trigger: 'item',
+				        formatter: "<span style='z-index:0'>{a} <br/>{b} : {c} 吨({d}%)</span>"
+				    },
+						//color:['#FFC65C','#EE6B67','#32D6C5','#4198E1'],
+						color:color,
+				    visualMap: {
+				        show: false,
+				        min: 80,
+				        max: 600,
+				        inRange: {
+				            colorLightness: [0, 1]
+				        }
+				    },
+						legend: {
+		         orient: 'vertical',
+		         x: 'left',
+		         data:gradeName
+		       },
+				    series : [
+				        {
+				            name:'采收品类分布',
+				            type:'pie',
+				            radius : '80%',
+				            center: ['60%', '50%'],
+				            data:harvestTotal.sort(function (a, b) { return a.value - b.value; }),
+				            roseType: 'radius',
+				            label: {
+				                normal: {
+															position: 'inner',
+															formatter: "{c} 吨"
+				                }
+				            },
+				            // labelLine: {
+				            //     normal: {
+				            //         smooth: 0.2,
+				            //         length: 10,
+				            //         length2: 20
+				            //     }
+				            // },
+				            itemStyle: {
+				                normal: {
+				                    // color: '#c23531',
+				                    shadowBlur: 150,
+				                    shadowColor: 'rgba(0, 0, 0, 0.4)'
+				                }
+				            },
+
+				            animationType: 'scale',
+				            animationEasing: 'elasticOut',
+				            animationDelay: function (idx) {
+				                return Math.random() * 200;
+				            }
+				        }
+				    ]
+				};
+				echarts.init(document.getElementById('container1')).setOption(option1)
+
+			} else {
+				//api.alert({msg:JSON.stringify(err)});
+			}
+		})
+	}
+	function priFen(startDate,endDate,farmId,categoryId){
+		api.ajax({
+		 url:pds.defaultUri + 'app/harvestStat/queryGradeOfHarvest',
+		 data:{values:{startDate:startDate,endDate:endDate,farmId:farmId,categoryId:categoryId}}
+		},function(ret,err){
+		 if (ret) {
+			 //api.alert({msg:JSON.stringify(ret)});
+			 if(!ret.data.length){
+					 $("#noPic2").show()
+					 $("#container2").hide()
+					 return
+			 }else{
+					 $("#noPic2").hide()
+					 $("#container2").show()
+			 }
+			 var pri=[];
+			 var date=ret.data,l=date.length;
+			 var c=['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'];
+      //  var color=['#ed6a66','#a864a8','#a1c345','#61d7c5','#3c81bf'];
+			//  var ci=0;
+			 for(var i=0;i<l;i++){
+				 if(date[i].harvestTotal>10000||date[i].harvestTotal<3000){
+					 continue
+				 }
+					 pri.push({
+							 "value": date[i].harvestTotal,
+							 "name": date[i].gradeName,
+
+							 "cleanValue": date[i].harvestTotal
+					 })
+			 }
+				FusionCharts.ready(function () {
+						var myChart = new FusionCharts({
+								type: "pyramid",
+								renderAt: 'container2',
+								width:'100%',
+								height:'105%',
+								dataFormat: 'json',
+								dataSource: {
+											"chart": {
+													"bgcolor": "FFFFFF",
+													"caption": "",
+													"basefontcolor": "333333",
+													"decimals": "0",
+													"showToolTip":"0",
+													"numbersuffix": "吨",
+													"pyramidyscale": "50",
+													"chartbottommargin": "20",
+													"showborder": "0"
+											},
+											"data":pri.sort(function (a, b) { return a.value - b.value; })
+
+									}
+						});
+
+						// Render the chart.
+						myChart.render();
+				});
+			} else {
+				//api.alert({msg:JSON.stringify(err)});
+			}
+		})
+	}
+function caiLiang(startDate,endDate,farmId,categoryId,numerator){
+	api.ajax({
+	 url:pds.defaultUri + 'app/harvestStat/queryAmountOfHarvest',
+	 data:{values:{startDate:startDate,endDate:endDate,farmId:farmId,categoryId:categoryId,numerator:numerator}}
+	},function(ret,err){
+	 if (ret) {
+		 //api.alert({msg:JSON.stringify(ret)});
+		 if(!ret.data.length){
+			 $("#noPic3").show()
+			 $("#container5").hide()
+			 return
+			}else{
+			 $("#noPic3").hide()
+			 $("#container5").show()
+			}
+		 var categories=[],harvestTotal=[]
+		 var date=ret.data,l=date.length
+		 for(var i=0;i<l;i++){
+			 categories.push(date[i].recordDate.substring(2,10))
+			 harvestTotal.push(date[i].harvestTotal)
+		 }
+		 $("#nianyue").html(date[0].recordDate.substring(0,4)+"年"+date[0].recordDate.substring(5,7)+"月-"+date[l-1].recordDate.substring(0,4)+"年"+date[l-1].recordDate.substring(5,7)+"月")
+		 //api.alert({msg:JSON.stringify(categories)});
+		 option = {
+			  backgroundColor: '#21bbef',
+				grid:{
+					x:40,
+					y:20,
+					x2:30,
+					y2:45
+				},
+			  tooltip : {
+						trigger: 'axis',
+						axisPointer:{
+										    type: 'line',
+										    lineStyle: {
+										        color: 'rgba(250,250,250,0.4)',
+										        width: 34,
+										        type: 'solid'
+										    },
+										    crossStyle: {
+										        color: '#1e90ff',
+										        width: 1,
+										        type: 'dashed'
+										    },
+										    shadowStyle: {
+										        color: 'rgba(150,150,150,0.3)',
+										        width: 'auto',
+										        type: 'default'
+										    }
+										},
+					formatter:function (param) {
+						//console.log(JSON.stringify(param))
+						if((param[0].value+"").length>16){
+							param[0].value=(param[0].value+"").slice(0, -16)+"亿亿"
+						}else if((param[0].value+"").length>8&&(param[0].value+"").length<=16){
+							param[0].value=(param[0].value+"").slice(0, -8)+"."+(param[0].value+"").slice(-8, -7)+"亿"
+						}
+						$("#dangricaishou").html(param[0].value+"吨")
+						$("#shujuyuan").html(param[0].axisValue.substring(0,2)+"年"+param[0].axisValue.substring(3,5)+"月"+param[0].axisValue.substring(6,8)+"日"+"<br>"+"采收总量")
+           }
+				},
+				dataZoom: [
+					 {
+							 show: false,
+							 realtime: true,
+							 handleColor: '#fff',
+							 zoomLock:true,
+							 showDetail: false,
+							 borderColor:"#fff",
+							 backgroundColor: '#ccc',
+							 start: 80,
+							 end: 100
+					 },
+					 {
+							 type: 'inside',
+							 realtime: true,
+							 zoomLock:true,
+							 start: 80,
+							 end: 100
+					 }
+			 ],
+		    xAxis: {
+						splitLine:{show: false},
+		        type: 'category',
+		        data: categories,
+						axisLine:{
+									 lineStyle:{
+											 color:'#fff',
+											 width:1
+									 }
+						},
+						axisLabel: {
+						   interval:0,
+						   rotate:-40
+						}
+		    },
+		    yAxis: {
+						//show:false,
+						splitLine:{show: false},
+		        type: 'log',
+						axisLine:{
+									 lineStyle:{
+											 color:'#fff',
+											 width:1
+									 }
+						},
+						axisLabel:{
+                    formatter: function (value) {
+											value=value+""
+											if(value.length<=3){
+												return value
+											}
+											if(value.length>3&&value.length<=6){
+												return value.slice(0, -3)+"k"
+											}
+											if(value.length>6&&value.length<=9){
+												return value.slice(0, -6)+"m"
+											}
+											if(value.length>9&&value.length<=12){
+												return value.slice(0, -9)+"b"
+											}
+											if(value.length>12&&value.length<=15){
+												return value.slice(0, -12)+"t"
+											}
+											if(value.length>15&&value.length<=18){
+												return value.slice(0, -15)+"p"
+											}
+                    }
+                }
+		    },
+		    series: [{
+		        data: harvestTotal,
+		        type: 'line',
+						symbol:'emptyCircle',
+						symbolSize: 5,
+						itemStyle: {
+		        normal: {
+		            color: "#fff",
+		            lineStyle: {
+		                color: "#fff"
+		            }
+		        }
+		    	},
+		    }]
+		};
+		echarts.init(document.getElementById('container5')).setOption(option)
+	 } else {
+		 //api.alert({msg:JSON.stringify(err)});
+	 }
+ })
+}
+function jidi(){
+	api.ajax({
+		headers : {
+				authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
+		},
+			url:pds.defaultUri + 'app/staff/farmland/get_farm_list',
+		},function(ret,err){
+			//api.alert({msg:JSON.stringify(ret)});
+			if (ret) {
+				var dt=ret.data,l=dt.length,land="";
+				if(!l){
+					return
+				}
+				for(var i=0; i<l; i++){
+					land+="<option value="+dt[i].id+">"+dt[i].farmName+"</option>"
+				}
+				$("#shuru1").html(land)
+				land=null
+			} else {
+			 api.alert({msg:JSON.stringify(err)});
+		 }
+	 })
+}
+function danwei(startDate,endDate,categoryId,farmId){
+	api.ajax({
+		headers : {
+				authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
+		},
+			url:pds.defaultUri + 'app/harvestStat/units',
+			//data:{value:{categoryId:categoryId,farmId:farmId}},
+		},function(ret,err){
+			//api.alert({msg:JSON.stringify(ret)});
+			if (ret) {
+				var dt=ret.data,l=dt.length,land="";
+				if(!l){
+					return
+				}
+				for(var i=0; i<l; i++){
+					land+="<option value="+dt[i].id+">"+dt[i].name+"</option>"
+				}
+				$("#shuru2").html(land)
+				land=null
+				caiLiang(startDate,endDate,farmId,categoryId,dt[0].id)
+				nowHarvest(categoryId,farmId,dt[0].id)
+			} else {
+			 api.alert({msg:JSON.stringify(err)});
+		 }
+	 })
+}
+function nowHarvest(categoryId,farmId,numerator){
+		api.ajax({
+			headers : {
+				authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
+		},
+		 url:pds.defaultUri + 'app/harvestStat/queryHarvestData',
+		 data:{values:{categoryId:categoryId,farmId:farmId,numerator:numerator}}
+		},function(ret,err){
+		 if (ret) {
+			 //api.alert({msg:JSON.stringify(ret)});
+			 if((ret.data.total+"").length>16){
+				 ret.data.total=(ret.data.total+"").slice(0, -16)+"亿亿"
+			 }else if((ret.data.total+"").length>8&&(ret.data.total+"").length<=16){
+				 ret.data.total=(ret.data.total+"").slice(0, -8)+"."+(ret.data.total+"").slice(-8, -7)+"亿"
+			 }
+			//  else if((ret.data.total+"").length>4&&(ret.data.total+"").length<=8){
+			// 	 ret.data.total=(ret.data.total+"").slice(0, -4)+"万"
+			//  }
+			 if((ret.data.max+"").length>16){
+				 ret.data.max=(ret.data.max+"").slice(0, -16)+"亿亿"
+			 }else if((ret.data.max+"").length>8&&(ret.data.max+"").length<=16){
+				 ret.data.max=(ret.data.max+"").slice(0, -8)+"."+(ret.data.max+"").slice(-8, -7)+"亿"
+			 }
+			//  else if((ret.data.max+"").length>4&&(ret.data.max+"").length<=8){
+			// 	 ret.data.max=(ret.data.max+"").slice(0, -4)+"万"
+			//  }
+			 $("#today").html("当日最大采收量："+ret.data.today+$("#shuru2").find("option:selected").text())
+			 $("#todayTotal").html(ret.data.total+$("#shuru2").find("option:selected").text())
+			 $("#max").html(ret.data.max+$("#shuru2").find("option:selected").text())
+		 } else {
+			 //api.alert({msg:JSON.stringify(err)});
+		 }
+	 })
+}
+function jidiChange(){
+	nowHarvest($("#catId").val(),$("#shuru1").val(),$("#shuru2").val())
+	caiLiang($("#startDate").val(),$("#endDate").val(),$("#shuru1").val(),$("#catId").val(),$("#shuru2").val())
+}
+function danweiChange(){
+	nowHarvest($("#catId").val(),$("#shuru1").val(),$("#shuru2").val())
+	caiLiang($("#startDate").val(),$("#endDate").val(),$("#shuru1").val(),$("#catId").val(),$("#shuru2").val())
+}
+//页面回到顶部
+function scrollToTop(){
+		var systemType = api.systemType;
+		$("#wrapper").on("scroll",function(){
+				var scrollTop = $("#wrapper").scrollTop();
+				if(systemType!="ios"){
+					if(scrollTop >= 223){
+						$("#xuanxiang").addClass("you")
+						$("#zhan").css("height","1rem")
+					}else{
+						$("#xuanxiang").removeClass("you")
+						$("#zhan").css("height","0")
+					}
+			  }
+				if(scrollTop >= 200){
+						$("#body_totop_btn").show().off("click").on("click",function(){
+								$("#wrapper").animate({'scrollTop': '0px'}, 1000);
+								//myScroll.scrollTo(0, 0, 300)
+								// $("#body_totop_btn").animate({'bottom': '10rem'}, 800,function(){
+								// 		$("#body_totop_btn").css("bottom","0.5rem")
+								// });
+						})
+				}else{
+						$("#body_totop_btn").hide();
+				}
+		})
+};
 </script>
 </body>
 </html>
