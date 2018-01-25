@@ -342,6 +342,7 @@ function login(){
 		url:"app/sys/enter",
 		data:{"username":username,"password":password,"flag":flag},
 		success:function(e){
+			$api.rmStorage('denyNum')
 	        if(e.status == "error"){
 	        	$('#username').val("");
 	    		$('#password').val("");
