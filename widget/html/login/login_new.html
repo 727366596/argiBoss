@@ -292,8 +292,10 @@ apiready=function(){
           api.addEventListener({
               name: 'keyback'
           }, function(ret, err){
-						return
-			//	api.closeWin();
+						//	api.closeWin();
+						api.closeWidget({
+				       silent:false
+			      });
           });
 
         // 初始化

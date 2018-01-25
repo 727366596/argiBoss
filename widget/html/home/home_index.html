@@ -229,7 +229,14 @@
 				width: 100%;
 				height: 100%;
 			}
-
+			.noticeContent{
+				display: none;
+			}
+			.noticeTitle{
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
 	</style>
 
 </head>
@@ -253,10 +260,10 @@
 			<div class="notoce-banner">
 				<img src="../../image/home/notice-l.png" alt="">
 				<span class="title">公告：</span>
-				<div class="swiper-container">
-			    <div class="swiper-wrapper">
-						<div class="swiper-slide">系统公告张珊珊来教导处下</div>'
-			    </div>
+				<div class="swiper-container" id="noticeTitle">
+					<div class="swiper-wrapper">
+					<!-- <div class="swiper-slide"><div>系统公告张珊珊来教导处下</div><div></div></div> -->
+				</div>
 				</div>
 				<div class="notoce-banner-more" id="noticeListMore">更多</div>
 				<img style="float:right;" src="../../image/home/notice-r.png" alt="">
@@ -567,27 +574,20 @@
 				//console.log('eeeeee'+JSON.stringify(e))
 				var data=e.data.data||[];
 				if(data.length>0){
-				   $('#noticeTitle').html(data[0].title)
-					 $('#noticeTitle').on('click',function(){
-							 var obj={
-								 content:data[0].content,
-								 title:data[0].title,
-								 author:data[0].author,
-								 time:data[0].pubdate.split(' ')[0],
-								 id:data[0].id
-							 }
-							 api.openWin({
-								 name:'content-detail_win',
-								 url:'./content-detail_win.html',
-								 slidBackEnabled : false,
-								 pageParam:obj,
-								 animation : {
-									 type : "movein", //动画类型（详见动画类型常量）
-									 subType : "from_right", //动画子类型（详见动画子类型常量）
-									 duration : 300 //动画过渡时间，默认300毫秒
-								 }
-							 })
-					 })
+				  var str='';
+				  for (var i = 0,len= data.length; i < len; i++) {
+					  str+='<div class="swiper-slide" onclick="noticeDetail(this)" data-id="'+data[i].id+'" data-time="'+data[i].pubdate.split(' ')[0]+'" data-author="'+data[i].author+'"><div class="noticeTitle">'+data[i].title+'</div><div class="noticeContent">'+data[i].content+'</div></div>'
+				  }
+
+				 $('#noticeTitle .swiper-wrapper').html(str);
+	         if(data.length>1){
+						 var mySwiper = new Swiper ('#noticeTitle', {
+							    direction: 'vertical',
+					      	loop:true,
+								  speed:1000,
+								  autoplay:5000
+							})
+					 }
 					 var dataList=data
 					 $('#noticeListMore').on('click',function(){
 						 noticeListMore(dataList)
@@ -599,6 +599,27 @@
 			}
 		});
 	}
+
+	function noticeDetail(node){
+	 			 var obj={
+	 				 content:$(node).find('.noticeContent').html(),
+	 				 title:$(node).find('.noticeTitle').text(),
+	 				 author:$(node).attr('data-author'),
+	 				 time:$(node).attr('data-time'),
+	 				 id:$(node).attr('data-id')
+	 			 }
+	 			 api.openWin({
+	 				 name:'content-detail_win',
+	 				 url:'./content-detail_win.html',
+	 				 slidBackEnabled : false,
+	 				 pageParam:obj,
+	 				 animation : {
+	 					 type : "movein", //动画类型（详见动画类型常量）
+	 					 subType : "from_right", //动画子类型（详见动画子类型常量）
+	 					 duration : 300 //动画过渡时间，默认300毫秒
+	 				 }
+	 			 })
+ 	}
 
 	function noticeListMore(list){
 		api.openWin({
