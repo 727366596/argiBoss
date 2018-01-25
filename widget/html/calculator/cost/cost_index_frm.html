@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>成本投入</title>
+	<script type="text/javascript" src="../../../script/common/rem.js"></script>
+	<link rel="stylesheet" href="../../../css/common/public.css" />
+	<link rel="stylesheet" type="text/css" href="../../../css/mui/css/mui.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../../../css/mui/css/mui.picker.min.css"/>
+	<style>
+   #chart{
+   	width: 100%;
+		height:7.0rem;
+   }
+	</style>
+</head>
+
+<body>
+	<div id="chart"></div>
+</body>
+<script type="text/javascript" src="../../../script/common/api.js"></script>
+<script type="text/javascript" src="../../../script/common/jquery.min.js"></script>
+<script type="text/javascript" src="../../../script/common/pds.ajax.js"></script>
+<script type="text/javascript" src="../../../script/mui/mui.min.js"></script>
+<script type="text/javascript" src="../../../script/mui/mui.picker.min.js"></script>
+<script type="text/javascript" src="../../../script/planting/echarts.common.min.js"></script>
+<script type="text/javascript" src="../../../script/planting/highcharts.js"></script>
+<script type="text/javascript" src="../../../script/planting/highcharts-3d.js"></script>
+<script type="text/javascript">
+	apiready = function() {
+		api.parseTapmode();
+    chart();
+	};
+	function chart(){
+		$( '#chart' )
+ 				.highcharts( {
+ 					chart: {
+ 						type: 'bar'
+ 					},
+ 					title: {
+ 						text: '各洲不同时间的人口条形图'
+ 					},
+ 					subtitle: {
+ 						text: '数据来源: Wikipedia.org'
+ 					},
+ 					xAxis: {
+ 						categories: [ '2012-01-01', '2012-02-01', '2012-03-01', '2012-04-01', '2012-05-01' ],
+ 						title: {
+ 							text: null
+ 						},
+						labels:{
+							enabled:true
+						}
+ 					},
+ 					yAxis: {
+ 						min: 0,
+ 						title: {
+ 							text: '人口总量 (百万)',
+ 							align: 'high'
+ 						},
+ 						labels: {
+								enabled:false
+ 						// 	overflow: 'justify'
+ 						}
+ 					},
+ 					tooltip: {
+ 						valueSuffix: ' 百万'
+ 					},
+ 					plotOptions: {
+ 						bar: {
+ 							dataLabels: {
+ 								enabled: true,
+ 								allowOverlap: true
+ 							}
+ 						}
+ 					},
+ 				// 	legend: {
+ 				// 		layout: 'vertical',
+ 				// 		align: 'right',
+ 				// 		verticalAlign: 'top',
+ 				// 		x: -40,
+ 				// 		y: 100,
+ 				// 		floating: true,
+ 				// 		borderWidth: 1,
+ 				// 		backgroundColor: ( ( Highcharts.theme && Highcharts.theme.legendBackgroundColor ) || '#FFFFFF' ),
+ 				// 		shadow: true
+ 				// 	},
+ 					credits: {
+ 						enabled: false
+ 					},
+ 					series: [ {
+ 						name: '',
+ 						data: [ 107, 31, 635, 203, 2 ],
+						showInLegend: false
+ 					}
+					// , {
+ 				// 		name: '1900 年',
+ 				// 		data: [ 133, 156, 947, 408, 6 ]
+ 				// 	}, {
+ 				// 		name: '2008 年',
+ 				// 		data: [ 973, 914, 4054, 732, 34 ]
+ 				// 	}
+				]
+ 				} );
+	}
+
+</script>
+
+</html>
