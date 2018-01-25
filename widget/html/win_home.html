@@ -25,7 +25,7 @@
 </head>
 <body>
 <div id="wrap">
-  <div id="main">
+  <div id="main" style="background:#204e41;">
 
   </div>
 </div>
@@ -104,14 +104,14 @@ apiready = function(){
 		obj = api.require('tabBar');
     var index;
 		obj.open({
-		    bgImg:'widget://image/home_nav_bc.jpg',
-		    selectImg:'widget://res/selecte_tabBar.png',
+		    // bgImg:'widget://image/home_nav_bc.jpg',
+		    // selectImg:'widget://res/selecte_tabBar.png',
 		    items:[
-		           {title:'首页',img:'widget://image/home_nav1_blur.jpg',color:'#999999',selected:'widget://image/home_nav1_act.jpg',selectedTitleColor:'#66BB6A'},
-		           {title:'种植',img:'widget://image/home_nav2_blur.jpg',color:'#999999',selected:'widget://image/home_nav2_act.jpg',selectedTitleColor:'#66BB6A'},
-		           {title:'田间',img:'widget://image/home_nav3_blur.jpg',color:'#999999',selected:'widget://image/home_nav3_act.jpg',selectedTitleColor:'#66BB6A'},
-		           {title:'采收',img:'widget://image/home_nav4_blur.jpg',color:'#999999',selected:'widget://image/home_nav4_act.jpg',selectedTitleColor:'#66BB6A'},
-		           {title:'我的',img:'widget://image/home_nav5_blur.jpg',color:'#999999',selected:'widget://image/home_nav5_act.jpg',selectedTitleColor:'#66BB6A'}
+		           {title:'首页',img:'widget://image/home/home_nav1_blur.png',color:'#fff',selected:'widget://image/home/home_nav1_act.png',selectedTitleColor:'#caa557'},
+		           {title:'种植',img:'widget://image/home/home_nav2_blur.png',color:'#fff',selected:'widget://image/home/home_nav2_act.png',selectedTitleColor:'#caa557'},
+		           {title:'田间',img:'widget://image/home/home_nav3_blur.png',color:'#fff',selected:'widget://image/home/home_nav3_act.png',selectedTitleColor:'#caa557'},
+		           {title:'采收',img:'widget://image/home/home_nav4_blur.png',color:'#fff',selected:'widget://image/home/home_nav4_act.png',selectedTitleColor:'#caa557'},
+		           {title:'我的',img:'widget://image/home/home_nav5_blur.png',color:'#fff',selected:'widget://image/home/home_nav5_act.png',selectedTitleColor:'#caa557'}
 		         ],
 		    selecteIndex:api.pageParam.extend_params==undefined?'0':JSON.parse(api.pageParam.extend_params).selecteIndex||'0',
 		    perScreenBtn:5,
