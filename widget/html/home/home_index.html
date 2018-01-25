@@ -240,9 +240,9 @@
 			<div class="fixed-top"></div>
 			<!-- 轮播 -->
 			<div class="banner">
-				<div class="swiper-container">
+				<div class="swiper-container" id="bannerContainer">
 					<div class="swiper-wrapper" id="banner">
-						<div class="swiper-slide"><img src="../../image/home_banner1.png"></div>'
+						<div class="swiper-slide" style="padding: 0 0.6rem; box-sizing: border-box;" ><img src="../../image/home_banner1.png"></div>'
 					</div>
 					<!-- 分页器 -->
 					<div class="swiper-pagination" ></div>
@@ -359,7 +359,7 @@
 			url:"app/sys/get_adv",
 			data:{"code":code,"place":'home'},
 			success:function(e){
-					// alert('hhhhhhh'+JSON.stringify(e))
+					alert('hhhhhhh'+JSON.stringify(e))
 				// console.log('hhhhhhhhhhhhhhhhhhhhhhh'+JSON.stringify(e.data.data))
 
 				if(e.data !== null && e.data !== ''){
@@ -370,35 +370,56 @@
 							img += '<div class="swiper-slide" data-id="'+data[i].title+'"><img data-id="'+data[i].url+'" src="'+data[i].pictureUrl+'"></div>'
 						}
 						$('#banner').html(img)
-						if(data.length >1){
-							// img渲染成功后调用轮播功能
-							var mySwiper = new Swiper ('.swiper-container', {
-						     direction: 'horizontal',
-								 autoplay: 3000,
-								 speed:300,
-						     loop: true,
-								 observer:true,
-	 								preloadImages:true,
-	 								updateOnImagesReady : true,
-	 								speed:1000,
-	 								autoplayDisableOnInteraction : false,
-	 								effect : 'coverflow',
-	 								slidesPerView: 1.25,
-	 								centeredSlides: true,
-	 								spaceBetween : 0,
-	 								coverflow: {
-	 												rotate: 0,
-	 												stretch: -48,
-	 												depth: 200,
-	 												modifier: 1,
-	 												slideShadows : false
-	 								},
-								 pagination : '.swiper-pagination',
-								 paginationClickable: true,
-								 autoplayDisableOnInteraction : false
-						  })
-						}
-
+					}else{
+							$('#banner').html('<div class="swiper-slide" ><img src="../../image/home_banner1.png"></div>')
+					}
+					if(data.length >1){
+						// img渲染成功后调用轮播功能
+						var mySwiper = new Swiper ('#bannerContainer', {
+							 direction: 'horizontal',
+							 autoplay: 3000,
+							 speed:300,
+							 loop: true,
+							 observer:true,
+								preloadImages:true,
+								updateOnImagesReady : true,
+								speed:1000,
+								autoplayDisableOnInteraction : false,
+								effect : 'coverflow',
+								slidesPerView: 1.25,
+								centeredSlides: true,
+								spaceBetween : 0,
+								coverflow: {
+												rotate: 0,
+												stretch: -48,
+												depth: 200,
+												modifier: 1,
+												slideShadows : false
+								},
+							 pagination : '.swiper-pagination',
+							 paginationClickable: true,
+							 autoplayDisableOnInteraction : false
+						})
+					}else{
+						var mySwiper = new Swiper ('#bannerContainer', {
+							 direction: 'horizontal',
+							 observer:true,
+							 preloadImages:true,
+							 updateOnImagesReady : true,
+							 speed:1000,
+							 autoplayDisableOnInteraction : false,
+							 effect : 'coverflow',
+							 slidesPerView: 1.25,
+							 centeredSlides: true,
+							 spaceBetween : 0,
+							 coverflow: {
+											 rotate: 0,
+											 stretch: -48,
+											 depth: 200,
+											 modifier: 1,
+											 slideShadows : false
+							 }
+						})
 					}
 				}
 			},
