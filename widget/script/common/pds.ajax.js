@@ -90,6 +90,17 @@ var pds = (typeof this.pds === 'undefined') ? {} : this.pds;
 			console.log("ret:"+JSON.stringify(ret));
 			console.log("err:"+JSON.stringify(err));
 		    if (ret) {
+					// 登录失效
+				if(ret.status == 'deny'){
+					if($api.getStorage("denyNum") == "undefined" || $api.getStorage("denyNum") != 1){
+							api.alert({msg:ret.message});
+							$api.setStorage("denyNum",1);
+					}
+					api.closeToWin({
+							name: 'root'
+					});
+					return;
+				}
 		    	if (ret.status == 'ok') {
 		    	  _custom.success(ret);
 		    	  }
