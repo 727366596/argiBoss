@@ -12,7 +12,7 @@
 
 </head>
 <body>
-<div id="header">
+<div id="header"  style="background:#204e41">
     <div class="headerLeft" style="background:none"></div>
     <div class="headerCenter">投入和长势</div>
     <div class="headerRight"></div>
@@ -24,7 +24,7 @@
 		var header = $api.byId('header');
 		$api.fixStatusBar(header);
 		var headerH = $api.offset(header).h;
-		
+
 		api.openFrame({
 				name: 'plantGrowth_frm',
 				url: './plantGrowth_frm.html',
