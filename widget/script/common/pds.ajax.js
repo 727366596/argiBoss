@@ -3,8 +3,8 @@ var pds = (typeof this.pds === 'undefined') ? {} : this.pds;
 
 	var uriConfig = {
 	  //  dev:"http://172.16.36.98:8080/",
-		// dev:'http://172.16.36.126:8080/',//小强
-			dev:'http://39.106.46.30:8081/',//富川
+		dev:'http://172.16.36.224:8080/argi/',//小强
+			//dev:'http://39.106.46.30:8081/',//富川
 		//	dev:'http://172.16.36.119:8080/',//富川
 		// dev:"http://172.16.36.132:8080/",
 		// uat:"http://60.205.185.177/",
@@ -41,7 +41,7 @@ var pds = (typeof this.pds === 'undefined') ? {} : this.pds;
 	}
 
 
-	var defaultUri = remoteUri("dev")
+	var defaultUri = remoteUri("uat")
 
 
 	/**release
@@ -91,16 +91,16 @@ var pds = (typeof this.pds === 'undefined') ? {} : this.pds;
 			console.log("err:"+JSON.stringify(err));
 		    if (ret) {
 					// 登录失效
-				if(ret.status == 'deny'){
-					if($api.getStorage("denyNum") == "undefined" || $api.getStorage("denyNum") != 1){
-							api.alert({msg:ret.message});
-							$api.setStorage("denyNum",1);
+					if(ret.status == 'deny'){
+						if($api.getStorage("denyNum") == "undefined" || $api.getStorage("denyNum") != 1){
+								api.alert({msg:ret.message});
+								$api.setStorage("denyNum",1);
+						}
+						api.closeToWin({
+								name: 'login_new'
+						});
+						return;
 					}
-					api.closeToWin({
-							name: 'root'
-					});
-					return;
-				}
 		    	if (ret.status == 'ok') {
 		    	  _custom.success(ret);
 		    	  }
