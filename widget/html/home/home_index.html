@@ -286,16 +286,16 @@
 
 			<!-- 页面跳转 -->
 			<div class="jump-page">
-				<div class="page-item" onclick="openMarketInfo()">
+				<div class="page-item" id="openMarketInfo" onclick="openMarketInfo()">
 						<img src="../../image/home/mark.png" alt="">
 				</div>
-				<div class="page-item" onclick="analysis()">
+				<div class="page-item" id="analysis" onclick="analysis()">
 						<img src="../../image/home/people.png" alt="">
 				</div>
-				<div class="page-item" onclick="openPlant()">
+				<div class="page-item" id="openPlant"  onclick="openPlant()">
 					<img src="../../image/home/plant.png" alt="">
 				</div>
-				<div class="page-item" onclick="openCall()">
+				<div class="page-item"  id="openCall" onclick="openCall()">
 						<img src="../../image/home/ask.png" alt="">
 				</div>
 			</div>
@@ -329,6 +329,19 @@
 <script type="text/javascript">
 
 	apiready=function(){
+		api.addEventListener({
+		    name: 'backHome'
+		}, function(ret, err){
+		    if( ret ){
+					$('#openPlant').html('<img src="../../image/home/plant.png" alt="">')
+					$('#analysis').html('<img src="../../image/home/people.png" alt="">')
+					$('#openCall').html('<img src="../../image/home/ask.png" alt="">')
+					$('#openMarketInfo').html('<img src="../../image/home/mark.png" alt="">')
+		    }else{
+		        //  alert( JSON.stringify( err ) );
+		    }
+		});
+
 
 			//判断终端传设备码
 			var code = ''
@@ -620,6 +633,7 @@
 
 	//点击“种植计算器”入口
 	function openPlant(){
+		$('#openPlant').html('<img src="../../image/home/plant-a.png" alt="">')
 		api.openWin({
 			name: 'index_win',
 			url: '../calculator/index_win.html',
@@ -635,6 +649,7 @@
 
 	//	点击“我的记工”页面跳转
 	function analysis() {
+		$('#analysis').html('<img src="../../image/home/people-a.png" alt="">')
 		api.openWin({
 			name : "list_win",
 			url : "widget://html/home/efficiency/efficiency_win.html",
@@ -650,6 +665,7 @@
 	}
 	//点击“问问专家”入口
 	function openCall(){
+		$('#openCall').html('<img src="../../image/home/ask-a.png" alt="">')
 		api.openWin({
 			name : "questionlist_win",
 			url:"widget://html/che/expert/questionlist_win.html",
@@ -665,6 +681,7 @@
 	}
 	//点击跳转市场分析
 	function openMarketInfo(){
+			$('#openMarketInfo').html('<img src="../../image/home/mark-a.png" alt="">')
 			api.openWin({
 				name:'market-index-win',
 				url:'./marketInfo/market-index-win.html',
