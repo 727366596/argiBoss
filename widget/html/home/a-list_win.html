@@ -36,11 +36,28 @@
 						h : 'auto'
 					}
 				})
+
+				api.addEventListener({
+				    name: 'keyback'
+				}, function(ret, err){
+				    if( ret ){
+
+							closeWin()
+				    }
+				});
+
+			}
+			/*******监听事件*********/
+			function onkeyback(){
+				api.sendEvent({
+						name: 'backHome'
+					})
 			}
 
 			function closeWin() {
 					api.closeWin({
 					});
+					onkeyback();
 			}
 
 		</script>

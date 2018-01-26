@@ -64,6 +64,13 @@
 						h : 'auto'
 					}
 				})
+				api.addEventListener({
+						name: 'keyback'
+				}, function(ret, err){
+						if( ret ){
+							closeWin();
+						}
+				});
 			}
 
 			function closeWin() {
