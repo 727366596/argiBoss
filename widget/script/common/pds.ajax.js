@@ -79,11 +79,16 @@ var pds = (typeof this.pds === 'undefined') ? {} : this.pds;
 		    text: '先喝杯茶...',
 		    modal: true
 		});
+		var headers = {
+	    authorization: $api.getStorage('userId'),
+	    mobile: 'true'
+	  };
 		api.ajax({
 		    url: defaultUri + _custom.url,
 		    method: _custom.type,
 		    data: paramData,
-            timeout:60
+				headers: headers,
+        timeout:60
 		},function(ret, err){
 			api.hideProgress();
 
