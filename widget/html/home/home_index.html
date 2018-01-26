@@ -41,7 +41,6 @@
 			.swiper-container,.swiper-wrapper,.swiper-slide,.swiper-slide img{
 				width: 100%;
 				height: 100%;
-				border-radius: 10px;
 			}
 			.swiper-pagination{
 				bottom: 0.3rem;
@@ -385,46 +384,32 @@
 							 autoplay: 3000,
 							 speed:300,
 							 loop: true,
-							 observer:true,
-								preloadImages:true,
-								updateOnImagesReady : true,
-								speed:1000,
-								autoplayDisableOnInteraction : false,
-								effect : 'coverflow',
-								slidesPerView: 1.25,
-								centeredSlides: true,
-								spaceBetween : 0,
-								coverflow: {
-												rotate: 0,
-												stretch: -48,
-												depth: 200,
-												modifier: 1,
-												slideShadows : false
-								},
+							//  observer:true,
+							// 	preloadImages:true,
+							// 	updateOnImagesReady : true,
+							// 	speed:1000,
+							// 	autoplayDisableOnInteraction : false,
+							// 	effect : 'coverflow',
+							// 	slidesPerView: 1.25,
+							// 	centeredSlides: true,
+							// 	spaceBetween : 0,
+							// 	coverflow: {
+							// 					rotate: 0,
+							// 					stretch: -48,
+							// 					depth: 200,
+							// 					modifier: 1,
+							// 					slideShadows : false
+							// 	},
 							 pagination : '.swiper-pagination',
 							 paginationClickable: true,
 							 autoplayDisableOnInteraction : false
 						})
 					}else{
-						var mySwiper = new Swiper ('#bannerContainer', {
-							 direction: 'horizontal',
-							 observer:true,
-							 preloadImages:true,
-							 updateOnImagesReady : true,
-							 speed:1000,
-							 autoplayDisableOnInteraction : false,
-							 effect : 'coverflow',
-							 slidesPerView: 1.25,
-							 centeredSlides: true,
-							 spaceBetween : 0,
-							 coverflow: {
-											 rotate: 0,
-											 stretch: -48,
-											 depth: 200,
-											 modifier: 1,
-											 slideShadows : false
-							 }
-						})
+						// var mySwiper = new Swiper ('#bannerContainer', {
+						// 	 direction: 'horizontal',
+						// 	 observer:true,
+						// 	 preloadImages:true
+						// })
 					}
 				}
 			},
