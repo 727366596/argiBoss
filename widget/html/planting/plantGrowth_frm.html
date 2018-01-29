@@ -979,13 +979,10 @@
 			var endDate=y + "-" + m + "-" + r;
 			var startDate=y + "-0" + 1 + "-0" + 1;
 			$("#time").val(y+".01.01"+"-"+y + "." + m + "." + r)
-			api.ajax({
-				headers : {
-						authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
-				},
-				url:pds.defaultUri + 'app/commons/stat/firstEnterQueryParam',
-			},function(ret,err){
-				if (ret) {
+			pds.ajaxSubmit({
+				url:'app/commons/stat/firstEnterQueryParam',
+				type : "GET",
+				success:function(ret,err){
 					//alert(JSON.stringify(ret))
 					var farmId=ret.data.farm.id
 					var categoryId=ret.data.category.id
@@ -998,32 +995,27 @@
 					plan(categoryId,farmId,startDate,endDate)
 					qiu(categoryId,farmId,startDate,endDate)
 					gongxu(categoryId,farmId,startDate,endDate)
-				} else {
-					//api.alert({msg:JSON.stringify(err)});
-				};
-			});
+				},
+			 error:function(e){
+					api.alert({msg:"服务器异常，请联系管理员!"});
+			 }
+		});
 		}
 	}
 	function plan(categoryId,farmId,startDate,endDate){
-		api.ajax({
-			headers : {
-				authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
-		},
-			url:pds.defaultUri + 'app/plantStat/planInvestment',
-			data:{values:{categoryId:categoryId,farmId:farmId,startDate:startDate,endDate:endDate}}
+		pds.ajaxSubmit({
+			url:'app/plantStat/planInvestment',
+			type : "GET",
+			data:{categoryId:categoryId,farmId:farmId,startDate:startDate,endDate:endDate},
 			//data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
-		},function(ret,err){
-			if(ret){
+			success:function(ret,err){
 							var plan=ret.data
-							api.ajax({
-								headers : {
-									authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
-							},
-								url:pds.defaultUri + 'app/plantStat/realInvestment',
-								data:{values:{categoryId:categoryId,farmId:farmId,startDate:startDate,endDate:endDate}}
+							pds.ajaxSubmit({
+								url:'app/plantStat/realInvestment',
+								type : "GET",
+								data:{categoryId:categoryId,farmId:farmId,startDate:startDate,endDate:endDate},
 								//data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
-							},function(ret,err){
-								if(ret){
+								success:function(ret,err){
 										//api.alert({msg:JSON.stringify(ret)});
 										var real=ret.data
 										// if(!plan&&!real){
@@ -1152,26 +1144,25 @@
 									 }
 									 $("#real").html("￥"+real)
 									 $("#plan").html("￥"+plan)
-									} else {
-										api.alert({msg:JSON.stringify(err)});
-									};
-							});
-				} else {
-					api.alert({msg:JSON.stringify(err)});
-				};
-		});
+								 },
+								error:function(e){
+									 api.alert({msg:"服务器异常，请联系管理员!"});
+								}
+						 });
+						},
+					 error:function(e){
+							api.alert({msg:"服务器异常，请联系管理员!"});
+					 }
+				});
 	}
 	function qiu(categoryId,farmId,startDate,endDate){
 
-		api.ajax({
-			headers : {
-				authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
-		},
-			url:pds.defaultUri + 'app/plantStat/costAnalysis',
-			data:{values:{categoryId:categoryId,farmId:farmId,startDate:startDate,endDate:endDate}}
+		pds.ajaxSubmit({
+			url:'app/plantStat/costAnalysis',
+			type : "GET",
+			data:{categoryId:categoryId,farmId:farmId,startDate:startDate,endDate:endDate},
 			//data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
-			},function(ret,err){
-				if(ret){
+			success:function(ret,err){
 					// alert(categoryId+","+farmId+","+startDate+","+endDate)
 					// alert(JSON.stringify(ret));
 					$(".circle").hide()
@@ -1246,22 +1237,20 @@
 							$("#qita .huaFei").html(shi[i].money)
 						}
 					}
-				} else {
-					api.alert({msg:JSON.stringify(err)});
-				};
+				},
+			 error:function(e){
+					api.alert({msg:"服务器异常，请联系管理员!"});
+			 }
 		});
 	}
 	function gongxu(categoryId,farmId,startDate,endDate){
-		api.ajax({
-			headers : {
-				authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
-		},
-			url:pds.defaultUri + 'app/plantStat/selectProcess',
-			data:{values:{categoryId:categoryId,farmId:farmId,startDate:startDate,endDate:endDate}}
+		pds.ajaxSubmit({
+			url:'app/plantStat/selectProcess',
+			type : "GET",
+			data:{categoryId:categoryId,farmId:farmId,startDate:startDate,endDate:endDate},
 			//data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
-		},function(ret,err){
+			success:function(ret,err){
 			//api.alert({msg:JSON.stringify(ret)});
-			if(ret){
 				if(!ret.data){
 
 				}
@@ -1357,10 +1346,11 @@
 
 					 }
 				}
-			} else {
-				//api.alert({msg:JSON.stringify(err)});
-			};
-		});
+			},
+		 error:function(e){
+				api.alert({msg:"服务器异常，请联系管理员!"});
+		 }
+	});
 	}
 	//页面回到顶部
 	function scrollToTop(){
