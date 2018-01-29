@@ -162,28 +162,29 @@
     var header = $api.byId('header');
     $api.fixStatusBar(header);
     var headerH = $api.offset(header).h;
-    $("body").css({"paddingTop":headerH+"px"});
+		$("body").css("paddingTop",headerH);
+    var topHeight = $(".nav").height()+headerH;
+
 		//获取历史作物
 		//$api.rmStorage('plant')
-		var plantObj = $api.getStorage('plant');
+		//$api.rmStorage('plant')
+		var plantObj = $api.getStorage($api.getStorage('userId')+'plant');
 		if (plantObj != undefined && plantObj != "" && plantObj != null && plantObj != {}) {console.log(111+"*************")
 				plantDo(plantObj.name, plantObj.id);
+				//打开frm组
+				openFrmGroup(topHeight);
 		}else{
 				//plantDo("土豆", 7);//默认马铃薯（土豆）
 				//获取默认作物
-				getPlant();
+				//alert("初始化作物")
+				getPlant(topHeight);
 		};
-
-		//打开frm组
-		var topHeight = $(".nav").height()+headerH;
-		openFrmGroup(topHeight);
-		//导航切换
-		tabCheck();
-
+		// //打开frm组
+		// openFrmGroup(topHeight);
 	};
 
 	//获取作物初始默认值
-	function getPlant(){console.log(222+"*************")
+	function getPlant(topHeight){
 			pds.ajaxSubmit({
 					type: "GET",
 					url : "app/price/defaultStatCategory",
@@ -204,7 +205,10 @@
 									}
 							}else {
 									$(".name").text("点击选择作物").attr("data-id","").attr("data-name","");
-							}
+							};
+
+							//打开frm组
+							openFrmGroup(topHeight);
 
 					},
 					error : function(e){
@@ -258,6 +262,9 @@
 					});
 					frmName = ret.name;
 			});
+
+			//导航切换
+			tabCheck();
 	}
 
 	//导航tab切换
@@ -296,7 +303,7 @@
 					name : name,
 					id : id
 			};
-			$api.setStorage('plant', plantObj);
+			$api.setStorage($api.getStorage('userId')+'plant', plantObj);
 	};
 
 	//打开作物搜索页面***************************************************
