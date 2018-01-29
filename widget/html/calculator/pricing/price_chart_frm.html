@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>定价测算——图表</title>
+    <title>定价测算——图表(3)</title>
     <script type="text/javascript" src="../../../script/common/rem.js"></script>
     <link rel="stylesheet" href="../../../css/common/public.css" />
     <link rel="stylesheet" href="../../../css/common/animate.min.css" />
@@ -35,7 +35,7 @@
 				height: 100%;
         position: absolute;;
         z-index: 999;
-        margin: 5.88rem 0.32rem 0.75rem 0.5rem;
+        margin: 5.28rem 0.32rem 0.75rem 0.5rem;
       }
 			.laoren{
 				width: 6.68rem;
@@ -46,7 +46,7 @@
         width:100%;
         height:100%;
         position: absolute;;
-        margin: 4.72rem 2.31rem 6.45rem 2.13rem;
+        margin: 4.12rem 2.31rem 6.45rem 2.13rem;
         z-index: 999;
       }
 			.price_1a{
@@ -58,7 +58,7 @@
 				width:100%;
         height:100%;
         position: absolute;
-        margin: 3.72rem 2.77rem 7.33rem 1.04rem;
+        margin: 3.12rem 2.77rem 7.33rem 1.04rem;
         z-index: 999;
       }
 			.price_1b{
@@ -70,19 +70,19 @@
 				width:100%;
         height:100%;
         position: absolute;
-				margin: 1.78rem 0.18rem 0.76rem 0.33rem;
+				margin: 1.3rem 0.18rem 0.76rem 0.33rem;
         z-index: 666;
       }
 			.price_1c{
 				width:6.99rem;
-        height: 9.42rem;
+        height: 9.22rem;
 			}
       /*一切*/
       .item_1d{
 				width:100%;
 				height:100%;
         position: absolute;
-        margin: 0.5rem 2.93rem 8.27rem 1.7rem;
+        margin: 0.3rem 2.93rem 8.27rem 1.7rem;
         z-index: 9;
       }
 			.price_1d{
@@ -94,20 +94,31 @@
 				width:100%;
 				height:100%;
         position: absolute;
-        margin: 0.5rem 1.64rem 6.62rem 4.85rem;
+        margin: 0.3rem 1.64rem 6.62rem 4.85rem;
 				z-index: 999;
       }
 			.price_2a{
 				width:1.01rem;
         height: 4.87rem;
 			}
-
+			/*下一页*/
+			.toDown{
+				width: 100%;
+				height:100%;
+				position: absolute;
+				text-align: center;
+				top: 10.3rem;
+			}
+			.price_down{
+				width: 0.46rem;
+				height: 0.24rem;
+			}
 		</style>
 </head>
 <body>
-  <div class="choose">
+  <div class="choose" style="display:none" id="pri_chart">
 <!--图表  -->
-    <div class="item0">
+    <div class="item0 wow slideInUp" data-wow-duration="1s" data-wow-delay="0.5s" data-wow-iteration="1">
       <img class="laoren item" src="../../../image/cal_img/price/chengbentouru@3x.png">
     </div>
 <!-- 市场 -->
@@ -115,28 +126,42 @@
       <img class="price_1a item" src="../../../image/cal_img/price/pic-shichang@3x.png">
     </div>
 		<!-- 采收 -->
-    <div class="item_1b wow slideInLeft" data-wow-duration="1s" data-wow-delay="2s" data-wow-iteration="1">
+    <div class="item_1b wow slideInLeft" data-wow-duration="1s" data-wow-delay="1.5s" data-wow-iteration="1">
       <img class="price_1b item" src="../../../image/cal_img/price/caishou@3x.png">
     </div>
 		<!-- 老头 -->
-    <div class="item_1c wow slideInLeft" data-wow-duration="1s" data-wow-delay="3s" data-wow-iteration="1">
+    <div class="item_1c wow slideInLeft" data-wow-duration="1s" data-wow-delay="2s" data-wow-iteration="1">
       <img class="price_1c item" src="../../../image/cal_img/price/laoren@3x.png">
     </div>
 		<!--一切  -->
-    <div class="item_1d wow slideInDown" data-wow-duration="1s" data-wow-delay="4s" data-wow-iteration="1">
+    <div class="item_1d wow slideInDown" data-wow-duration="1s" data-wow-delay="2.5s" data-wow-iteration="1">
       <img class="price_1d item" src="../../../image/cal_img/price/slogan@3x.png">
     </div>
 		<!-- 简单 -->
-    <div class="item_2a wow slideInDown" data-wow-duration="1s" data-wow-delay="5s" data-wow-iteration="1">
+    <div class="item_2a wow slideInDown" data-wow-duration="1s" data-wow-delay="3.5s" data-wow-iteration="1">
       <img class="price_2a item" src="../../../image/cal_img/price/easy.png">
     </div>
+		<!-- 下一页 -->
+	  <div class="toDown wow bounce" data-wow-duration="5s" data-wow-delay="4.5s" data-wow-iteration="10000">
+	 		<img class="price_down item" src="../../../image/cal_img/price/xiangxia@3x.png" />
+	  </div>
 
   </div>
 </body>
 <script type="text/javascript" src="../../../script/common/wow.js"></script>
+<script type="text/javascript" src="../../../script/common/api.js"></script>
 <script>
 	apiready=function(){
+		$api.css($api.byId('pri_chart'),'display:block');
     new WOW().init();
+		$api.addEvt($api.dom('body'), 'click',function(){
+
+			api.openWin({
+			    name: 'price_suggest_win',
+			    url: './price_suggest_win.html',
+			});
+
+		});
   }
 </script>
 </html>
