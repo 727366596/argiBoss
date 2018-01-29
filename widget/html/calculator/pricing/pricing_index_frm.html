@@ -131,6 +131,7 @@
 					position: absolute;
 					text-align: center;
     			top: 10.2rem;
+					z-index: 99999;
 				}
 				.price_down{
 					width: 0.46rem;
@@ -172,11 +173,10 @@
       	<img class="price_3b item" src="../../../image/cal_img/price/4a.png" />
       </div>
 		 <!-- 下一页 -->
-		 <div id="pri_down">
-			 <div class="toDown wow bounce" data-wow-duration="2s" data-wow-delay="4.5s" data-wow-iteration="10000">
+			 <div id="nextPage" class="toDown wow bounce" data-wow-duration="2s" data-wow-delay="4.5s" data-wow-iteration="10000">
 					<img class="price_down item" src="../../../image/cal_img/price/xiangxia@3x.png" />
-			 </div>
-		</div>
+			</div>
+
 		</div>
 </body>
 <script type="text/javascript" src="../../../script/common/wow.js"></script>
@@ -185,26 +185,13 @@
 	apiready=function(){
 		$api.css($api.byId('dimg'),'display:block');
 	  new WOW().init();
-		var ss = $api.dom('#pri_down');
 
-		$api.addEvt($api.dom('body'), 'click',function(){
+		$api.addEvt($api.byId('nextPage'), 'click',function(){
 			api.openWin({
 			    name: 'price_choose_win',
 			    url: './price_choose_win.html',
 			});
-			// api.openFrame({
-			//     name: 'price_choose_frm',
-			//     url: './price_choose_frm.html',
-			//     rect: {
-			//         x: 0,
-			//         y: 69,
-			//         w: 'auto',
-			//         h: 'auto'
-			//     },
-			//     pageParam: {
-			//         name: 'test'
-			//     }
-			// });
+
 		});
 
 	}
