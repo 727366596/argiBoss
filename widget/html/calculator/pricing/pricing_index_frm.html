@@ -173,7 +173,7 @@
       	<img class="price_3b item" src="../../../image/cal_img/price/4a.png" />
       </div>
 		 <!-- 下一页 -->
-			 <div id="nextPage" class="toDown wow bounce" data-wow-duration="2s" data-wow-delay="4.5s" data-wow-iteration="10000">
+			 <div id="nextPageIndex" class="toDown wow bounce" data-wow-duration="2s" data-wow-delay="4.5s" data-wow-iteration="10000">
 					<img class="price_down item" src="../../../image/cal_img/price/xiangxia@3x.png" />
 			</div>
 
@@ -186,7 +186,7 @@
 		$api.css($api.byId('dimg'),'display:block');
 	  new WOW().init();
 
-		$api.addEvt($api.byId('nextPage'), 'click',function(){
+		$api.addEvt($api.byId('nextPageIndex'), 'click',function(){
 			api.openWin({
 			    name: 'price_choose_win',
 			    url: './price_choose_win.html',

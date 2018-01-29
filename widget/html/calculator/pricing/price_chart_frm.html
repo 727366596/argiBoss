@@ -143,7 +143,7 @@
       <img class="price_2a item" src="../../../image/cal_img/price/easy.png">
     </div>
 		<!-- 下一页 -->
-	  <div id="nextPage" class="toDown wow bounce" data-wow-duration="5s" data-wow-delay="4.5s" data-wow-iteration="10000">
+	  <div id="nextPageChart" class="toDown wow bounce" data-wow-duration="2s" data-wow-delay="4s" data-wow-iteration="10000">
 	 		<img class="price_down item" src="../../../image/cal_img/price/xiangxia@3x.png" />
 	  </div>
 
@@ -155,7 +155,7 @@
 	apiready=function(){
 		$api.css($api.byId('pri_chart'),'display:block');
     new WOW().init();
-		$api.addEvt($api.byId('nextPage'), 'click',function(){
+		$api.addEvt($api.byId('nextPageChart'), 'click',function(){
 
 			api.openWin({
 			    name: 'price_suggest_win',
