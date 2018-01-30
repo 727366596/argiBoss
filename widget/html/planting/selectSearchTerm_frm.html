@@ -210,13 +210,10 @@ apiready=function(){
 		}
 }
 function showLand(){
-	api.ajax({
-		headers : {
-			authorization : $api.getStorage("userId") == undefined? null : $api.getStorage("userId")
-	},
-		url:pds.defaultUri + 'app/staff/farmland/get_farm_list',
-	},function(ret,err){
-		if (ret) {
+	pds.ajaxSubmit({
+		url:'app/staff/farmland/get_farm_list',
+		type : "GET",
+	  success:function(ret,err){
 			var dt=ret.data,l=dt.length,land="";
 			if(!l){
 				return
@@ -231,11 +228,11 @@ function showLand(){
 					$(this).css("backgroundColor","#e4ffdd")
 					$("#idLand").val($(this).attr("id"))
 					$("#nameLand").val($(this).html())
-					api.ajax({
-						url:pds.defaultUri + 'app/crop/categoryList',
-						data:{values:{farmId:$(this).attr("id")}}
-					},function(ret,err){
-						if (ret) {
+					pds.ajaxSubmit({
+						url:'app/crop/categoryList',
+						type : "GET",
+						data:{farmId:$(this).attr("id")},
+						success:function(ret,err){
 							var dt=ret.data,l=dt.length,spic="";
 							if(!l){
 								return
@@ -246,11 +243,11 @@ function showLand(){
 							$("#spic").html(spic);
 							spic=null;
 							$("#spic>p").eq(0).css("backgroundColor","#e4ffdd")
-							api.ajax({
-								url:pds.defaultUri + 'app/crop/findCategoryList',
-								data:{values:{id:$("#spic>p").eq(0).attr("id")}}
-							},function(ret,err){
-								if (ret) {
+							pds.ajaxSubmit({
+								url:'app/crop/findCategoryList',
+								type : "GET",
+								data:{id:$("#spic>p").eq(0).attr("id")},
+								success:function(ret,err){
 									var dt=ret.data,l=dt.length,pin="";
 									if(!l){
 										return
@@ -268,19 +265,20 @@ function showLand(){
 											$("#nameCat").val($(this).html())
 										})
 									}
-								} else {
-									//api.alert({msg:JSON.stringify(err)});
-								};
-							});
+								},
+               error:function(e){
+                  api.alert({msg:"服务器异常，请联系管理员!"});
+               }
+            });
 							for(var j=0; j<l; j++){
 								$("#spic>p").eq(j).on("touchstart",function(){
 									$("#spic>p").css("backgroundColor","#fff")
 									$(this).css("backgroundColor","#e4ffdd")
-									api.ajax({
-										url:pds.defaultUri + 'app/crop/findCategoryList',
-										data:{values:{id:$(this).attr("id")}}
-									},function(ret,err){
-										if (ret) {
+									pds.ajaxSubmit({
+										url:'app/crop/findCategoryList',
+										type : "GET",
+										data:{id:$(this).attr("id")},
+										success:function(ret,err){
 											var dt=ret.data,l=dt.length,pin="";
 											if(!l){
 												return
@@ -298,24 +296,26 @@ function showLand(){
 													$("#nameCat").val($(this).html())
 												})
 											}
-										} else {
-											//api.alert({msg:JSON.stringify(err)});
-										};
-									});
+										},
+		               error:function(e){
+		                  api.alert({msg:"服务器异常，请联系管理员!"});
+		               }
+		            });
 								})
 							}
-						} else {
-							//api.alert({msg:JSON.stringify(err)});
-						};
-					});
+						},
+					 error:function(e){
+							api.alert({msg:"服务器异常，请联系管理员!"});
+					 }
+				});
 				})
 			}
 			land=null
-			api.ajax({
-				url:pds.defaultUri + 'app/crop/categoryList',
-				data:{values:{farmId:dt[0].id}}
-			},function(ret,err){
-				if (ret) {
+			pds.ajaxSubmit({
+				url:'app/crop/categoryList',
+				type : "GET",
+				data:{farmId:dt[0].id},
+				success:function(ret,err){
 					var dt=ret.data,l=dt.length,spic="";
 					if(!l){
 						return
@@ -326,11 +326,11 @@ function showLand(){
 					$("#spic").html(spic);
 					spic=null;
 				  $("#spic>p").eq(0).css("backgroundColor","#e4ffdd")
-					api.ajax({
-						url:pds.defaultUri + 'app/crop/findCategoryList',
-						data:{values:{id:$("#spic>p").eq(0).attr("id")}}
-					},function(ret,err){
-						if (ret) {
+					pds.ajaxSubmit({
+						url:'app/crop/findCategoryList',
+						type : "GET",
+						data:{id:$("#spic>p").eq(0).attr("id")},
+						success:function(ret,err){
 							var dt=ret.data,l=dt.length,pin="";
 							if(!l){
 								return
@@ -348,19 +348,20 @@ function showLand(){
 									$("#nameCat").val($(this).html())
 								})
 							}
-						} else {
-							//api.alert({msg:JSON.stringify(err)});
-						};
-					});
+						},
+					 error:function(e){
+							api.alert({msg:"服务器异常，请联系管理员!"});
+					 }
+				});
 					for(var j=0; j<l; j++){
 						$("#spic>p").eq(j).on("touchstart",function(){
 							$("#spic>p").css("backgroundColor","#fff")
 							$(this).css("backgroundColor","#e4ffdd")
-							api.ajax({
-								url:pds.defaultUri + 'app/crop/findCategoryList',
-								data:{values:{id:$(this).attr("id")}}
-							},function(ret,err){
-								if (ret) {
+							pds.ajaxSubmit({
+								url:'app/crop/findCategoryList',
+								type : "GET",
+								data:{id:$(this).attr("id")},
+								success:function(ret,err){
 									var dt=ret.data,l=dt.length,pin="";
 									if(!l){
 										return
@@ -378,20 +379,23 @@ function showLand(){
 											$("#nameCat").val($(this).html())
 										})
 									}
-								} else {
-									//api.alert({msg:JSON.stringify(err)});
-								};
-							});
+								},
+               error:function(e){
+                  api.alert({msg:"服务器异常，请联系管理员!"});
+               }
+            });
 						})
 					}
-				} else {
-					//api.alert({msg:JSON.stringify(err)});
-				};
-			});
-		} else {
-			//api.alert({msg:JSON.stringify(err)});
-		};
-	});
+				},
+			 error:function(e){
+					api.alert({msg:"服务器异常，请联系管理员!"});
+			 }
+		});
+	},
+ error:function(e){
+		api.alert({msg:"服务器异常，请联系管理员!"});
+ }
+});
 
 }
 function cropGrowth() {

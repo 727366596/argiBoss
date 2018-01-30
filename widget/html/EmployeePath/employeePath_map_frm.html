@@ -73,34 +73,14 @@
 						//alert('地图打开成功');
 						//api.hideProgress();
 						//打电话按钮
-						// api.openFrame({
-            //     name:'employeePath_map_call_frm',
-            //     url:'./employeePath_map_call_frm.html',
-            //     rect:{
-            //         x:api.winWidth-70,
-            //         y:api.winHeight-70,
-            //         w:52,
-            //         h:52
-            //     },
-						// 		pageParam: {
-						// 				id : id_,
-						// 				date : date_,
-						// 				tel : tel_
-						// 		},
-						// 		//bgColor:'#00f',
-            //     bounces:false,
-            //     vScrollBarEnabled:false,
-            //     hScrollBarEnabled:false
-            // });
-
 						api.openFrame({
-                name:'employeePath_map_callBtn_frm',
-                url:'./employeePath_map_callBtn_frm.html',
+                name:'employeePath_map_call_frm',
+                url:'./employeePath_map_call_frm.html',
                 rect:{
-                    x:0,
-                    y:66,
-                    w:'auto',
-                    h:40
+                    x:api.winWidth-70,
+                    y:api.winHeight-155,
+										w:57,
+										h:80
                 },
 								pageParam: {
 										id : id_,
@@ -113,6 +93,26 @@
                 hScrollBarEnabled:false
             });
 
+						// api.openFrame({
+            //     name:'employeePath_map_callBtn_frm',
+            //     url:'./employeePath_map_callBtn_frm.html',
+            //     rect:{
+            //         x:0,
+            //         y:66,
+            //         w:'auto',
+            //         h:40
+            //     },
+						// 		pageParam: {
+						// 				id : id_,
+						// 				date : date_,
+						// 				tel : tel_
+						// 		},
+						// 		//bgColor:'#00f',
+            //     bounces:false,
+            //     vScrollBarEnabled:false,
+            //     hScrollBarEnabled:false
+            // });
+
 						//点击查看轨迹按钮
 						api.openFrame({
 						    name: 'employeePath_map_addLineBtn_frm',
@@ -120,7 +120,7 @@
 						    rect: {
 										x:api.winWidth-70,
 										y:api.winHeight-90,
-										w:55,
+										w:57,
 										h:80
 						    },
 						    pageParam: {
@@ -264,10 +264,15 @@
 												// };
 												//启动布告图
 												billBoardId = (function(){
+														var systemType = api.systemType;
+
 														//alert("可以显示了")
-														//添加起始点布告牌
 														var bgImgUrl = "widget://image/common/beginPoint_bc1.png";
-														var titleStart = title("起点",createDateArr);
+														if (systemType == "ios") {
+																bgImgUrl = "widget://image/common/beginPoint_bc1_ios.png";
+														}
+														//添加起始点布告牌
+														var titleStart = title("起点",createDateArr,systemType);
 														//画布告图
 														//beginBillBoardId = 0+99999;
 														addBillboard(0, pointsArrs[0], bgImgUrl, titleStart, photoUrl);
@@ -279,7 +284,10 @@
 
 														//添加起终点布告牌
 														var endImgUrl = "widget://image/common/endPoint_bc2.png";
-														var titleEnd = title("终点",createDateArr);
+														if (systemType == "ios") {
+																endImgUrl = "widget://image/common/endPoint_bc2_ios.png";
+														}
+														var titleEnd = title("终点",createDateArr,systemType);
 														//画布告图
 														//endBillBoardId = pointsArrs.length-1+99999;
 														addBillboard(999999, pointsArrs[pointsArrs.length-1], endImgUrl, titleEnd, photoUrl);
@@ -415,7 +423,7 @@
 
 		//地图添加布告牌
 		function addBillboard(billBoardId, position, bgImgUrl, title, illusUrl){
-			//alert(JSON.stringify(illusUrl))
+			//alert(JSON.stringify(bgImgUrl))
 			//var illusUrl = 'widget://image/common/header_bc.png';
 			map.addBillboard({
 					id: billBoardId,
@@ -495,15 +503,20 @@
 		}
 
 		//日期处理
-		function title(str,arr){
+		function title(str,arr,systemType){
 				var titleTimeArr = null, titleTime = null;
 				if(str == "起点"){
 						titleTimeArr = (arr[0].split(" ")[1]).split(":");
 				}else{
 						titleTimeArr = (arr[arr.length-1].split(" ")[1]).split(":");
-				}
-				var	titleTime =" " + titleTimeArr[0]+"："+titleTimeArr[1];
-				return  str += titleTime;
+				};
+
+				var emptyStr = "";
+				if (systemType == "ios") {
+						emptyStr = "          ";
+				};
+				var	titleTime =" " + titleTimeArr[0]+":"+titleTimeArr[1];
+				return  str = emptyStr + str + titleTime;
 		};
 
 		//设置当前中心位置
@@ -647,7 +660,8 @@
 		// **************************************地图动态轨迹*******************************************
 		// 后台轨迹坐标数据
 		// 步增值(经纬度角度)
-		var diffSingle = 0.00005;
+		//var diffSingle = 0.00005;
+		var diffSingle = 0.00008;
 		// 步增间隔时间（毫秒）
 		var interValTime = 100;
 		// 线宽
@@ -663,12 +677,6 @@
 		}
 		// 初始化数据：生成更多步增点
 		function initData(){
-			//alert(JSON.stringify(pointsArrs))
-			// 生成假数据
-			// for(var i = 0;i<100;i++){
-			// 	var p = {"lon":pointsArrs[0].lon+Math.random()/1000,"lat":pointsArrs[0].lat+Math.random()/1000};
-			// 	pointsArrs.push(p);
-			// }
 			// 拿到所有步增坐标
 			for(var i=0;i<pointsArrs.length;i++){
 					if(i ==  pointsArrs.length-1){
@@ -676,64 +684,69 @@
 						break;
 					}
 					var childern = getChildrenCoorArr(pointsArrs[i],pointsArrs[i+1]);
-					// alert(JSON.stringify(pointsArrs[i])+",  "+JSON.stringify(pointsArrs[i+1]))
-					// alert(JSON.stringify(childern))
 					allCoorArr.push(pointsArrs[i]);
 					for(var j = 0;j<childern.length; j++){
 						allCoorArr.push(childern[j]);
 					}
 			}
-			//alert(JSON.stringify(allCoorArr))
 			return allCoorArr;
 		}
 
 		// 获取两点间按步增值生成的子坐标点
-	 	function getChildrenCoorArr(p1,p2){
-	 		var children = [];
-	 		var k = calculateK(p1.lon,p1.lat,p2.lon,p2.lat);
-	 		if(k == null){// 垂直
-				var sonLen = Math.abs(Math.floor((parseFloat(p1.lat)-parseFloat(p2.lat))/diffSingle));
+		function getChildrenCoorArr(p1,p2){
+			var children = [];
+			var k = calculateK(p1.lon,p1.lat,p2.lon,p2.lat);
+			// 必须转成数字，不然会被当成字符串处理
+			var lon1 = parseFloat(p1.lon);
+			var lat1 = parseFloat(p1.lat);
+			var lon2 = parseFloat(p2.lon);
+			var lat2 = parseFloat(p2.lat);
+			if(k == null){// 垂直
+				var sonLen = Math.abs(Math.floor((lat1-lat2)/diffSingle));
 				var Latsymbol = (p2.lat >= p1.lat) ? 1 : -1;
-	 			var p = p1;
-	 			for(var i=0;i<sonLen; i++){
-	 				var son = {};
-	 				son.lon = parseFloat(p.lon);
-	 				son.lat = parseFloat(p.lat)+(diffSingle*Latsymbol);
-					if(Math.abs(parseFloat(p2.lat) - son.lat) <= diffSingle){
+				var p = p1;
+				for(var i=0;i<sonLen; i++){
+					var son = {};
+					son.lon = parseFloat(p.lon);
+					son.lat = parseFloat(p.lat)+(diffSingle*Latsymbol);
+					if(Math.abs(lat2 - son.lat) <= diffSingle){
 						break;
 					}
-	 				children.push(son);
-	 				p = son;
-	 			}
-	 		}else{
-				var sonLen = Math.abs(Math.floor((parseFloat(p1.lon)-parseFloat(p2.lon))/diffSingle));
+					children.push(son);
+					p = son;
+				}
+			}else{
+				// 两个点之间在坐标系中的长度
+				var L = Math.sqrt((lon1-lon2)*(lon1-lon2)+(lat1-lat2)*(lat1-lat2));
+				// 在该斜率下经度的步增值
+				var diffLon = diffSingle* Math.abs(lon1-lon2)/L;
+				// 计算出步增的个数
+				var sonLen = Math.abs(Math.floor((lon1-lon2)/diffLon));
 				// 步增的正负
 				var Lonsymbol = (p2.lon >= p1.lon) ? 1 : -1;
-	 			var p = p1;
-	 			for(var i=0;i<sonLen; i++){
-	 				var son = {};
-					// alert("Latsymbol-else:"+Lonsymbol)
-					// alert("diffSingle:"+diffSingle)
-					// alert("p.lon:"+(p.lon))
-	 				son.lon = parseFloat(p.lon)+(diffSingle*Lonsymbol);
-	 				son.lat = parseFloat(p.lat)+k*(son.lon - parseFloat(p.lon));
-					// alert("son.lon:"+(son.lon))
-					// alert("p.lon2:"+(p.lon))
-					// alert("diffSingle:"+son.lat)
-					if(Math.abs(parseFloat(p2.lon) - parseFloat(son.lon)) <= diffSingle){
+				var p = p1;
+				for(var i=0;i<sonLen; i++){
+					var son = {};
+					son.lon = parseFloat(p.lon)+(diffLon*Lonsymbol);
+					son.lat = parseFloat(p.lat)+k*(son.lon - parseFloat(p.lon));
+					if(Math.abs(lon2 - parseFloat(son.lon)) <= diffLon){
 						break;
 					}
-	 				children.push(son);
-	 				p = son;
-	 			}
-	 		}
-	 		return children;
-	 	}
+					children.push(son);
+					p = son;
+				}
+			}
+			return children;
+		}
+
 
 		// 存放动态生成的数组
 		var dynamicPointArr = [];
 		// 存放点击停止动画时最后生成的一条直线的ID，以备后面删除用
-		var lastId = 0 ;
+		var oldIds = new Array();
+		// ios系统轨迹限制坐标点个数
+		var iosLimitCoorPoints = 400;
+
 		// 动态生成轨迹
 		function getArrowDynamic(coorArr) {
 			if(coorArr == "undefined" || coorArr == null || coorArr.length <2 ){
@@ -744,42 +757,36 @@
 				// 最后一个时停止动画
 				if(i == coorArr.length -1){
 					window.clearInterval(interval);
+					//stopAnimation();
 					return;
 				}
-				// 添加临时线段：两个点之间的直线
-				map.addLine({
-						id: 10000,
-						styles: {
-								borderColor: '#99ce00',
-								borderWidth: lineBorderWidth
-						 },
-						 points: [coorArr[i],coorArr[i+1]]
-				});
-				// 移除上一点，避免与后面的重复
-				if(i > 0){
-					dynamicPointArr.pop();
-				}
-				dynamicPointArr.push(coorArr[i]);
-				dynamicPointArr.push(coorArr[i+1]);
 				var newLineId = 1314521+i;
 				lastId = newLineId;
-				// 添加新线
+				var nums = Math.floor(i/iosLimitCoorPoints);
+				var startIndex = nums*iosLimitCoorPoints;
+				// 获取步增后
+				var arr = coorArr.slice(startIndex ,i+3)
+				// 直接连线
 				map.addLine({
 						id: newLineId,
 						styles: {
 								borderColor: '#99ce00',
 								borderWidth: lineBorderWidth
 						 },
-						 points: dynamicPointArr
+						 points: arr
 				});
+
 				// 移除旧线，一定要在添加新线后面
+				// 如果满足重新生成一条直线时候，不删除
 				if(i > 0){
-					removeLine([newLineId-1]);
+					if(i % iosLimitCoorPoints == 0){
+						oldIds.push(newLineId);
+					}else{
+						removeLine([newLineId-1]);
+					}
 				}
-				// 移除临时线段
-				removeLine([10000]);
 				i++;
-			},interValTime)
+			},interValTime);
 		}
 
 		// 停止动画
@@ -793,27 +800,16 @@
 						});
 						return;
 				};
-				// api.confirm({
-        //     title: '提示',
-        //     msg: '查看该员工所有轨迹？',
-        //     buttons: ['确定', '取消']
-        // }, function(ret, err){
-        //     var index = ret.buttonIndex;
-        //     if (index == 1) {
-				//
-        //     }
-        // });
-
 				// 停止
 				window.clearInterval(interval);
 				// 移除之前的
-				removeLine([lastId]);
+				removeLine(oldIds);
 				//回到地块
 				setCenter(pointsArrs[0])
 
-				var nums = Math.ceil(arrLen/400);
+				var nums = Math.ceil(arrLen/iosLimitCoorPoints);
 				for(var i = 0; i< nums ; i++){
-					var arr = pointsArrs.slice(i*400,i*400+400)
+					var arr = pointsArrs.slice(i*iosLimitCoorPoints,i*iosLimitCoorPoints+iosLimitCoorPoints)
 					// 直接连线
 					map.addLine({
 							id: 999999+i,

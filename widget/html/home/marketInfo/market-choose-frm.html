@@ -134,10 +134,10 @@
 	apiready = function(){
 			//获取导航省份数据
 			//alert(JSON.stringify(api.pageParam.obj))
-			//alert(api.pageParam.marketId + "*******" + api.pageParam.provinceId + "*******" + api.pageParam.frmName)
+			//alert(api.pageParam.marketIdArr + "*******" + api.pageParam.provinceId + "*******" + api.pageParam.frmName)
 			var provinceId = api.pageParam.provinceId;
 			var marketId = api.pageParam.marketId;
-			var obj = api.pageParam.obj;
+			var obj = api.pageParam.nameBoxId;
 
 			getNavData(obj,provinceId, marketId);
 	};
@@ -225,7 +225,26 @@
 															if (data[i].id == marketId) {//alert(data[i].id+"******"+marketId+"*********"+data[i].name)
 																	marketSelectClassName = "spanShow";
 															};
-															marketListStr += '<li data-name="'+ data[i].name +'" data-provinceId="'+ data[i].provinceId +'" data-city="'+ data[i].fVC +'" data-title="'+ data[i].abbreviation +'" data-id="'+ data[i].id +'">'+ data[i].name +'<span class="select '+ marketSelectClassName +'"><i></i></span></li>'
+															//标记多市场对比页面是否回显市场
+															var addMarketFlag = false;
+															if (api.pageParam.frmName == "morePrice-frm") {
+																	var selectMarkets = api.pageParam.marketIdArr;
+																	//alert(JSON.stringify(selectMarkets)+"*********"+marketId);
+																	if (selectMarkets != [] && selectMarkets != "" && selectMarkets != null) {
+																			for (var j = 0; j < selectMarkets.length; j++) {
+																					if (selectMarkets[j] != "" && selectMarkets[j] != null) {
+																							if (data[i].id == selectMarkets[j]) {
+																									//marketListStr += '<li data-name="'+ data[i].name +'" data-provinceId="'+ data[i].provinceId +'" data-city="'+ data[i].fVC +'" data-title="'+ data[i].abbreviation +'" data-id="'+ data[i].id +'">'+ data[i].name +'<span class="select '+ marketSelectClassName +'"><i></i></span></li>'
+																									addMarketFlag = true;//alert(addMarketFlag)
+																									break;
+																							}
+																					}
+																			};
+																	};
+															};
+															if (!addMarketFlag) {
+																	marketListStr += '<li data-name="'+ data[i].name +'" data-provinceId="'+ data[i].provinceId +'" data-city="'+ data[i].fVC +'" data-title="'+ data[i].abbreviation +'" data-id="'+ data[i].id +'">'+ data[i].name +'<span class="select '+ marketSelectClassName +'"><i></i></span></li>';
+															}
 													};
 											};
 											$(".box").html(marketListStr);
@@ -256,11 +275,12 @@
 					var selectObj = $(this).find("span");
 					if (selectObj.hasClass("spanShow")) {
 							$(this).off("click").on("click",function(){
-									api.toast({
-									    msg: '已选择该市场，换个试试！',
-									    duration: 2000,
-									    location: 'bottom'
-									});
+									// api.toast({
+									//     msg: '已选择该市场，换个试试！',
+									//     duration: 2000,
+									//     location: 'bottom'
+									// });
+									api.closeWin();
 							});
 					}else{
 							$(this).one("click",function(){
@@ -279,7 +299,8 @@
 									if (frameName == "marketPrice-frm") {
 											jsfun = 'nameDo("'+ nameBoxId +'","'+ marketName +'","'+ marketId +'","'+ provinceId +'")';
 									}else if(frameName == "morePrice-frm"){
-											jsfun = 'nameDo("'+ nameBoxId +'","'+ marketName +'","'+ marketId +'","'+ provinceId +'")';
+											var allMarketName = $(this).attr("data-name");
+											jsfun = 'nameDo("'+ nameBoxId +'","'+ marketName +'","'+ marketId +'","'+ provinceId +'","'+ allMarketName +'")';
 									};
 									api.execScript({
 											name: 'market-index-win',

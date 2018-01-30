@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>定价测算——建议(4)</title>
+    <script type="text/javascript" src="../../../script/common/rem.js"></script>
+    <link rel="stylesheet" href="../../../css/common/public.css" />
+    <link rel="stylesheet" href="../../../css/common/animate.min.css" />
+		<style>
+    html,body{
+      height: 100%;
+      width: 100%;
+    }
+      .suggest{
+        width: 100%;
+        height: 100%;
+				position: relative;
+        overflow: hidden;
+        box-sizing: border-box;
+        background-color: #dadada;
+      }
+      .item{
+        overflow: hidden;
+  			display: inline-block;
+  			background-size: 100% 100%;
+  			box-sizing: border-box;
+        /*width: 100%;
+        height: 100%;*/
+      }
+      /*建议*/
+      .item0{
+				width: 100%;
+				height: 100%;
+        position: absolute;;
+        /*z-index: 999;*/
+        margin: 1.3rem 1.23rem 8.71rem 1.39rem;
+      }
+			.laoren{
+				width:4.88rem;
+				height:2.19rem;
+			}
+      /*定价*/
+      .item_1a{
+        width:100%;
+        height:100%;
+        position: absolute;;
+        margin: 6.5rem 3.6rem 3.35rem 1rem;
+        /*z-index: 999;*/
+      }
+			.price_1a{
+				width:2.84rem;
+        height: 2.1rem;
+			}
+      /*元*/
+      .item_1b{
+				width:100%;
+        height:100%;
+        position: absolute;
+        margin: 8.55rem 0.46rem 1.33rem 0.97rem;
+        /*z-index: 999;*/
+      }
+			.price_1b{
+				width:6.07rem;
+        height: 2.06rem;
+			}
+      /*图表*/
+      .item_1c{
+				width:100%;
+        height:100%;
+        position: absolute;
+				margin: 5.9rem 2.04rem 2.71rem 3.08rem;
+        z-index: 666;
+      }
+			.price_1c{
+				width:2.38rem;
+        height: 3.4rem;
+			}
+      /*成本定价*/
+      .item_1d{
+				width:100%;
+				height:100%;
+        position: absolute;
+        margin: 3.4rem 1.39rem 7.67rem 3.27rem;
+        z-index: 666;
+      }
+			.price_1d{
+				width:2.84rem;
+				height: 0.59rem;
+			}
+      /*老人*/
+      .item_2a{
+				width:100%;
+				height:100%;
+        position: absolute;
+        margin: 1.75rem 1.23rem 5.22rem 0.69rem;
+				/*z-index: 999;*/
+      }
+			.price_2a{
+				width:5.58rem;
+        height: 4.94rem;
+			}
+			/*下一页*/
+			.toDown{
+				width: 100%;
+				height:100%;
+				position: absolute;
+				text-align: center;
+				top: 10.3rem;
+        z-index: 9999;
+			}
+			.price_down{
+				width: 0.46rem;
+				height: 0.24rem;
+			}
+		</style>
+</head>
+<body>
+  <div class="suggest" style="display:none" id="pri_chart">
+<!--建议  -->
+    <div class="item0 wow slideInDown" data-wow-duration="1s" data-wow-delay="0.5s" data-wow-iteration="1">
+      <img class="laoren item" src="../../../image/cal_img/price/jianyi.png">
+    </div>
+<!-- 定价 -->
+    <div class="item_1a wow slideInLeft" data-wow-duration="1s" data-wow-delay="0.5s" data-wow-iteration="1">
+      <img class="price_1a item" src="../../../image/cal_img/price/dingjia.png">
+    </div>
+		<!-- 元 -->
+    <div class="item_1b wow slideInLeft" data-wow-duration="1s" data-wow-delay="2s" data-wow-iteration="1">
+      <img class="price_1b item" src="../../../image/cal_img/price/yingli@3x.png">
+    </div>
+		<!-- 图表 -->
+    <div class="item_1c wow slideInRight" data-wow-duration="1s" data-wow-delay="3s" data-wow-iteration="1">
+      <img class="price_1c item" src="../../../image/cal_img/price/touruchengben@3x.png">
+    </div>
+		<!--成本  -->
+    <div class="item_1d wow slideInRight" data-wow-duration="1s" data-wow-delay="4s" data-wow-iteration="1">
+      <img class="price_1d item" src="../../../image/cal_img/price/chengben.png">
+    </div>
+		<!-- 老人 -->
+    <div class="item_2a wow slideInLeft" data-wow-duration="1s" data-wow-delay="5s" data-wow-iteration="1">
+      <img class="price_2a item" src="../../../image/cal_img/price/laotou.png">
+    </div>
+		<!-- 下一页 -->
+	  <div id="nextPageSuggest" class="toDown wow bounce" data-wow-duration="2s" data-wow-delay="5.5s" data-wow-iteration="10000">
+	 		<img class="price_down item" src="../../../image/cal_img/price/xiangxia@3x.png" />
+	  </div>
+
+  </div>
+</body>
+<script type="text/javascript" src="../../../script/common/wow.js"></script>
+<script type="text/javascript" src="../../../script/common/api.js"></script>
+<script>
+	apiready=function(){
+		$api.css($api.byId('pri_chart'),'display:block');
+    new WOW().init();
+    $api.addEvt($api.byId('nextPageSuggest'), 'click',function(){
+			api.openWin({
+			    name: 'price_wait_win',
+			    url: './price_wait_win.html',
+			});
+
+		});
+  }
+</script>
+</html>

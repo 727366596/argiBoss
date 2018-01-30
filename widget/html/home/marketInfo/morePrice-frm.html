@@ -132,7 +132,7 @@
 				}
 				.content{
 						width: 100%;
-						height: 6.0rem;
+						height: 8rem;
 						position: relative;
 				}
 				.content>div.contentBox{
@@ -179,9 +179,9 @@
 <body>
 		<input type="hidden" name="plantId" id="plantId">
 		<ul class="nav">
-				<li class="nav-active1"><span id="market0" data-date="7" data-id="" data-provinceId="" class="market-date"  onclick="openMarketWin(this);">选择市场</span><span class="date-icon" style="background-image: url('../../../image/market/more-green.png');"></span></li>
-				<li class="nav-active2"><span id="market1" data-date="7" data-id="" data-provinceId="" class="market-date"  onclick="openMarketWin(this);">选择市场</span><span class="date-icon" style="background-image: url('../../../image/market/more-yel.png');"></span></li>
-				<li class="nav-active3"><span id="market2" data-date="7" data-id="" data-provinceId="" class="market-date"  onclick="openMarketWin(this);">选择市场</span><span class="date-icon" style="background-image: url('../../../image/market/more-blue.png');"></span></li>
+				<li class="nav-active1"><span id="market0" data-name="" data-date="7" data-id="" data-provinceId="" class="market-date"  onclick="openMarketWin(this);">选择市场</span><span class="date-icon" style="background-image: url('../../../image/market/more-green.png');"></span></li>
+				<li class="nav-active2"><span id="market1" data-name="" data-date="7" data-id="" data-provinceId="" class="market-date"  onclick="openMarketWin(this);">选择市场</span><span class="date-icon" style="background-image: url('../../../image/market/more-yel.png');"></span></li>
+				<li class="nav-active3"><span id="market2" data-name="" data-date="7" data-id="" data-provinceId="" class="market-date"  onclick="openMarketWin(this);">选择市场</span><span class="date-icon" style="background-image: url('../../../image/market/more-blue.png');"></span></li>
 		</ul>
 		<div class="marketTitleBox">
 				<span class="marketTitle-icon"></span>
@@ -196,7 +196,7 @@
 <script type="text/javascript" src="../../../script/common/api.js"></script>
 <script type="text/javascript" src="../../../script/common/jquery.min.js"></script>
 <script type="text/javascript" src="../../../script/common/pds.ajax.js"></script>
-<script type="text/javascript" src="../../../script/common/echarts.common.min.js"></script>
+<script type="text/javascript" src="../../../script/planting/echarts.common.min.js"></script>
 <script type="text/javascript">
 	var chartH = null;//chart盒子高
 	var chartW = null;//chart盒子宽
@@ -209,16 +209,20 @@
 			//作物Id赋值
 			plantDo(api.pageParam.plantId, api.pageParam.plantName);
 			//获取历史市场
-			var marketObjs = $api.getStorage('markets');//alert("本地市场数据缓存************"+JSON.stringify(marketObjs))
+			//$api.rmStorage($api.getStorage('userId')+'markets');
+			var marketObjs = $api.getStorage($api.getStorage('userId')+'markets');//alert("本地市场数据缓存************"+JSON.stringify(marketObjs))
 			if (marketObjs != undefined && marketObjs != "" && marketObjs != null && marketObjs != {}) {
 					$(".market-date").each(function(index,el){
 							var marketName = marketObjs[index].marketName;
+							var allMarketName = marketObjs[index].allMarketName;
 							var marketId = marketObjs[index].marketId;
 							var provinceId = marketObjs[index].provinceId;
 							var nameBoxId = $(this).attr("id");
-							if (marketName != "" && marketName != null && marketId != "" && marketId != null && provinceId != "" && provinceId != null) {
+							if (marketName != "" && marketName != null && marketId != "" && marketId != null && provinceId != "" && provinceId != null && allMarketName != "" && allMarketName != null) {
 									//写入市场名字，并写入缓存
-									nameDo(nameBoxId, marketName, marketId, provinceId);
+									nameDo(nameBoxId, marketName, marketId, provinceId, allMarketName);
+									//获取数据
+									dataInit();
 							}else {
 									$(this).text("选择市场").attr("data-id","").attr("data-provinceId","");
 							};
@@ -227,9 +231,6 @@
 					//打开默认市场
 					getMarket();
 			};
-
-			dataInit();
-
 
 	};
 
@@ -247,13 +248,14 @@
 											$(".market-date").each(function(index,el){
 													(function(i, this_){
 															var marketName = marketsData[i].abbreviation;
+															var allMarketName = marketsData[i].name;
 															var marketId = marketsData[i].id;
 															var provinceId = marketsData[i].provinceId;
 															var boxId = $(this_).attr("id");
 
-															if (marketName != "" && marketName != null && marketId != "" && marketId != null && provinceId != "" && provinceId != null) {
+															if (marketName != "" && marketName != null && marketId != "" && marketId != null && provinceId != "" && provinceId != null && allMarketName != "" && allMarketName != null) {
 																	//写入市场名字，并写入缓存
-																	nameDo(boxId, marketName, marketId, provinceId);
+																	nameDo(boxId, marketName, marketId, provinceId, allMarketName);
 															}else {
 																	$(this).text("选择市场").attr("data-id","").attr("data-provinceId","");
 															};
@@ -280,11 +282,16 @@
 							});
 					}
 			});
+
+			setTimeout(function(){
+					//初始化数据
+					dataInit();
+			},1000)
 	}
 
 	//市场框赋值
-	function nameDo(nameBox, marketName, marketId, provinceId){
-			$("#"+nameBox).text(marketName).attr("data-id",marketId).attr("data-provinceId",provinceId);
+	function nameDo(nameBox, marketName, marketId, provinceId, allMarketName){
+			$("#"+nameBox).text(marketName).attr("data-id",marketId).attr("data-name",allMarketName).attr("data-provinceId",provinceId);
 			//创建缓存
 			var marketArr = (function(){
 				  var marketArr_ = [];
@@ -292,8 +299,10 @@
 							var name_ = $(this).text();
 							var id_ = $(this).attr("data-id");
 							var provinceId_ = $(this).attr("data-provinceId");
+							var allName = $(this).attr("data-name");
 							var marketObj = {
 									marketName : name_,
+									allMarketName : allName,
 									marketId : id_,
 									provinceId : provinceId_
 							};
@@ -302,7 +311,7 @@
 					return marketArr_;
 			})()
 			//alert(JSON.stringify(marketArr))
-			$api.setStorage('markets', marketArr);
+			$api.setStorage($api.getStorage('userId')+'markets', marketArr);
 			//数据修改
 			//myChartInit(nameBox, plantId, marketId, marketName, statDays, index);
 
@@ -355,8 +364,10 @@
 					if (marketId != "") {
 							marketIdArr.push(marketId);
 							var marketName = $(this).text();
+							var allMarketName = $(this).attr("data-name");
 							marketInfo[marketId] = {
 									marketName : marketName,
+									allMarketName : allMarketName,
 									marketIndex : index
 							};
 					}
@@ -465,7 +476,7 @@
 																	var marketObj = marketInfo[k];
 																	var marketId_ = Object.keys(marketObj);
 																	if (marketId == marketId_) {
-																			marketName_ = marketObj[marketId_].marketName;
+																			marketName_ = marketObj[marketId_].allMarketName;
 																			marketIndex = marketObj[marketId_].marketIndex;
 																			break;
 																	}
@@ -533,18 +544,22 @@
 							backgroundColor : 'rgba(50,50,50,0.7)',
 							textStyle:{
 					　　		align:'left'
-					　　}
+							},
+							position: [10, 10],
+							//formatter: '{b0}<br/>{a0}: {c0}<br/>{a1}: {c1}<br/>{a2}: {c2}'
 					},
 					color : chartOptionObj.colorArr,
 					legend: {//图例
 							data : chartOptionObj.legend,
-							//bottom : 10
-							top : '3%'
+							bottom : 10,
+							//top : '3%'
+							orient: 'vertical'
 					},
 					grid: {
 							left: '7%',
 							right: '7%',
-							bottom: '5%',
+							bottom: '25%',
+							top : '12%',
 							containLabel: true,
 							show : false,
 							borderColor:'#f09d71'
@@ -558,12 +573,13 @@
 											// shadowBlur: 10
 									}
 							},
+							// name:'日期',
 							data: chartOptionObj.xAxisData
 					},
 					yAxis: {//Y轴
 							type: 'value',
 							name: chartOptionObj.yAxisName,
-							boundaryGap: ['20%', '20%'],
+							boundaryGap: ['10%', '50%'],
 							axisLine:{
 									lineStyle:{
 											color : '#f09d71',
@@ -589,6 +605,14 @@
 		var marketName = $(obj).text();
 		var provinceId = $(obj).attr("data-provinceId");
 		var marketId = $(obj).attr("data-id");//alert(nameBoxId+"******"+marketId)
+		var marketIdArr = [];
+		$(".market-date").each(function(index,el){
+				var id_ = $(this).attr("data-id");
+				if (id_ != marketId) {
+						marketIdArr.push(id_)
+				}
+		});
+		//alert(JSON.stringify(marketIdArr)+"*********"+marketId)
 		api.openWin({
 			name : "market-choose-win",
 			url : "widget://html/home/marketInfo/market-choose-win.html",
@@ -596,6 +620,7 @@
 			pageParam : {
 					provinceId : provinceId,
 					marketId : marketId,
+					marketIdArr : marketIdArr,
 					frmName : api.frameName,
 					nameBoxId : nameBoxId
 			},

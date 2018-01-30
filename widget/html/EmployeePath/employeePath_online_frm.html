@@ -264,10 +264,15 @@
 </body>
 <script type="text/javascript" src="../../script/common/api.js"></script>
 <script type="text/javascript" src="../../script/common/jquery.min.js"></script>
-<script type="text/javascript" src="../../script/common/zepto-1.2.0.min.js"></script>
+<!-- <script type="text/javascript" src="../../script/common/zepto-1.2.0.min.js"></script> -->
 <!-- <script type="text/javascript" src="../../script/common/iscroll.js"></script> -->
-<script type="text/javascript" src="../../script/common/pds.ajax.js"></script>
+<script type="text/javascript" src="../../script/common/common/pds.ajax.js"></script>
+<script type="text/javascript" src="../../script/common/emptyFrm.js"></script>
 <script type="text/javascript">
+    //导航tab切换
+    var page = 1, pageSize = 5;
+    var total;
+    var emptyImgUrl = "../../image/empty.png";
     apiready = function(){
         api.parseTapmode();
 
@@ -275,17 +280,10 @@
 
     };
 
-
-    //导航tab切换
-  	var page = 1, pageSize = 5;
-
-    var total;
     //请求数据***************************************
     function pathListData(page, pageSize){
     			//page+=1;
-          //alert(page+"*****开始请求数据*****"+navId)
-          $('.more span').text('加载中...');
-          $('.pull_icon').addClass('loading');
+          //alert(page+"*****开始请求数据*****"+pageSize)
     			pds.ajaxSubmit({
     				 url:"app/coor/selectByUser",
     				 type : "GET",
@@ -299,9 +297,10 @@
     				 },
     				 success:function(e){
     					 	//alert("success")
-    						// alert(JSON.stringify(e))
                 total = e.total;
+                //alert(JSON.stringify(total))
     						if(e.total > 0){
+                    emptyFrm.hide();
     								var techListArr = e.data;
     								var techListStr = "";
     								var articleTypeName = null;
@@ -375,8 +374,8 @@
                                 $('.more span').text('加载中...');
                                 $('.pull_icon').addClass('loading');
                                 // alert(page);
+                                pathListData(page,pageSize);
                                 setTimeout(function(){
-                                    pathListData(page,pageSize,navId);
                                 },300)
 
                             });
@@ -389,13 +388,14 @@
                         };
 
     								}else{
-                        $('.more span').text('暂无在岗人员...');
+                        $('.more span').text('暂无更多数据...');
                         $('.pull_icon').removeClass('loading');
     								}
 
     						}else{
                     $('.more span').text('暂无在岗人员...');
                     $('.pull_icon').removeClass('loading');
+                    emptyFrm.show("暂无在岗人员~", 0, emptyImgUrl)
                 };
 
     				 },

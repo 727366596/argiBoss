@@ -7,6 +7,7 @@
     <title>员工轨迹列表搜索</title>
     <link rel="stylesheet" type="text/css" href="../../css/common/public.css" />
     <link rel="stylesheet" type="text/css" href="../../css/common/header.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/iscroll-style.css" />
     <script type="text/javascript" src="../../script/common/rem-750.js"></script>
     <style>
         .header_search_input_clearMsg{
@@ -56,7 +57,7 @@
         input::placeholder{
             color: #999999;opacity:1;font-size: 0.28rem;
         }
-
+				
     </style>
 </head>
 <body>
@@ -71,6 +72,7 @@
 </body>
 <script type="text/javascript" src="../../script/common/api.js"></script>
 <script type="text/javascript" src="../../script/common/jquery.min.js"></script>
+<script type="text/javascript" src="../../script/common/common/pds.ajax.js"></script>
 <script type="text/javascript">
 	apiready = function(){
     //适配iOS7+，Android4.4+状态栏沉浸式效果，详见config文档statusBarAppearance字段

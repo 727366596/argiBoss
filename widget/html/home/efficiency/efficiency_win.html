@@ -4,14 +4,16 @@
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 		<title>效率分析图</title>
-		<link rel="stylesheet" type="text/css" href="../../../css/common/api.css">
+		<!-- <link rel="stylesheet" type="text/css" href="../../../css/common/api.css"> -->
 		<link rel="stylesheet" href="../../../css/common/public.css" />
+		<script type="text/javascript" src="../../../script/common/rem.js"></script>
 		<link rel="stylesheet" href="../../../css/common/header.css" />
 		<link rel="stylesheet" href="../../../css/efficiency/efficiency_win.css" />
-    <script type="text/javascript" src="../../../script/common/rem.js"></script>
-    <style>
-
-    </style>
+		<style media="screen">
+				body{
+						background-color: #fff!important;
+				}
+		</style>
 </head>
 <body>
 <div id="header">
@@ -21,14 +23,7 @@
 </div>
 
 <script type="text/javascript" src="../../../script/common/api.js"></script>
-<script type="text/javascript" src="../../../script/common/zepto-1.2.0.min.js"></script>
 <script type="text/javascript" src="../../../script/common/jquery.min.js"></script>
-<script type="text/javascript" src="../../../script/common/pds.ajax.js"></script>
-<script type="text/javascript" src="../../../script/common/mui.min.js"></script>
-<script type="text/javascript" src="../../../script/common/mui.picker.min.js"></script>
-<script src="http://code.highcharts.com/highcharts.js"></script>
-<script src="http://code.highcharts.com/highcharts-3d.js"></script>
-<script src="https://cdn.bootcss.com/echarts/3.8.4/echarts-en.common.js"></script>
 <script>
 
 	apiready=function(){
@@ -36,8 +31,8 @@
 			$api.fixStatusBar(header);
 			var headerH = $api.offset(header).h;
 			api.openFrame({
-					name: 'efficiency_new',
-					url: './efficiency_new.html',
+					name: 'efficiency_frm',
+					url: './efficiency_frm.html',
 					bounces: false,
 					rect: {
 							x: 0,

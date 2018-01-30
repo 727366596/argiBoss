@@ -9,7 +9,12 @@
     <link rel="stylesheet" href="../../../css/common/public.css" />
     <link rel="stylesheet" href="../../../css/common/header.css" />
 		<style>
-
+		#header{
+			background-color: #204e41;
+		}
+		.headerLeft{
+			background: url("../../../image/cal_img/index/pressedbtn-fanhui@3x.png") no-repeate left;
+		}
 		</style>
 </head>
 <body>
@@ -28,8 +33,8 @@
 			var headerPos = $api.offset(header);
 			var body_h = $api.offset($api.dom('body')).h;
 			api.openFrame({
-				name : 'seed_frm(2)',
-				url : './seed_frm(2).html',
+				name : 'seed_plantFrm',
+				url : './seed_plantFrm.html',
 				bounces : true,
 				reload : true,
 				rect : {

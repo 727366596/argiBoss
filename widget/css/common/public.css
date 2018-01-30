@@ -34,13 +34,8 @@ a, a:visited{
 		text-decoration:none;
 }
 html,body{
-<<<<<<< HEAD
-		margin:0;
-		background:#fdfcfc;
-=======
 	margin:0;
   background:#fdfcfc;
->>>>>>> 3ebb2fb611bc85e5435c867972b98a08c3bafb70
 }
 .content{
 		width:100%;

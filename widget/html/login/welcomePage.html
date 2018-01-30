@@ -97,6 +97,7 @@
 						 }
 					 },1000)
 				},1500)
+				if(e.data !== null && e.data !== ''){
 				var data = e.data.data || []
 				if (data.length > 0) {
 					var pictureUrl = data[0].pictureUrl
@@ -106,6 +107,7 @@
 						jumpPage(data[0].title,data[0].url)
 					})
 				}
+			}
 			},
 			error: function(e) {
 				api.alert({
