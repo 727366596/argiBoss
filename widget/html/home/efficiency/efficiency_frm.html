@@ -199,8 +199,10 @@
                   });
                   return;
               };
-              var startDate = time.split("至")[0].split(".").join("-");
-              var endDate = time.split("至")[1].split(".").join("-");
+              var startDate = time.split("至")[0];
+              var endDate = time.split("至")[1];
+              getTimeTitle(startDate, endDate);
+
               farmIdStr = farmIdStr.substring(0, farmIdStr.length - 1);
               getWorkOrder(startDate,endDate,farmIdStr);//工单
               getWorkTime(startDate,endDate,farmIdStr);
@@ -325,7 +327,7 @@
       function timeFirst(){
           var searchTime = $api.getStorage($api.getStorage("userId")+"searchTime");//alert(JSON.stringify(searchTime))
           if (searchTime != undefined && searchTime != null && searchTime != "") {
-              $("#time").val(searchTime.startDate + " 至 " + searchTime.endDate);
+              $("#time").val(searchTime.startDate + "至" + searchTime.endDate);
               $("#date1").val(searchTime.startDate);
               $("#date2").val(searchTime.endDate);
           }else{
@@ -428,8 +430,8 @@
                   });
                   return;
               };
-              var startDate = time.split("至")[0].split(".").join("-");
-              var endDate = time.split("至")[1].split(".").join("-");
+              var startDate = time.split("至")[0];
+              var endDate = time.split("至")[1];
               var farmIds = [], farmIdStr = "";
               $(".section-p").each(function(index,el){
                   if ($(this).hasClass("section") && !$(this).find(".select").hasClass("okNone")) {
@@ -506,6 +508,7 @@
                  var startDate = time.split("至")[0];
                  var endDate = time.split("至")[1];
                  getTimeTitle(startDate, endDate);
+
                  getWorkOrder(startDate,endDate,farmIdStr);//工单
                  getWorkTime(startDate,endDate,farmIdStr);//时长
                  getlongNess(startDate,endDate,farmIdStr);//公里数
@@ -1150,13 +1153,13 @@
           var startDateArr = startDate.split("-");
           var endDateArr = endDate.split("-");
 
-          var startYear = startDateArr[0];
-          var startMonth = startDateArr[1];
-          var startDay = startDateArr[2];
+          var startYear = startDateArr[0].toString();
+          var startMonth = startDateArr[1].toString();
+          var startDay = startDateArr[2].toString();
 
-          var endYear = endDateArr[0];
-          var endMonth = endDateArr[1];
-          var endDay = endDateArr[2];
+          var endYear = endDateArr[0].toString();
+          var endMonth = endDateArr[1].toString();
+          var endDay = endDateArr[2].toString();
 
           //将xxxx-xx-xx的时间格式，转换为 xxxx/xx/xx的格式
           // startTime = startTime.replace(/\-/g, "/");
@@ -1165,18 +1168,20 @@
           var year_x = 1000*60*60*24*366;//一年的总时间
           var sTime = new Date(startDate).getTime();//开始时间chuo
           var eTime = new Date(endDate).getTime();  //结束时间chuo
-          //alert(sTime+"*****"+eTime);
           var time_x = eTime - sTime;//时间差值
+          // alert(sTime+"*****"+eTime);
+          // alert(time_x);
+
           if (time_x == 0) {
               timeTitle = startYear + "年" + startMonth + "月";
-          }else if(time_x > month_x && time_x < year_x){//时间差超过30天，按月统计
+          }else if(time_x >= month_x && time_x <= year_x){//时间差超过30天，按月统计
               timeTitle = startYear + "年";
               if (startYear != endYear) {
                   timeTitle = startYear + "/" + endYear + "年";
               };
-          }else if(time_x >= year_x){//时间差超过一年，按年统计
+          }else if(time_x > year_x){//时间差超过一年，按年统计
               timeTitle = startYear + "至" + endYear + "年";
-          }else{//时间差小于30天，按天统计
+          }else if(time_x < month_x && time_x > 0){//时间差小于30天，按天统计
               timeTitle = startYear + "年" + startMonth + "月";
               if (startYear != endYear && startMonth != endMonth) {
                   timeTitle = startYear + "-" + startMonth + "至" + endYear + "-" + endMonth;
