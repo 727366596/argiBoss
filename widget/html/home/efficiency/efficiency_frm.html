@@ -167,8 +167,10 @@
                   });
                   return;
               };
-              var startDate = time.split("至")[0].split(".").join("-");
-              var endDate = time.split("至")[1].split(".").join("-");
+              var startDate = time.split("至")[0];
+              var endDate = time.split("至")[1];
+              getTimeTitle(startDate, endDate);
+
               farmIdStr = farmIdStr.substring(0, farmIdStr.length - 1);
               getWorkOrder(startDate,endDate,farmIdStr);//工单
               getWorkTime(startDate,endDate,farmIdStr);
@@ -501,8 +503,9 @@
              //调用获取数据方法************************************
              if (farmIdArr != []) {
                  farmIdStr = farmIdArr.join(",");
-                 var startDate = time.split("至")[0].split(".").join("-");
-                 var endDate = time.split("至")[1].split(".").join("-");
+                 var startDate = time.split("至")[0];
+                 var endDate = time.split("至")[1];
+                 getTimeTitle(startDate, endDate);
                  getWorkOrder(startDate,endDate,farmIdStr);//工单
                  getWorkTime(startDate,endDate,farmIdStr);//时长
                  getlongNess(startDate,endDate,farmIdStr);//公里数
@@ -620,6 +623,7 @@
                   var farm_name = [];//基地名称数组
                   var completeData = [];//已完成数量数组
                   var confrimData = [];//已派发数量数组
+                  var axisLabelPadding = null;
                   if(e.data != [] && e.data != "" && e.data != null){
                     for (var i = 0; i <e.data.length; i++) {
                         var item = e.data[i];
@@ -664,6 +668,30 @@
                       $("#container1").html('<span class="chartEmpty">暂无数据，换个条件看看吧~</span>')
                       return;
                   };
+                  //padding值设置
+                  var farmNameL = farm_name.length;
+                  if (farmNameL != 0 && farmNameL != [] && farmNameL != null) {
+                      switch (farmNameL) {
+                        case 1:
+                            axisLabelPadding = -40;
+                        break;
+                        case 2:
+                            axisLabelPadding = -30;
+                        break;
+                        case 3:
+                            axisLabelPadding = -25;
+                        break;
+                        case 4:
+                            axisLabelPadding = -20;
+                        break;
+                        case 5:
+                            axisLabelPadding = -15;
+                        break;
+                        //default:
+
+                      }
+                  };
+
                   var option1 = {
                         backgroundColor: '#ffffff',
                         legend: {
@@ -686,6 +714,7 @@
                              show:"false",
                              trigger: 'axis',
                              zIndex:"0",
+                             confine : true,//将提示框限制在图表范围内
                              axisPointer: { // 坐标轴指示器，坐标轴触发有效
                                  type: 'shadow',
                                  shadowStyle : {                       // 阴影指示器样式设置
@@ -729,10 +758,10 @@
                                     axisLabel :{
                                          inside:true,
                                          verticalAlign:'bottom',
-                                         align:'top',
+                                         align:'left',
                                          color: "#666666",
                                          //padding :[0,0,16,0]
-                                         padding :[0,0,-25,0]
+                                         padding :[0,0,axisLabelPadding,0]
                                     },
                                     tooltip: {
                                         show:"false",
@@ -740,8 +769,8 @@
                                         axisPointer: { // 坐标轴指示器，坐标轴触发有效
                                             type: 'shadow',
                                             shadowStyle : {                       // 阴影指示器样式设置
-                                             width: 'auto',                   // 阴影大小
-                                             }// 默认为直线，可选为：'line' | 'shadow'
+                                                width: 'auto',                   // 阴影大小
+                                            }// 默认为直线，可选为：'line' | 'shadow'
                                         }
                                     },
                                     data: farm_name
@@ -868,6 +897,7 @@
                        createChart(echarts2, echartsData);
                    }else{
                        echarts2.dispose();
+                       $(".bottom_id").text("");
                        $("#container2").html('<span class="chartEmpty">暂无数据，换个条件看看吧~</span>')
                    }
                }else{
@@ -927,6 +957,7 @@
                          createChart(echarts3, echartsData);
                      }else{
                          echarts3.dispose();
+                         $(".bottom_id").text("");
                          $("#container3").html('<span class="chartEmpty">暂无数据，换个条件看看吧~</span>');
                      }
                  }else{
@@ -1109,37 +1140,6 @@
            }, {
                type: 'inside'
            }],
-          //  visualMap: {
-          //      top: 10,
-          //      right: 10,
-          //      pieces: [{
-          //          gt: 0,
-          //          lte: 50,
-          //          color: '#096'
-          //      }, {
-          //          gt: 50,
-          //          lte: 100,
-          //          color: '#ffde33'
-          //      }, {
-          //          gt: 100,
-          //          lte: 150,
-          //          color: '#ff9933'
-          //      }, {
-          //          gt: 150,
-          //          lte: 200,
-          //          color: '#cc0033'
-          //      }, {
-          //          gt: 200,
-          //          lte: 300,
-          //          color: '#660099'
-          //      }, {
-          //          gt: 300,
-          //          color: '#7e0023'
-          //      }],
-          //      outOfRange: {
-          //          color: '#999'
-          //      }
-          //  },
            series: chartOptionObj.series
          });
       }
@@ -1158,22 +1158,31 @@
           var endMonth = endDateArr[1];
           var endDay = endDateArr[2];
 
-          if (startYear == endYear) {//同年
-              if (startMonth == endMonth) {//同年同月, 按天统计
-                  timeTitle = startYear +"年"+ startMonth +"月";
-              }else{//同年不同月
-                  var monthMore = endMonth - startMonth;
-                  if(monthMore > 1){//同年不同月, 跨度大于一个月，按月统计
-                      timeTitle = startYear +"年";
-                  }else{//同年不同月, 跨度小于一个月，按天统计
-
-                  }
+          //将xxxx-xx-xx的时间格式，转换为 xxxx/xx/xx的格式
+          // startTime = startTime.replace(/\-/g, "/");
+          // endTime = endTime.replace(/\-/g, "/");
+          var month_x = 1000*60*60*24*31;//31天的总时间;
+          var year_x = 1000*60*60*24*366;//一年的总时间
+          var sTime = new Date(startDate).getTime();//开始时间chuo
+          var eTime = new Date(endDate).getTime();  //结束时间chuo
+          //alert(sTime+"*****"+eTime);
+          var time_x = eTime - sTime;//时间差值
+          if (time_x == 0) {
+              timeTitle = startYear + "年" + startMonth + "月";
+          }else if(time_x > month_x && time_x < year_x){//时间差超过30天，按月统计
+              timeTitle = startYear + "年";
+              if (startYear != endYear) {
+                  timeTitle = startYear + "/" + endYear + "年";
+              };
+          }else if(time_x >= year_x){//时间差超过一年，按年统计
+              timeTitle = startYear + "至" + endYear + "年";
+          }else{//时间差小于30天，按天统计
+              timeTitle = startYear + "年" + startMonth + "月";
+              if (startYear != endYear && startMonth != endMonth) {
+                  timeTitle = startYear + "-" + startMonth + "至" + endYear + "-" + endMonth;
               }
-          }else{
-
           };
 
-          //return  timeTitle;
           $(".bottom_id").text(timeTitle);
       }
 
