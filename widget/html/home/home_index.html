@@ -584,6 +584,7 @@
 			data:{"code":code,"place":'notice'},
 			success:function(e){
 				//console.log('eeeeee'+JSON.stringify(e))
+			if(e.data !== null && e.data !== ''){
 				var data=e.data.data||[];
 				if(data.length>0){
 				  var str='';
@@ -605,6 +606,7 @@
 						 noticeListMore(dataList)
 					 })
 				}
+			}
 			},
 			error:function(e){
 				api.alert({msg:"服务器错误，请联系管理员!"});
