@@ -8,7 +8,7 @@
       <link rel="stylesheet" type="text/css" href="../../css/common/mui.min.css"/>
       <link rel="stylesheet" type="text/css" href="../../css/fieldManage/frm_workTab.css" />
       <link rel="stylesheet" type="text/css" href="../../css/common/iscroll-style.css" />
-      <script type="text/javascript" src="../../script/common/rem.js"></script>
+      <script type="text/javascript" src="../../script/common/rem-750.js"></script>
       <style>
           #wrapper{
             margin-top: -1rem;
@@ -37,6 +37,7 @@
       <script type="text/javascript" src="../../script/common/jquery.tmpl.js"></script>
       <script type="text/javascript" src="../../script/common/zepto-1.2.0.min.js"></script>
       <script type="text/javascript" src="../../script/common/common/pds.ajax.js"></script>
+      <script type="text/javascript" src="../../script/common/emptyFrm.js"></script>
       <script type="text/template" id='UserTmpl'>
           {{each(i,item) eachData.data}}
                       <div  class="top" data-workId ="${item.id}" data-workType = "${item.workType}">
@@ -130,6 +131,7 @@
                {{/each}} -->
      </script>
       <script type="text/javascript">
+          var emptyImgUrl = "../../image/empty.png";
           apiready = function(){
             //alert(api.pageParam.growthCycleId+","+api.pageParam.farmId+","+api.pageParam.landId+","+api.pageParam.categoryId+","+api.pageParam.startDate+","+api.pageParam.endDate+","+120)
             // 默认获取没干完的活的第一页
@@ -140,7 +142,7 @@
             // alert(api.pageParam.startDate)
             // alert(api.pageParam.endDate)
             // alert(api.pageParam.weak)
-            pathListData(page,pageSize,api.pageParam.growthCycleId,api.pageParam.farmId,api.pageParam.landId,api.pageParam.categoryId,api.pageParam.startDate,api.pageParam.endDate,api.pageParam.weak);
+            pathListData(page,pageSize,api.pageParam.growthCycleId,api.pageParam.farmId,api.pageParam.landId,api.pageParam.categoryId,api.pageParam.startDate,api.pageParam.endDate,api.pageParam.weak,api.pageParam.modelNum);
             // 默认显示第一个tab的样式
             // 点击tab切换第一页数据
             // tabCheck();
@@ -206,7 +208,7 @@
           var total ;
           var paramObj = {};
           var eachData;
-          function pathListData(page, pageSize,growthCycleId,farmId,landId,categoryId,startDate,endDate,weak){
+          function pathListData(page, pageSize,growthCycleId,farmId,landId,categoryId,startDate,endDate,weak,modelNum){
                 pds.ajaxSubmit({
                    url:"app/task/taskList",
                    type : "GET",
@@ -219,7 +221,8 @@
                             "categoryId":categoryId,
                             "startDate":startDate,
                             "endDate":endDate,
-                            "growthCycleId":growthCycleId
+                            "growthCycleId":growthCycleId,
+                            "modelNum":modelNum
                         },
                         page : page,
                         pageSize : pageSize,
@@ -233,6 +236,8 @@
                       // 无数据处理
                       if(total == 0){
                           $('.more span').text('暂无数据...');
+                          $('.pull_icon').removeClass('loading');
+                          emptyFrm.show("暂无相关工单~", 0, emptyImgUrl)
                           return;
                       }
                       eachData =e;
@@ -255,7 +260,7 @@
                                         // if(work_type==1){
                                         //     pathListData(page,pageSize,"",106,"");
                                         // }else if(work_type==2){
-                                            pathListData(page,pageSize,api.pageParam.growthCycleId,api.pageParam.farmId,api.pageParam.landId,api.pageParam.categoryId,api.pageParam.startDate,api.pageParam.endDate,120);
+                                            pathListData(page,pageSize,api.pageParam.growthCycleId,api.pageParam.farmId,api.pageParam.landId,api.pageParam.categoryId,api.pageParam.startDate,api.pageParam.endDate,api.pageParam.weak,api.pageParam.modelNum);
                                         // }else{
                                         //     pathListData(page,pageSize,"",105,"");
                                         // }
