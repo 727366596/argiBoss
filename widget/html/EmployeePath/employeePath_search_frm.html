@@ -371,8 +371,10 @@
 <script type="text/javascript" src="../../script/common/jquery.min.js"></script>
 <!-- <script type="text/javascript" src="../../script/common/zepto-1.2.0.min.js"></script> -->
 <script type="text/javascript" src="../../script/common/iscroll.js"></script>
-<script type="text/javascript" src="../../script/common/pds.ajax.js"></script>
+<script type="text/javascript" src="../../script/common/common/pds.ajax.js"></script>
+<script type="text/javascript" src="../../script/common/emptyFrm.js"></script>
 <script type="text/javascript">
+	var emptyImgUrl = "../../image/empty.png";
 	apiready = function(){
 		//获取搜索历史信息
 		getHistoryData();
@@ -464,6 +466,7 @@
 							$('.more span').text('搜索中...');
 							setTimeout(function(){
 								if(e.total > 0){
+										emptyFrm.hide();
 										var techListArr = e.data;
 										var techListStr = "";
 										var articleTypeName = null;
@@ -564,6 +567,7 @@
 										$('.pull_icon').removeClass('flip loading');
 										$('.pull_icon').removeClass('loading');
 										$('.more span').text('搜索无结果...');
+										emptyFrm.show("暂无相关轨迹~", 0, emptyImgUrl)
 								};
 
 							},300)

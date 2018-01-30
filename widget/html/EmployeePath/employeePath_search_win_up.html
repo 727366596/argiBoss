@@ -449,7 +449,7 @@
 			var search_obj = {
 					'searchStr' : nameSearchStr
 			};
-			search_history_arr = $api.getStorage('search_history_list');
+			search_history_arr = $api.getStorage($api.getStorage("userId")+'search_history_list');
 			var search_history_flag = false;//记录是否追加本地缓存
 			//alert(JSON.stringify(search_history_arr));
 			if(search_history_arr != [] && search_history_arr != null && search_history_arr != "" && search_history_arr != undefined){
@@ -473,7 +473,7 @@
 			};
 			//需延时处理
 			setTimeout(function(){
-					$api.setStorage('search_history_list', search_history_arr);
+					$api.setStorage($api.getStorage("userId")+'search_history_list', search_history_arr);
 					//重新获取历史搜索数据
 					//alert(JSON.stringify(search_history_arr))
 					if(!search_history_flag_){//有新增时才会重新请求搜索记录
@@ -710,7 +710,7 @@
 
   //搜索历史数据
   function getHistoryData(){
-      var search_history_list_arr = $api.getStorage('search_history_list');
+      var search_history_list_arr = $api.getStorage($api.getStorage("userId")+'search_history_list');
 			//alert(JSON.stringify(search_history_list_arr[2]));
 			if(search_history_list_arr != '' && search_history_list_arr != null && search_history_list_arr != []  && search_history_list_arr != undefined){
 					$(".clear_search_history_btn").show();
@@ -738,7 +738,7 @@
   function empty_search_history(){
       $(".search_history_list_content").html("暂无搜索历史记录");
 			$("#wrapper .scroller ul").html("");
-			$api.setStorage('search_history_list', []);
+			$api.setStorage($api.getStorage("userId")+'search_history_list', []);
 			//$api.clearStorage('search_history_list');
 			$(".clear_search_history_btn").hide();
 			emptyInput();

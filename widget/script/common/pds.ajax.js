@@ -106,7 +106,7 @@ var pds = (typeof this.pds === 'undefined') ? {} : this.pds;
 						});
 						return;
 					}
-		    	if (ret.status == 'ok') {
+		    	if (ret.status == 'ok' || ret.data) {
 		    	  _custom.success(ret);
 		    	  }
 		    	else {
