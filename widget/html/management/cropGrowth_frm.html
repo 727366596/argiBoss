@@ -200,7 +200,7 @@
 
     <section id="section2">
 				<p class="plantCondition">作物长势</p>
-				<img id="tishi" src="../../image/management/no.png">
+				<img id="tishi" src="">
 				<div id="growth">
 					<p class="collectionTime">最近采集时间：<i class="updateTime">2017-12-11</i></p>
 					<div class="img">
@@ -219,7 +219,8 @@
     </section>
 		<section id="section3">
 			<p class="plantCondition">地里的实际情况</p>
-			<div class="swiper-container"><!--swiper容器[可以随意更改该容器的样式-->
+			<img id="noImg" style="width:100%;height:4.96rem;display:none" src="../../image/management/shijing.png">
+			<div id="swiper-container" class="swiper-container"><!--swiper容器[可以随意更改该容器的样式-->
 			    <div class="swiper-wrapper" id="swiper-wrapper">
 			    	<div class="swiper-slide"><img src="../../image/management/no.png"></div>
 						<div class="swiper-slide"><img src="../../image/management/no.png"></div>
@@ -232,6 +233,7 @@
 		</section>
 </article>
 <script type="text/javascript" src="../../script/common/api.js"></script>
+<script type="text/javascript" src="../../script/common/zepto-1.2.0.min.js"></script>
 <script type="text/javascript" src="../../script/common/swiper.min.js"></script>
 <script type="text/javascript" src="../../script/common/jquery.min.js"></script>
 <script type="text/javascript" src="../../script/common/pds.ajax.js"></script>
@@ -242,6 +244,7 @@
 		// 	$api.fixStatusBar(header);
 		// 	var headerH = $api.offset(header).h;
 		// 	$("body").css({"paddingTop":headerH+"px"});
+
 			initIn()
 	}
 	function initIn(n){
@@ -263,41 +266,60 @@
 			var endDate=y + "-" + m + "-" + r;
 			var startDate=y + "-0" + 1 + "-0" + 1;
 			$("#time").val(y+"年0"+1+"月-"+y+"年"+m+"月")
-			api.ajax({
-				url:pds.defaultUri + 'app/crop/firstEnterCondition',
-				data:{values:{farmId:api.pageParam.farmId}}
-			},function(ret,err){
-				if (ret) {
-					if(!ret.data.land){
-						return
-					}
-					//alert(JSON.stringify(ret))
-					$("#land").val(ret.data.land.landName)
-					$("#crop").val(ret.data.category.catName)
-					$("#landId").val(ret.data.land.id)
-					$("#catId").val(ret.data.category.id)
-					showGrowth(api.pageParam.farmId,ret.data.land.id,ret.data.category.id,startDate,endDate)
-					//showGrowth(11,1,23,'2017-11-20','2017-12-04')
-				} else {
-					//api.alert({msg:JSON.stringify(err)});
-				};
+			pds.ajaxSubmit({
+				 url:"app/crop/firstEnterCondition",
+				 type : "GET",
+				 data:{
+					 farmId:api.pageParam.farmId
+				 },
+				 success:function(e){
+					 $("#land").val(e.data.land.landName)
+					 $("#crop").val(e.data.category.catName)
+					 $("#landId").val(e.data.land.id)
+					 $("#catId").val(e.data.category.id)
+					 showGrowth(api.pageParam.farmId,e.data.land.id,e.data.category.id,startDate,endDate)
+				 },
+				 error:function(e){
+						api.alert({msg:"服务器异常，请联系管理员!"});
+				 }
 			});
+			// api.ajax({
+			// 	url:pds.defaultUri + 'app/crop/firstEnterCondition',
+			// 	data:{values:{farmId:api.pageParam.farmId}}
+			// },function(ret,err){
+			// 	if (ret) {
+			// 		if(!ret.data.land){
+			// 			return
+			// 		}
+			// 		//alert(JSON.stringify(ret))
+			// 		$("#land").val(ret.data.land.landName)
+			// 		$("#crop").val(ret.data.category.catName)
+			// 		$("#landId").val(ret.data.land.id)
+			// 		$("#catId").val(ret.data.category.id)
+			// 		showGrowth(api.pageParam.farmId,ret.data.land.id,ret.data.category.id,startDate,endDate)
+			// 		//showGrowth(11,1,23,'2017-11-20','2017-12-04')
+			// 	} else {
+			// 		//api.alert({msg:JSON.stringify(err)});
+			// 	};
+			// });
 		}
 	}
 	function showGrowth(farmId,landId,categoryId,startDate,endDate){
-		api.ajax({
+			pds.ajaxSubmit({
 			//标准传
-			url:pds.defaultUri + 'app/crop/growth',
-			//虚拟数据
-			//url:'http://192.168.31.213:8080/app/crop/growth',
-			data:{values:{'farmId':farmId,'landId':landId,'categoryId':categoryId,'startDate':startDate,'endDate':endDate}}
-			//data:{values:{'farmId':"2405",'landId':"2455",'categoryId':"2878",'startDate':"2017-1-1",'endDate':"2018-2-2"}}
-		},function(ret,err){
-			if (ret) {
+			url:'app/crop/growth',
+			type : "GET",
+			data:{'farmId':farmId,'landId':landId,'categoryId':categoryId,'startDate':startDate,'endDate':endDate},
+			success:function(ret){
 				//alert(JSON.stringify(ret))
-				var period=ret.data.list
-				if(period.length==0){
+				var period=ret.data.list||0
+				if(!ret.data.hasOwnProperty("list")||period==0){
 					$("#tishi").show()
+					if($api.getStorage('cat')=="苹果"||$api.getStorage('cat')=="马铃薯"||$api.getStorage('cat')=="柑橘"){
+						$("#tishi").attr("src", "../../image/management/noM.png")
+					}else{
+						$("#tishi").attr("src", "../../image/management/no.png")
+					}
 					$("#growth").hide()
 				}else{
 					$("#tishi").hide()
@@ -309,12 +331,12 @@
 						$("#section2").append($("#growth").clone().removeAttr("id"))
 					}
 					for(let j=0; j<period[i].length; j++){
-						per+='<span onclick="qiehuan(this)" id='+period[i][j].updateDate+','+period[i][j].growthCycleId+','+period[i][j].disease+','+period[i][j].insectPests+','+period[i][j].grassHarm+','+period[i][j].physiologicalStress+','+period[i][j].ifDeficiency+','+period[i][j].weak+','+categoryId+' >'+period[i][j].lifeCycle+'</span>'
+						per+='<span onclick="qiehuan(this)" id='+period[i][j].updateDate+','+period[i][j].growthCycleId+','+period[i][j].disease+','+period[i][j].insectPests+','+period[i][j].grassHarm+','+period[i][j].physiologicalStress+','+period[i][j].ifDeficiency+','+period[i][j].weak+','+categoryId+','+period[i][j].modelNum+' >'+period[i][j].lifeCycle+'</span>'
 					}
 					$(".slider").eq(i).html(per)
 					per=null
 					$(".updateTime").eq(i).html(period[i][0].updateDate)
-					$(".moreInfo").eq(i).attr("id",period[i][0].growthCycleId+","+period[i][0].weak)
+					$(".moreInfo").eq(i).attr("id",period[i][0].growthCycleId+","+period[i][0].weak+","+period[i][0].modelNum)
 					var  str="出现",arr=[]
 					if(period[i][0].disease==1){
 						arr.push("病害")
@@ -334,50 +356,56 @@
 					str+=arr.join("、")
 					str+="现象"
 					if(period[i][0].weak==120){
-						api.ajax({
+							pds.ajaxSubmit({
 							//标准传
-							url:pds.defaultUri + 'app/crop/growthModelPicture',
+							url:'app/crop/growthModelPicture',
+							type : "GET",
 							//虚拟数据
 							//url:'http://192.168.31.213:8080/app/crop/growth',
 							//data:{values:{'farmId':farmId,'landId':landId,'categoryId':categoryId,'startDate':startDate,'endDate':endDate}}
-							data:{values:{'catalogId':categoryId,'growthCycleId':period[i][0].growthCycleId,'weak':"120",'deficiency':period[i][0].ifDeficiency,'physiologicalStress':period[i][0].physiologicalStress,'insectPests':period[i][0].insectPests,'grassHarm':period[i][0].grassHarm,'disease':period[i][0].disease}}
-						},function(ret,err){
-							if (ret) {
+							data:{
+								'catalogId':categoryId,'growthCycleId':period[i][0].growthCycleId,'weak':"120",'deficiency':period[i][0].ifDeficiency,'physiologicalStress':period[i][0].physiologicalStress,'insectPests':period[i][0].insectPests,'grassHarm':period[i][0].grassHarm,'disease':period[i][0].disease
+							},
+							success:function(ret){
 									if(ret.data==null){
 										$(".imgShow").eq(i).attr("src", "../../image/management/no.png")
 										return
 									}
 								  //console.log(ret.data.url)
 									$(".imgShow").eq(i).attr("src", ret.data.url)
-							} else {
-									api.alert({msg:JSON.stringify(err)});
-								};
-						});
+								},
+			 				 error:function(e){
+			 						api.alert({msg:"服务器异常，请联系管理员!"});
+			 				 }
+			 			});
 
 						$(".warning").eq(i).css("background","url('../../image/management/warning.png') no-repeat left center")
 						$(".warning").eq(i).css("backgroundSize","0.36rem 0.36rem")
 						$(".warning").eq(i).css("color","red")
 						$(".warning").eq(i).html(str)
 					}else{
-						api.ajax({
+						pds.ajaxSubmit({
 							//标准传
-							url:pds.defaultUri + 'app/crop/growthModelPicture',
+							url:'app/crop/growthModelPicture',
+							type : "GET",
 							//虚拟数据
 							//url:'http://192.168.31.213:8080/app/crop/growth',
 							//data:{values:{'farmId':farmId,'landId':landId,'categoryId':categoryId,'startDate':startDate,'endDate':endDate}}
-							data:{values:{'catalogId':categoryId,'growthCycleId':period[i][0].growthCycleId,'weak':"121"}}
-						},function(ret,err){
-							if (ret) {
+							data:{
+								'catalogId':categoryId,'growthCycleId':period[i][0].growthCycleId,'weak':"121"
+							},
+							success:function(ret){
 								//alert(JSON.stringify(ret))
 									if(ret.data==null){
 										$(".imgShow").eq(i).attr("src", "../../image/management/no.png")
 										return
 									}
 									$(".imgShow").eq(i).attr("src", ret.data.url)
-							} else {
-									api.alert({msg:JSON.stringify(err)});
-								};
-						});
+								},
+	 						 error:function(e){
+	 								api.alert({msg:"服务器异常，请联系管理员!"});
+	 						 }
+	 					});
 						$(".warning").eq(i).css("background","url('../../image/management/plantIcon.jpg') no-repeat left center")
 						$(".warning").eq(i).css("backgroundSize","0.36rem 0.36rem")
 						$(".warning").eq(i).css("color","#666")
@@ -484,9 +512,13 @@
 							// str+='<div class="swiper-slide"><img src="'+pic[i]+'"></div>'
 							imgUrls.push(pic[i])
 						}
+						$("#noImg").hide()
+						$("#swiper-container").show()
 						$("#swiper-wrapper").html(str)
 					}else{
-						$("#swiper-wrapper").html('<div class="swiper-slide"><img style="width:7.2rem;height:4.93rem" src="../../image/management/shijing.png"></div>')
+						$("#noImg").show()
+						$("#swiper-container").hide()
+						$("#swiper-wrapper").html('')
 					}
 					str=null;
 					window.preview = function (dom) {
@@ -498,9 +530,10 @@
 						});
 					};
 				},300)
-			} else {
-				api.alert({msg:JSON.stringify(err)});
-			};
+			},
+			error:function(ret){
+				 api.alert({msg:"服务器异常，请联系管理员!"});
+			}
 		});
 	}
 	function selectSearchTerm(){
@@ -514,7 +547,7 @@
 	}
 
 	function workList(dom){
-		let growthCycleId=$(dom).attr('id').split(',')[0],weak=$(dom).attr('id').split(',')[1]
+		let growthCycleId=$(dom).attr('id').split(',')[0],weak=$(dom).attr('id').split(',')[1],modelNum=$(dom).attr('id').split(',')[2]
 		if(back){
 			var landId=$api.getStorage('landIds')
 			var categoryId=$api.getStorage('categoryIds')
@@ -528,11 +561,12 @@
 						startDate:$api.getStorage('startDates'),
 						endDate:$api.getStorage('endDates'),
 						growthCycleId:growthCycleId,
-						weak:weak
+						weak:weak,
+						modelNum:modelNum
 				}
 			});
 		}else{
-			let growthCycleId=$(dom).attr('id').split(',')[0],weak=$(dom).attr('id').split(',')[1]
+			let growthCycleId=$(dom).attr('id').split(',')[0],weak=$(dom).attr('id').split(',')[1],modelNum=$(dom).attr('id').split(',')[2]
 			var d = new Date(), y = d.getFullYear(), m = d.getMonth() + 1, r = d.getDate();
 			m < 10 ? m = "0" + m : m;
 			r < 10 ? r = "0" + r : r;
@@ -548,7 +582,8 @@
 						endDate:endDate,
 						startDate:startDate,
 						growthCycleId:growthCycleId,
-						weak:weak
+						weak:weak,
+						modelNum:modelNum
 				}
 			});
 		}
@@ -582,7 +617,7 @@
 			//$("#imgShow").attr("src", period[arr[0]][arr[1]].imageUrl)
 			$(".updateTime").eq(i).html(arr[0])
 			//$(".warning").eq(i).html(period[arr[0]][arr[1]].physiologicalStress)
-			$(".moreInfo").eq(i).attr("id",arr[1]+","+arr[7])
+			$(".moreInfo").eq(i).attr("id",arr[1]+","+arr[7]+","+arr[9])
 			$(dom).parent().find('span').css("backgroundColor","#fff")
 			$(dom).parent().find('span').css("color","#747976")
 			$(dom).parent().find('span').css("border","1px solid #ededed")
@@ -613,49 +648,51 @@
 			str+=arry.join("、")
 			str+="现象"
 			if(arr[7]==120){
-				api.ajax({
+				pds.ajaxSubmit({
 					//标准传
-					url:pds.defaultUri + 'app/crop/growthModelPicture',
+					url:'app/crop/growthModelPicture',
+					type : "GET",
 					//虚拟数据
 					//url:'http://192.168.31.213:8080/app/crop/growth',
 					//data:{values:{'farmId':farmId,'landId':landId,'categoryId':categoryId,'startDate':startDate,'endDate':endDate}}
-					data:{values:{'catalogId':arr[8],'growthCycleId':arr[1],'weak':"120",'deficiency':arr[6],'physiologicalStress':arr[5],'insectPests':arr[3],'grassHarm':arr[4],'disease':arr[2]}}
-				},function(ret,err){
-					if (ret) {
+					data:{'catalogId':arr[8],'growthCycleId':arr[1],'weak':"120",'deficiency':arr[6],'physiologicalStress':arr[5],'insectPests':arr[3],'grassHarm':arr[4],'disease':arr[2]},
+					success:function(ret){
 							if(ret.data.url==null){
 								$(".imgShow").eq(i).attr("src", "../../image/management/no.png")
 								return
 							}
 						  //api.alert({msg:JSON.stringify(ret.data.url)});
 							$(".imgShow").eq(i).attr("src", ret.data.url)
-					} else {
-							api.alert({msg:JSON.stringify(err)});
-						};
-				});
+						},
+						error:function(e){
+							 api.alert({msg:"服务器异常，请联系管理员!"});
+						}
+				 });
 				$(".warning").eq(i).css("background","url('../../image/management/warning.png') no-repeat left center")
 				$(".warning").eq(i).css("backgroundSize","0.36rem 0.36rem")
 				$(".warning").eq(i).css("color","red")
 				$(".warning").eq(i).html(str)
 			}else{
-				api.ajax({
+				pds.ajaxSubmit({
 					//标准传
-					url:pds.defaultUri + 'app/crop/growthModelPicture',
+					url:'app/crop/growthModelPicture',
+					type : "GET",
 					//虚拟数据
 					//url:'http://192.168.31.213:8080/app/crop/growth',
 					//data:{values:{'farmId':farmId,'landId':landId,'categoryId':categoryId,'startDate':startDate,'endDate':endDate}}
-					data:{values:{'catalogId':arr[8],'growthCycleId':arr[1],'weak':"121"}}
-				},function(ret,err){
-					if (ret) {
+					data:{'catalogId':arr[8],'growthCycleId':arr[1],'weak':"121"},
+					success:function(ret){
 						if(ret.data==null){
 							$(".imgShow").eq(i).attr("src", "../../image/management/no.png")
 							return
 						}
 						//alert(JSON.stringify(ret.data.url))
 						 $(".imgShow").eq(i).attr("src", ret.data.url)
-					} else {
-							api.alert({msg:JSON.stringify(err)});
-						};
-				});
+					 },
+ 					error:function(e){
+ 						 api.alert({msg:"服务器异常，请联系管理员!"});
+ 					}
+ 			  });
 				$(".warning").eq(i).css("background","url('../../image/management/plantIcon.jpg') no-repeat left center")
 				$(".warning").eq(i).css("backgroundSize","0.36rem 0.36rem")
 				$(".warning").eq(i).css("color","#666")

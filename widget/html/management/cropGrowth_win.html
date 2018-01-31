@@ -6,11 +6,11 @@
 		<title>作物长的怎么样</title>
 		<link rel="stylesheet" type="text/css" href="../../css/common/public.css"/>
 		<link rel="stylesheet" type="text/css" href="../../css/common/header.css"/>
-		<script type="text/javascript" src="../../script/common/rem.js"></script>
+		<script type="text/javascript" src="../../script/common/rem-750.js"></script>
 </head>
 <body>
 <div id="header">
-        <div class="headerLeft" onclick="back()"></div>
+        <div class="headerLeft" onclick="api.closeWin()"></div>
         <div class="headerCenter">作物长的怎么样</div>
         <div class="headerRight"></div>
 </div>
@@ -35,23 +35,7 @@
 								h: 'auto'
 						}
 				});
-				//监听返回键
-        api.addEventListener({
-            name: 'keyback'
-        }, function(ret, err){
-            if( ret ){
-                back()
-            }else{
-
-            }
-        });
 		};
-		function back(){
-        api.closeWin();
-        api.sendEvent( {
-           name: 'openMapEvent'
-        })
-    }
 </script>
 </body>
 </html>

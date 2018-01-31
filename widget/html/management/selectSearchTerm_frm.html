@@ -6,9 +6,9 @@
 		<title>选择查询条件</title>
 	  <link rel="stylesheet" type="text/css" href="../../css/common/public.css"/>
 		<!-- <link rel="stylesheet" type="text/css" href="../../css/common/header.css"/> -->
-		<link rel="stylesheet" type="text/css" href="../../css/common/mui.min.css"/>
-		<link rel="stylesheet" type="text/css" href="../../css/common/mui.picker.min.css"/>
-    <script type="text/javascript" src="../../script/common/rem.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../css/mui/css/mui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mui/css/mui.picker.min.css"/>
+    <script type="text/javascript" src="../../script/common/rem-750.js"></script>
     <style>
 		body{
 			background-color: #f3f4f4;
@@ -183,14 +183,14 @@
 	<input id="idCat" type="hidden">
 	<input id="nameLand" type="hidden">
 	<input id="nameCat" type="hidden">
+	<input id="cat" type="hidden">
 	<div class="btnConfirm" id="btnConfirm" onclick="cropGrowth()">我选好了</div>
 </article>
 <script type="text/javascript" src="../../script/common/api.js"></script>
-<script type="text/javascript" src="../../script/common/zepto-1.2.0.min.js"></script>
 <script type="text/javascript" src="../../script/common/jquery.min.js"></script>
 <script type="text/javascript" src="../../script/common/pds.ajax.js"></script>
-<script type="text/javascript" src="../../script/common/mui.min.js"></script>
-<script type="text/javascript" src="../../script/common/mui.picker.min.js"></script>
+<script type="text/javascript" src="../../script/mui/mui.min.js"></script>
+<script type="text/javascript" src="../../script/mui/mui.picker.min.js"></script>
 
 <script>
 apiready=function(){
@@ -208,11 +208,10 @@ apiready=function(){
 		$("#date2").val(endDate)
 }
 function showLand(){
-	api.ajax({
-		url:pds.defaultUri + 'app/staff/farmland/land_list',
-		data:{values:{farmId:api.pageParam.farmId}}
-	},function(ret,err){
-		if (ret) {
+	pds.ajaxSubmit({
+		url:'app/staff/farmland/land_list',
+		data:{farmId:api.pageParam.farmId},
+		success:function(ret){
 			var dt=ret.data,l=dt.length,land="";
 			if(!l){
 				return
@@ -233,15 +232,17 @@ function showLand(){
 				})
 			}
 			land=null
-		} else {
-			//api.alert({msg:JSON.stringify(err)});
-		};
-	});
-	api.ajax({
-		url:pds.defaultUri + 'app/crop/categoryList',
-		data:{values:{farmId:api.pageParam.farmId}}
-	},function(ret,err){
-		if (ret) {
+		},
+		error:function(ret){
+			 api.alert({msg:"服务器异常，请联系管理员!"});
+		}
+  });
+	pds.ajaxSubmit({
+		url:'app/crop/categoryList',
+		type : "GET",
+		data:{farmId:api.pageParam.farmId},
+		success:function(ret){
+			//alert(JSON.stringify(ret))
 			var dt=ret.data,l=dt.length,spic="";
 			if(!l){
 				return
@@ -252,11 +253,12 @@ function showLand(){
 			$("#spic").html(spic);
 			spic=null;
 		  $("#spic>p").eq(0).css("backgroundColor","#e4ffdd")
-			api.ajax({
-				url:pds.defaultUri + 'app/crop/findCategoryList',
-				data:{values:{id:$("#spic>p").eq(0).attr("id")}}
-			},function(ret,err){
-				if (ret) {
+			$("#cat").val($("#spic>p").eq(0).html())
+			pds.ajaxSubmit({
+				url:'app/crop/findCategoryList',
+				type : "GET",
+				data:{id:$("#spic>p").eq(0).attr("id")},
+				success:function(ret){
 					var dt=ret.data,l=dt.length,pin="";
 					if(!l){
 						return
@@ -277,19 +279,21 @@ function showLand(){
 							$("#nameCat").val($(this).html())
 						})
 					}
-				} else {
-					//api.alert({msg:JSON.stringify(err)});
-				};
-			});
+				},
+				error:function(e){
+					 api.alert({msg:"服务器异常，请联系管理员!"});
+				}
+		 });
 			for(var j=0; j<l; j++){
 				$("#spic>p").eq(j).on("touchstart",function(){
 					$("#spic>p").css("backgroundColor","#fff")
 					$(this).css("backgroundColor","#e4ffdd")
-					api.ajax({
-						url:pds.defaultUri + 'app/crop/findCategoryList',
-						data:{values:{id:$(this).attr("id")}}
-					},function(ret,err){
-						if (ret) {
+					$("#cat").val($(this).html())
+					pds.ajaxSubmit({
+						url:'app/crop/findCategoryList',
+						type : "GET",
+						data:{id:$(this).attr("id")},
+						success:function(ret){
 							var dt=ret.data,l=dt.length,pin="";
 							if(!l){
 								return
@@ -310,15 +314,17 @@ function showLand(){
 									$("#nameCat").val($(this).html())
 								})
 							}
-						} else {
-							//api.alert({msg:JSON.stringify(err)});
-						};
+						},
+						error:function(ret){
+							 api.alert({msg:"服务器异常，请联系管理员!"});
+						}
 					});
 				})
 			}
-		} else {
-			//api.alert({msg:JSON.stringify(err)});
-		};
+		},
+		error:function(ret){
+			 api.alert({msg:"服务器异常，请联系管理员!"});
+		}
 	});
 }
 function cropGrowth() {
@@ -344,6 +350,7 @@ function cropGrowth() {
 	$api.setStorage('categoryIds',$("#idCat").val())
 	$api.setStorage('landNames',$("#nameLand").val())
 	$api.setStorage('categorys',$("#nameCat").val())
+	$api.setStorage('cat',$("#cat").val())
 	api.execScript({
     name: 'cropGrowth_win',
 		frameName:'cropGrowth_frm',

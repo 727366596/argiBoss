@@ -642,7 +642,7 @@
 				<ul>
 					<li>
 						<span>哪个基地：</span>
-						<input id="land"type="text" value="#1" readonly>
+						<input id="land"type="text" value="" readonly>
 						<input id="landId" type="hidden">
 					</li>
 					<li>
@@ -653,7 +653,7 @@
 					</li>
 					<li>
 						<span>种的作物：</span>
-						<input id="crop" type="text" value="玉米一号" readonly>
+						<input id="crop" type="text" value="" readonly>
 						<input id="catId" type="hidden">
 					</li>
 				</ul>
@@ -1124,6 +1124,7 @@
 													 }]
 											 }]
 									 });
+									 real=real>>0
 									 if((real+"").length>12){
 			 							real=(real+"").slice(0, -12)+"万亿"
 			 						 }else if((real+"").length>8&&(real+"").length<=16){
@@ -1133,6 +1134,7 @@
 			 						 }else{
 										 real=real.toFixed(0)
 									 }
+									 plan=plan>>0
 									 if((plan+"").length>12){
 			 							plan=(plan+"").slice(0, -12)+"万亿"
 			 						 }else if((plan+"").length>8&&(plan+"").length<=16){

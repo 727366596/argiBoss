@@ -7,7 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="../../css/common/api.css"/>
 		<link rel="stylesheet" type="text/css" href="../../css/common/public.css"/>
     <!-- <link rel="stylesheet" type="text/css" href="../../css/common/header.css"/> -->
-    <script type="text/javascript" src="../../script/common/rem.js"></script>
+    <script type="text/javascript" src="../../script/common/rem-750.js"></script>
     <style>
 		  body{
 		  	background-color: #f3f4f4;
@@ -321,19 +321,21 @@
       //   $api.fixStatusBar(header);
       //   var headerH = $api.offset(header).h;
       //   $("body").css({"paddingTop":headerH+"px"});
+			var systemType = api.systemType;
+			if(systemType=="ios"){
+				$("h4").css("fontWeight","bold")
+			}
 			 scrollToTop();
 			 //alert(api.pageParam.detailID)
 			 //$("#pic").html('<img src="http://p2.gexing.com/shaitu/20130316/1310/5143fedf1c236.jpg" alt=""/><img src="http://p2.gexing.com/shaitu/20130316/1310/5143fedf1c236.jpg" alt=""/>')
-
-			 api.ajax({
+			  pds.ajaxSubmit({
 				// 	url:'app/task/taskDetail ',
 				// data:{values:{taskId:api.pageParam.taskId}}
 
 				//测试链接
-				url:pds.defaultUri + 'app/task/taskDetail',
-			 	data:{values:{taskId:api.pageParam.detailID}}
-			 },function(ret,err){
-			 	if (ret) {
+				url:'app/task/taskDetail',
+			 	data:{taskId:api.pageParam.detailID},
+				success:function(ret,err){
 					//alert(JSON.stringify(ret))
 					var data=ret.data
 					$("#categoryName").html(data.cropName+"-"+data.categoryName)
@@ -376,6 +378,10 @@
 					}
 					$("#others").html(data.others)
 					var pic=data.backPictureUrl.split(","),pl=pic.length,picl="",imgUrls=[];
+					if(!pl||pic[0]==""){
+						$("#pic").html('<div style="text-align:center;font-weight:normal;font-size:0.28rem;">暂无图片信息</div>')
+						return
+					}
 					for(var j=0; j<pl; j++){
 						// picl+="<img  onclick='preview(this)' src="+pds.defaultUri+"app/attach/view/"+pic[j]+" >"
 						picl+="<img id="+j+" onclick='preview(this)' src="+pic[j]+">"
@@ -400,6 +406,10 @@
 						});
 					};
 					var res=data.resourceList,rl=res.length,rp=""
+					if(!rl){
+						$("#resource").html('<span style="text-align:center;font-size:0.28rem;color:#666">在此工单执行过程中没有用到资源</span>')
+						return
+					}
 					for(var i=0; i<rl; i++){
 						// if(i%2){
 						// 		rp+="<p><span>"+res[i].resourceName+"</span><span>单价</span></p><p><span>"+res[i].resQuantity+res[i].resUnit+"</span><span>"+res[i].resPrice+res[i].resPriceUnit+"</span></p>"
@@ -410,9 +420,10 @@
 					$("#resource").html(rp)
 					rp=null;
 					//资源使用情况
-			 	} else {
-			 		api.alert({msg:JSON.stringify(err)});
-			 	};
+			 	},
+				error:function(e){
+					 api.alert({msg:"服务器异常，请联系管理员!"});
+				}
 			 });
 			//  $("#close").toggle(function(){
 			// 	 $("#close").html('<i class="bp"></i>点我展开')

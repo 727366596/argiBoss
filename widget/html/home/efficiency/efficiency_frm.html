@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <title>效率分析图</title>
+  		<link rel="stylesheet" href="../../../css/common/public.css" />
+      <script type="text/javascript" src="../../../script/common/rem.js"></script>
+  		<!-- <link rel="stylesheet" href="../../../css/common/header.css" /> -->
+  		<link rel="stylesheet" href="../../../css/efficiency/efficiency_win.css" />
+      <link rel="stylesheet" type="text/css" href="../../../css/mui/css/mui.min.css"/>
+  		<link rel="stylesheet" type="text/css" href="../../../css/mui/css/mui.picker.min.css"/>
+  </head>
+  <body>
+      <!-- 时间弹窗 -->
+      <section id="section2" style="margin-top:0px;">
+          <ul id="timeContain" class="clearfix" style="padding-top:13px;">
+              <li>
+                  <span id="time1">
+                      <input id="date1" type="text" placeholder="点击我选择时间" readonly>
+                      <i></i>
+                  </span>
+              </li>
+              <span style="margin:-0.3rem 0.2rem 0 0.2rem;color:#666;">至</span>
+              <li>
+                  <span id="time2">
+                      <input id="date2" type="text" placeholder="点击我选择时间" readonly>
+                      <i></i>
+                  </span>
+              </li>
+          </ul>
+          <div class="btns">
+              <div class="time_btn" ontouchend="cropGrowth()">确定</div>
+              <div class="time_btn" ontouchend="closeSection()">取消</div>
+          </div>
+      </section>
+      <!-- 基地弹窗 -->
+      <section id="section3">
+          <nav class="section-title title" style="display:none;">
+               <i></i><span>提示:最多可选择5个基地对比分析</span>
+          </nav>
+          <section id="section_special" class='clearfix'>
+
+          </section>
+          <div class="btns_farm" style="display:flex;">
+              <div class="farm_btn" ontouchend="sendFarm()">确定</div>
+              <div class="farm_btn" ontouchend="closeFarm()">取消</div>
+          </div>
+      </section>
+      <!-- 选择查询 -->
+      <section id="section1">
+        <ul>
+          <li>
+            <input class="dis_ipt" id="time" type="text" readonly onclick=""><!--timeStyle()-->
+          </li>
+          <li>
+            <input class="dis_ipt" id="farm" type="text" readonly onclick=""><!--farmStyle()-->
+          </li>
+        </ul>
+      </section>
+      <!-- 主体内容 -->
+      <article>
+          <div id="other">
+             <section>
+                   <div id="plan_content">
+                        <div class="plan_title" class="clearfix">
+                            <span><i></i>工单完成情况分析<i></i></span>
+                        </div>
+                   </div>
+                   <div class="showdow_box">
+                        <div id="container1"></div>
+                   </div>
+             </section>
+             <section style="height: 9rem;">
+                 <div id="plan_content">
+                      <div class="plan_title" class="clearfix">
+                          <span><i></i>基地人员在岗时长<i></i></span>
+                      </div>
+                 </div>
+                 <div class="staffTime">
+                      <div id="container2"></div>
+                 </div>
+                 <div class="bottom_id"></div>
+             </section>
+             <section style="height: 12rem;">
+                 <div id="plan_content">
+                    <div class="plan_title" class="clearfix">
+                        <span><i></i>基地人员公里数<i></i></span>
+                    </div>
+                 </div>
+                 <div class="staffTime">
+                     <div id="container3"></div>
+                 </div>
+                 <div class="bottom_id"></div>
+             </section>
+        </div>
+       </acticle>
+  </body>
+  <script type="text/javascript" src="../../../script/common/api.js"></script>
+  <script type="text/javascript" src="../../../script/common/jquery.min.js"></script>
+  <script type="text/javascript" src="../../../script/common/pds.ajax.js"></script>
+  <script type="text/javascript" src="../../../script/mui/mui.min.js"></script>
+  <script type="text/javascript" src="../../../script/mui/mui.picker.min.js"></script>
+  <script type="text/javascript" src="../../../script/planting/echarts.common.min.js"></script>
+  <script type="text/javascript" src="../../../script/planting/highcharts.js"></script>
+  <script type="text/javascript" src="../../../script/planting/highcharts-3d.js"></script>
+  <script type="text/javascript">
+      apiready = function(){
+          //时间插件
+          timeInit();
+          //获取默认时间
+          //$api.rmStorage($api.getStorage("userId")+'searchTime');
+          timeFirst();
+
+          //获取基地数据
+          farmLandShow();
+
+          //点击启动弹窗
+          $("#time").click(function(event){
+              event.stopPropagation();
+              timeStyle();
+          });
+          $("#farm").click(function(event){
+              event.stopPropagation();
+              farmStyle();
+          });
+
+      };
+
+      //基地回显
+      function getFarmLand(){
+          $(".section-p").removeClass("section").find(".select").addClass("okNone");
+          //基地回显
+          //alert($api.getStorage("userId"))
+          //$api.rmStorage($api.getStorage("userId")+'farmlands');
+          var farmlands = $api.getStorage($api.getStorage("userId")+'farmlands');
+          if (farmlands != undefined && farmlands != null && farmlands != "" && farmlands != []) {
+              var farmlandsStr = "", farmIdStr = "";
+              for (var i = 0; i < farmlands.length; i++) {
+                  var farmName = farmlands[i].farmName;
+                  var farmlandId = farmlands[i].farmId;
+                  if (farmName != "" && farmName != null && farmlandId != "" && farmlandId != null) {
+                      //基地字段回显
+                      farmlandsStr += farmName+"、";
+                      //已选择基地回显
+                      var allFarms = $(".section-p");
+                      if (allFarms.length > 0) {
+                          allFarms.each(function(){
+                              var farmId = $(this).attr("data-id");
+                              if (farmId == farmlandId) {//alert(JSON.stringify(farmId+"******"+farmlandId))
+                                  $(this).addClass("section").find(".select").removeClass("okNone");
+                                  farmIdStr += farmId + ",";
+                                  return false;
+                              }
+                          })
+                      }
+                  };
+              };
+              $("#farm").val(farmlandsStr);
+              //渲染图表
+              var time = $("#time").val();
+              if (time == "") {
+                  api.toast({
+                      msg: '请选择时间',
+                      duration: 2000,
+                      location: 'middle'
+                  });
+                  return;
+              };
+              var startDate = time.split("至")[0];
+              var endDate = time.split("至")[1];
+              getTimeTitle(startDate, endDate);
+
+              farmIdStr = farmIdStr.substring(0, farmIdStr.length - 1);
+              getWorkOrder(startDate,endDate,farmIdStr);//工单
+              getWorkTime(startDate,endDate,farmIdStr);
+              getlongNess(startDate,endDate,farmIdStr);
+
+          }else{
+              //初次登陆应用，默认获取前五个基地数据
+              //alert(JSON.stringify(fiveArray)+"ahahhahaha");
+              var farmlandsStr = "", farmIdStr = "";
+              $(".section-p").each(function(index,el){
+                  var farmId = $(this).attr("data-id");
+                  if (farmId == fiveArray[index].id) {
+                      $(this).addClass("section").find(".select").removeClass("okNone");
+                      farmlandsStr += fiveArray[index].farmName + "、";
+                      farmIdStr += fiveArray[index].id + ",";
+                  };
+              });
+              $("#farm").val(farmlandsStr);
+              //渲染图表
+              var time = $("#time").val();
+              if (time == "") {
+                  api.toast({
+                      msg: '请选择时间',
+                      duration: 2000,
+                      location: 'middle'
+                  });
+                  return;
+              };
+              var startDate = time.split("至")[0];
+              var endDate = time.split("至")[1];
+              getTimeTitle(startDate, endDate);
+
+              farmIdStr = farmIdStr.substring(0, farmIdStr.length - 1);
+              getWorkOrder(startDate,endDate,farmIdStr);//工单
+              getWorkTime(startDate,endDate,farmIdStr);
+              getlongNess(startDate,endDate,farmIdStr);
+
+          };
+
+      }
+
+      //获取默认月份
+      function getDefaultTime(){
+          var defaultTime = "";
+          var date = new Date();
+          var year = date.getFullYear();
+          var month = date.getMonth()+1;
+          if (month < 10) {
+              month = "0" + month;
+          };
+          var day = date.getDate();
+          if (day < 10) {
+              day = "0" + day;
+          };
+          var defaultStartTime = year+"-01-01";
+          var defaultEndTime = year + "-" + month + "-" + day;
+          $("#date1").val(defaultStartTime);
+          $("#date2").val(defaultEndTime);
+          return defaultTime = defaultStartTime + "至" + defaultEndTime;
+      }
+
+      //调用时间选择插件
+      mui.init();
+      var dtpicker = new mui.DtPicker( {
+        type: 'date', //设置日历初始视图模式
+        labels: [ '年', '月', '日' ], //设置默认标签区域提示语
+      });
+      function timeInit(){
+          // 调用时间插件1
+          $("#time1").off("touchend").on("touchend",function(){
+              //$("#time1").off("touchend");
+              //event.stopPropagation();
+              var texts = $( '#date1' )
+              texts.on('tap', function (){
+                  api.setFrameAttr( {
+                     name: 'record_frm',//固定日历控件
+                     bounces: false
+                  });
+                  dtpicker.show(function(rs) {
+                     //console.log( JSON.stringify( rs ) );
+                     var dateValue = JSON.parse(JSON.stringify( rs ));
+
+                     //console.log(dateValue.value);
+                     var beginDate=rs.y.text + '-' + rs.m.text + '-' + rs.d.text;
+                     var endDate=$("#date2").val();
+                     var d1 = new Date(beginDate.replace(/\-/g, "\/"));
+                     var d2 = new Date(endDate.replace(/\-/g, "\/"));
+
+                     if(beginDate!=""&&endDate!=""&&d1 >d2){
+                        alert("开始时间不能大于结束时间！");
+                        return false;
+                     }
+                     texts.val(beginDate);
+
+                     dtpicker.hide();
+                     //dtpicker.dispose()
+                     api.setFrameAttr( {
+                         name: 'record_frm',
+                         bounces: true
+                     })
+                  })
+              })
+          });
+          // 调用时间插件2
+          $("#time2").off("touchend").on("touchend",function(){
+              //event.stopPropagation();
+              //$("#time2").off("touchend");
+              //mui.init()
+              var texts = $( '#date2' )
+              texts.on( 'tap', function () {
+                  api.setFrameAttr( {
+                     name: 'record_frm',//固定日历控件
+                     bounces: false
+                  });
+
+                  // var dtpicker = new mui.DtPicker( {
+                  //    type: 'date', //设置日历初始视图模式
+                  //    labels: [ '年', '月', '日' ], //设置默认标签区域提示语
+                  // })
+                  dtpicker.show( function(rs){
+                     //console.log( JSON.stringify( rs ) );
+                     var dateValue = JSON.parse(JSON.stringify( rs ));
+                     //console.log(dateValue.value);
+                     var beginDate=$("#date1").val();
+                     var endDate=rs.y.text + '-' + rs.m.text + '-' + rs.d.text;
+                     var d1 = new Date(beginDate.replace(/\-/g, "\/"));
+                     var d2 = new Date(endDate.replace(/\-/g, "\/"));
+
+                     if(beginDate!=""&&endDate!=""&&d1 >d2){
+                        alert("开始时间不能大于结束时间！");
+                        return false;
+                     }
+                     texts.val(endDate)
+
+                     dtpicker.hide()
+                     api.setFrameAttr( {
+                       name: 'record_frm',
+                       bounces: true
+                     })
+                  })
+              });
+          });
+      }
+
+      //时间选择框点击,出弹窗
+      function timeStyle(){
+          $('#section2').addClass('active');
+          if($('#section3').hasClass("active")){
+              $('#section3').removeClass('active')
+          };
+          timeFirst();
+      };
+      //第一次获取时间
+      function timeFirst(){
+          var searchTime = $api.getStorage($api.getStorage("userId")+"searchTime");//alert(JSON.stringify(searchTime))
+          if (searchTime != undefined && searchTime != null && searchTime != "") {
+              $("#time").val(searchTime.startDate + "至" + searchTime.endDate);
+              $("#date1").val(searchTime.startDate);
+              $("#date2").val(searchTime.endDate);
+          }else{
+              //初次登陆应用，获取默认月份
+              var defaultTime = getDefaultTime();
+              $("#time").val(defaultTime);
+          };
+      };
+
+      //基地选择框点击,出弹窗
+      function farmStyle(){
+          $('#section3').addClass('active');
+          if($('#section2').hasClass("active")){
+              $('#section2').removeClass('active')
+          };
+          farmFirst();
+      };
+      //第一次获取基地
+      function farmFirst(){
+          $(".section-p").removeClass("section").find(".select").addClass("okNone");
+          //基地回显
+          //alert($api.getStorage("userId"))
+          //$api.rmStorage($api.getStorage("userId")+'farmlands');
+
+          var farmlands = $api.getStorage($api.getStorage("userId")+'farmlands');
+          if (farmlands != undefined && farmlands != null && farmlands != "" && farmlands != []) {
+              var farmlandsStr = "";
+              for (var i = 0; i < farmlands.length; i++) {
+                  var farmName = farmlands[i].farmName;
+                  var farmlandId = farmlands[i].farmId;
+                  if (farmName != "" && farmName != null && farmlandId != "" && farmlandId != null) {
+                      //基地字段回显
+                      farmlandsStr += farmName+"、";
+                      //已选择基地回显
+                      var allFarms = $(".section-p");
+                      if (allFarms.length > 0) {
+                          allFarms.each(function(){
+                              var farmId = $(this).attr("data-id");
+                              if (farmId == farmlandId) {//alert(JSON.stringify(farmId+"******"+farmlandId))
+                                  $(this).addClass("section").find(".select").removeClass("okNone");
+                                  return false;
+                              }
+                          })
+                      }
+                  };
+              };
+              $("#farm").val(farmlandsStr);
+          }else{
+              //初次登陆应用，默认获取前五个基地数据
+              //alert(JSON.stringify(fiveArray)+"ahahhahaha");
+              var farmlandsStr = "", farmIdStr = "";
+              $(".section-p").each(function(index,el){
+                  var farmId = $(this).attr("data-id");
+                  if (farmId == fiveArray[index].id) {
+                      $(this).addClass("section").find(".select").removeClass("okNone");
+                      farmlandsStr += fiveArray[index].farmName + "、";
+                      farmIdStr += fiveArray[index].id + ",";
+                  };
+              });
+              $("#farm").val(farmlandsStr);
+
+          };
+      }
+
+      //时间选择 确定键点击
+      function cropGrowth() {
+          var date1 = $("#date1").val();
+          var date2 = $("#date2").val();
+        	if(!date1){
+        		api.alert({msg:"请点击选择开始时间"});
+        		return
+        	};
+        	if(!date2){
+        		api.alert({msg:"请点击选择结束时间"});
+        		return
+        	};
+          //做时间缓存
+          $api.setStorage($api.getStorage("userId")+"searchTime",{
+             startDate : date1,
+             endDate : date2
+          });
+
+          $("#time").val(date1 + "至" + date2);
+          getTimeTitle(date1, date2);//日期处理
+
+
+          //判断基地是否已选择
+          var farmValue = $("#farm").val();
+          if (farmValue == "") {
+              api.alert({msg: '请选择基地'});
+          }else{
+              //调用获取数据方法*********************************
+              //渲染图表
+              var time = $("#time").val();
+              if (time == "") {
+                  api.toast({
+                      msg: '请选择时间',
+                      duration: 2000,
+                      location: 'middle'
+                  });
+                  return;
+              };
+              var startDate = time.split("至")[0];
+              var endDate = time.split("至")[1];
+              var farmIds = [], farmIdStr = "";
+              $(".section-p").each(function(index,el){
+                  if ($(this).hasClass("section") && !$(this).find(".select").hasClass("okNone")) {
+                      var farmId = $(this).attr("data-id");
+                      farmIds.push(farmId);
+                  }
+              });
+              farmIdStr = farmIds.join(",");
+              getWorkOrder(startDate,endDate,farmIdStr);//工单
+              getWorkTime(startDate,endDate,farmIdStr);//时长
+              getlongNess(startDate,endDate,farmIdStr);//公里数
+          };
+
+          $('#section2').removeClass('active');
+
+      }
+
+      //时间选择 取消键点击
+      function closeSection(){
+          $('#section2').removeClass('active')
+      }
+
+      //基地选择 取消键点击
+      function closeFarm(){
+          $('#section3').removeClass('active')
+      }
+
+      //点击基地弹窗的确定键
+      function sendFarm(){
+         //event.stopPropagation();
+         var farmLandP = $("#section_special p");
+         if (farmLandP.length == 0) {
+             api.alert({msg: '暂无基地，无法查看效率分析~'});
+             //隐藏弹窗
+             $('#section3').removeClass('active');
+             return;
+         };
+         var selectNameSum = $("#section_special .section");
+         if (selectNameSum.length == 0) {
+             api.alert({msg: '请选择基地'});
+             return;
+         };
+         //做基地缓存
+         var farmlands = [], farmlandsStr = "";
+         var farmIdArr = [], farmIdStr = "";
+         selectNameSum.each(function(index,el){
+             var farmId = $(this).attr("data-id");
+                 farmIdArr.push(farmId);
+             var farmName = $(this).find(".name").text();
+             if (farmId != "" && farmId != null && farmName != "" && farmName != null) {
+                 var farmlandObj = {
+                     farmId : farmId,
+                     farmName : farmName
+                 };
+                 farmlands.push(farmlandObj);
+                 farmlandsStr += farmName+"、"
+             }
+         });
+         $api.setStorage($api.getStorage("userId")+'farmlands', farmlands);
+         $("#farm").val(farmlandsStr);
+
+         //判断时间是否有值
+         var time = $("#time").val();
+         if (time == "") {
+             api.toast({
+                 msg: '请选择时间',
+                 duration: 2000,
+                 location: 'middle'
+             });
+         }else{
+             //调用获取数据方法************************************
+             if (farmIdArr != []) {
+                 farmIdStr = farmIdArr.join(",");
+                 var startDate = time.split("至")[0];
+                 var endDate = time.split("至")[1];
+                 getTimeTitle(startDate, endDate);
+
+                 getWorkOrder(startDate,endDate,farmIdStr);//工单
+                 getWorkTime(startDate,endDate,farmIdStr);//时长
+                 getlongNess(startDate,endDate,farmIdStr);//公里数
+             }
+         };
+
+         //隐藏弹窗
+         $('#section3').removeClass('active');
+
+      }
+
+      // 获取基地列表
+      var farmIdsArr = [], fiveArray = [], farmIdsStr = "";
+      function farmLandShow(){
+          pds.ajaxSubmit({
+              url:'app/staff/farmland/get_farm_list',
+              type : 'get',
+              success:function(ret,err){
+                //api.alert({msg:"哈哈哈***************"+JSON.stringify(ret)});
+                if (ret.status == "ok") {
+                    if (ret.data != "" && ret.data != [] && ret.data != null) {
+                        var allArray = ret.data;
+                        if (allArray.length >= 5) {
+                            $(".section-title").show();
+                            fiveArray = allArray.slice(0,5);
+                        }else{
+                            $(".section-title").hide();
+                            fiveArray = allArray;
+                        };
+                        var str = "";
+                        for(var i=0; i<allArray.length; i++){
+                            if (allArray[i].id != "" && allArray[i].id != null && allArray[i].farmName != "" && allArray[i].farmName != null) {
+                                str += "<p data-id="+allArray[i].id+" class='section-p'><span class='name'>"+allArray[i].farmName+"</span><span class='select ok okNone'><span><span class='select ic okNone'></span></p>"
+                            };
+                        };
+                        $('#section_special').html(str);
+                        //$('#section_special').html('<span style="display:block;text-align:center;font-size:0.3rem;color:#999;padding:0.5rem 0;">暂无基地数据，无法查看效率分析~</span>');
+
+                        setTimeout(function(){
+                            //上次选择回显
+                            getFarmLand();
+                            //点击选择效果
+                            $("#section_special p").on("touchend",function(event){
+                                event.stopPropagation();
+                                //判断是否选择超过5个基地
+                                var selectNameSum = $("#section_special .section").length;
+                                if (selectNameSum >= 5) {
+                                    $(".section-title").show();
+                                    if ($(this).hasClass("section")) {
+
+                                        $(this).toggleClass("section");
+                                        $(this).find(".select").toggleClass("okNone");
+                                    }else{
+                                        api.toast({
+                                          msg: '最多可选择5个基地对比分析！',
+                                          duration: 1000,
+                                          location: 'middle'
+                                        });
+                                    }
+                                }else{
+                                    $(this).toggleClass("section");
+                                    $(this).find(".select").toggleClass("okNone");
+                                };
+
+                            })
+                        },300)
+
+                    }else{
+                        $('#section_special').html('<span style="display:block;text-align:center;font-size:0.3rem;color:#999;padding:0.5rem 0;">暂无基地数据，无法查看效率分析~</span>');
+                    }
+          			}else{
+          			    api.alert({msg: '基地获取异常，请重试！'});
+          			};
+
+              },
+              error: function(e){
+                  api.alert({msg: '服务器异常，请联系管理员！'});
+              }
+          });
+      }
+
+      // 工单展示
+      function getWorkOrder(startDate,endDate,farmIds){
+          //初始化图表
+          var echarts1 = echarts.init(document.getElementById('container1'));
+          //alert("getWorkOrder"+"******"+startDate+"*****"+endDate+"*****"+farmIds);
+          echarts1.clear();
+    			//显示加载进度
+    			echarts1.showLoading({
+    					default: {
+    						// text: 'loading',
+    						color: '#c23531',
+    						textColor: '#000',
+    						maskColor: 'rgba(255, 255, 255, 0.8)',
+    						zlevel: 0
+    					}
+    			});
+          var paramObj ={};
+              paramObj.startDate = startDate;
+              paramObj.endDate = endDate;
+              paramObj.farmIds = farmIds;
+          pds.ajaxSubmit({
+             url:"app/plantStat/workOrderAnalysis",
+             type : "GET",
+             data:{
+                 startDate:startDate,
+                 endDate:endDate,
+                 farmIds:farmIds
+             },
+             success:function(e){
+                //alert(JSON.stringify(e));
+                echarts1.hideLoading();
+                if (e.status == "ok") {
+                  //alert("success1")
+                  var farm_name = [];//基地名称数组
+                  var completeData = [];//已完成数量数组
+                  var confrimData = [];//已派发数量数组
+                  var axisLabelPadding = null;
+                  if(e.data != [] && e.data != "" && e.data != null){
+                    for (var i = 0; i <e.data.length; i++) {
+                        var item = e.data[i];
+                        //基地
+                        farm_name.push(item.farmName);
+                        //已完成数量
+                        if(item.completeCount==null){
+                          completeData.push(0)
+                        }else{
+                          completeData.push(item.completeCount)
+                        };
+                        //已派发数量
+                        if(item.confrimCount==null){
+                          confrimData.push(0)
+                        }else{
+                          confrimData.push(item.confrimCount);
+                        };
+
+                    }
+                    // alert(JSON.stringify(farm_name))
+                    // alert(JSON.stringify(completeData))
+                    // alert(JSON.stringify(confrimData))
+                    //总工单量
+                    var sendArray =[]
+                    for (var i = 0; i < completeData.length; i++) {
+                        var tempA = completeData[i];
+                        for (var j = 0; j < confrimData.length; j++) {
+                              var tempB = confrimData[j];
+                              var resultNum = tempA + tempB;
+                              sendArray.push(resultNum);
+                        }
+                    };
+
+
+                  }else{
+                      // ___________________________________________________临时假数据，需删除————————————————————————————————————————————————————————————
+                      // farm_name = ['一号基地','二号基地','三号基地','四号基地','五号基地']
+                      // sendArray = [12,20,31,50,100]
+                      // completeData = [10,2,11,20,80]
+                      // ___________________________________________________删除————————————————————————————————————————————————————————————
+                      echarts1.dispose();
+                      $("#container1").html('<span class="chartEmpty">暂无数据，换个条件看看吧~</span>')
+                      return;
+                  };
+                  //padding值设置
+                  var farmNameL = farm_name.length;
+                  if (farmNameL != 0 && farmNameL != [] && farmNameL != null) {
+                      switch (farmNameL) {
+                        case 1:
+                            axisLabelPadding = -40;
+                        break;
+                        case 2:
+                            axisLabelPadding = -30;
+                        break;
+                        case 3:
+                            axisLabelPadding = -25;
+                        break;
+                        case 4:
+                            axisLabelPadding = -20;
+                        break;
+                        case 5:
+                            axisLabelPadding = -15;
+                        break;
+                        //default:
+
+                      }
+                  };
+
+                  var option1 = {
+                        backgroundColor: '#ffffff',
+                        legend: {
+                            bottom: 15,
+                            textStyle:{
+                                color:'#666666',
+                            },
+                            data:[{name:'完成工单量',backgroundColor:'#f00'},
+                                  {name:'派发工单量',backgroundColor:'#B5C334'}
+                            ],
+                        },
+                        grid: {
+                            top:'5%',
+                            left: '5%',
+                            right: '-20%',
+                            bottom: '17%',
+                            containLabel: true
+                        },
+                        tooltip: {
+                             show:"false",
+                             trigger: 'axis',
+                             zIndex:"0",
+                             confine : true,//将提示框限制在图表范围内
+                             axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                 type: 'shadow',
+                                 shadowStyle : {                       // 阴影指示器样式设置
+                                   width: 'auto',                   // 阴影大小
+                                 }// 默认为直线，可选为：'line' | 'shadow'
+                             },
+                            // position: ['20%', '50%']
+                         },
+                        xAxis:  {
+                            type: 'value',
+                            axisTick: {
+                                show: false
+                            },
+                            axisLine: {
+                              lineStyle: {
+                                  color: '#c8cbc8',
+                                  type:'dashed'
+                              }
+                            },
+                            axisLabel :{
+                              color: "#666666"
+                            },
+                            splitLine: {
+                                show: false
+                            },
+                            //minInterval : 20
+                        },
+                        yAxis: [
+                                {
+                                    type: 'category',
+                                    axisTick : {
+                                      show: false
+                                    },
+                                    axisLine: {
+                                      lineStyle: {
+                                          color: '#c8cbc8',
+                                          type:'dashed'
+                                      }
+                                    },
+                                    boundaryGap: ['10%', '50%'],
+                                    axisLabel :{
+                                         inside:true,
+                                         verticalAlign:'bottom',
+                                         align:'left',
+                                         color: "#666666",
+                                         //padding :[0,0,16,0]
+                                         padding :[0,0,axisLabelPadding,0]
+                                    },
+                                    tooltip: {
+                                        show:"false",
+                                        trigger: 'axis',
+                                        axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                            type: 'shadow',
+                                            shadowStyle : {                       // 阴影指示器样式设置
+                                                width: 'auto',                   // 阴影大小
+                                            }// 默认为直线，可选为：'line' | 'shadow'
+                                        }
+                                    },
+                                    data: farm_name
+                                 },
+                                 {
+                                    type: 'category',
+                                    axisTick : {
+                                      show: false
+                                    },
+                                    axisLine: {
+                                      show: false
+                                    },
+                                    axisLabel :{
+                                      show: false
+                                    },
+                                    data:  farm_name
+                                },
+
+                        ],
+                        series: [
+                            {
+                                name: '派发工单量',
+                                type: 'bar',
+                                yAxisIndex:1,
+                                itemStyle:{
+                                    normal: {
+                                        show: true,
+                                        // color: function (params){
+                                        //     var colorList = ['#d6d3d3','#d6d3d3','#d6d3d3','#d6d3d3','#d6d3d3'];
+                                        //     return colorList[params.dataIndex];
+                                        // },
+                                        color : '#d6d3d3',
+                                        barBorderRadius:5,
+                                        borderWidth:0,
+                                        borderColor:'#333',
+                                        barMinHeight:1,
+                                        barMaxHeight:1,
+                                        barWidth:1
+                                    }
+                                },
+                                barGap:'0%',
+                                barCategoryGap:'80%',
+                                data:sendArray
+                            },
+                            {
+                                name: '完成工单量',
+                                type: 'bar',
+                                itemStyle:{
+                                    normal: {
+                                        show: true,
+                                        // color: function (params){
+                                        //     var colorList = ['#73c6e4','#8dbdf0','#eeb954','#98d73b','#6ec0de'];
+                                        //     return colorList[params.dataIndex];
+                                        // },
+                                        color : '#73c6e4',
+                                        barBorderRadius:5,
+                                        borderWidth:0,
+                                        borderColor:'#333',
+                                        barMinHeight:1,
+                                        barMaxHeight:1,
+                                        barWidth:1
+                                    }
+                                },
+                                barGap:'0%',
+                                barCategoryGap:'80%',
+                                data: completeData
+                            }
+
+                        ]
+                    };
+                    //document.getElementById('container1').style.border = "solid 1px red";
+                    echarts1.setOption(option1);
+
+                }else{
+                    echarts1.dispose();
+                    api.alert({msg : "请求数据失败，请重试！"})
+                };
+             },
+             error:function(e){
+                echarts1.dispose();
+                api.alert({msg:"服务器异常，请联系管理员!"});
+             }
+          });
+      }
+
+      //在岗时长
+      function getWorkTime(startDate,endDate,farmIds){
+        //alert("我我我我我我"+startDate+"*****"+endDate+"*****"+farmIds);
+        //初始化图表
+        var boxId = document.getElementById('container2');
+        var echarts2 = echarts.init(boxId);
+        //alert(startDate+"*****"+endDate+"*****"+farmIds);
+        echarts2.clear();
+        //显示加载进度
+        echarts2.showLoading({
+            default: {
+              // text: 'loading',
+              color: '#c23531',
+              textColor: '#000',
+              maskColor: 'rgba(255, 255, 255, 0.8)',
+              zlevel: 0
+            }
+        });
+        var paramObj ={};
+            paramObj.startDate = startDate;
+            paramObj.endDate = endDate;
+            paramObj.farmIds = farmIds;
+        pds.ajaxSubmit({
+           url:"app/plantStat/workTimeAnalysis",
+           type : "GET",
+           data:{
+               startDate:startDate,
+               endDate:endDate,
+               farmIds:farmIds
+           },
+           success : function(e){
+               echarts2.hideLoading();
+               if (e.status == "ok") {
+                   if (e.data != "" && e.data != null && JSON.stringify(e.data) != "{}") {
+                       var dataObj = e.data;
+                       //var farmNames = Object.keys(dataObj);alert("heiheihei"+JSON.stringify(farmNames))
+                       var echartsData = createData2(dataObj, boxId);
+                       //alert(JSON.stringify(echartsData));
+                       createChart(echarts2, echartsData);
+                   }else{
+                       echarts2.dispose();
+                       $(".bottom_id").text("");
+                       $("#container2").html('<span class="chartEmpty">暂无数据，换个条件看看吧~</span>')
+                   }
+               }else{
+                   api.alert({msg : "服务器异常，请联系管理员!"})
+               }
+               //*****************************************************************
+
+
+               //*****************************************************************
+
+           },
+           error : function(e){
+               api.alert({msg : "服务器异常，请联系管理员!"})
+           }
+        });
+      };
+
+      //基地人员公里数
+      function getlongNess(startDate,endDate,farmIds){
+          //alert("我我我我我我"+startDate+"*****"+endDate+"*****"+farmIds);
+          //初始化图表
+          var boxId = document.getElementById('container3');
+          var echarts3 = echarts.init(boxId);
+          //alert(startDate+"*****"+endDate+"*****"+farmIds);
+          echarts3.clear();
+          //显示加载进度
+          echarts3.showLoading({
+              default: {
+                // text: 'loading',
+                color: '#c23531',
+                textColor: '#000',
+                maskColor: 'rgba(255, 255, 255, 0.8)',
+                zlevel: 0
+              }
+          });
+          var paramObj ={};
+              paramObj.startDate = startDate;
+              paramObj.endDate = endDate;
+              paramObj.farmIds = farmIds;
+          pds.ajaxSubmit({
+             url:"app/plantStat/workDistanceAnalysis",
+             type : "GET",
+             data:{
+                 startDate:startDate,
+                 endDate:endDate,
+                 farmIds:farmIds
+             },
+             success : function(e){
+                 echarts3.hideLoading();
+                 //  *****************************************************************
+                 if (e.status == "ok") {
+                     if (e.data != "" && e.data != null &&  JSON.stringify(e.data) != "{}") {
+                         var dataObj = e.data;
+                         //var farmNames = Object.keys(dataObj);alert("heiheihei"+JSON.stringify(farmNames))
+                         var echartsData = createData3(dataObj, boxId);
+                         //alert(JSON.stringify(echartsData));
+                         createChart(echarts3, echartsData);
+                     }else{
+                         echarts3.dispose();
+                         $(".bottom_id").text("");
+                         $("#container3").html('<span class="chartEmpty">暂无数据，换个条件看看吧~</span>');
+                     }
+                 }else{
+                     api.alert({msg : "服务器异常，请联系管理员!"})
+                 }
+
+                 //*****************************************************************
+             },
+             error : function(e){
+                 alert("呵呵呵呵"+JSON.stringify(e))
+             }
+          });
+      };
+
+      //解析数据
+    	function createData2(data, boxId){
+    			var chartOptionObj = {	//保存chart配置项参数
+    					xAxisData : [],
+    					yAxisName : "小时",
+    					series : [],
+    					legend : []
+    			};
+
+          var farmNames = Object.keys(data);//alert("heiheihei"+JSON.stringify(farmNames))
+    			if (farmNames != []) {
+    			    for (var i = 0; i < farmNames.length; i++) {
+                  var farmName = farmNames[i];
+    			        if (data[farmName] != "" && data[farmName] != null && data[farmName] != []) {
+                      //图例
+                      //alert(farmName)
+                      chartOptionObj.legend.push(farmName);
+                      //数据处理
+                      var farmDates = data[farmName];
+                      //var lineData = [];//每条线时间数据
+                      var lineData = (function(){
+                          var lineData_ = [];
+                          for (var j = 0; j < farmDates.length; j++) {
+                              var farmObj = farmDates[j];//每一条数据
+                              //统计日期
+                              var timeDate = [];
+                              //年****************
+                              if(farmObj.year != null && farmObj.year != ""){
+                                  timeDate.push(farmObj.year);
+                              };
+                              //月*****************
+                              if(farmObj.month != null && farmObj.month != ""){
+                                  timeDate.push(farmObj.month);
+                              };
+                              //日*****************
+                              if(farmObj.day != null && farmObj.day != ""){
+                                  timeDate.push(farmObj.day);
+                              };
+                              //alert(JSON.stringify(timeDate));
+                              chartOptionObj.xAxisData[j] = timeDate.join("-");
+
+                              //在线时长
+                              if (farmObj.time != null && farmObj.time != "") {
+                                  var time_ = (parseInt(farmObj.time)/60/60).toFixed(2);
+                                  lineData_.push(time_);
+                              }else{
+                                  //lineData_.push("");
+                              };
+                          };
+                          return lineData_;
+                      })()
+                      //alert(JSON.stringify("好好爱好"+lineData));
+                      if (lineData == []) {
+                          break;
+                      };
+                      var lineSeries = {
+                          name: farmName,
+                          type: 'line',
+                          data: lineData
+                      };
+                      chartOptionObj.series.push(lineSeries);
+
+    			        }
+    			    }
+    			};
+    			return chartOptionObj;
+    	};
+
+      //解析数据
+    	function createData3(data, boxId){
+    			var chartOptionObj = {	//保存chart配置项参数
+    					xAxisData : [],
+    					yAxisName : "公里",
+    					series : [],
+    					legend : []
+    			};
+
+          var farmNames = Object.keys(data);//alert("heiheihei"+JSON.stringify(farmNames))
+    			if (farmNames != []) {
+    			    for (var i = 0; i < farmNames.length; i++) {
+                  var farmName = farmNames[i];
+    			        if (data[farmName] != "" && data[farmName] != null && data[farmName] != []) {
+                      //图例
+                      chartOptionObj.legend.push(farmName);
+                      //数据处理
+                      var farmDates = data[farmName];
+                      //var lineData = [];//每条线时间数据
+                      var lineData = (function(){
+                          var lineData_ = [];
+                          for (var j = 0; j < farmDates.length; j++) {
+                              var farmObj = farmDates[j];//每一条数据
+                              //统计日期
+                              var timeDate = [];
+                              //年****************
+                              if(farmObj.year != null && farmObj.year != ""){
+                                  timeDate.push(farmObj.year);
+                              };
+                              //月*****************
+                              if(farmObj.month != null && farmObj.month != ""){
+                                  timeDate.push(farmObj.month);
+                              };
+                              //日*****************
+                              if(farmObj.day != null && farmObj.day != ""){
+                                  timeDate.push(farmObj.day);
+                              };
+                              //alert(JSON.stringify(timeDate));
+                              chartOptionObj.xAxisData[j] = timeDate.join("-");
+
+                              if (farmObj.distance != null && farmObj.distance != "") {
+                                  var distance_ = (parseInt(farmObj.distance)/1000).toFixed(2);
+                                  lineData_.push(distance_);
+                              };
+                          };
+                          return lineData_;
+                      })()
+                      //alert(JSON.stringify(lineData));
+                      if (lineData == []) {
+                          break;
+                      };
+                      var lineSeries = {
+                          name: farmName,
+                          type: 'line',
+                          data: lineData
+                      };
+                      chartOptionObj.series.push(lineSeries);
+
+    			        }
+    			    }
+    			};
+    			return chartOptionObj;
+    	};
+
+      //创建图表
+      function createChart(myChart, chartOptionObj){
+         //alert("legend*********"+JSON.stringify(chartOptionObj))
+         myChart.setOption(option = {
+           tooltip: {
+               trigger: 'axis',
+               confine : true,//将提示框限制在图表范围内
+           },
+           legend: {//图例
+ 							data : chartOptionObj.legend,
+ 							//bottom : 10
+ 							top : '3%',
+              //show: true
+              // orient : 'vertical'
+ 					 },
+           grid: {
+               top:'30%',
+               left: '5%',
+               right: '10%',
+               bottom: '15%',
+               containLabel: true
+           },
+           xAxis: {
+               data: chartOptionObj.xAxisData
+           },
+           yAxis: {
+               name : chartOptionObj.yAxisName,
+               splitLine: {
+                   show: false
+               }
+           },
+           dataZoom: [{
+               //startValue: '2010'//设置起始时间
+           }, {
+               type: 'inside'
+           }],
+           series: chartOptionObj.series
+         });
+      }
+
+      //获取时间差
+      function getTimeTitle(startDate, endDate){
+          var timeTitle = "";
+          var startDateArr = startDate.split("-");
+          var endDateArr = endDate.split("-");
+
+          var startYear = startDateArr[0].toString();
+          var startMonth = startDateArr[1].toString();
+          var startDay = startDateArr[2].toString();
+
+          var endYear = endDateArr[0].toString();
+          var endMonth = endDateArr[1].toString();
+          var endDay = endDateArr[2].toString();
+
+          //将xxxx-xx-xx的时间格式，转换为 xxxx/xx/xx的格式
+          // startTime = startTime.replace(/\-/g, "/");
+          // endTime = endTime.replace(/\-/g, "/");
+          var month_x = 1000*60*60*24*31;//31天的总时间;
+          var year_x = 1000*60*60*24*366;//一年的总时间
+          var sTime = new Date(startDate).getTime();//开始时间chuo
+          var eTime = new Date(endDate).getTime();  //结束时间chuo
+          var time_x = eTime - sTime;//时间差值
+          // alert(sTime+"*****"+eTime);
+          // alert(time_x);
+
+          if (time_x == 0) {
+              timeTitle = startYear + "年" + startMonth + "月";
+          }else if(time_x >= month_x && time_x <= year_x){//时间差超过30天，按月统计
+              timeTitle = startYear + "年";
+              if (startYear != endYear) {
+                  timeTitle = startYear + "/" + endYear + "年";
+              };
+          }else if(time_x > year_x){//时间差超过一年，按年统计
+              timeTitle = startYear + "至" + endYear + "年";
+          }else if(time_x < month_x && time_x > 0){//时间差小于30天，按天统计
+              timeTitle = startYear + "年" + startMonth + "月";
+              if (startYear != endYear && startMonth != endMonth) {
+                  timeTitle = startYear + "-" + startMonth + "至" + endYear + "-" + endMonth;
+              }
+          };
+
+          $(".bottom_id").text(timeTitle);
+      }
+
+      /*
+      * 获得时间差,时间格式为 年-月-日 小时:分钟:秒 或者 年/月/日 小时：分钟：秒
+      * 其中，年月日为全格式，例如 ： 2010-10-12 01:00:00
+      * 返回精度为：秒，分，小时，天
+      */
+      function compare(property){
+             return function(a,b){
+                 var value1 = a[property];
+                 var value2 = b[property];
+                 return value1-value2;
+            }
+      }
+      //console.log(arr.sort(compare('age')))
+      function GetDateDiff(startTime, endTime, diffType) {
+             //将xxxx-xx-xx的时间格式，转换为 xxxx/xx/xx的格式
+             startTime = startTime.replace(/\-/g, "/");
+             endTime = endTime.replace(/\-/g, "/");
+
+             //将计算间隔类性字符转换为小写
+             diffType = diffType.toLowerCase();
+             var sTime = new Date(startTime);      //开始时间
+             var eTime = new Date(endTime);  //结束时间
+             //作为除数的数字
+             var divNum = 1;
+             switch (diffType) {
+                 case "second":
+                     divNum = 1000;
+                     break;
+                 case "minute":
+                     divNum = 1000 * 60;
+                     break;
+                 case "hour":
+                     divNum = 1000 * 3600;
+                     break;
+                 case "day":
+                     divNum = 1000 * 3600 * 24;
+                     break;
+                 default:
+                     break;
+             }
+             return parseInt((eTime.getTime() - sTime.getTime()) / parseInt(divNum));
+         }
+  </script>
+  </html>
