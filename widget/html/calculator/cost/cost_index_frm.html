@@ -8,104 +8,161 @@
 	<title>成本投入</title>
 	<script type="text/javascript" src="../../../script/common/rem.js"></script>
 	<link rel="stylesheet" href="../../../css/common/public.css" />
-	<link rel="stylesheet" type="text/css" href="../../../css/mui/css/mui.min.css"/>
-	<link rel="stylesheet" type="text/css" href="../../../css/mui/css/mui.picker.min.css"/>
+	<link rel="stylesheet" href="../../../css/common/animate.min.css" />
 	<style>
-   #chart{
-   	width: 100%;
-		height:7.0rem;
-   }
+	html,body{
+		height: 100%;
+		width: 100%;
+	}
+		.choose{
+			width: 100%;
+			height: 100%;
+			position: relative;
+			overflow: hidden;
+			box-sizing: border-box;
+			background-color: #dadada;
+		}
+		.item{
+			overflow: hidden;
+			display: inline-block;
+			background-size: 100% 100%;
+			box-sizing: border-box;
+		}
+		/*土地*/
+		.item0{
+			width: 100%;
+			height: 100%;
+			position: absolute;;
+			z-index: 999;
+			margin: 2.7rem 0.54rem 7.93rem 2.12rem;
+		}
+		.laoren{
+			width: 4.84rem;
+			height:1.24rem;
+		}
+		/*烦恼*/
+		.item_1a{
+			width:100%;
+			height:100%;
+			position: absolute;;
+			margin: 0.5rem 2.56rem 8.06rem 0.47rem;
+		}
+		.price_1a{
+			width:4.47rem;
+			height: 3.27rem;
+		}
+		/*横线*/
+		.line{
+			text-align: center;
+			position: absolute;;
+			margin: 4.5rem 0.72rem 8.06rem 0.72rem;
+			z-index: 9999999;
+			overflow: hidden;
+			height: 1px;
+			background: #fff;
+		}
+		.crossLine{
+			width:6.06rem;
+		}
+		/*左一*/
+		.item_1b{
+			width:100%;
+			height:100%;
+			position: absolute;
+			margin: 5rem 3.95rem 2.9rem 0.23rem;
+		}
+		.price_1b{
+			width:3.32rem;
+			height: 3.51rem;
+		}
+		/*左二*/
+		.item_1c{
+			width:100%;
+			height:100%;
+			position: absolute;
+			margin: 5.85rem 2.23rem 1.61rem 1.95rem;
+		}
+		.price_1c{
+			width:3.32rem;
+			height: 3.88rem;
+		}
+		/*左三*/
+		.item_1d{
+			width:100%;
+			height:100%;
+			position: absolute;
+			margin: 6.5rem 0.45rem 0.53rem 3.73rem;
+			z-index: 9;
+		}
+		.price_1d{
+			width:3.32rem;
+			height: 4.18rem;
+		}
+		/*下一页*/
+		.toDown{
+			width: 100%;
+			height:100%;
+			position: absolute;
+			text-align: center;
+			top: 10.2rem;
+			z-index: 9999;
+		}
+		.price_down{
+			width: 0.46rem;
+			height: 0.24rem;
+		}
 	</style>
 </head>
 
 <body>
-	<div id="chart"></div>
+	<div class="choose" style="display:none" id="pri_chart">
+<!--土地  -->
+    <div class="item0 wow slideInRight" data-wow-duration="1s" data-wow-delay="0.5s" data-wow-iteration="1">
+      <img class="laoren item" src="../../../image/cal_img/cost/pic01@3x.png">
+    </div>
+<!-- 烦恼 -->
+    <div class="item_1a wow slideInLeft" data-wow-duration="1s" data-wow-delay="1s" data-wow-iteration="1">
+      <img class="price_1a item" src="../../../image/cal_img/cost/wenzi@3x.png">
+    </div>
+		<!-- 横线 -->
+		<div class="line">
+			<div class="crossLine"></div>
+		</div>
+		<!-- 左一 -->
+    <div class="item_1b wow slideInLeft" data-wow-duration="1s" data-wow-delay="1.5s" data-wow-iteration="1">
+      <img class="price_1b item" src="../../../image/cal_img/cost/tudou01@3x.png">
+    </div>
+		<!-- 左二 -->
+    <div class="item_1c wow slideInLeft" data-wow-duration="1s" data-wow-delay="2s" data-wow-iteration="1">
+      <img class="price_1c item" src="../../../image/cal_img/cost/tudou02@3x.png">
+    </div>
+		<!--左三  -->
+    <div class="item_1d wow slideInRight" data-wow-duration="1s" data-wow-delay="2.5s" data-wow-iteration="1">
+      <img class="price_1d item" src="../../../image/cal_img/cost/tudou03@3x.png">
+    </div>
+		<!-- 下一页 -->
+	  <div id="nextPageChart" class="toDown wow bounce" data-wow-duration="2s" data-wow-delay="3s" data-wow-iteration="10000">
+	 		<img class="price_down item" src="../../../image/cal_img/price/xiangxia@3x.png" />
+	  </div>
+
+  </div>
 </body>
 <script type="text/javascript" src="../../../script/common/api.js"></script>
-<script type="text/javascript" src="../../../script/common/jquery.min.js"></script>
-<script type="text/javascript" src="../../../script/common/pds.ajax.js"></script>
-<script type="text/javascript" src="../../../script/mui/mui.min.js"></script>
-<script type="text/javascript" src="../../../script/mui/mui.picker.min.js"></script>
-<script type="text/javascript" src="../../../script/planting/echarts.common.min.js"></script>
-<script type="text/javascript" src="../../../script/planting/highcharts.js"></script>
-<script type="text/javascript" src="../../../script/planting/highcharts-3d.js"></script>
+<script type="text/javascript" src="../../../script/common/wow.js"></script>
 <script type="text/javascript">
 	apiready = function() {
-		api.parseTapmode();
-    chart();
+		$api.css($api.byId('pri_chart'),'display:block');
+		new WOW().init();
+		$api.addEvt($api.byId('nextPageChart'), 'click',function(){
+			alert('打开下一页')
+			// api.openWin({
+			// 		name: 'price_suggest_win',
+			// 		url: './price_suggest_win.html',
+			// });
+
+		});
 	};
-	function chart(){
-		$( '#chart' )
- 				.highcharts( {
- 					chart: {
- 						type: 'bar'
- 					},
- 					title: {
- 						text: '各洲不同时间的人口条形图'
- 					},
- 					subtitle: {
- 						text: '数据来源: Wikipedia.org'
- 					},
- 					xAxis: {
- 						categories: [ '2012-01-01', '2012-02-01', '2012-03-01', '2012-04-01', '2012-05-01' ],
- 						title: {
- 							text: null
- 						},
-						labels:{
-							enabled:true
-						}
- 					},
- 					yAxis: {
- 						min: 0,
- 						title: {
- 							text: '人口总量 (百万)',
- 							align: 'high'
- 						},
- 						labels: {
-								enabled:false
- 						// 	overflow: 'justify'
- 						}
- 					},
- 					tooltip: {
- 						valueSuffix: ' 百万'
- 					},
- 					plotOptions: {
- 						bar: {
- 							dataLabels: {
- 								enabled: true,
- 								allowOverlap: true
- 							}
- 						}
- 					},
- 				// 	legend: {
- 				// 		layout: 'vertical',
- 				// 		align: 'right',
- 				// 		verticalAlign: 'top',
- 				// 		x: -40,
- 				// 		y: 100,
- 				// 		floating: true,
- 				// 		borderWidth: 1,
- 				// 		backgroundColor: ( ( Highcharts.theme && Highcharts.theme.legendBackgroundColor ) || '#FFFFFF' ),
- 				// 		shadow: true
- 				// 	},
- 					credits: {
- 						enabled: false
- 					},
- 					series: [ {
- 						name: '',
- 						data: [ 107, 31, 635, 203, 2 ],
-						showInLegend: false
- 					}
-					// , {
- 				// 		name: '1900 年',
- 				// 		data: [ 133, 156, 947, 408, 6 ]
- 				// 	}, {
- 				// 		name: '2008 年',
- 				// 		data: [ 973, 914, 4054, 732, 34 ]
- 				// 	}
-				]
- 				} );
-	}
+
 
 </script>
 
