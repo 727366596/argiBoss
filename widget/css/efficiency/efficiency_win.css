@@ -233,17 +233,17 @@ margin-right: 0.2rem;
 }
 .staffTime{
   width: 90%;
-  height: 7rem;
+  height: 7.5rem;
   overflow-x: hidden;
   margin:0 auto;
   overflow-y: hidden;
 }
 #container2{
-  height: 7rem;
+  height: 7.5rem;
   width: 100%;
 }
 #container3{
-  height: 7rem;
+  height: 7.5rem;
   width: 100%;
 }
 .bottom_id{
@@ -527,4 +527,19 @@ i{
     background-size: 15px 15px;
     padding-left: 20px;
     text-align: center;
+}
+
+.bottom_legend{
+    position: relative;
+    width: 90%;
+    height: 3rem!important;
+    margin: 0 auto;
+}
+.bottom_screen{
+    width: 100%;
+    height: 1.3rem;
+    position: absolute;
+    bottom: 0;
+    z-index: 999999999;
+    background-color: #fff;
 }
