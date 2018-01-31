@@ -7,7 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="../../css/common/public.css"/>
 		<!-- <link rel="stylesheet" type="text/css" href="../../css/common/header.css"/> -->
 		<link rel="stylesheet" type="text/css" href="../../css/common/swiper.min.css"/>
-		<script type="text/javascript" src="../../script/common/rem-750.js"></script>
+		<script type="text/javascript" src="../../script/common/rem.js"></script>
     <style>
 				article{
 					padding-top: 0.2rem;
@@ -312,8 +312,8 @@
 			data:{'farmId':farmId,'landId':landId,'categoryId':categoryId,'startDate':startDate,'endDate':endDate},
 			success:function(ret){
 				//alert(JSON.stringify(ret))
-				var period=ret.data.list
-				if(period.length==0){
+				var period=ret.data.list||0
+				if(!ret.data.hasOwnProperty("list")||period==0){
 					$("#tishi").show()
 					if($api.getStorage('cat')=="苹果"||$api.getStorage('cat')=="马铃薯"||$api.getStorage('cat')=="柑橘"){
 						$("#tishi").attr("src", "../../image/management/noM.png")
