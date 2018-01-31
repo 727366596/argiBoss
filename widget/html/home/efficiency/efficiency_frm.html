@@ -668,7 +668,7 @@
                       // completeData = [10,2,11,20,80]
                       // ___________________________________________________删除————————————————————————————————————————————————————————————
                       echarts1.dispose();
-                      $("#container1").html('<span class="chartEmpty">暂无数据，换个条件看看吧~</span>')
+                      $("#container1").html('<span class="detialEmpty"></span>')
                       return;
                   };
                   //padding值设置
@@ -902,7 +902,7 @@
                    }else{
                        echarts2.dispose();
                        $(".bottom_id").text("");
-                       $("#container2").html('<span class="chartEmpty">暂无数据，换个条件看看吧~</span>')
+                       $("#container2").html('<span class="timeEmpty"></span>')
                    }
                }else{
                    api.alert({msg : "服务器异常，请联系管理员!"})
@@ -962,7 +962,7 @@
                      }else{
                          echarts3.dispose();
                          $(".bottom_id").text("");
-                         $("#container3").html('<span class="chartEmpty">暂无数据，换个条件看看吧~</span>');
+                         $("#container3").html('<span class="distanceEmpty"></span>');
                      }
                  }else{
                      api.alert({msg : "服务器异常，请联系管理员!"})
