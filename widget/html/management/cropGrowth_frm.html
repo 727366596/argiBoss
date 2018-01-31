@@ -286,7 +286,11 @@
 						 $("#catId").val(e.data.category.id)
 					 }
 					 if(!e.data.category||!e.data.land){
-							 $("#tishi").attr("src", "../../image/management/no.png")
+						 		if(e.data.lifeCycleNum==0){
+								 $("#tishi").attr("src", "../../image/management/no.png")
+								}else{
+								 $("#tishi").attr("src", "../../image/management/noM.png")
+								}
 							 $("#tishi").show()
 							 $("#growth").hide()
 							 $("#noImg").show()
@@ -336,7 +340,7 @@
 				var period=ret.data.list||0
 				if(!ret.data.hasOwnProperty("list")||period==0){
 					$("#tishi").show()
-					if($api.getStorage('cat')=="苹果"||$api.getStorage('cat')=="马铃薯"||$api.getStorage('cat')=="柑橘"){
+					if(ret.data.lifeCycleNum>0){
 						$("#tishi").attr("src", "../../image/management/noM.png")
 					}else{
 						$("#tishi").attr("src", "../../image/management/no.png")
