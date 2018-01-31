@@ -629,7 +629,7 @@
 				background-color: #fff;
 				z-index: 9999;
 			}
-			#noPic,#noP{
+			#noPic,#noP,#no{
 				display: none;
 				width: 100%;
 				height: 5.77rem;
@@ -696,7 +696,7 @@
 			</div>
 			<div class="nian">
 				<span id="sanjiao2" class="sanjiao2"></span>
-				<span id="nianfen" class="nianfen">2017</span>
+				<span id="nianfen" class="nianfen">2018</span>
 				<span id="sanjiao1" class="sanjiao1"></span>
 			</div>
 			<div id="wrap" class="wrap">
@@ -1012,6 +1012,7 @@
 			data:{categoryId:categoryId,farmId:farmId,startDate:startDate,endDate:endDate},
 			//data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
 			success:function(ret,err){
+							//alert(JSON.stringify(ret))
 							var plan=ret.data
 							pds.ajaxSubmit({
 								url:'app/plantStat/realInvestment',
@@ -1263,8 +1264,11 @@
 			//data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
 			success:function(ret,err){
 			//api.alert({msg:JSON.stringify(ret)});
+			  $("#part2").html("");
 				if(!ret.data){
-
+						$("#part2").html('<img id="no" src="../../image/planting/noPic.png" alt="">');
+				}else{
+						$("#part2").html("");
 				}
 				if (ret.status == "ok") {
 					 var datasArr = ret.data;
