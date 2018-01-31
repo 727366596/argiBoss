@@ -56,9 +56,8 @@
 		api.setFullScreen({
 			fullScreen: true
 		});
-
-		jumpLogin()
-	 	advImg()
+		jumpLogin();
+		advImg();
 		api.addEventListener({
 			name: 'openLogin'
 		}, function(ret, err) {
@@ -66,18 +65,24 @@
 				jumpSlogin()
 			}
 		});
+		api.addEventListener({
+			name: 'keyback'
+		}, function(ret, err) {
+			if (ret) {
+				api.closeWidget({});
+			}
+		});
 
 	};
 
 	function advImg() {
 		var systemType = api.systemType;
-		var code=''
-		if(systemType==='ios'){
-     code="e9b66e519c6944e595f47af8a7e45497"
-	 }else if(systemType==='android'){
-		 code="fca9b5db26b24e32b2743950578661c1"
-	 }
-
+		var code = ''
+		if (systemType === 'ios') {
+			code = "e9e312fce8a741958c817ba5bdbe6b17"
+		} else if (systemType === 'android') {
+			code = "5fb756a9831c439d87fc338b4050a990"
+		}
 		pds.ajaxSubmit({
 			url: "app/sys/get_adv",
 			data: {
@@ -86,28 +91,28 @@
 			},
 			success: function(e) {
 				console.log('++++++++' + JSON.stringify(e))
-				setTimeout(function(){
-					var number=3;
-					var time=setInterval(function(){
-						 number--;
-						 if(number>=0){
-								 $('.jump').text(number)
-						 }else {
-								clearInterval(time)
-						 }
-					 },1000)
-				},1500)
-				if(e.data !== null && e.data !== ''){
-				var data = e.data.data || []
-				if (data.length > 0) {
-					var pictureUrl = data[0].pictureUrl
-					// var url= data[0].url
-					$('img').attr('src', pictureUrl)
-					$('img').on('click', function(){
-						jumpPage(data[0].title,data[0].url)
-					})
+				setTimeout(function() {
+					var number = 3;
+					var time = setInterval(function() {
+						number--;
+						if (number > 0) {
+							$('.jump').text(number)
+						} else {
+							clearInterval(time)
+						}
+					}, 1000)
+				}, 1500);
+				if (e.data !== null && e.data !== '') {
+					var data = e.data.data || []
+					if (data.length > 0) {
+						var pictureUrl = data[0].pictureUrl
+							// var url= data[0].url
+						$('img').attr('src', pictureUrl)
+						$('img').on('click', function() {
+							jumpPage(data[0].title, data[0].url)
+						})
+					}
 				}
-			}
 			},
 			error: function(e) {
 				api.alert({
@@ -115,7 +120,6 @@
 				});
 			}
 		});
-
 	}
 	var settime;
 
@@ -132,10 +136,11 @@
 					duration: 400 //动画过渡时间，默认300毫秒
 				}
 			});
-		}, 5000)
+		}, 3000)
 	}
 
 	function jumpSlogin() {
+		clearTimeout(settime)
 		api.openWin({
 			name: "login_new",
 			url: "widget://html/login/login_new.html",
@@ -150,12 +155,12 @@
 	}
 	$('.jump').on('click', jumpSlogin)
 
-	function jumpPage(title,url) {
+	function jumpPage(title, url) {
 		api.openWin({
 			name: 'startPage_win',
 			url: './startPage.html',
 			pageParam: {
-				title:title,
+				title: title,
 				url: url
 			},
 			animation: {
