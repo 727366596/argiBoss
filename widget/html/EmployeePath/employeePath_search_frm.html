@@ -535,7 +535,7 @@
 												// 判断是否还有数据，如果还有数据监听滚动，滚动加载
 												if(page*pageSize < total){
 														$('.pull_icon').removeClass('flip loading');
-														$('.more span').text('上拉加载更多...')
+														$('.more span').text('上拉加载更多...');
 														api.addEventListener({
 																name:'scrolltobottom',
 														}, function(ret, err){
@@ -559,8 +559,7 @@
 
 										}else{
 												$('.pull_icon').removeClass('flip loading');
-												$('.pull_icon').removeClass('loading');
-												$('.more span').text('暂无更多轨迹...')
+												$('.more span').text('暂无更多轨迹...');
 										}
 
 								}else{
