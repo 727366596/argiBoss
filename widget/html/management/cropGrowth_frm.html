@@ -273,10 +273,31 @@
 					 farmId:api.pageParam.farmId
 				 },
 				 success:function(e){
-					 $("#land").val(e.data.land.landName)
-					 $("#crop").val(e.data.category.catName)
-					 $("#landId").val(e.data.land.id)
-					 $("#catId").val(e.data.category.id)
+					 if(e.data.land){
+						 e.data.land.landName=e.data.land.landName||""
+						 $("#land").val(e.data.land.landName)
+						 e.data.land.id=e.data.land.id||""
+						 $("#landId").val(e.data.land.id)
+					 }
+					 if(e.data.category){
+						 e.data.category.catName=e.data.category.catName||""
+						 $("#crop").val(e.data.category.catName)
+						 e.data.category.id=e.data.category.id||""
+						 $("#catId").val(e.data.category.id)
+					 }
+					 if(!e.data.category||!e.data.land){
+							 $("#tishi").attr("src", "../../image/management/no.png")
+							 $("#tishi").show()
+							 $("#growth").hide()
+							 $("#noImg").show()
+							 $("#swiper-container").hide()
+							 return
+						}else{
+							 $("#tishi").hide()
+							 $("#growth").show()
+							 $("#noImg").hide()
+							 $("#swiper-container").show()
+						}
 					 showGrowth(api.pageParam.farmId,e.data.land.id,e.data.category.id,startDate,endDate)
 				 },
 				 error:function(e){

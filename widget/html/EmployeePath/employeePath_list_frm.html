@@ -431,7 +431,7 @@
 
                             });
                         }else{
-                            $('.more span').text('暂无更多数据...');
+                            $('.more span').text('暂无更多轨迹...');
                             $('.pull_icon').removeClass('loading');
                             api.removeEventListener({
                                 name: 'scrolltobottom'
@@ -439,12 +439,12 @@
                         };
 
     								}else{
-                        $('.more span').text('暂无数据...');
+                        //$('.more span').text('暂无数据...');
                         $('.pull_icon').removeClass('loading');
     								}
 
     						}else{
-                    $('.more span').text('暂无数据...');
+                    $('.more span').text('暂无轨迹数据...');
                     $('.pull_icon').removeClass('loading');
                 };
 

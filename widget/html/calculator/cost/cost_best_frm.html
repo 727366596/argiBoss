@@ -28,34 +28,33 @@
 			background-size: 100% 100%;
 			box-sizing: border-box;
 		}
-		/*土地*/
+		/*自从*/
 		.item0{
 			width: 100%;
 			height: 100%;
 			position: absolute;;
-			z-index: 999;
-			margin: 2.7rem 0.54rem 7.93rem 2.12rem;
+			margin: 1rem 0.83rem 11.07rem 0.72rem;
 		}
-		.laoren{
-			width: 4.84rem;
-			height:1.24rem;
+		.since{
+			font-size:0.26rem;
+      color: #204e41;
 		}
-		/*烦恼*/
+		/*马铃薯*/
 		.item_1a{
 			width:100%;
 			height:100%;
 			position: absolute;;
-			margin: 0.5rem 2.56rem 8.06rem 0.47rem;
+			margin: 0.8rem 5.59rem 10.42rem 0.73rem;
 		}
 		.price_1a{
-			width:4.47rem;
-			height: 3.27rem;
+      font-size:0.2rem;
+      color: #204e41;
 		}
 		/*横线*/
 		.line{
 			text-align: center;
 			position: absolute;;
-			margin: 4.5rem 0.72rem 8.06rem 0.72rem;
+			margin: 5.35rem 0.72rem 8.06rem 0.72rem;
 			z-index: 9999999;
 			overflow: hidden;
 			height: 1px;
@@ -64,39 +63,38 @@
 		.crossLine{
 			width:6.06rem;
 		}
-		/*左一*/
+		/*省*/
 		.item_1b{
 			width:100%;
 			height:100%;
 			position: absolute;
-			margin: 5rem 3.95rem 2.9rem 0.23rem;
+			margin: 2rem 0.71rem 7.34rem 0.69rem;
 		}
 		.price_1b{
-			width:3.32rem;
-			height: 3.51rem;
+			width:6.1rem;
+			height: 2.77rem;
 		}
-		/*左二*/
+		/*详细*/
 		.item_1c{
 			width:100%;
 			height:100%;
 			position: absolute;
-			margin: 5.85rem 2.23rem 1.61rem 1.95rem;
+			margin: 5.3rem 1.87rem 4.99rem 0.69rem;
 		}
 		.price_1c{
-			width:3.32rem;
-			height: 3.88rem;
+      font-size:0.26rem;
+      color: #204e41;
 		}
-		/*左三*/
+		/*对比*/
 		.item_1d{
 			width:100%;
 			height:100%;
 			position: absolute;
-			margin: 6.5rem 0.45rem 0.53rem 3.73rem;
-			z-index: 9;
+			margin: 6.5rem 0.77rem 1.19rem 0.77rem;
 		}
 		.price_1d{
-			width:3.32rem;
-			height: 4.18rem;
+			width:5.96rem;
+			height: 3.42rem;
 		}
 		/*下一页*/
 		.toDown{
@@ -116,29 +114,29 @@
 
 <body>
 	<div class="choose" style="display:none" id="pri_chart">
-<!--土地  -->
-    <div class="item0 wow slideInRight" data-wow-duration="1s" data-wow-delay="0.5s" data-wow-iteration="1">
-      <img class="laoren item" src="../../../image/cal_img/cost/pic01@3x.png">
+<!--自从  -->
+    <div class="item0" >
+      <span class="since">自从用了慧种地,可对比同区域优秀种植企业亩成本</span>
     </div>
-<!-- 烦恼 -->
-    <div class="item_1a wow slideInLeft" data-wow-duration="1s" data-wow-delay="1s" data-wow-iteration="1">
-      <img class="price_1a item" src="../../../image/cal_img/cost/wenzi@3x.png">
+<!-- 马铃薯 -->
+    <div class="item_1a">
+      <span class="price_1a item">以马铃薯为例</span>
+    </div>
+    <!-- 省 -->
+    <div class="item_1b wow slideInRight" data-wow-duration="1s" data-wow-delay="1s" data-wow-iteration="1">
+      <img class="price_1b item" src="../../../image/cal_img/cost/sheng@3x.png">
     </div>
 		<!-- 横线 -->
 		<div class="line">
 			<div class="crossLine"></div>
 		</div>
-		<!-- 左一 -->
-    <div class="item_1b wow slideInLeft" data-wow-duration="1s" data-wow-delay="1.5s" data-wow-iteration="1">
-      <img class="price_1b item" src="../../../image/cal_img/cost/tudou01@3x.png">
+		<!-- 详细 -->
+    <div class="item_1c">
+      <span class="price_1c item">可详细对比不同作物生长周期每亩投入成本</span>
     </div>
-		<!-- 左二 -->
-    <div class="item_1c wow slideInLeft" data-wow-duration="1s" data-wow-delay="2s" data-wow-iteration="1">
-      <img class="price_1c item" src="../../../image/cal_img/cost/tudou02@3x.png">
-    </div>
-		<!--左三  -->
-    <div class="item_1d wow slideInRight" data-wow-duration="1s" data-wow-delay="2.5s" data-wow-iteration="1">
-      <img class="price_1d item" src="../../../image/cal_img/cost/tudou03@3x.png">
+		<!--对比  -->
+    <div class="item_1d wow slideInRight" data-wow-duration="1s" data-wow-delay="2s" data-wow-iteration="1">
+      <img class="price_1d item" src="../../../image/cal_img/cost/quxian@3x.png">
     </div>
 		<!-- 下一页 -->
 	  <div id="nextPageChart" class="toDown wow bounce" data-wow-duration="2s" data-wow-delay="3s" data-wow-iteration="10000">
@@ -154,10 +152,11 @@
 		$api.css($api.byId('pri_chart'),'display:block');
 		new WOW().init();
 		$api.addEvt($api.byId('nextPageChart'), 'click',function(){
-			api.openWin({
-					name: 'cost_best_win',
-					url: './cost_best_win.html',
-			});
+			alert('打开下一页')
+			// api.openWin({
+			// 		name: 'price_suggest_win',
+			// 		url: './price_suggest_win.html',
+			// });
 
 		});
 	};
