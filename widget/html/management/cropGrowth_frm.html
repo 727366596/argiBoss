@@ -286,14 +286,18 @@
 						 $("#catId").val(e.data.category.id)
 					 }
 					 if(!e.data.category||!e.data.land){
-						 $("#tishi").attr("src", "../../image/management/no.png")
-						 $("#tishi").show()
-						 $("#growth").hide()
-						 return
-					 }else{
-						 $("#tishi").hide()
-						 $("#growth").show()
-					 }
+							 $("#tishi").attr("src", "../../image/management/no.png")
+							 $("#tishi").show()
+							 $("#growth").hide()
+							 $("#noImg").show()
+							 $("#swiper-container").hide()
+							 return
+						}else{
+							 $("#tishi").hide()
+							 $("#growth").show()
+							 $("#noImg").hide()
+							 $("#swiper-container").show()
+						}
 					 showGrowth(api.pageParam.farmId,e.data.land.id,e.data.category.id,startDate,endDate)
 				 },
 				 error:function(e){

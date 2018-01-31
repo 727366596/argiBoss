@@ -629,7 +629,7 @@
 				background-color: #fff;
 				z-index: 9999;
 			}
-			#noPic{
+			#noPic,#noP,#no{
 				display: none;
 				width: 100%;
 				height: 5.77rem;
@@ -672,20 +672,23 @@
 				</div>
 			</div>
 		</section>
+		<img id="noP" src="../../image/planting/noPic.png" alt="">
 		<div id="part1">
-			<p class="biaoTitle">
-				<span class="leftTitle">总共投了多少钱</span>
-				<span class="rightUnit">单位：元</span>
-			</p>
-			<div id="container1"></div>
-			<div class="shuju">
-				<div class="jihuashuju">
-					<span id="plan">￥</span>
-					<span class="shujuyuan">打算花多少钱</span>
-				</div>
-				<div class="shijishuju">
-					<span id="real">￥</span>
-					<span class="shujuyuan">实际花多少钱</span>
+			<div id="biao1">
+				<p class="biaoTitle">
+					<span class="leftTitle">总共投了多少钱</span>
+					<span class="rightUnit">单位：元</span>
+				</p>
+				<div id="container1"></div>
+				<div class="shuju">
+					<div class="jihuashuju">
+						<span id="plan">￥</span>
+						<span class="shujuyuan">打算花多少钱</span>
+					</div>
+					<div class="shijishuju">
+						<span id="real">￥</span>
+						<span class="shujuyuan">实际花多少钱</span>
+					</div>
 				</div>
 			</div>
 			<div class="title2">
@@ -693,7 +696,7 @@
 			</div>
 			<div class="nian">
 				<span id="sanjiao2" class="sanjiao2"></span>
-				<span id="nianfen" class="nianfen">2017</span>
+				<span id="nianfen" class="nianfen">2018</span>
 				<span id="sanjiao1" class="sanjiao1"></span>
 			</div>
 			<div id="wrap" class="wrap">
@@ -952,11 +955,11 @@
 					}
 				});
 		})
-		initIn()
+		initIn(0)
 		scrollToTop()
 	}
-	function initIn(){
-		if($api.getStorage('plant')){
+	function initIn(n){
+		if(n){
 			var startDate=$api.getStorage('startDates')
 			var endDate=$api.getStorage('endDates')
 			var farmId=$api.getStorage('farmIds')
@@ -1009,6 +1012,7 @@
 			data:{categoryId:categoryId,farmId:farmId,startDate:startDate,endDate:endDate},
 			//data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
 			success:function(ret,err){
+							//alert(JSON.stringify(ret))
 							var plan=ret.data
 							pds.ajaxSubmit({
 								url:'app/plantStat/realInvestment',
@@ -1024,6 +1028,13 @@
 										// }
 										plan=plan||0
 										real=real||0
+										if(plan==0&&real==0){
+												$("#noP").show()
+												$("#biao1").hide()
+										}else{
+												$("#noP").hide()
+												$("#biao1").show()
+										}
 										$('#container1').highcharts({
 											credits: { enabled: false },
 											chart: {
@@ -1253,8 +1264,11 @@
 			//data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
 			success:function(ret,err){
 			//api.alert({msg:JSON.stringify(ret)});
+			  $("#part2").html("");
 				if(!ret.data){
-
+						$("#part2").html('<img id="no" src="../../image/planting/noPic.png" alt="">');
+				}else{
+						$("#part2").html("");
 				}
 				if (ret.status == "ok") {
 					 var datasArr = ret.data;

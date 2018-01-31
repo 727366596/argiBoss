@@ -266,7 +266,7 @@
 <script type="text/javascript" src="../../script/common/jquery.min.js"></script>
 <!-- <script type="text/javascript" src="../../script/common/zepto-1.2.0.min.js"></script> -->
 <!-- <script type="text/javascript" src="../../script/common/iscroll.js"></script> -->
-<script type="text/javascript" src="../../script/common/common/pds.ajax.js"></script>
+<script type="text/javascript" src="../../script/common/pds.ajax.js"></script>
 <script type="text/javascript" src="../../script/common/emptyFrm.js"></script>
 <script type="text/javascript">
     //导航tab切换
@@ -366,6 +366,8 @@
 
                         // 判断是否还有数据，如果还有数据监听滚动，滚动加载
                         if(page*pageSize < total){
+                            $('.pull_icon').removeClass('flip loading');
+                            $('.more span').text('上拉加载更多...');
                             api.addEventListener({
                                 name:'scrolltobottom',
                             }, function(ret, err){
@@ -380,21 +382,21 @@
 
                             });
                         }else{
-                            $('.more span').text('暂无更多数据...');
-                            $('.pull_icon').removeClass('loading');
+                            $('.more span').text('暂无更多人员...');
+                            $('.pull_icon').removeClass('flip loading');
                             api.removeEventListener({
                                 name: 'scrolltobottom'
                             });
                         };
 
     								}else{
-                        $('.more span').text('暂无更多数据...');
-                        $('.pull_icon').removeClass('loading');
+                        $('.more span').text('暂无更多人员...');
+                        $('.pull_icon').removeClass('flip loading');
     								}
 
     						}else{
                     $('.more span').text('暂无在岗人员...');
-                    $('.pull_icon').removeClass('loading');
+                    $('.pull_icon').removeClass('flip loading');
                     emptyFrm.show("暂无在岗人员~", 0, emptyImgUrl)
                 };
 
