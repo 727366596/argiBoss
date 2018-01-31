@@ -1128,9 +1128,9 @@
 									 if((real+"").length>12){
 			 							real=(real+"").slice(0, -12)+"万亿"
 			 						 }else if((real+"").length>8&&(real+"").length<=16){
-			 							real=(real+"").slice(0, -8)+"."+(real+"").slice(-8, -7)+"亿"
+			 							real=(real+"").slice(0, -8)+"亿"
 			 						 }else if((real+"").length>4&&(real+"").length<=8){
-			 							real=(real+"").slice(0, -4)+"."+(real+"").slice(-4, -5)+"万"
+			 							real=(real+"").slice(0, -4)+"万"
 			 						 }else{
 										 real=real.toFixed(0)
 									 }
@@ -1138,9 +1138,9 @@
 									 if((plan+"").length>12){
 			 							plan=(plan+"").slice(0, -12)+"万亿"
 			 						 }else if((plan+"").length>8&&(plan+"").length<=16){
-			 							plan=(plan+"").slice(0, -8)+"."+(plan+"").slice(-8, -7)+"亿"
+			 							plan=(plan+"").slice(0, -8)+"亿"
 			 						 }else if((plan+"").length>4&&(plan+"").length<=8){
-			 							plan=(plan+"").slice(0, -4)+"."+(plan+"").slice(-4, -5)+"万"
+			 							plan=(plan+"").slice(0, -4)+"万"
 			 						 }else{
 										 plan=plan.toFixed(0)
 									 }
