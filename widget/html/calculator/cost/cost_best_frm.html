@@ -152,11 +152,10 @@
 		$api.css($api.byId('pri_chart'),'display:block');
 		new WOW().init();
 		$api.addEvt($api.byId('nextPageChart'), 'click',function(){
-			alert('打开下一页')
-			// api.openWin({
-			// 		name: 'price_suggest_win',
-			// 		url: './price_suggest_win.html',
-			// });
+			api.openWin({
+					name: 'cost_three_win',
+					url: './cost_three_win.html',
+			});
 
 		});
 	};
