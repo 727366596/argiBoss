@@ -69,8 +69,8 @@
 			width:100%;
 			height:100%;
 			position: absolute;
-			/*margin: 7rem 0.97rem 1.32rem 0.96rem;*/
-      margin: 7.3rem 0.97rem 1.32rem 0.96rem;
+			margin: 7rem 0.97rem 1.32rem 0.96rem;
+      /*margin: 7.3rem 0.97rem 1.32rem 0.96rem;*/
 		}
 		.price_1b{
 			width:5.57rem;
@@ -81,8 +81,8 @@
 			width:100%;
 			height:100%;
 			position: absolute;
-			/*margin:8.8rem 4.87rem 1.47rem 2.13rem;*/
-      margin:9.1rem 4.87rem 1.47rem 2.13rem;
+			margin:8.8rem 4.87rem 1.47rem 2.13rem;
+      /*margin:9.1rem 4.87rem 1.47rem 2.13rem;*/
 		}
 		.price_1c{
       width: 0.5rem;
@@ -92,8 +92,8 @@
 		.item_1d{
 			width:100%;
 			position: absolute;
-			/*margin: 9.6rem 2.36rem 0.5rem 2.35rem;*/
-      margin: 10rem 2.36rem 0.5rem 2.35rem;
+			margin: 9.6rem 2.36rem 0.5rem 2.35rem;
+      /*margin: 10rem 2.36rem 0.5rem 2.35rem;*/
       overflow: hidden;
       z-index: 9999;
 		}
@@ -182,9 +182,9 @@
       </div>
     </div>
 		<!-- 下一页 -->
-	  <!-- <div id="nextPageChart" class="toDown wow bounce" data-wow-duration="2s" data-wow-delay="3s" data-wow-iteration="10000">
+	  <div id="nextPageChart" class="toDown wow bounce" data-wow-duration="2s" data-wow-delay="3s" data-wow-iteration="10000">
 	 		<img class="price_down item" src="../../../image/cal_img/price/xiangxia@3x.png" />
-	  </div> -->
+	  </div>
   </div>
 
 </body>
@@ -208,11 +208,10 @@
 
 		});
 		$api.addEvt($api.byId('nextPageChart'), 'click',function(){
-			alert('打开下一页')
-			// api.openWin({
-			// 		name: 'price_suggest_win',
-			// 		url: './price_suggest_win.html',
-			// });
+			api.openWin({
+					name: 'cost_last_win',
+					url: './cost_last_win.html',
+			});
 
 		});
 	};
