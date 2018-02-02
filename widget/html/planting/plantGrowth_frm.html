@@ -696,7 +696,7 @@
 			</div>
 			<div class="nian">
 				<span id="sanjiao2" class="sanjiao2"></span>
-				<span id="nianfen" class="nianfen">2018</span>
+				<span id="nianfen" class="nianfen"></span>
 				<span id="sanjiao1" class="sanjiao1"></span>
 			</div>
 			<div id="wrap" class="wrap">
@@ -855,7 +855,7 @@
 	}
 
 	apiready=function(){
-
+		$("#nianfen").html(new Date().getFullYear())
 		// var header = $api.byId('header');
 		// 	$api.fixStatusBar(header);
 		// 	var headerH = $api.offset(header).h;
@@ -959,7 +959,7 @@
 		scrollToTop()
 	}
 	function initIn(n){
-		if(n){
+		if($api.getStorage('startDates')){
 			var startDate=$api.getStorage('startDates')
 			var endDate=$api.getStorage('endDates')
 			var farmId=$api.getStorage('farmIds')
