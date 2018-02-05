@@ -45,7 +45,7 @@
 					display: inline-block;
 					font-size: 0.3rem;
 					width: 1.7rem;
-				  color: #666666;
+				  color: #204e41;
 				}
 				input{
 					font-size: 0.3rem;
@@ -53,16 +53,15 @@
 					padding-bottom: 0.1rem;
 					width: 3.4rem;
 					padding-left: 0.1rem;
-					color: #666666;
-					background-color: #f3f4f4;
+					color: #204e41;
 				}
 				button{
 					width: 5.7rem;
-					height: 0.7rem;
-					background-color: #00c558;
+					height: 0.8rem;
+					background-color: #c3a256;
 					color:#ffffff;
 					font-size: 0.3rem;
-					border-radius: 0.7rem;
+					border-radius: 0.1rem;
 					outline: 0;
 				}
 				.plantCondition{
@@ -92,7 +91,7 @@
 					line-height: 1rem;
 					width: 48%;
 					font-size: 0.3rem;
-					color: #00c558;
+					color: #204e41;
 				}
 				.plantB{
 					display: inline-block;
@@ -101,7 +100,7 @@
 					text-align: center;
 					width: 48%;
 					font-size: 0.3rem;
-					color: #333333;
+					color: #a0b2a6;
 				}
 				.shuju{
 					height: 2.25rem;
@@ -155,7 +154,7 @@
 					width: 0;
 					height: 0;
 					border-top: 0.2rem solid transparent;
-					border-left: 0.4rem solid #A2C446;
+					border-left: 0.4rem solid #204e41;
 					border-bottom: 0.2rem solid transparent;
 				}
 				.sanjiao2{
@@ -165,7 +164,7 @@
 					width: 0;
 					height: 0;
 					border-top: 0.2rem solid transparent;
-					border-right: 0.4rem solid #A2C446;
+					border-right: 0.4rem solid #204e41;
 					border-bottom: 0.2rem solid transparent;
 				}
 			 .wrap{
@@ -214,7 +213,7 @@
 				height: 2.5rem;
 				border-radius: 5rem;
 				color: #fff;
-				background-color: #EE6B67;
+				background-color: #bf7a78;
 			 }
 			 #gongJu{
 			 	float: right;
@@ -225,38 +224,38 @@
 			#renGong{
 				width: 3.2rem;
 				height: 3.2rem;
-				background-color: #4198E1;
+				background-color: #4d7291;
 			}
 			#nongyao{
 				float: right;
 				width: 1.8rem;
 				height: 1.8rem;
 				/*margin-right: 0.3rem;*/
-				background-color: #D8E801;
+				background-color: #b4bb6b;
 			}
 			#zicai{
 				width: 2.1rem;
 				height: 2.1rem;
-				background-color: #A864A8;
+				background-color: #956995;
 			}
 			#guangai{
 				float: right;
 				width: 2.4rem;
 				height: 2.4rem;
-				background-color: #AFA9FE;
+				background-color: #8d8ab1;
 			}
 			#shebei{
 				width: 2.1rem;
 				height: 2.1rem;
 				/*margin-top: -0.4rem;*/
-				background-color: #A2C446;
+				background-color: #8c986b;
 			}
 			#qita{
 				float: right;
 				/*margin-top: -0.7rem;*/
 				width: 2.4rem;
 				height: 2.4rem;
-				background-color: #FFC65C;
+				background-color: #d0b178;
 			}
 			 .neiRong{
 			 	position: absolute;
@@ -281,7 +280,7 @@
 				background-size: 100% 100%;
 			}
 			#gongJu .tuBiao{
-				background:url("../../image/planting/gongJu.jpg") no-repeat left center;
+				background:url("../../image/planting/gongju.jpg") no-repeat left center;
 				background-size: 100% 100%;
 			}
 			#renGong .tuBiao{
@@ -617,7 +616,7 @@
 					background-color: rgba(0,0,0,0);
 					border-radius: 6px;
 					font-size: 0.20rem;
-					color: #20c714;
+					color: #204e41;
 					display: none;
 			}
 			.you{
@@ -664,11 +663,9 @@
 			<div id="xuanxiang" class="xuanxiang">
 				<div id="partA" class="plantA">
 					种植成本分析
-					<span id="partA1"></span>
 				</div>
 				<div id="partB" class="plantB">
 					工序执行情况
-					<span id="partA2"></span>
 				</div>
 			</div>
 		</section>
@@ -682,21 +679,21 @@
 				<div id="container1"></div>
 				<div class="shuju">
 					<div class="jihuashuju">
-						<span id="plan">￥</span>
-						<span class="shujuyuan">打算花多少钱</span>
+						<span id="plan" style="color:#38a586">￥</span>
+						<span class="shujuyuan" style="color:#5aaf95">打算花多少钱</span>
 					</div>
 					<div class="shijishuju">
-						<span id="real">￥</span>
-						<span class="shujuyuan">实际花多少钱</span>
+						<span id="real" style="color:#47947e">￥</span>
+						<span class="shujuyuan" style="color:#47947e">实际花多少钱</span>
 					</div>
 				</div>
 			</div>
-			<div class="title2">
+			<div class="title2" style="color:#204e41">
 				实际投入分布
 			</div>
 			<div class="nian">
 				<span id="sanjiao2" class="sanjiao2"></span>
-				<span id="nianfen" class="nianfen"></span>
+				<span id="nianfen" class="nianfen" style="color:#204e41"></span>
 				<span id="sanjiao1" class="sanjiao1"></span>
 			</div>
 			<div id="wrap" class="wrap">
@@ -869,7 +866,7 @@
 					$("#slider>span").css("backgroundColor","#fff")
 					$("#slider>span").css("color","#747976")
 					$("#slider>span").css("border","1px solid #ededed")
-					$(this).css("backgroundColor","#A2C446")
+					$(this).css("backgroundColor","#204e41")
 					$(this).css("color","#fff")
 					$(this).css("border","0")
 					var m=$(this).html().replace(/[^0-9]/ig,""),y=$("#nianfen").html()
@@ -901,8 +898,6 @@
 				$("#partB").attr("class","plantB")
 				$("#part1").show()
 				$("#part2").hide()
-				$("#partA1").show()
-				$("#partA2").hide()
 			}
 		})
 		$("#partB").on("touchstart",function(){
@@ -912,8 +907,6 @@
 				$("#partB").attr("class","plantA")
 				$("#part1").hide()
 				$("#part2").show()
-				$("#partA2").show()
-				$("#partA1").hide()
 				//处理折行问题
 				$(".jutiwenzi").removeClass("jutiwenzi-all");
 				$(".more").addClass("hide");
@@ -1127,11 +1120,11 @@
 													 colorByPoint: true,
 													 data: [{
 															 name: '打算花多少钱',
-															 color : "#bad863",
+															 color : "#74bca8",
 															 y: plan
 													 }, {
 															 name: '总共花多少钱',
-															 color : "#2c9fe4",
+															 color : "#47a48a",
 															 y: real
 													 }]
 											 }]
