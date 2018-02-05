@@ -955,18 +955,19 @@
 					}
 				});
 		})
-		initIn(0)
+		initIn()
 		scrollToTop()
 	}
-	function initIn(n){
-		if($api.getStorage('startDates')){
-			var startDate=$api.getStorage('startDates')
-			var endDate=$api.getStorage('endDates')
-			var farmId=$api.getStorage('farmIds')
-			var categoryId=$api.getStorage('categoryIds')
+	function initIn(){
+		if($api.getStorage('plantGrowth'+$api.getStorage("userId"))){
+			var data=JSON.parse($api.getStorage('plantGrowth'+$api.getStorage("userId")))
+			var startDate=data.startDates
+			var endDate=data.endDates
+			var farmId=data.farmIds
+			var categoryId=data.categoryIds
 			$("#time").val(startDate.replace(/\-/g, '.')+"-"+endDate.replace(/\-/g, '.'))
-			$("#land").val($api.getStorage('landNames'))
-			$("#crop").val($api.getStorage('categorys'))
+			$("#land").val(data.landNames)
+			$("#crop").val(data.categorys)
 			$("#landId").val(farmId)
 			$("#catId").val(categoryId)
 			$("#startDate").val(startDate)
@@ -1135,26 +1136,20 @@
 													 }]
 											 }]
 									 });
-									 real=real>>0
 									 if((real+"").length>12){
 			 							real=(real+"").slice(0, -12)+"万亿"
 			 						 }else if((real+"").length>8&&(real+"").length<=16){
 			 							real=(real+"").slice(0, -8)+"亿"
-			 						 }else if((real+"").length>4&&(real+"").length<=8){
-			 							real=(real+"").slice(0, -4)+"万"
-			 						 }else{
-										 real=real.toFixed(0)
-									 }
-									 plan=plan>>0
+									}else if(real>10000&&(real+"").length<=8){
+			 							real=parseFloat((real/10000).toFixed(2))+"万"
+			 						 }
 									 if((plan+"").length>12){
 			 							plan=(plan+"").slice(0, -12)+"万亿"
 			 						 }else if((plan+"").length>8&&(plan+"").length<=16){
 			 							plan=(plan+"").slice(0, -8)+"亿"
-			 						 }else if((plan+"").length>4&&(plan+"").length<=8){
-			 							plan=(plan+"").slice(0, -4)+"万"
-			 						 }else{
-										 plan=plan.toFixed(0)
-									 }
+									}else if(plan>=10000&&(plan+"").length<=8){
+			 							plan=parseFloat((plan/10000).toFixed(2))+"万"
+			 						 }
 									 $("#real").html("￥"+real)
 									 $("#plan").html("￥"+plan)
 								 },

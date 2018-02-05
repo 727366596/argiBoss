@@ -30,8 +30,8 @@
               </li>
           </ul>
           <div class="btns">
-              <div class="time_btn" ontouchend="cropGrowth()">确定</div>
-              <div class="time_btn" ontouchend="closeSection()">取消</div>
+              <div class="time_btn" id="timeSure">确定</div>
+              <div class="time_btn" id="timeCancel">取消</div>
           </div>
       </section>
       <!-- 基地弹窗 -->
@@ -43,8 +43,8 @@
 
           </section>
           <div class="btns_farm" style="display:flex;">
-              <div class="farm_btn" ontouchend="sendFarm()">确定</div>
-              <div class="farm_btn" ontouchend="closeFarm()">取消</div>
+              <div class="farm_btn"  id="farmSure">确定</div>
+              <div class="farm_btn"  id="farmCancel">取消</div>
           </div>
       </section>
       <!-- 选择查询 -->
@@ -322,6 +322,15 @@
               $('#section3').removeClass('active')
           };
           timeFirst();
+
+          $("#timeSure").off("click").on("click",function(e){
+              e.stopPropagation();
+              cropGrowth();
+          });
+          $("#timeCancel").off("click").on("click",function(e){
+              e.stopPropagation();
+              closeSection();
+          });
       };
       //第一次获取时间
       function timeFirst(){
@@ -344,6 +353,14 @@
               $('#section2').removeClass('active')
           };
           farmFirst();
+          $("#farmSure").off("click").on("click",function(e){
+              e.stopPropagation();
+              sendFarm();
+          });
+          $("#farmCancel").off("click").on("click",function(e){
+              e.stopPropagation();
+              closeFarm();
+          });
       };
       //第一次获取基地
       function farmFirst(){
@@ -451,7 +468,8 @@
 
       //时间选择 取消键点击
       function closeSection(){
-          $('#section2').removeClass('active')
+          $('#section2').removeClass('active');
+          dtpicker.hide();
       }
 
       //基地选择 取消键点击
