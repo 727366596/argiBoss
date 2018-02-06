@@ -237,14 +237,9 @@
 				white-space: nowrap;
 			}
 			.more-list{
-				width: 100%;
-				overflow: hidden;
-				padding: 0.57rem 2.7rem 0;
-				box-sizing: border-box;
-			}
-			.more-list img{
-				width: 100%;
-				height: 0.41rem;
+				position: absolute;
+				right: 35%;
+				top: -2px;
 			}
 	</style>
 
@@ -319,13 +314,11 @@
 					<div class="list-title">技术推广</div>
 					<div class="back-img-r">
 							<img src="../../image/home/list-right.png" alt="">
+							<div class="more-list"  id="gotolist">更多</div>
+
 					</div>
 				</div>
 				<div class="list-content">
-
-				</div>
-				<div class="more-list"  id="gotolist">
-					<img src="../../image/home/more.png" alt="">
 				</div>
 
 			</div>
@@ -350,7 +343,6 @@
 					$('#analysis').html('<img src="../../image/home/people.png" alt="">')
 					$('#openCall').html('<img src="../../image/home/ask.png" alt="">')
 					$('#openMarketInfo').html('<img src="../../image/home/mark.png" alt="">')
-					$('#gotolist').html('<img src="../../image/home/more.png" alt="">')
 		    }else{
 		        //  alert( JSON.stringify( err ) );
 		    }
@@ -559,7 +551,7 @@
 
 	// 点击更多跳转列表
 	function goToList(code){
-		$('#gotolist').html('<img src="../../image/home/more-a.png" alt="">')
+
 		api.openWin({
 			name:'a-list_win',
 			url:'./a-list_win.html',
