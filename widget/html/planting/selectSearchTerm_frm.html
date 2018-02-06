@@ -11,22 +11,25 @@
 		<link rel="stylesheet" type="text/css" href="../../css/mui/css/mui.picker.min.css"/>
 		<script language=javascript>window.onerror=function(){return true;} </script>
     <style>
+		html,body{
+			background-color: #f3f4f4;
+		}
 		article{
 			background-color: #f3f4f4;
 			padding-bottom: 1rem;
 		}
 		section{
 			clear: both;
-			background-color: #fff;
+			background-color: #f3f4f4;
 		}
 		ul{
 			padding-top: 0.25rem;
 			font-size: 0.3rem;
-			color:#666666;
+			color:#204e41;
 			text-align: center;
 		}
 		li{
-			text-align: center;
+			text-align: left;
 		}
 		span{
 			display: inline-block;
@@ -36,9 +39,10 @@
 			height: 0.7rem !important;
 			padding-left: 0.4rem;
 			font-size: 0.26rem;
-			color: #D1CDCD;
+			color: #204e41;
 			border-radius: 0.05rem !important;
-			border: 1px solid #B1BBB0;
+			background-color: rgba(32,78,65,0.1) !important;
+			border: 1px solid #204e41 !important;
 		}
 		.section-title{
 				padding-top: 0.1rem;
@@ -46,7 +50,7 @@
 				padding-left: 0.1rem;
 				text-align: left;
 				font-size: 0.3rem;
-				color:#333333;
+				color:#204e41;
 				border-bottom: 1px solid #f6f3f3;
 		}
 		.filed{
@@ -65,13 +69,15 @@
 			padding-left: 0.2rem;
 			padding-right: 0.2rem;
 			border-radius: 0.05rem;
-			color: #82e268;
+			color: #204e41;
 			font-size: 0.28rem;
 			border-radius: 0.05rem;
-			border: 1px solid #82e268;
+			border: 0;
+			background-color: #fff;
 		}
 		.filed2>p{
 			border-radius: 0.34rem;
+			background-color: #fff;
 		}
 		.btnConfirm{
 			position: fixed;
@@ -82,7 +88,7 @@
 			color: #FFFEFE;
 			font-size: 0.30rem;
 			text-align: center;
-			background-color: #FF7A00;
+			background-color: #c3a256;
 		}
 		/*.btnConfirm{
 		  position: absolute;
@@ -96,7 +102,7 @@
 			text-align: center;
 			background-color: #FF7A00;
 		}*/
-		.border1{
+		/*.border1{
 			border-left: 2px solid #ffd400;
 		}
 		.border2{
@@ -107,16 +113,17 @@
 		}
 		.border4{
 			border-left: 2px solid #f9b099;
-		}
+		}*/
 		i{
 			position: absolute;
 			display: inline-block;
-			width: 0.3rem;
-			height: 0.3rem;
-			background:url("../../image/management/arrow.png") no-repeat center center;
-			background-size: 80% 50%;
-			top: 0.2rem;
+			top: 0.25rem;
 			right: 0.1rem;
+			width: 0;
+			height: 0;
+			border-left: 0.2rem solid transparent;
+			border-right: 0.2rem solid transparent;
+			border-top: 0.2rem solid #204e41;
 		}
 		.small{
 			font-size: 0.24rem;
@@ -148,14 +155,14 @@
 	        选择统计时间<span class="small">（必选）</span>
 	    </nav>
 			<ul>
-				<li>
+				<li style="padding-left:0.3rem">
 					<span>开始时间：</span>
 					<span id="time1">
 						<input id="date1" type="text" placeholder="点击我选择时间" readonly>
 						<i></i>
 					</span>
 				</li>
-				<li>
+				<li style="padding-left:0.3rem">
 					<span>结束时间：</span>
 					<span id="time2">
 						<input id="date2" type="text" placeholder="点击我选择时间" readonly>
@@ -222,12 +229,16 @@ function showLand(){
 				land+="<p id="+dt[i].id+">"+dt[i].farmName+"</p>"
 			}
 			$("#selectFiled").html(land);
+			$("#selectFiled>p").eq(0).css("backgroundColor","#dde8dc")
+			$("#idLand").val($("#selectFiled>p").eq(0).attr("id"))
+			$("#nameLand").val($("#selectFiled>p").eq(0).html())
 			for(var j=0; j<l; j++){
 				$("#selectFiled>p").eq(j).on("touchstart",function(){
 					$("#selectFiled>p").css("backgroundColor","#fff")
-					$(this).css("backgroundColor","#e4ffdd")
+					$(this).css("backgroundColor","#dde8dc")
 					$("#idLand").val($(this).attr("id"))
 					$("#nameLand").val($(this).html())
+					$("#idCat").val("")
 					pds.ajaxSubmit({
 						url:'app/crop/categoryList',
 						type : "GET",
@@ -235,6 +246,8 @@ function showLand(){
 						success:function(ret,err){
 							var dt=ret.data,l=dt.length,spic="";
 							if(!l){
+								$("#spic").html("")
+								$("#pin").html("");
 								return
 							}
 							for(var i=0; i<l; i++){
@@ -242,7 +255,7 @@ function showLand(){
 							}
 							$("#spic").html(spic);
 							spic=null;
-							$("#spic>p").eq(0).css("backgroundColor","#e4ffdd")
+							$("#spic>p").eq(0).css("backgroundColor","#dde8dc")
 							pds.ajaxSubmit({
 								url:'app/crop/findCategoryList',
 								type : "GET",
@@ -257,10 +270,13 @@ function showLand(){
 									}
 									$("#pin").html(pin);
 									pin=null;
+									$("#pin>p").eq(0).css("backgroundColor","#dde8dc")
+									$("#idCat").val($("#pin>p").eq(0).attr("id"))
+									$("#nameCat").val($("#pin>p").eq(0).html())
 									for(var j=0; j<l; j++){
 										$("#pin>p").eq(j).on("touchstart",function(){
 											$("#pin>p").css("backgroundColor","#fff")
-											$(this).css("backgroundColor","#e4ffdd")
+											$(this).css("backgroundColor","#dde8dc")
 											$("#idCat").val($(this).attr("id"))
 											$("#nameCat").val($(this).html())
 										})
@@ -273,7 +289,7 @@ function showLand(){
 							for(var j=0; j<l; j++){
 								$("#spic>p").eq(j).on("touchstart",function(){
 									$("#spic>p").css("backgroundColor","#fff")
-									$(this).css("backgroundColor","#e4ffdd")
+									$(this).css("backgroundColor","#dde8dc")
 									pds.ajaxSubmit({
 										url:'app/crop/findCategoryList',
 										type : "GET",
@@ -288,10 +304,13 @@ function showLand(){
 											}
 											$("#pin").html(pin);
 											pin=null;
+											$("#pin>p").eq(0).css("backgroundColor","#dde8dc")
+											$("#idCat").val($("#pin>p").eq(0).attr("id"))
+											$("#nameCat").val($("#pin>p").eq(0).html())
 											for(var j=0; j<l; j++){
 												$("#pin>p").eq(j).on("touchstart",function(){
 													$("#pin>p").css("backgroundColor","#fff")
-													$(this).css("backgroundColor","#e4ffdd")
+													$(this).css("backgroundColor","#dde8dc")
 													$("#idCat").val($(this).attr("id"))
 													$("#nameCat").val($(this).html())
 												})
@@ -325,7 +344,7 @@ function showLand(){
 					}
 					$("#spic").html(spic);
 					spic=null;
-				  $("#spic>p").eq(0).css("backgroundColor","#e4ffdd")
+				  $("#spic>p").eq(0).css("backgroundColor","#dde8dc")
 					pds.ajaxSubmit({
 						url:'app/crop/findCategoryList',
 						type : "GET",
@@ -339,11 +358,14 @@ function showLand(){
 								pin+="<p id="+dt[i].id+">"+dt[i].catName+"</p>"
 							}
 							$("#pin").html(pin);
+							$("#pin>p").eq(0).css("backgroundColor","#dde8dc")
+							$("#idCat").val($("#pin>p").eq(0).attr("id"))
+							$("#nameCat").val($("#pin>p").eq(0).html())
 							pin=null;
 							for(var j=0; j<l; j++){
 								$("#pin>p").eq(j).on("touchstart",function(){
 									$("#pin>p").css("backgroundColor","#fff")
-									$(this).css("backgroundColor","#e4ffdd")
+									$(this).css("backgroundColor","#dde8dc")
 									$("#idCat").val($(this).attr("id"))
 									$("#nameCat").val($(this).html())
 								})
@@ -356,7 +378,7 @@ function showLand(){
 					for(var j=0; j<l; j++){
 						$("#spic>p").eq(j).on("touchstart",function(){
 							$("#spic>p").css("backgroundColor","#fff")
-							$(this).css("backgroundColor","#e4ffdd")
+							$(this).css("backgroundColor","#dde8dc")
 							pds.ajaxSubmit({
 								url:'app/crop/findCategoryList',
 								type : "GET",
@@ -370,11 +392,14 @@ function showLand(){
 										pin+="<p id="+dt[i].id+">"+dt[i].catName+"</p>"
 									}
 									$("#pin").html(pin);
+									$("#pin>p").eq(0).css("backgroundColor","#dde8dc")
+									$("#idCat").val($("#pin>p").eq(0).attr("id"))
+									$("#nameCat").val($("#pin>p").eq(0).html())
 									pin=null;
 									for(var j=0; j<l; j++){
 										$("#pin>p").eq(j).on("touchstart",function(){
 											$("#pin>p").css("backgroundColor","#fff")
-											$(this).css("backgroundColor","#e4ffdd")
+											$(this).css("backgroundColor","#dde8dc")
 											$("#idCat").val($(this).attr("id"))
 											$("#nameCat").val($(this).html())
 										})

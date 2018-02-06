@@ -131,7 +131,6 @@
       function getFarmLand(){
           $(".section-p").removeClass("section").find(".select").addClass("okNone");
           //基地回显
-          //alert($api.getStorage("userId"))
           //$api.rmStorage($api.getStorage("userId")+'farmlands');
           var farmlands = $api.getStorage($api.getStorage("userId")+'farmlands');
           if (farmlands != undefined && farmlands != null && farmlands != "" && farmlands != []) {
@@ -178,15 +177,20 @@
 
           }else{
               //初次登陆应用，默认获取前五个基地数据
-              //alert(JSON.stringify(fiveArray)+"ahahhahaha");
               var farmlandsStr = "", farmIdStr = "";
               $(".section-p").each(function(index,el){
+
                   var farmId = $(this).attr("data-id");
-                  if (farmId == fiveArray[index].id) {
-                      $(this).addClass("section").find(".select").removeClass("okNone");
-                      farmlandsStr += fiveArray[index].farmName + "、";
-                      farmIdStr += fiveArray[index].id + ",";
-                  };
+                  // alert(JSON.stringify(fiveArray)+"ahahhahaha*********"+farmObj);
+                  // alert(typeof farmObj);
+                  if (index <= 4) {
+                      var farmObj = fiveArray[index];
+                      if (farmId == farmObj.id) {
+                          $(this).addClass("section").find(".select").removeClass("okNone");
+                          farmlandsStr += farmObj.farmName + "、";
+                          farmIdStr += farmObj.id + ",";
+                      };
+                  }
               });
               $("#farm").val(farmlandsStr);
               //渲染图表
@@ -398,11 +402,13 @@
               var farmlandsStr = "", farmIdStr = "";
               $(".section-p").each(function(index,el){
                   var farmId = $(this).attr("data-id");
-                  if (farmId == fiveArray[index].id) {
+                  if (index <= 4) {
+                    if (farmId == fiveArray[index].id) {
                       $(this).addClass("section").find(".select").removeClass("okNone");
                       farmlandsStr += fiveArray[index].farmName + "、";
                       farmIdStr += fiveArray[index].id + ",";
-                  };
+                    };
+                  }
               });
               $("#farm").val(farmlandsStr);
 
@@ -488,6 +494,7 @@
              return;
          };
          var selectNameSum = $("#section_special .section");
+
          if (selectNameSum.length == 0) {
              api.alert({msg: '请选择基地'});
              return;
@@ -552,6 +559,7 @@
                         if (allArray.length >= 5) {
                             $(".section-title").show();
                             fiveArray = allArray.slice(0,5);
+
                         }else{
                             $(".section-title").hide();
                             fiveArray = allArray;
@@ -665,19 +673,19 @@
 
                     }
                     // alert(JSON.stringify(farm_name))
-                    // alert(JSON.stringify(completeData))
-                    // alert(JSON.stringify(confrimData))
+                    //alert(JSON.stringify(completeData))
+                    //alert(JSON.stringify(confrimData))
                     //总工单量
                     var sendArray =[]
                     for (var i = 0; i < completeData.length; i++) {
                         var tempA = completeData[i];
-                        for (var j = 0; j < confrimData.length; j++) {
-                              var tempB = confrimData[j];
-                              var resultNum = tempA + tempB;
-                              sendArray.push(resultNum);
-                        }
+                        var tempB = confrimData[i];
+                        var resultNum = tempA + tempB;
+                        sendArray.push(resultNum);
+                        // for (var j = 0; j < confrimData.length; j++) {
+                        // }
                     };
-
+                    //alert(JSON.stringify(sendArray))
 
                   }else{
                       // ___________________________________________________临时假数据，需删除————————————————————————————————————————————————————————————
