@@ -25,12 +25,13 @@
 				}
 				section{
 					margin-top: 0.2rem;
-					background-color: #fff;
+					background-color: #ededed;
 				}
 				#section1{
 					padding-top: 0.25rem;
 					padding-bottom: 0.25rem;
 					text-align: center;
+					background-color: #f3f4f4;
 				}
 				#section2{
 					margin-top: 0.3rem;
@@ -44,7 +45,7 @@
 					display: inline-block;
 					font-size: 0.3rem;
 					width: 1.7rem;
-				  color: #666666;
+				  color: #204e41;
 				}
 				input{
 					font-size: 0.3rem;
@@ -52,16 +53,15 @@
 					padding-bottom: 0.1rem;
 					width: 3.4rem;
 					padding-left: 0.1rem;
-					color: #666666;
-					background-color: #f3f4f4;
+					color: #204e41;
 				}
 				button{
 					width: 5.7rem;
-					height: 0.7rem;
-					background-color: #00c558;
-					color:#ffffff;
+					height: 0.8rem;
+					background-color: #c3a256;
+					color:#ededed;
 					font-size: 0.3rem;
-					border-radius: 0.7rem;
+					border-radius: 0.1rem;
 					outline: 0;
 				}
 				.container1,.container2{
@@ -74,7 +74,7 @@
 					margin-left: -20%;
 					width: 140%;
 					height: 140%;*/
-					width: 100%;
+					width: 7.2rem;
 					height: 6rem;
 				}
 				#container5{
@@ -124,34 +124,39 @@
 					padding: 0.2rem;
 				}
 				.titleContent{
-					font-size: 0.3rem;
+					font-size: 0.36rem;
 					text-align: center;
 					height: 0.8rem;
 					line-height: 0.8rem;
-					background-color: #fafafa;
+					color: #204e41;
+					border-bottom: 1px solid #f6f3f3
 				}
 				.xuanxiang{
 					position: relative;
-					border-bottom: 1px solid #f6f3f3;
-					background-color: #fff;
+					/*border-bottom: 1px solid #f6f3f3;*/
+					height: 1rem;
+					background-color: #f3f4f4;
+					z-index: 9999;
 				}
 				.plantA{
-					display: inline-block;;
+					float: left;
 					text-align: center;
 					height: 1rem;
 					line-height: 1rem;
-					width: 48%;
+					width: 50%;
 					font-size: 0.3rem;
-					color: #00c558;
+					color: #204e41;
+					background-color: #ededed;
 				}
 				.plantB{
-					display: inline-block;
+					float: left;
 					height: 1rem;
 					line-height: 1rem;
 					text-align: center;
-					width: 48%;
+					width: 50%;
 					font-size: 0.3rem;
-					color: #333333;
+					color: #a0b2a6;
+					background-color: #f3f4f4;
 				}
 				#partA1{
 					width: 1.6rem;
@@ -176,7 +181,6 @@
 					border-bottom: 1px solid #f6f3f3;
 				}
 				.xuan{
-					padding-top: 0.7rem;
 					padding-bottom: 0.42rem;
 					padding-left: 0.3rem;
 				}
@@ -187,7 +191,7 @@
 					line-height: 0.3rem;
 					font-size: 0.28rem;
 					text-align: right;
-					color: #666;
+					color: #204e41;
 				}
 				.shuru{
 					display: inline-block;
@@ -199,7 +203,7 @@
 					padding-left: 0.2rem;
 					width: 2.74rem;
 					font-size: 0.28rem;
-					color: #666;
+					color: #204e41;
 				}
 				.shuru2{
 					display: inline-block;
@@ -207,28 +211,29 @@
 					padding-left: 0.2rem;
 					width: 1.34rem;
 					font-size: 0.28rem;
-					color: #666;
+					color: #204e41;
 				}
 				select{
 					display: inline-block;
 					width: 1rem;
 					height: 0.8rem;
-					background-color: #fff;
-	  			border: 1px solid #f6f3f3 !important;
+					background-color: rgba(32,78,65,0.1);
+	  			border: 1px solid #204e41 !important;
 	  		}
 				i{
 					position: absolute;
-					top: 0.7rem;
+					top: 0.8rem;
 					right: 0.2rem;
-					width: 0.3rem;
-					height: 0.3rem;
-					background:url("../../image/planting/arrow.png") no-repeat center center;
-					background-size: 80% 50%;
+					width: 0;
+					height: 0;
+					border-left: 0.2rem solid transparent;
+					border-right: 0.2rem solid transparent;
+					border-top: 0.2rem solid #204e41;
 				}
 				.shuju{
 					margin-top: 0.7rem;
 					height: 2.25rem;
-					background-color: #fff;
+					background-color: #ededed;
 				}
 				.jihuashuju{
 					display: inline-block;
@@ -265,7 +270,7 @@
 						background-color: rgba(0,0,0,0);
 						border-radius: 6px;
 						font-size: 0.20rem;
-						color: #20c714;
+						color: #204e41;
 						display: none;
 				}
 				.you{
@@ -274,13 +279,36 @@
 					right: 0;
 					left: 0;
 					width: 100%;
-					background-color: #fff;
+					background-color: #ededed;
 					z-index: 9999;
 				}
 				#noPic1,#noPic2,#noPic3{
 					display: none;
 					width: 100%;
 					height: 5.77rem;
+				}
+				#shadowBar{
+					position: absolute;
+					pointer-events: none;
+					left: 3.3rem;
+					height: 6rem;
+					width: 0.826rem;
+					background-color: rgba(256,256,256,0.4);
+					z-index: 9000;
+				}
+				#gong1{
+					position: absolute;
+					top: 0.31rem;
+					left: 0.69rem;
+					width: 0.3rem;
+					height: 0.3rem;
+				}
+				#gong2{
+					position: absolute;
+					top: 0.31rem;
+					left: 4.1rem;
+					width: 0.3rem;
+					height: 0.3rem;
 				}
     </style>
 </head>
@@ -311,15 +339,29 @@
 			<div id="zhan"></div>
 			<div id="xuanxiang" class="xuanxiang">
 				<div id="partA" class="plantA">
-					采收品类分布
-					<span id="partA1"></span>
+					<img id="gong1"  src="../../image/planting/liang2.png" alt="">
+					采收量情况
 				</div>
 				<div id="partB" class="plantB">
-					采收量情况
-					<span id="partA2"></span>
+					<img id="gong2"  src="../../image/planting/pin1.png" alt="">
+					采收品类分布
 				</div>
 			</div>
-			<div id="part1">
+			<div class="xuan">
+				<span class="dikuai">地块：</span>
+				<span class="shuru">
+						<select id="shuru1" class="shuru1" onchange="jidiChange()">
+						</select>
+						<i></i>
+				</span>
+				<span class="dikuai">采收单位：</span>
+				<span class="shuru">
+						<select id="shuru2" class="shuru2" onchange="jidiChange()">
+						</select>
+						<i></i>
+				</span>
+			</div>
+			<div id="part2">
 			<div class="biaoTitle">
 				<div class="titleContent">当日品类分布</div>
 			</div>
@@ -335,40 +377,24 @@
 				<div id="container2"></div>
 				</div>
 			</div>
-			<div id="part2">
-				<div class="xuan">
-					<span class="dikuai">地块：</span>
-					<span class="shuru">
-							<select id="shuru1" class="shuru1" onchange="jidiChange()">
-								<option value="">一大队2号地</option>
-							</select>
-							<i></i>
-					</span>
-					<span class="dikuai">采收单位：</span>
-					<span class="shuru">
-							<select id="shuru2" class="shuru2" onchange="danweiChange()">
-								<option value="">吨</option>
-								<option value="">斤</option>
-							</select>
-							<i></i>
-					</span>
-				</div>
+			<div id="part1">
 				<div class="biaoTitle">
-					<div id="today" class="titleContent">当日最大采收量：500吨</div>
+					<div id="today" class="titleContent"></div>
 				</div>
 				<div class="container1">
+					<div id="shadowBar"></div>
 					<img id="noPic3" src="../../image/planting/noPic.png" alt="">
 					<div id="container5"></div>
 				</div>
 				<p id="nianyue" class="nianyue"></p>
 				<div class="shuju">
 					<div class="jihuashuju">
-						<span id="dangricaishou"></span>
-						<span id="shujuyuan" class="shujuyuan">当日采收总量</span>
+						<span id="dangricaishou" style="color:#47a48a"></span>
+						<span id="shujuyuan" class="shujuyuan" style="color:#47a48a">当日采收总量</span>
 					</div>
 					<div class="shijishuju">
-						<span id="todayTotal"></span>
-						<span class="shujuyuan">累计采收总量</span>
+						<span id="todayTotal" style="color:#204e41"></span>
+						<span class="shujuyuan" style="color:#204e41">累计采收总量</span>
 					</div>
 				</div>
 			</div>
@@ -392,7 +418,7 @@
 
 <script>
 
-eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('4U=l(){v b=1;$("#2a").1F("28",l(){b||(b=1,$("#2a").1P("1O","33"),$("#21").1P("1O","32"),$("#31").q(),$("#2Z").B(),$("#2Y").q(),$("#2W").B())});$("#21").1F("28",l(){b&&(b=4B,$("#2a").1P("1O","32"),$("#21").1P("1O","33"),$("#31").B(),$("#2Z").q(),$("#2W").q(),$("#2Y").B())});$("#4S").1F("28",l(){A.4g({1w:"2V",Q:"./2V.o",4r:{4v:2}})});2U(0);2T()};l 2U(b){D($A.1j("2S")){v d=$A.1j("2S"),e=$A.1j("52");b=$A.1j("3d");v c=$A.1j("4l");$("#2R").j(d.2Q(/\\-/g,".")+"-"+e.2Q(/\\-/g,"."));$("#2J").j($A.1j("4Z"));$("#2I").j($A.1j("55"));$("#K").j(b);$("#1v").j(c);$("#1e").j(d);$("#1f").j(e);$("#1g").j(b);2j();1T(d,e,b,c);1U(d,e,b,c);1V(d,e,c,b)}1h{v a=2H 3z;b=a.3A();c=a.3D()+1;a=a.4f();10>c?c="0"+c:c;10>a?a="0"+a:a;e=b+"-"+c+"-"+a;d=b+"-1K-1K";$("#2R").j(b+".1K.1K-"+b+"."+c+"."+a);1b.1c({Q:"1d/4C/4P/4R",w:"1u",1p:l(a,b){$("#2J").j(a.i.2G.3c);$("#2I").j(a.i.2i.3y);$("#K").j(a.i.2G.1q);$("#1v").j(a.i.2i.1q);$("#1e").j(d);$("#1f").j(e);2j();1T(e,e,a.i.N,a.i.S);1U(d,e,a.i.N,a.i.S);1V(d,e,a.i.S,a.i.N)},1k:l(a){A.1l({1m:"\\1n\\1o\\W\\X\\Y\\Z\\11\\13\\14\\17\\19\\1a!"})}})}}l 1T(b,d,e,c,a){1b.1c({Q:"1d/1C/2F",w:"1u",i:{1e:b,1f:d,N:e,S:c,K:a},1p:l(a,b){D(a.i.n){$("#2E").B();$("#1W").q();b=[];v c=[],d="#3E #3L #3N #3O #3P #43".4e(" ");a=a.i;1B(v e=a.n,f=0;f<e;f++)b.1y(a[f].1Z),c.1y({r:a[f].1A,1w:a[f].1Z}),5<e&&d.1y("4O("+24(25*1I.1S())+","+24(25*1I.1S())+","+24(25*1I.1S())+")");2D={2C:{2B:"58",1L:"<2y 3e=\'z-3w:0\'>{a} <2d/>{b} : {c} \\2g({d}%)</2y>"},V:d,3B:{q:!1,3C:1R,J:3F,3G:{3H:[0,1]}},3I:{3J:"3K",x:"3M",i:b},2x:[{1w:"\\P\\O\\3Q\\3S\\3V\\41",w:"42",2w:"1R%",4a:["4d%","50%"],i:c.2v(l(a,b){M a.r-b.r}),4h:"2w",4j:{2h:{4m:"4q",1L:"{c} \\2g"}},2u:{2h:{4u:1H,4w:"23(0, 0, 0, 0.4)"}},4D:"4H",4L:"4M",4N:l(a){M 2t*1I.1S()}}]};2s.2r(2q.2p("1W")).2o(2D)}1h $("#2E").q(),$("#1W").B()},1k:l(a){A.1l({1m:"\\1n\\1o\\W\\X\\Y\\Z\\11\\13\\14\\17\\19\\1a!"})}})}l 1U(b,d,e,c){1b.1c({Q:"1d/1C/2F",w:"1u",i:{1e:b,1f:d,N:e,S:c},1p:l(a,b){D(a.i.n){$("#2n").B();$("#2b").q();v c=[];a=a.i;b=a.n;1B(v d=0;d<b;d++)c.1y({r:a[d].1A,1w:a[d].1Z,57:a[d].1A});2m.59(l(){(2H 2m({w:"5c",5e:"2b",1t:"2e%",2f:"3f%",3g:"3h",3i:{3j:{3k:"3l",3m:"",3n:"3o",3p:"0",3q:"0",3r:"\\2g",3s:"50",3t:"20",3u:"0"},i:c.2v(l(a,b){M a.r-b.r})}})).3v()})}1h $("#2n").q(),$("#2b").B()},1k:l(a){A.1l({1m:"\\1n\\1o\\W\\X\\Y\\Z\\11\\13\\14\\17\\19\\1a!"})}})}l 1Q(b,d,e,c,a,g){1b.1c({Q:"1d/1C/3x",w:"1u",i:{1e:b,1f:d,N:e,S:c,2l:a,K:g},1p:l(a,b){D(a.i.n){$("#1x").B();$("#1i").q();b=[];v d=[];a=a.i;1B(v c=a.n,e=0;e<c;e++)b.1y(a[e].R.F(2,10)),d.1y(a[e].1A);$("#1E").o(a[c-1].1A+$("#u").H("s:G").E());$("#1z").o(a[c-1].R.F(2,4)+"\\1G"+a[c-1].R.F(5,7)+"\\1J"+a[c-1].R.F(8,10)+"\\T<2d>\\P\\O\\1D\\U");$("#3R").o(a[0].R.F(0,4)+"\\1G"+a[0].R.F(5,7)+"\\1J-"+a[c-1].R.F(0,4)+"\\1G"+a[c-1].R.F(5,7)+"\\1J");s={2z:"#3T",3U:{x:40,y:20,3W:30,3X:45},2C:{2B:"3Y",3Z:{w:"2A",1M:{V:"23(29,29,29,0.4)",1t:34,w:"44"},46:{V:"#47",1t:1,w:"48"},49:{V:"23(1H,1H,1H,0.3)",1t:"4b",w:"4c"}},1L:l(a){a[0].r>>=0;16<(a[0].r+"").n?a[0].r=(a[0].r+"").C(0,-16)+"\\L\\L":8<(a[0].r+"").n&&16>=(a[0].r+"").n&&(a[0].r=(a[0].r+"").C(0,-8)+"."+(a[0].r+"").C(-8,-7)+"\\L");$("#1E").o(a[0].r+$("#u").H("s:G").E());$("#1z").o(a[0].1Y.F(0,2)+"\\1G"+a[0].1Y.F(3,5)+"\\1J"+a[0].1Y.F(6,8)+"\\T<2d>\\P\\O\\1D\\U")}},4i:[{q:!1,2k:!0,4k:"#1r",2K:!0,4n:!1,4o:"#1r",2z:"#4p",2L:1R,2M:2e},{w:"4s",2k:!0,2K:!0,2L:1R,2M:2e}],4t:{2N:{q:!1},w:"2i",i:b,2O:{1M:{V:"#1r",1t:1}},2P:{4x:0,4y:-40}},4z:{2N:{q:!1},w:"4A",2O:{1M:{V:"#1r",1t:1}},2P:{1L:l(a){a+="";D(3>=a.n)M a;D(3<a.n&&6>=a.n)M a.C(0,-3)+"k";D(6<a.n&&9>=a.n)M a.C(0,-6)+"m";D(9<a.n&&12>=a.n)M a.C(0,-9)+"b";D(12<a.n&&15>=a.n)M a.C(0,-12)+"t";D(15<a.n&&18>=a.n)M a.C(0,-15)+"p"}}},2x:[{i:d,w:"2A",4E:"4F",4G:5,2u:{2h:{V:"#1r",1M:{V:"#1r"}}}}]};2s.2r(2q.2p("1i")).2o(s)}1h $("#1x").q(),$("#1i").B(),$("#1E").o(0+$("#u").H("s:G").E()),$("#1z").o("\\1s\\T\\P\\O\\1D\\U")},1k:l(a){A.1l({1m:"\\1n\\1o\\W\\X\\Y\\Z\\11\\13\\14\\17\\19\\1a!"})}})}l 2j(){1b.1c({Q:"1d/4I/4J/4K",i:{N:$("#K").j()},1p:l(b,d){b=b.i;d=b.n;v e="";D(d){$("#1x").B();$("#1i").q();1B(v c=0;c<d;c++)e+="<s r="+b[c].1q+">"+b[c].1w+"</s>";$("#1g").o(e)}1h $("#1x").q(),$("#1i").B(),$("#1E").o(0+$("#u").H("s:G").E()),$("#1z").o("\\1s\\T\\P\\O\\1D\\U"),$("#22").o("\\1s\\T\\2c\\27\\P\\O\\U\\2X"+$("#u").H("s:G").E()),$("#26").o(0+$("#u").H("s:G").E())},1k:l(b){A.1l({1m:"\\1n\\1o\\W\\X\\Y\\Z\\11\\13\\14\\17\\19\\1a!"})}})}l 1V(b,d,e,c){1b.1c({Q:"1d/1C/4Q",w:"1u",i:{S:e,N:c},1p:l(a,g){a=a.i;g=a.n;v f="";D(g){$("#1x").B();$("#1i").q();1B(v h=0;h<g;h++)f+="<s r="+a[h].1q+">"+a[h].1w+"</s>";$("#u").o(f);1Q(b,d,c,e,a[0].1q);1N(e,c,a[0].1q,$("#1g").j())}1h $("#1x").q(),$("#1i").B(),$("#1E").o(0+$("#u").H("s:G").E()),$("#1z").o("\\1s\\T\\P\\O\\1D\\U"),$("#22").o("\\1s\\T\\2c\\27\\P\\O\\U\\2X"+$("#u").H("s:G").E()),$("#26").o(0+$("#u").H("s:G").E())},1k:l(a){A.1l({1m:"\\1n\\1o\\W\\X\\Y\\Z\\11\\13\\14\\17\\19\\1a!"})}})}l 1N(b,d,e,c){1b.1c({Q:"1d/1C/4T",w:"1u",i:{S:b,N:d,2l:e,K:c},1p:l(a,b){a.i.I>>=0;16<(a.i.I+"").n?a.i.I=(a.i.I+"").C(0,-16)+"\\L\\L":8<(a.i.I+"").n&&16>=(a.i.I+"").n&&(a.i.I=(a.i.I+"").C(0,-8)+"."+(a.i.I+"").C(-8,-7)+"\\L");a.i.J>>=0;16<(a.i.J+"").n?a.i.J=(a.i.J+"").C(0,-16)+"\\L\\L":8<(a.i.J+"").n&&16>=(a.i.J+"").n&&(a.i.J=(a.i.J+"").C(0,-8)+"."+(a.i.J+"").C(-8,-7)+"\\L");$("#22").o("\\1s\\T\\2c\\27\\P\\O\\U\\4V"+a.i.I+$("#u").H("s:G").E());$("#26").o(a.i.I+$("#u").H("s:G").E())},1k:l(a){A.1l({1m:"\\1n\\1o\\W\\X\\Y\\Z\\11\\13\\14\\17\\19\\1a!"})}})}l 4W(){1N($("#1v").j(),$("#K").j(),$("#u").j(),$("#1g").j());1Q($("#1e").j(),$("#1f").j(),$("#K").j(),$("#1v").j(),$("#u").j(),$("#1g").j())}l 4X(){1N($("#1v").j(),$("#K").j(),$("#u").j(),$("#1g").j());1Q($("#1e").j(),$("#1f").j(),$("#K").j(),$("#1v").j(),$("#u").j(),$("#1g").j())}l 2T(){v b=A.4Y;$("#1X").1F("51",l(){v d=$("#1X").35();"53"!=b&&(54<=d?($("#36").56("37"),$("#38").39("2f","5a")):($("#36").5b("37"),$("#38").39("2f","0")));D(2t<=d)$("#3a").q().5d("3b").1F("3b",l(){$("#1X").5f({35:"5g"},5h)});1h $("#3a").B()})};',62,328,'||||||||||||||||||data|val||function||length|html||show|value|option||shuru2|var|type||||api|hide|slice|if|text|substring|selected|find|total|max|landId|u4ebf|return|farmId|u6536|u91c7|url|recordDate|categoryId|u65e5|u91cf|color|u5668|u5f02|u5e38|uff0c||u8bf7||u8054|u7cfb|||u7ba1||u7406|u5458|pds|ajaxSubmit|app|startDate|endDate|shuru1|else|container5|getStorage|error|alert|msg|u670d|u52a1|success|id|fff|u5f53|width|GET|catId|name|noPic3|push|shujuyuan|harvestTotal|for|harvestStat|u603b|dangricaishou|on|u5e74|150|Math|u6708|01|formatter|lineStyle|nowHarvest|class|attr|caiLiang|80|random|pieFen|priFen|danwei|container1|wrapper|axisValue|gradeName||partB|today|rgba|parseInt|257|todayTotal|u5927|touchstart|250|partA|container2|u6700|br|100|height|u5428|normal|category|jidi|realtime|numerator|FusionCharts|noPic2|setOption|getElementById|document|init|echarts|200|itemStyle|sort|radius|series|span|backgroundColor|line|trigger|tooltip|option1|noPic1|queryGradeOfHarvest|farm|new|crop|land|zoomLock|start|end|splitLine|axisLine|axisLabel|replace|time|startDates|scrollToTop|initIn|selectSearchTerm_win|partA2|uff1a0|partA1|part2||part1|plantB|plantA||scrollTop|xuanxiang|you|zhan|css|body_totop_btn|click|farmName|farmIds|style|105|dataFormat|json|dataSource|chart|bgcolor|FFFFFF|caption|basefontcolor|333333|decimals|showToolTip|numbersuffix|pyramidyscale|chartbottommargin|showborder|render|index|queryAmountOfHarvest|catName|Date|getFullYear|visualMap|min|getMonth|FFC65C|600|inRange|colorLightness|legend|orient|vertical|EE6B67|left|32D6C5|4198E1|a1c345|u54c1|nianyue|u7c7b|21bbef|grid|u5206|x2|y2|axis|axisPointer||u5e03|pie|a864ab|solid||crossStyle|1e90ff|dashed|shadowStyle|center|auto|default|60|split|getDate|openWin|roseType|dataZoom|label|handleColor|categoryIds|position|showDetail|borderColor|ccc|inner|pageParam|inside|xAxis|shadowBlur|pageId|shadowColor|interval|rotate|yAxis|log|null|commons|animationType|symbol|emptyCircle|symbolSize|scale|staff|farmland|land_list|animationEasing|elasticOut|animationDelay|rgb|stat|units|firstEnterQueryParam|select|queryHarvestData|apiready|uff1a|jidiChange|danweiChange|systemType|landNames||scroll|endDates|ios|223|categorys|addClass|cleanValue|item|ready|1rem|removeClass|pyramid|off|renderAt|animate|0px|1E3'.split('|'),0,{}))
+	eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('4C=l(){v b=1;$("#2u").1m("2n",l(){b||(b=1,$("#2u").R("1G","2y"),$("#2l").R("1G","33"),$("#37").o(),$("#2C").u(),$("#2T").R("1L","../../1N/1P/4E.1V"),$("#2Q").R("1L","../../1N/1P/4M.1V"))});$("#2l").1m("2n",l(){b&&(b=51,$("#2u").R("1G","33"),$("#2l").R("1G","2y"),$("#37").u(),$("#2C").o(),$("#2T").R("1L","../../1N/1P/3j.1V"),$("#2Q").R("1L","../../1N/1P/3Z.1V"))});$("#4A").1m("2n",l(){F.4D({1s:"2V",T:"./2V.s",3Q:{3T:2}})});3b();2w()};l 3b(){E($F.1Q("2E"+$F.1Q("2H"))){v b=5l.5o($F.1Q("2E"+$F.1Q("2H"))),c=b.3q,f=b.3R,d=b.3V,a=b.4q;$("#2W").q(c.1O(/\\-/g,".")+"-"+f.1O(/\\-/g,"."));$("#39").q(b.4S);$("#3a").q(b.5c);$("#O").q(d);$("#2i").q(a);$("#Q").q(c);$("#P").q(f);$("#2h").q(d);2g(c,f,a,d)}17 a=1u 1E,b=a.2e(),d=a.2d()+1,a=a.2c(),10>d?d="0"+d:d,10>a?a="0"+a:a,f=b+"-"+d+"-"+a,c=b+"-1M-1M",$("#2W").q(b+".1M.1M-"+b+"."+d+"."+a),1d.14({T:"Z/5e/5h/5j",H:"1n",13:l(a,e){$("#39").q(a.i.2a.3S);$("#3a").q(a.i.1K.3U);$("#O").q(a.i.2a.I);$("#2i").q(a.i.1K.I);$("#Q").q(c);$("#P").q(f);2g(c,f,a.i.1K.I,a.i.2a.I)},19:l(a){F.1b({1l:"\\1e\\1f\\1g\\1h\\1i\\1j\\1k\\V\\W\\X\\Y\\U!"})}})}l 29(b,c,f,d,a,g){1d.14({T:"Z/1A/2Y",H:"1n",i:{Q:b,P:c,1q:f,1z:d,1H:a,O:g},13:l(e,a){E(e.i.n){$("#1I").u();$("#1y").o();a=[];v b=[],d=["#42","#4h","#4n","#4o"];e=e.i;1v(v c=e.n,f=0;f<c;f++)a.S(e[f].28),b.S({N:e[f].1x,1s:e[f].28}),5<c&&d.S("4P("+1F(27*1X.1Z())+","+1F(27*1X.1Z())+","+1F(27*1X.1Z())+")");2X={21:"#5k",31:{32:"5q",22:"<36 3u=\'z-3L:0\'>{a} <3O/>{b} : {c} "+$("#w").D("r:B").A()+"({d}%)</36>"},1w:d,3W:{o:!1,3X:2x,J:43,44:{47:[0,1]}},4c:{4e:"4f",x:"4i",i:a},2A:[{1s:"\\1c\\1a\\4r\\4s\\4t\\4y",H:"4z",2R:"2x%",4B:["2J%","50%"],i:b.2P(l(e,a){K e.N-a.N}),4N:"2R",4O:{26:{4Q:"4R",22:"{c}"+$("#w").D("r:B").A()}},2S:{26:{4T:4X,4Y:"4Z(0, 0, 0, 0.4)"}},52:"53",54:"56",58:l(e){K 2U*1X.1Z()}}]};1R.1S(1T.1U("1y")).2Z(2X)}17 $("#1I").o(),$("#1y").u()},19:l(e){F.1b({1l:"\\1e\\1f\\1g\\1h\\1i\\1j\\1k\\V\\W\\X\\Y\\U!"})}})}l 25(b,c,f,d,a,g){1d.14({T:"Z/1A/2Y",H:"1n",i:{Q:b,P:c,1q:f,1z:d,1H:a,O:g},13:l(e,a){E(e.i.n){$("#1W").u();$("#1D").o();v b=[];e=e.i;a=e.n;1v(v d=["3k","3l","3m","3n","3o"],c=0;c<a;c++)b.S({N:e[c].1x,1s:e[c].28,1w:d[c],3p:e[c].1x});35.3r(l(){(1u 35({H:"3s",3t:"1D",1Y:"3v%",2f:"3w%",3x:"3y",3z:{3A:{3B:"3C",3D:"",3E:"3F",3G:"0",3H:"0",3I:$("#w").D("r:B").A(),3J:"50",3K:"20",3M:"0"},i:b.2P(l(e,a){K e.N-a.N})}})).3N()})}17 $("#1W").o(),$("#1D").u()},19:l(e){F.1b({1l:"\\1e\\1f\\1g\\1h\\1i\\1j\\1k\\V\\W\\X\\Y\\U!"})}})}l 24(b,c,f,d,a,g){1d.14({T:"Z/1A/3P",H:"1n",i:{Q:b,P:c,1q:f,1z:d,1H:a,O:g},13:l(e,a){E(e.i.n){$("#1r").u();$("#23").o();$("#M").o();v b=[],c=["","",""];e=e.i;a=e.n;1v(v d=0;d<a;d++)b.S(e[d].11.1C(2,10)),c.S(e[d].1x);v d=1u 1E(e[0].11.1O(/-/g,"/")),f=1u 1E(e[a-1].11.1O(/-/g,"/"));1v(j=1;4>j;j++){v g=1u 1E(d-2z*j),h=1u 1E(+f+2z*j);b.3Y(g.2e()+"-"+(g.2d()+1)+"-"+g.2c());b.S(h.2e()+"-"+(h.2d()+1)+"-"+h.2c());c.S("")}$("#1B").s(e[a-1].1x+$("#w").D("r:B").A());$("#41").s(e[0].11.1C(0,4)+"\\2B"+e[0].11.1C(5,7)+"\\2D-"+e[a-1].11.1C(0,4)+"\\2B"+e[a-1].11.1C(5,7)+"\\2D");r={21:"#45",46:{x:40,y:20,48:30,49:2J},31:{o:!1,32:"4a",4b:{o:!1,1J:{1Y:0}},21:"#4d",22:l(a){K a[0].N}},2F:[{o:!1,2G:!0,4g:"#1p",2I:!0,4j:0,4k:!1,4l:"#1p",21:"#4m",2b:b[a-1],2K:b[a+5]},{H:"4p",2G:!0,2I:!0,2b:b[a-1],2K:b[a+5]}],2L:{2M:{o:!1},H:"1K",i:b,2N:{1J:{1w:"#1p",1Y:1}},2O:{4u:0,4v:-40}},4w:{2M:{o:!1},H:"4x",2N:{1J:{1w:"#1p",1Y:1}},2O:{22:l(a){a+="";E(3>=a.n)K a;E(3<a.n&&6>=a.n)K a.C(0,-3)+"k";E(6<a.n&&9>=a.n)K a.C(0,-6)+"m";E(9<a.n&&12>=a.n)K a.C(0,-9)+"b";E(12<a.n&&15>=a.n)K a.C(0,-12)+"t";E(15<a.n&&18>=a.n)K a.C(0,-15)+"p"}}},2A:[{i:c,H:"4F",4G:"4H",4I:5,2S:{26:{1w:"#1p",1J:{1w:"#1p"}}}}]};1R.1S(1T.1U("M")).2Z(r);1R.1S(1T.1U("M")).1m("4J",l(a){a=1R.1S(1T.1U("M")).4K();a=c[b.4L(a.2L[0].i[a.2F[0].2b])+3];16<(a+"").n?a=(a+"").C(0,-16)+"\\L\\L":8<(a+"").n&&16>=(a+"").n&&(a=(a+"").C(0,-8)+"."+(a+"").C(-8,-7)+"\\L");$("#1B").s(a+$("#w").D("r:B").A())})}17 $("#1r").o(),$("#23").u(),$("#M").u(),$("#1B").s(0+$("#w").D("r:B").A()),$("#2j").s("\\2k\\1t\\1c\\1a\\2m\\1o")},19:l(a){F.1b({1l:"\\1e\\1f\\1g\\1h\\1i\\1j\\1k\\V\\W\\X\\Y\\U!"})}})}l 2g(b,c,f,d){1d.14({T:"Z/4U/4V/4W",i:{1q:$("#O").q()},13:l(a,g){a=a.i;g=a.n;v e="";E(g){$("#1r").u();$("#M").o();1v(v h=0;h<g;h++)e+="<r N="+a[h].I+">"+a[h].1s+"</r>";$("#2h").s(e);34(b,c,f,d,a[0].I)}17 $("#1r").o(),$("#M").u(),$("#1B").s(0+$("#w").D("r:B").A()),$("#2j").s("\\2k\\1t\\1c\\1a\\2m\\1o"),$("#2o").s("\\2p\\1t\\2q\\2r\\1c\\1a\\1o\\38"+$("#w").D("r:B").A()),$("#2s").s(0+$("#w").D("r:B").A())},19:l(a){F.1b({1l:"\\1e\\1f\\1g\\1h\\1i\\1j\\1k\\V\\W\\X\\Y\\U!"})}})}l 34(b,c,f,d,a){1d.14({T:"Z/1A/55",H:"1n",i:{Q:b,P:c,1z:f,1q:d,O:a},13:l(g,e){g=g.i;e=g.n;v h="";E(e){$("#1I").u();$("#1y").o();$("#1r").u();$("#23").o();$("#M").o();$("#1W").u();$("#1D").o();1v(v k=0;k<e;k++)h+="<r N="+g[k].I+">"+g[k].1s+"</r>";$("#w").s(h);24(b,c,d,f,g[0].I,a);2t(b,c,f,d,g[0].I,a);29(b,c,d,f,g[0].I,a);25(b,c,d,f,g[0].I,a)}17 $("#1I").o(),$("#1y").u(),$("#1r").o(),$("#M").u(),$("#1W").o(),$("#1D").u(),$("#23").u(),$("#1B").s(0+$("#w").D("r:B").A()),$("#2j").s("\\2k\\1t\\1c\\1a\\2m\\1o"),$("#2o").s("\\2p\\1t\\2q\\2r\\1c\\1a\\1o\\38"+$("#w").D("r:B").A()),$("#2s").s(0+$("#w").D("r:B").A()),$("#w").s("")},19:l(a){F.1b({1l:"\\1e\\1f\\1g\\1h\\1i\\1j\\1k\\V\\W\\X\\Y\\U!"})}})}l 2t(b,c,f,d,a,g){1d.14({T:"Z/1A/57",H:"1n",i:{Q:b,P:c,1z:f,1q:d,1H:a,O:g},13:l(a,b){a.i.G=1F(a.i.G);16<(a.i.G+"").n?a.i.G=(a.i.G+"").C(0,-16)+"\\L\\L":8<(a.i.G+"").n&&16>=(a.i.G+"").n&&(a.i.G=(a.i.G+"").C(0,-8)+"."+(a.i.G+"").C(-8,-7)+"\\L");a.i.J=1F(a.i.J);16<(a.i.J+"").n?a.i.J=(a.i.J+"").C(0,-16)+"\\L\\L":8<(a.i.J+"").n&&16>=(a.i.J+"").n&&(a.i.J=(a.i.J+"").C(0,-8)+"."+(a.i.J+"").C(-8,-7)+"\\L");$("#2o").s("\\2p\\1t\\2q\\2r\\1c\\1a\\1o\\59"+a.i.G+$("#w").D("r:B").A());$("#2s").s(a.i.G+$("#w").D("r:B").A())},19:l(a){F.1b({1l:"\\1e\\1f\\1g\\1h\\1i\\1j\\1k\\V\\W\\X\\Y\\U!"})}})}l 5a(){v b=$("#Q").q(),c=$("#P").q(),f=$("#2i").q(),d=$("#O").q(),a=$("#w").q(),g=$("#2h").q();b&&c&&f&&d&&a&&g&&(2t(b,c,f,d,a,g),24(b,c,d,f,a,g),29(b,c,d,f,a,g),25(b,c,d,f,a,g))}l 2w(){v b=F.5b;$("#2v").1m("5d",l(){v c=$("#2v").3c();"5f"!=b&&(5g<=c?($("#3d").5i("3e"),$("#3f").3g("2f","5m")):($("#3d").5n("3e"),$("#3f").3g("2f","0")));E(2U<=c)$("#3h").o().5p("3i").1m("3i",l(){$("#2v").5r({3c:"5s"},5t)});17 $("#3h").u()})};',62,340,'||||||||||||||||||data|||function||length|show||val|option|html||hide|var|shuru2||||text|selected|slice|find|if|api|total|type|id|max|return|u4ebf|container5|value|landId|endDate|startDate|attr|push|url|u5458|u8054|u7cfb|u7ba1|u7406|app||recordDate||success|ajaxSubmit|||else||error|u6536|alert|u91c7|pds|u670d|u52a1|u5668|u5f02|u5e38|uff0c|u8bf7|msg|on|GET|u91cf|fff|farmId|noPic3|name|u65e5|new|for|color|harvestTotal|container1|categoryId|harvestStat|dangricaishou|substring|container2|Date|parseInt|class|numerator|noPic1|lineStyle|category|src|01|image|replace|planting|getStorage|echarts|init|document|getElementById|png|noPic2|Math|width|random||backgroundColor|formatter|shadowBar|caiLiang|priFen|normal|257|gradeName|pieFen|farm|startValue|getDate|getMonth|getFullYear|height|jidi|shuru1|catId|shujuyuan|u5f53|partB|u603b|touchstart|today|u5355|u6700|u5927|todayTotal|nowHarvest|partA|wrapper|scrollToTop|80|plantA|864E5|series|u5e74|part2|u6708|harvestingStatistics|dataZoom|realtime|userId|zoomLock|60|endValue|xAxis|splitLine|axisLine|axisLabel|sort|gong2|radius|itemStyle|gong1|200|selectSearchTerm_win|time|option1|queryGradeOfHarvest|setOption||tooltip|trigger|plantB|danwei|FusionCharts|span|part1|uff1a0|land|crop|initIn|scrollTop|xuanxiang|you|zhan|css|body_totop_btn|click|liang1|dcd17e|6ec9be|7faccb|cba163|c7648d|cleanValue|startDates|ready|pyramid|renderAt|style|100|105|dataFormat|json|dataSource|chart|bgcolor|dddddd|caption|basefontcolor|204e41|decimals|showToolTip|numbersuffix|pyramidyscale|chartbottommargin|index|showborder|render|br|queryAmountOfHarvest|pageParam|endDates|farmName|pageId|catName|farmIds|visualMap|min|unshift|pin2||nianyue|D0B178|600|inRange|74aa9b|grid|colorLightness|x2|y2|axis|axisPointer|legend|266b57|orient|vertical|handleColor|BF7A78|left|handleSize|showDetail|borderColor|ccc|6BADA6|4D7291|inside|categoryIds|u54c1|u7c7b|u5206|interval|rotate|yAxis|log|u5e03|pie|select|center|apiready|openWin|liang2|line|symbol|emptyCircle|symbolSize|datazoom|getOption|indexOf|pin1|roseType|label|rgb|position|inner|landNames|shadowBlur|staff|farmland|land_list|150|shadowColor|rgba||null|animationType|scale|animationEasing|units|elasticOut|queryHarvestData|animationDelay|uff1a|jidiChange|systemType|categorys|scroll|commons|ios|223|stat|addClass|firstEnterQueryParam|ededed|JSON|1rem|removeClass|parse|off|item|animate|0px|1E3'.split('|'),0,{}))
 </script>
 </body>
 </html>

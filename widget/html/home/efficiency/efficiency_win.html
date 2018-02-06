@@ -17,7 +17,7 @@
 </head>
 <body>
 <div id="header">
-        <div class="headerLeft" onclick="api.closeWin()"></div>
+        <div class="headerLeft" onclick="closeWin()"></div>
         <div class="headerCenter">人员效率分析</div>
         <div class="headerRight"></div>
 </div>
@@ -41,7 +41,27 @@
 							h: 'auto'
 					}
 			});
-			
+
+
+			api.addEventListener({
+					name: 'keyback'
+			}, function(ret, err){
+					if( ret ){
+						closeWin();
+					}
+			});
+
+	}
+	/*******监听事件*********/
+	function onkeyback(){
+		api.sendEvent({
+				name: 'backHome'
+			})
+	}
+
+	function closeWin() {
+		api.closeWin();
+	  onkeyback();
 	}
 
 

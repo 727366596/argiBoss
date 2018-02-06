@@ -23,6 +23,7 @@
         <div class="headerCenter" >种苗测算</div>
 				<div class="headerRight"></div>
      </header>
+
 </body>
 <script type="text/javascript" src="../../../script/common/api.js"></script>
 	<script type="text/javascript">
@@ -32,18 +33,18 @@
 			$api.fixStatusBar(header);
 			var headerPos = $api.offset(header);
 			var body_h = $api.offset($api.dom('body')).h;
-			api.openFrame({
-				name : 'seed_dosageFrm',
-				url : './seed_dosageFrm.html',
-				bounces : true,
-				reload : true,
-				rect : {
-					x : 0,
-					y : headerPos.h,
-					w : 'auto',
-					h : 'auto'
-				}
-			})
+			// api.openFrame({
+			// 	name : 'seed_dosageFrm',
+			// 	url : './seed_dosageFrm.html',
+			// 	bounces : true,
+			// 	reload : true,
+			// 	rect : {
+			// 		x : 0,
+			// 		y : headerPos.h,
+			// 		w : 'auto',
+			// 		h : 'auto'
+			// 	}
+			// })
 		};
 		function closeWin() {
 					api.closeWin();

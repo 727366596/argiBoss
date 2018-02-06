@@ -133,7 +133,7 @@
 </head>
 <body>
     <div id="header">
-        <div class="headerLeft" onclick="back();"></div><!-- width:0; -->
+        <div class="headerLeft" onclick="closeWin()"></div><!-- width:0; -->
         <div class="headerCenter"><!-- width:80%;margin-left:0.3rem; -->
             <div class="headerSearchBox" onclick="openSearchWin(this);">
           			<span data-id="" data-name="" class="name"></span>
@@ -181,6 +181,15 @@
 		};
 		// //打开frm组
 		// openFrmGroup(topHeight);
+
+
+			api.addEventListener({
+					name: 'keyback'
+			}, function(ret, err){
+					if( ret ){
+						closeWin();
+					}
+			});
 	};
 
 	//获取作物初始默认值
@@ -326,8 +335,18 @@
 	};
 
 	//返回上一级********************************************************************
-	function back() {
-			api.closeWin();
+	/*******监听事件*********/
+	function onkeyback(){
+		api.sendEvent({
+				name: 'backHome'
+			})
 	}
+
+	function closeWin() {
+		api.closeWin();
+	  onkeyback();
+	}
+
+
 </script>
 </html>

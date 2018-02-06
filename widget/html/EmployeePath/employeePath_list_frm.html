@@ -279,15 +279,17 @@
 <!-- <script type="text/javascript" src="../../script/common/zepto-1.2.0.min.js"></script> -->
 <!-- <script type="text/javascript" src="../../script/common/iscroll.js"></script> -->
 <script type="text/javascript" src="../../script/common/pds.ajax.js"></script>
+<script type="text/javascript" src="../../script/common/emptyFrm.js"></script>
 <script type="text/javascript">
+    var navH = null;
+    var emptyImgUrl = "../../image/empty.png";
     apiready = function(){
         api.parseTapmode();
+        navH = $(".nav").height();
         //点击tab切换
         tabCheck();
         //默认触发今日
         $("#0").triggerHandler('touchend');
-
-
     };
 
 
@@ -295,6 +297,7 @@
   	var page = 1, pageSize = 5, navId = null;
 
   	function tabCheck(){
+      emptyFrm.hide();
       var pathListDataUrl = "";
   		$(".nav li").off("touchend").on("touchend",function(){
   				$(".nav li span").css({
@@ -343,6 +346,7 @@
     						//alert(JSON.stringify(e))
                 total = e.total;
     						if(e.total > 0){
+                    emptyFrm.hide();
     								var techListArr = e.data;
     								var techListStr = "";
     								var articleTypeName = null;
@@ -444,8 +448,9 @@
     								}
 
     						}else{
-                    $('.more span').text('暂无轨迹数据...');
+                    $('.more span').text('暂无数据...');
                     $('.pull_icon').removeClass('loading');
+                    emptyFrm.show("暂无相关轨迹~", navH, emptyImgUrl)
                 };
 
     				 },
