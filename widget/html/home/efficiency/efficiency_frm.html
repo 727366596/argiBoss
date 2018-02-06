@@ -494,7 +494,7 @@
              return;
          };
          var selectNameSum = $("#section_special .section");
-         
+
          if (selectNameSum.length == 0) {
              api.alert({msg: '请选择基地'});
              return;
@@ -673,19 +673,19 @@
 
                     }
                     // alert(JSON.stringify(farm_name))
-                    // alert(JSON.stringify(completeData))
-                    // alert(JSON.stringify(confrimData))
+                    //alert(JSON.stringify(completeData))
+                    //alert(JSON.stringify(confrimData))
                     //总工单量
                     var sendArray =[]
                     for (var i = 0; i < completeData.length; i++) {
                         var tempA = completeData[i];
-                        for (var j = 0; j < confrimData.length; j++) {
-                              var tempB = confrimData[j];
-                              var resultNum = tempA + tempB;
-                              sendArray.push(resultNum);
-                        }
+                        var tempB = confrimData[i];
+                        var resultNum = tempA + tempB;
+                        sendArray.push(resultNum);
+                        // for (var j = 0; j < confrimData.length; j++) {
+                        // }
                     };
-
+                    //alert(JSON.stringify(sendArray))
 
                   }else{
                       // ___________________________________________________临时假数据，需删除————————————————————————————————————————————————————————————
