@@ -143,7 +143,6 @@
 					height: 0.86rem;
 					font-size: 0.28rem;
 					color: #5c634b;
-					border-top: 1px solid #f6f3f3;
 				}
 				.nianfen{
 					height: 0.86rem;
@@ -636,6 +635,27 @@
 				width: 100%;
 				height: 5.77rem;
 			}
+			.decorateL{
+				float: left;
+				padding-top: 0.3rem;
+				height: 1rem;
+				width: 35%;
+			}
+			.wenben{
+				float: left;
+				height: 1rem;
+				text-align: center;
+				width: 30%;
+			}
+			.decorateR{
+				float: left;
+				padding-top: 0.3rem;
+				height: 1rem;
+				width: 35%;
+			}
+			.decorateR::after{
+				clear: both;
+			}
     </style>
 </head>
 <body>
@@ -692,7 +712,13 @@
 				</div>
 			</div>
 			<div class="title2" style="color:#204e41">
-				实际投入分布
+				<div class="decorateL">
+					<img src="../../image/planting/decorateL.png" alt="" style="width:100%">
+				</div>
+				<div class="wenben">实际投入分布</div>
+				<div class="decorateR">
+					<img src="../../image/planting/decorateR.png" alt="" style="width:100%">
+				</div>
 			</div>
 			<div class="nian">
 				<span id="sanjiao2" class="sanjiao2"></span>
