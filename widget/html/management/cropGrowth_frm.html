@@ -414,7 +414,6 @@
 					if(i>0){
 						$("#section2").append($("#growth").clone().removeAttr("id"))
 					}
-					period[i]=period[i].reverse()
 					for(let j=0; j<period[i].length; j++){
 						per+='<span onclick="qiehuan(this)" id='+period[i][j].updateDate+','+period[i][j].growthCycleId+','+period[i][j].disease+','+period[i][j].insectPests+','+period[i][j].grassHarm+','+period[i][j].physiologicalStress+','+period[i][j].ifDeficiency+','+period[i][j].weak+','+categoryId+','+period[i][j].modelNum+' >'+period[i][j].lifeCycle+'</span>'
 					}
@@ -600,6 +599,27 @@
 						$("#noImg").hide()
 						$("#swiper-container").show()
 						$("#swiper-wrapper").html(str)
+						var mySwiper = new Swiper(".swiper-container",{
+								loop : true,
+								autoplay : 3000,
+								noSwiping : true,//控制slide是否可手动滑动
+								observer:true,
+								preloadImages:true,
+								initialSlide :0,
+								updateOnImagesReady : true,
+								speed:1000,
+								autoplayDisableOnInteraction : false,
+								effect : 'coverflow',
+								centeredSlides: true,
+								spaceBetween : 0,
+								coverflow: {
+												rotate: 0,
+												stretch: -48,
+												depth: 200,
+												modifier: 2,
+												slideShadows : false
+								}
+						 })
 					}else{
 						$("#noImg").show()
 						$("#swiper-container").hide()
@@ -673,27 +693,6 @@
 			});
 		}
 	}
-	var mySwiper = new Swiper(".swiper-container",{
-			loop : true,
-			autoplay : 3000,
-			noSwiping : true,//控制slide是否可手动滑动
-			observer:true,
-			preloadImages:true,
-			initialSlide :0,
-			updateOnImagesReady : true,
-			speed:1000,
-			autoplayDisableOnInteraction : false,
-			effect : 'coverflow',
-			centeredSlides: true,
-			spaceBetween : 0,
-			coverflow: {
-							rotate: 0,
-							stretch: -48,
-							depth: 200,
-							modifier: 2,
-							slideShadows : false
-			}
-	 })
 	 function qiehuan(dom){
 		 //$api.setStorage('growthCycleId',$(this).attr("id"))
 			let i=$(dom).parent().parent().parent().index()-2
