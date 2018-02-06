@@ -143,6 +143,7 @@
 					height: 0.86rem;
 					font-size: 0.28rem;
 					color: #5c634b;
+					border-top: 1px solid #f6f3f3;
 				}
 				.nianfen{
 					height: 0.86rem;
@@ -582,22 +583,29 @@
 			.swiper-slide-top-icon{
 				width: 1.0rem;
 				height: 1.0rem;
+				/*padding: 0.1rem;*/
 				background-color: #fff;
 			}
 			.swiper-slide-top-icon>img{
 				height: 100%;width: 100%;
 				border-radius: 50%;
-				border: solid 3px #74c09e;
+				border: solid 2px #acb0af;
 			}
 			.swiper-slide-top-icon>img.sliderImg-active{
-				border: solid 3px #f3c753;
+				border: solid 2px #c3a256;
+			}
+			.swiper-slide-top-icon>img.sliderImg-finish{
+				border: solid 2px #204e41;
 			}
 			.swiper-slide-bottom{
-				height: 25%;width: 100%;color: #74c09e;
+				height: 25%;width: 100%;color: #acb0af;
 				text-align: center;line-height: 0.375rem;font-size: 0.27rem;
 			}
 			.swiper-slide-bottom-active{
-				color: #f3c753;
+				color: #c3a256;
+			}
+			.swiper-slide-bottom-finish{
+				color: #204e41;
 			}
 			.part2Content{
 				width: 100%;
@@ -634,27 +642,6 @@
 				display: none;
 				width: 100%;
 				height: 5.77rem;
-			}
-			.decorateL{
-				float: left;
-				padding-top: 0.3rem;
-				height: 1rem;
-				width: 35%;
-			}
-			.wenben{
-				float: left;
-				height: 1rem;
-				text-align: center;
-				width: 30%;
-			}
-			.decorateR{
-				float: left;
-				padding-top: 0.3rem;
-				height: 1rem;
-				width: 35%;
-			}
-			.decorateR::after{
-				clear: both;
 			}
     </style>
 </head>
@@ -712,13 +699,7 @@
 				</div>
 			</div>
 			<div class="title2" style="color:#204e41">
-				<div class="decorateL">
-					<img src="../../image/planting/decorateL.png" alt="" style="width:100%">
-				</div>
-				<div class="wenben">实际投入分布</div>
-				<div class="decorateR">
-					<img src="../../image/planting/decorateR.png" alt="" style="width:100%">
-				</div>
+				实际投入分布
 			</div>
 			<div class="nian">
 				<span id="sanjiao2" class="sanjiao2"></span>
@@ -1293,7 +1274,7 @@
 							//整体循环
 							for (var i = 0; i < datasArr.length; i++) {
 									var datasStr = "";
-									var datasObjs = datasArr[i];
+									var datasObjs = datasArr[i];//alert(JSON.stringify(datasObjs))
 									if (datasObjs != [] && datasObjs != "" && datasObjs != null) {
 											var objHtml = "";
 											var categoryName = "";
@@ -1305,31 +1286,50 @@
 													var infoNum = 0;
 													for (var j = 0; j < datasObjs.length; j++) {
 														 var dataObj = datasObjs[j];
-														 var statusImgUrl = "../../image/planting/proName.png";
+														 //var statusImgUrl = "../../image/planting/proName.png";
+														 var statusImgUrl = "../../image/planting/un-active.png";
 														 var statusTextColorClass = "";
 														 var statusImgClass = "";
 														 datasTime = dataObj.date.split(" ")[0];
 														 if (dataObj.categoryName != "" && dataObj.categoryName != null && dataObj.proName != "" && dataObj.proName != null) {
 																 categoryName = dataObj.categoryName;
 																 if (dataObj.landNames != [] && dataObj.landNames != "" && dataObj.landNames != null && dataObj.landNames.length > 0) {
-																		statusImgUrl = "../../image/planting/proName-active.png";
-																		statusTextColorClass = "swiper-slide-bottom-active";
-																		statusImgClass = "sliderImg-active";
+																		//statusImgUrl = "../../image/planting/proName-active.png";
+																		if (dataObj.status != "" && dataObj.status != null) {
+																				var status = dataObj.status;
+																				switch (status) {
+																					case "CONFIRMED":
+																						statusTextColorClass = "swiper-slide-bottom-active";
+																						statusImgClass = "sliderImg-active";
+																						statusImgUrl = "../../image/planting/plant.png";
 
-																		//此状态说明有处于该工序阶段的地块存在
-																		infoNum++;
-																		var infoMain = dataObj.landNames.join("、");
-																		//var infoMain = ["地块1","地块2","地块3","地块4","地块5","地块6","地块7","地块8","地块9"].join("、")
-																		infoStr_ += '	<div class="period">'+
-																								'			<div class="process">'+
-																								'					<span class="xuhao">'+ infoNum +'</span>'+
-																								'					<span class="chuli">'+ dataObj.proName +'</span>'+
-																								'			</div>'+
-																								'			<div class="jutineirong">'+
-																								'					<p id="jutiwenzi'+ j +'" class="jutiwenzi">处于该工序阶段的：'+ infoMain +'</p>'+
-																								'					<span class="hide more">查看更多</span>'+
-																								'			</div>'+
-																								'	</div>';
+																						//此状态说明有处于该工序阶段的地块存在
+																						infoNum++;
+																						var infoMain = dataObj.landNames.join("、");
+																						//var infoMain = ["地块1","地块2","地块3","地块4","地块5","地块6","地块7","地块8","地块9"].join("、")
+																						infoStr_ += '	<div class="period">'+
+																												'			<div class="process">'+
+																												'					<span class="xuhao">'+ infoNum +'</span>'+
+																												'					<span class="chuli">'+ dataObj.proName +'</span>'+
+																												'			</div>'+
+																												'			<div class="jutineirong">'+
+																												'					<p id="jutiwenzi'+ j +'" class="jutiwenzi">处于该工序阶段的：'+ infoMain +'</p>'+
+																												'					<span class="hide more">查看更多</span>'+
+																												'			</div>'+
+																												'	</div>';
+
+																						break;
+																					case "COMPLETED":
+																						statusTextColorClass = "swiper-slide-bottom-finish";
+																						statusImgClass = "sliderImg-finish";
+																						statusImgUrl = "../../image/planting/plant.png";
+																						break;
+																					default:
+
+																				}
+																		};
+
+
 
 
 																 };
