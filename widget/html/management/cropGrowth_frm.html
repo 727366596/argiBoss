@@ -62,7 +62,7 @@
 					line-height: 0.95rem;
 					color: #204e41;
 					text-align: center;
-					border-bottom: 1px solid #f6f3f3;
+					/*border-bottom: 1px solid #f6f3f3;*/
 				}
 				.collectionTime{
 					font-size: 0.28rem;
@@ -169,6 +169,48 @@
 			 .updateTime{
 			 	font-style: normal;
 			 }
+			 .decorateL{
+				 float: left;
+				 padding-top: 0.35rem;
+				 height: 1rem;
+				 width: 37%;
+			 }
+			 .wenben{
+				 float: left;
+				 height: 1rem;
+				 text-align: center;
+				 width: 26%;
+			 }
+			 .decorateR{
+				 float: left;
+				 padding-top: 0.35rem;
+				 height: 1rem;
+				 width: 37%;
+			 }
+			 .decorateR::after{
+				 clear: both;
+			 }
+			 .decorateL1{
+				 float: left;
+				 padding-top: 0.35rem;
+				 height: 1rem;
+				 width: 30%;
+			 }
+			 .wenben1{
+				 float: left;
+				 height: 1rem;
+				 text-align: center;
+				 width: 40%;
+			 }
+			 .decorateR1{
+				 float: left;
+				 padding-top: 0.35rem;
+				 height: 1rem;
+				 width: 30%;
+			 }
+			 .decorateR1::after{
+				 clear: both;
+			 }
     </style>
 </head>
 <body>
@@ -199,7 +241,15 @@
     </section>
 
     <section id="section2">
-				<p class="plantCondition">作物长势</p>
+				<div class="plantCondition">
+					<div class="decorateL">
+						<img src="../../image/planting/decorateL.png" alt="" style="width:100%">
+					</div>
+					<div class="wenben">作物长势</div>
+					<div class="decorateR">
+						<img src="../../image/planting/decorateR.png" alt="" style="width:100%">
+					</div>
+				</div>
 				<img id="tishi" src="">
 				<div id="growth">
 					<p class="collectionTime">最近采集时间：<i class="updateTime">2017-12-11</i></p>
@@ -218,7 +268,16 @@
 			</div>
     </section>
 		<section id="section3">
-			<p class="plantCondition">地里的实际情况</p>
+			<div class="plantCondition">
+				<div class="decorateL1">
+					<img src="../../image/planting/decorateL.png" alt="" style="width:100%">
+				</div>
+				<div class="wenben1">地里的实际情况</div>
+				<div class="decorateR1">
+					<img src="../../image/planting/decorateR.png" alt="" style="width:100%">
+				</div>
+
+			</div>
 			<img id="noImg" style="width:100%;height:4.96rem;display:none" src="../../image/management/shijing.png">
 			<div id="swiper-container" class="swiper-container"><!--swiper容器[可以随意更改该容器的样式-->
 			    <div class="swiper-wrapper" id="swiper-wrapper">
