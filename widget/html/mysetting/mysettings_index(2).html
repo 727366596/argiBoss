@@ -12,7 +12,7 @@
 		html,body{
 			width:100%;
 			height:100%;
-			background: #f3f4f4;
+			background: #e5e5e5;
 			overflow: hidden;
 		}
 		#photo{
@@ -29,10 +29,11 @@
 			width:100%;
 			height:2.86rem;
 			padding: 0 0.22rem 0 0.52rem;
-			background-image: url(../../image/main_header_bc.png);
+			background-color: #204e41;
+			/*background-image: url(../../image/main_header_bc1.png);
 			background-size: 100% 100%;
 			background-position: center center;
-			background-repeat: no-repeat;
+			background-repeat: no-repeat;*/
 			/*display: -webkit-box;display: -webkit-flex;display:flex;
 			-webkit-justify-content: space-between; justify-content: space-between;
 			-webkit-align-items: center; align-items: center;*/
@@ -204,7 +205,7 @@
 
 		.btn-out{
 			position: absolute;
-			bottom: 0.7rem;
+			bottom: 3.9rem;
 			width: 100%;
 			line-height: 0.76rem;
 			text-align: center;
@@ -213,7 +214,8 @@
 			box-sizing: border-box;
 		}
 		#mainBtn{
-			background: #ef8233;
+			border-radius: 5px;
+			background: #c3a256;
 		}
 
 
@@ -336,7 +338,11 @@
 		.bottom .item{
 			float: left;
 		}
-
+		.item{
+			margin-top: 0.34rem;
+			background-color: #fff;
+			color: #204e41;
+		}
 	</style>
 </head>
 <body>
@@ -373,7 +379,7 @@
 				<div class="item card" id="punchCard" onclick="openChangePassword()">
 			<!--打卡页面入口-->
 					<a href="javascript:;">
-						<img src="../../image/main_content_password.png" alt="" />
+						<img src="../../image/main_content_password1.png" alt="" />
 					</a>
 					<div class="text">修改密码</div>
 				</div>
@@ -381,7 +387,7 @@
 				<div class="item promotion" id="businessPromotion" onclick="mypostion()">
 			<!--业务推广页面入口-->
 					<a href="javascript:;">
-						<img src="../../image/main_content_position.png" alt="" />
+						<img src="../../image/main_content_position1.png" alt="" />
 					</a>
 					<div class="text" >划定地块</div>
 				</div>
@@ -534,6 +540,8 @@
 				$("p[name=office]").text(office);
 				if(photo != undefined && photo != null && photo != ""){
 					$("#photo").attr("src",pds.defaultUri+'/'+photo);
+				}else{
+					$("#photo").attr("src",'../../image/main_username_login1.png');
 				}
 				if(roles){
 					if((roles.indexOf("市场总监")>-1||roles.indexOf("业务代表")>-1||roles.indexOf("大区经理")>-1)&&(roles.indexOf("服务中心")>-1 || roles.indexOf("服务顾问")>-1)){

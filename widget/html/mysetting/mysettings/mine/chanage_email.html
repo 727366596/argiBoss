@@ -6,10 +6,11 @@
 	    <title>邮箱</title>
 	    <link rel="stylesheet" type="text/css" href="../../../../css/common/api.css"/>
 	    <link rel="stylesheet" type="text/css" href="../../../../css/common/common.css"/>
+			<link rel="stylesheet" type="text/css" href="../../../../css/common/header.css"/>
 	    <link rel="stylesheet" type="text/css" href="../../../../css/common/mystyle.css">
 	    <link rel="stylesheet" type="text/css" href="../../../../css/common/mysettings.css">
 	    <style>
-	    	header{
+	    	/*header{
 				position: fixed;
 				left: 0;
 				top: 0;
@@ -17,7 +18,7 @@
 				height:68px;
 				background: #00c558;
 
-			}
+			}*/
 			/*header #top{
 				width: 100%;
 				height: 0.46rem;
@@ -73,13 +74,14 @@
 	            		<form class="chanageuseremail-form" id="chanageUserEmailForm">
 	            			<div class="form-container-noborder">
 		            			<div class="form-input-container input-b-margin">
-		            				<img class="input-img" id = "oldpimg" src="../../../../image/contact.png">
-		            				<input type="textera" data-rule="e" data-nullmsg="邮箱不能为空" data-errmsg="不是正确的邮箱格式" data-sucmsg="" id = "newEmail" name="" placeholder="请输入邮箱" value="" class="input-ta">
+		            				<!-- <img class="input-img" id = "oldpimg" src="../../../../image/contact.png"> -->
+												<span class="input-img" id = "oldpimg" style="width:32px;color:#204e41;padding-top:10px">邮箱</span>
+		            				<input style="color:#204e41" type="textera" data-rule="e" data-nullmsg="邮箱不能为空" data-errmsg="不是正确的邮箱格式" data-sucmsg="" id = "newEmail" name="" placeholder="请输入邮箱" value="" class="input-ta">
 		            			</div>
 	            			</div>
 
 	            			<div class="login-btn-container">
-	            				<a style="border-radius:40px;height:40px;line-height:40px;" class = "btn-3" href="javascript:void(0);" id="submit"><input type="button" class = "btn-1-text" name=""  value="确认修改"></a>
+	            				<a style="border-radius:5px;height:40px;line-height:40px;background-color:#c3a256" class = "btn-3" href="javascript:void(0);" id="submit"><input type="button" class = "btn-1-text" name=""  value="确认修改"></a>
 	            			</div>
 	            		</form>
 	            	</div>
@@ -88,8 +90,8 @@
 			</div>
 	    </div>
 
-	    <script type="text/javascript" src= "../../../../../script/common/jquery.min.js"></script>
-	    <script type="text/javascript" src= "./../../../../script/common/zepto.min.js"></script>
+	    <script type="text/javascript" src="../../../../script/common/jquery.min.js" charset="utf-8"></script>
+	    <!-- <script type="text/javascript" src= "./../../../../script/common/zepto.min.js"></script> -->
 	    <script type="text/javascript" src="./../../../../script/common/pds.ajax.js"></script>
 	    <script type="text/javascript" src="./../../../../script/common/api.js"></script>
 	    <script type="text/javascript" src="./../../../../script/common/availdate-v1.0.2.js"></script>
