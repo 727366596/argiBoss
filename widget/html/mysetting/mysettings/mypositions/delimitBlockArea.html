@@ -5,6 +5,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 		<title>我的-选定地块</title>
 	  <link rel="stylesheet" type="text/css" href="../../../../css/common/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../../../css/common/header.css"/>
     <style>
         .nav-bg{
 				  padding-top:24px;
@@ -20,8 +21,9 @@
 						line-height: 38px;
 						text-align: left;
 						font-size: 15px;
-						color:#726F6E;
-						border-left: 4px solid #ffd400;
+						/*color:#726F6E;*/
+						color:#204e41;
+						/*border-left: 4px solid #ffd400;*/
         }
         .section-p{
         	  position: relative;
@@ -35,11 +37,10 @@
 						font-size: 14px;
 						height: 22px;
 						line-height: 22px;
-						color: #82e268;
-            border: 1px solid #82e268;
+						color: #204e41;
         }
         .designed{
-            background-color: #E4FFDD;
+            background-color: #dde8dc;
         }
 				section{
 					padding-top: 10px;
@@ -49,18 +50,13 @@
 					border-radius: 20px;
 					padding-right: 11px;
 				}
-				.shadow{
-					clear: both;
-					padding-top: 10px;
-					border-bottom: 10px solid #f8f8f8;
-				}
 				#section2 .section-p{
 					border-radius: 4px;
 					padding-right: 11px;
 				}
-				.title{
+				/*.title{
 						border-left: 4px solid #82e268;
-				}
+				}*/
 				#mapLazyLoad {
 					width: 100%;
 					position: fixed;
@@ -90,16 +86,16 @@
 				.ok{
 					position: absolute;
 					right: 0;
-					top: 0;
-					width: 0;
-			    height: 0;
-			    border-top: 16px solid #82e268;
-			    border-left: 20px solid transparent;
+					bottom: 0;
+					width: 10px;
+			    height: 10px;
+					border-radius: 10px;
+			    background-color: #204e41;
 				}
 				.ic{
 					position: absolute;
-					right:2px;
-					top: -14px;
+					right:1.5px;
+					bottom: 3px;
 					height: 5px;
 					width: 8px;
 					background: url("../../../../image/delimit_ic.png") no-repeat left center;
@@ -109,23 +105,17 @@
     </style>
 </head>
 <body>
-<header id="mapLazyLoad">
-    <!-- <nav class="aui-bar aui-bar-nav nav-bg">
-        <a class="aui-pull-left" onclick="api.closeWin()">
-            <span class="aui-iconfont aui-icon-left"></span>
-        </a>
-        <div class="aui-title">选择地块</div>
-    </nav> -->
-		<h4><span onclick="api.closeWin()"></span>选择地块</h4>
-</header>
+<div id="header">
+        <div class="headerLeft" onclick="api.closeWin()"></div>
+        <div class="headerCenter" style="font-size:16px">人员效率分析</div>
+        <div class="headerRight"></div>
+</div>
 <article style="padding-top:70px;">
     <nav class="section-title">
         &nbsp选择基地（必选）
     </nav>
     <section id="section1">
-
     </section>
-		<p class="shadow"><p>
     <nav class="section-title title">
        &nbsp选择地块（必选）
     </nav>
@@ -177,7 +167,7 @@ function show(row){
 		p[j].style.backgroundColor="#fff"
 		//p[j].style.border="1px solid #00c558"
 	}
-	row.style.backgroundColor="#E4FFDD"
+	row.style.backgroundColor="#dde8dc"
 	//row.style.border="1px solid #00c558"
 	pds.ajaxSubmit({
 			url:"app/land/listDesign",

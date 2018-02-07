@@ -12,35 +12,44 @@
 	<script type="text/javascript" src="../../script/common/jquery.min.js"></script>
 	<script type="text/javascript" src="../../script/common/pds.ajax.js"></script>
 	<style media="screen">
+	html,body,.content{
+		width: 100%;
+		height: 100%;
+	}
 		.content_inner {
 			width: 100%;
+			height: 100%;
 			font-size: 0.24rem;
-			padding: 0.5rem 0;
+			padding: 0.4rem 0;
 			box-sizing: border-box;
+			background: #dadada;
+			font-size: 0.28rem;
+			color: #204e41;
 		}
 
 		.content_inner li {
 			width: 100%;
-			height: 1.2rem;
-			border-bottom: 1px solid #cdcdcd;
+			height: 2rem;
 			overflow: hidden;
+			margin-bottom: 0.2rem;
+			background: #ededed;
+			padding: 0.15rem 0.4rem;
+			box-sizing: border-box;
 		}
 
 		.left_img {
-			width: 20%;
+			width: 0.85rem;
 			height: 100%;
 			background-image: url(../../image/tonggao.png);
 			background-repeat: no-repeat;
-			background-size: 50% 50%;
-			background-position: center;
+			background-size: 0.44rem 0.44rem;
+			background-position: left center;
 			float: left;
-			padding-left: 0.2rem;
 		}
 
 		.right_content {
-			float: left;
-			width: 80%;
-			padding-right: 0.2rem;
+			float: right;
+			width: 5.7rem;
 		}
 
 		.left {
@@ -49,6 +58,8 @@
 
 		.right {
 			float: right;
+			margin-top: 0.1rem;
+			font-size: 0.24rem;
 		}
 
 		span {
@@ -57,9 +68,11 @@
 
 		.title {
 			width: 100%;
-			line-height: 0.6rem;
+			line-height: 0.5rem;
+			height: 1.2rem;
 			overflow: hidden;
 			text-overflow: ellipsis;
+			    margin-top: 0.1rem;
 		}
 		.none{
 			display: none;
@@ -70,16 +83,13 @@
 <body>
 	<div class="content">
 		<ul class="content_inner" id="list">
-			<!-- <li>
+			<li>
 				<div class="left_img"></div>
 				<div class="right_content">
-					<div class="title">
-						<span class="left">张三</span>
-						<span class="right">2012-10-01</span>
-					</div>
-					<div class="title">hjhkjlk;kjjhgbjklkkjhgfghjkljsdfghgfdsdfghgfdsahgfvhbjnkl</div>
+					<div class="title">精神四isisis呢卷四十岁,哈哈哈哈哈哈哈哈哈哈哈哈</div>
+					<span class="right">2012-10-01</span>
 				</div>
-			</li> -->
+			</li>
 		</ul>
 	</div>
 
@@ -95,10 +105,9 @@
 		var html = ''
 		for (var i = 0, len = data.length; i < len; i++) {
 			var time = data[i].pubdate.split(' ')[0];
-			html += '<li id="'+data[i].id+'" onclick="checkdetail(this)"><div class="left_img"><span class="none">'+data[i].content+'</span></div><div class="right_content"><div class="title">' +
-				'<span class="left name">' + data[i].author + '</span>' +
-				'<span class="right time">' + time + '</span>' +
-				'</div><div class="title header">' + data[i].title + '</div></div></li>'
+			html += '<li id="'+data[i].id+'" onclick="checkdetail(this)"><div class="left_img"><span class="none">'+data[i].content+'</span></div><div class="right_content">' +
+        '<div class="title header">' + data[i].title + '</div><span class="name" style="display:none;">'+data[i].author+'</span>' +
+				'<span class="right time">' + time + '</span></div></li>'
 		}
 		$('#list').html(html);
 	}
