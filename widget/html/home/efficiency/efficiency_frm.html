@@ -735,7 +735,7 @@
                         grid: {
                             top:'5%',
                             left: '5%',
-                            right: '5%',
+                            right: '0',
                             bottom: '17%',
                             containLabel: true
                         },
@@ -769,7 +769,7 @@
                             splitLine: {
                                 show: false
                             },
-                            //minInterval : 20
+                            minInterval : 20
                         },
                         yAxis: [
                                 {
@@ -997,7 +997,7 @@
                  //*****************************************************************
              },
              error : function(e){
-                 alert("呵呵呵呵"+JSON.stringify(e))
+                 alert(JSON.stringify(e))
              }
           });
       };
