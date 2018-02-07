@@ -427,8 +427,10 @@
 
 
 <script>
-
+	var myChart1,myChart2,myChart3
 	apiready=function(){
+		myChart1=echarts.init(document.getElementById('container1'))
+		myChart2=echarts.init(document.getElementById('container5'))
 		// var header = $api.byId('header');
 		// 	$api.fixStatusBar(header);
 		// 	var headerH = $api.offset(header).h;
@@ -535,6 +537,7 @@
 	function pieFen(startDate,endDate,farmId,categoryId,numerator,landId){
 		//alert("单位参数"+startDate+","+endDate+","+farmId+","+categoryId+","+numerator+","+landId)
 		//alert("app/harvestStat/queryGradeOfHarvest")
+		myChart1.clear()
 		pds.ajaxSubmit({
 		 url:'app/harvestStat/queryGradeOfHarvest',
 		 type : "GET",
@@ -616,7 +619,7 @@
 				        }
 				    ]
 				};
-				echarts.init(document.getElementById('container1')).setOption(option1)
+				myChart1.setOption(option1)
 			},
 		 error:function(e){
 				api.alert({msg:"服务器异常，请联系管理员!"});
@@ -686,6 +689,7 @@
 	}
 function caiLiang(startDate,endDate,farmId,categoryId,numerator,landId){
 	//alert("采收参数"+startDate+","+endDate+","+farmId+","+categoryId+","+numerator+","+landId)
+	myChart2.clear()
 	pds.ajaxSubmit({
 	 url:'app/harvestStat/queryAmountOfHarvest',
 	 type : "GET",
@@ -830,9 +834,9 @@ function caiLiang(startDate,endDate,farmId,categoryId,numerator,landId){
 		    	},
 		    }]
 		};
-		echarts.init(document.getElementById('container5')).setOption(option)
-		echarts.init(document.getElementById('container5')).on('datazoom',function(params){
-		var opt = echarts.init(document.getElementById('container5')).getOption();
+		myChart2.setOption(option)
+		myChart2.on('datazoom',function(params){
+		var opt = myChart2.getOption();
 		var dz = opt.dataZoom[0];
 		var s = harvestTotal[categories.indexOf(opt.xAxis[0].data[dz.startValue])+3];
 			if((s+"").length>16){
