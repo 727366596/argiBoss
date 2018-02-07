@@ -8,6 +8,7 @@
 	<title>种苗测算-首页</title>
 	<script type="text/javascript" src="../../../script/common/rem.js"></script>
 	<link rel="stylesheet" href="../../../css/common/public.css" />
+	<link rel="stylesheet" href="../../../css/common/header.css" />
 	<link rel="stylesheet" type="text/css" href="../../../css/common/swiper.min.css">
 	<style>
 		html,
@@ -18,7 +19,16 @@
 			height: 100%;
 		}
 
+		#header {
+			background-color: #204e41;
+		}
+
+		.headerLeft {
+			background: url("../../../image/cal_img/index/pressedbtn-fanhui@3x.png") no-repeate left;
+		}
+
 		.swiper-container {
+			padding-top: 66px;
 			width: 100%;
 			height: 100%;
 		}
@@ -250,11 +260,41 @@
 			background: #5b8c14;
 			color: #fff;
 		}
+
+		.row-spacing span,
+		.ridge-distance span {
+			display: inline-block;
+		}
+		.swiper-container{
+			position: relative;
+		}
+		.swiper-pagination {
+			position: fixed;
+			right: 0.2rem;
+			top:23%;
+			width:10px;
+			height:50px;
+			background: #000;
+		}
+		.swiper-pagination-bullet {
+			width: 6px;
+			height: 6px;
+			background: #fff;
+			opacity: .4;
+		}
+
+		.swiper-pagination-bullet-active {
+			opacity: 1;
+		}
 	</style>
 </head>
 
 <body>
-
+	<header id="header">
+		<div class="headerLeft" onclick="closeWin()"></div>
+		<div class="headerCenter">种苗测算</div>
+		<div class="headerRight"></div>
+	</header>
 
 	<div class="swiper-container">
 		<div class="swiper-wrapper">
@@ -266,9 +306,9 @@
 				<div class="seeding-img">
 					<img src="../../../image/cal_img/seeding-img.png" alt="">
 					<!-- 株距 -->
-					<span class="row-spacing">40cm</span>
+					<div class="row-spacing"><span id="plan-text">40</span>cm</div>
 					<!-- 垄距 -->
-					<span class="ridge-distance">90cm</span>
+					<div class="ridge-distance"><span id="dist-text">90</span>cm</div>
 				</div>
 				<!-- 种苗测算填写页 -->
 				<div class="content">
@@ -276,21 +316,21 @@
 					<div class="item">
 						<div class="name">株距:</div>
 						<div class="item-r">
-							<input type="number">
+							<input type="number" id="row-input">
 							<div class="right-pic">cm</div>
 						</div>
 					</div>
 					<div class="item">
 						<div class="name">垄距:</div>
 						<div class="item-r">
-							<input type="number">
+							<input type="number" id="dist-input">
 							<div class="right-pic">cm</div>
 						</div>
 					</div>
 					<div class="item">
 						<div class="name">每垄行数:</div>
 						<div class="item-r">
-							<input type="number">
+							<input type="number" id="line">
 							<div class="right-pic">行</div>
 						</div>
 					</div>
@@ -304,7 +344,7 @@
 				<div class="calculated-data">
 					<div>经测算:</div>
 					<div class="calculated-num">
-						每亩地种薯用量为<span>150千克</span>，约<span>3700</span>颗/亩。
+						每亩地种薯用量为<span id="count">150</span>千克，约<span id="num-text">3700</span>颗/亩。
 					</div>
 				</div>
 				<div class="seeding-show-img">
@@ -325,8 +365,8 @@
 				<div class="calculated-data" style="padding:0.3rem 0.6rem;margin-bottom:0;">
 					<div>测算结果:</div>
 					<div class="calculated-num">
-						建议投入成本为<span>689872元</span>，建议每亩投入种薯<span>150</span>千克 您可以省下
-						<span>98778元</span>
+						建议投入成本为<span id="idea-cost">689872</span>元，建议每亩投入种薯<span id="idea-num">150</span>千克 您可以省下
+						<span id="save-cost">98778</span>元
 					</div>
 				</div>
 				<!-- 分割线 -->
@@ -343,6 +383,7 @@
 						<span>种薯用量</span>
 						<div class="cost-back">200千克/亩</div>
 					</div>
+					
 				</div>
 				<!-- 分割线 -->
 				<div class="line">
@@ -372,7 +413,8 @@
 
 
 			</div>
-
+			<!-- 分页器 -->
+			<div class="swiper-pagination"></div>
 		</div>
 	</div>
 
@@ -381,15 +423,41 @@
 <script type="text/javascript" src="../../../script/common/jquery.min.js"></script>
 <script type="text/javascript" src="../../../script/common/pds.ajax.js"></script>
 <script type="text/javascript" src="../../../script/common/swiper.min.js"></script>
+<script type="text/javascript" src="../../../script/planting/echarts.common.min.js"></script>
+<script type="text/javascript" src="../../../script/planting/highcharts.js"></script>
+<script type="text/javascript" src="../../../script/planting/highcharts-3d.js"></script>
 <script>
 	apiready = function() {
+		$('#plan-text').text(api.pageParam.colSpacing);
+		$('#dist-text').text(api.pageParam.ridgeSpacing);
+		$('#row-input').val(api.pageParam.colSpacing);
+		$('#dist-input').val(api.pageParam.ridgeSpacing);
+		$('#line').val(api.pageParam.linesOnRidge);
 
-		$(function() {
-			var mySwiper = new Swiper('.swiper-container', {
-				direction: 'vertical'
-			})
+		$('#count').text(api.pageParam.count);
+		$('#num-text').text(22);
+
+	$('#idea-cost').text(222);
+		$('#idea-num').text(223);
+			$('#save-cost').text(224);
+
+
+
+		var mySwiper = new Swiper('.swiper-container', {
+			direction: 'vertical',
+       pagination: '.swiper-pagination',
+       mousewheelControl: true
 		})
-	}
+
+	};
+  //返回按钮操作
+	function closeWin() {
+		api.closeToWin({
+			name: 'index_win'
+		});
+	};
+
+	//
 </script>
 
 </html>

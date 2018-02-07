@@ -115,7 +115,7 @@
 				text-align: center;
 				border: 1px solid #ededed;
 			 }
-			 .slider span:first-child{
+			 .slider span:last-child{
 			 	background-color: #204e41;
 				color: #fff;
 				border: 0;
@@ -411,11 +411,12 @@
 				}
 				for(let i=0;i<period.length;i++){
 					var per=""
+					period[i]=period[i].reverse()
 					if(i>0){
 						$("#section2").append($("#growth").clone().removeAttr("id"))
 					}
 					for(let j=0; j<period[i].length; j++){
-						per+='<span onclick="qiehuan(this)" id='+period[i][j].updateDate+','+period[i][j].growthCycleId+','+period[i][j].disease+','+period[i][j].insectPests+','+period[i][j].grassHarm+','+period[i][j].physiologicalStress+','+period[i][j].ifDeficiency+','+period[i][j].weak+','+categoryId+','+period[i][j].modelNum+' >'+period[i][j].lifeCycle+'</span>'
+						per='<span onclick="qiehuan(this)" id='+period[i][j].updateDate+','+period[i][j].growthCycleId+','+period[i][j].disease+','+period[i][j].insectPests+','+period[i][j].grassHarm+','+period[i][j].physiologicalStress+','+period[i][j].ifDeficiency+','+period[i][j].weak+','+categoryId+','+period[i][j].modelNum+' >'+period[i][j].lifeCycle+'</span>'+per
 					}
 					$(".slider").eq(i).html(per)
 					per=null
@@ -607,7 +608,7 @@
 								preloadImages:true,
 								initialSlide :0,
 								updateOnImagesReady : true,
-								speed:1000,
+								speed:2000,
 								autoplayDisableOnInteraction : false,
 								effect : 'coverflow',
 								centeredSlides: true,

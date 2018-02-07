@@ -735,7 +735,7 @@
                         grid: {
                             top:'5%',
                             left: '5%',
-                            right: '-20%',
+                            right: '0',
                             bottom: '17%',
                             containLabel: true
                         },
@@ -769,7 +769,7 @@
                             splitLine: {
                                 show: false
                             },
-                            //minInterval : 20
+                            minInterval : 20
                         },
                         yAxis: [
                                 {
@@ -997,7 +997,7 @@
                  //*****************************************************************
              },
              error : function(e){
-                 alert("呵呵呵呵"+JSON.stringify(e))
+                 alert(JSON.stringify(e))
              }
           });
       };
@@ -1007,6 +1007,7 @@
     			var chartOptionObj = {	//保存chart配置项参数
     					xAxisData : [],
     					yAxisName : "小时",
+              xAxisName : "",
     					series : [],
     					legend : []
     			};
@@ -1031,14 +1032,17 @@
                               //年****************
                               if(farmObj.year != null && farmObj.year != ""){
                                   timeDate.push(farmObj.year);
+                                  chartOptionObj.xAxisName = "年";
                               };
                               //月*****************
                               if(farmObj.month != null && farmObj.month != ""){
                                   timeDate.push(farmObj.month);
+                                  chartOptionObj.xAxisName = "月";
                               };
                               //日*****************
                               if(farmObj.day != null && farmObj.day != ""){
                                   timeDate.push(farmObj.day);
+                                  chartOptionObj.xAxisName = "日";
                               };
                               //alert(JSON.stringify(timeDate));
                               chartOptionObj.xAxisData[j] = timeDate.join("-");
@@ -1075,6 +1079,7 @@
     			var chartOptionObj = {	//保存chart配置项参数
     					xAxisData : [],
     					yAxisName : "公里",
+              xAxisName : "",
     					series : [],
     					legend : []
     			};
@@ -1098,14 +1103,17 @@
                               //年****************
                               if(farmObj.year != null && farmObj.year != ""){
                                   timeDate.push(farmObj.year);
+                                  chartOptionObj.xAxisName = "年";
                               };
                               //月*****************
                               if(farmObj.month != null && farmObj.month != ""){
                                   timeDate.push(farmObj.month);
+                                  chartOptionObj.xAxisName = "月";
                               };
                               //日*****************
                               if(farmObj.day != null && farmObj.day != ""){
                                   timeDate.push(farmObj.day);
+                                  chartOptionObj.xAxisName = "日";
                               };
                               //alert(JSON.stringify(timeDate));
                               chartOptionObj.xAxisData[j] = timeDate.join("-");
@@ -1142,6 +1150,7 @@
          myChart.setOption(option = {
            tooltip: {
                trigger: 'axis',
+               triggerOn: 'click',
                confine : true,//将提示框限制在图表范围内
            },
            legend: {//图例
@@ -1161,19 +1170,21 @@
                height: '45%'
            },
            xAxis: {
+               name: chartOptionObj.xAxisName,
                data: chartOptionObj.xAxisData
            },
            yAxis: {
                name : chartOptionObj.yAxisName,
-               splitLine: {
-                   show: false
-               }
+              //  splitLine: {
+              //      show: false
+              //  }
            },
            dataZoom: [{
-               //startValue: '2010'//设置起始时间
+               //startValue: '1',//设置起始时间
                type: 'slider',
                bottom : '35%',
-
+           },{
+               type: 'inside',
            }],
            series: chartOptionObj.series
          });

@@ -209,11 +209,26 @@ apiready=function(){
 	// 	var headerH = $api.offset(header).h;
 	// 	$("body").css({"paddingTop":headerH+"px"});
 	  showLand()
-		if($api.getStorage('startDates')){
-			$("#date1").val($api.getStorage('startDates'))
-		}
-		if($api.getStorage('endDates')){
-			$("#date2").val($api.getStorage('endDates'))
+		var d = new Date(), y = d.getFullYear(), m = d.getMonth() + 1, r = d.getDate();
+		m < 10 ? m = "0" + m : m;
+		r < 10 ? r = "0" + r : r;
+		var endDate=y + "-" + m + "-" + r;
+		var startDate=y + "-0" + 1 + "-0" + 1;
+		$("#date1").val(startDate)
+		$("#date2").val(endDate)
+		if(api.pageParam.pageId==2){
+			if($api.getStorage('harvestingStatistics'+$api.getStorage("userId"))){
+				var data=JSON.parse($api.getStorage('harvestingStatistics'+$api.getStorage("userId")))
+				$("#date1").val(data.startDates)
+				$("#date2").val(data.endDates)
+			}
+	  }
+		if(api.pageParam.pageId==1){
+			if($api.getStorage('plantGrowth'+$api.getStorage("userId"))){
+				var data=JSON.parse($api.getStorage('plantGrowth'+$api.getStorage("userId")))
+				$("#date1").val(data.startDates)
+				$("#date2").val(data.endDates)
+			}
 		}
 }
 function showLand(){

@@ -640,7 +640,17 @@
 				background-color: #ededed;
 				z-index: 9999;
 			}
-			#noPic,#noP,#no{
+			#noPic{
+				display: none;
+				width: 100%;
+				height: 5.77rem;
+			}
+			#noP{
+				display: none;
+				width: 100%;
+				height: 7.1rem;
+			}
+			#no{
 				display: none;
 				width: 100%;
 				height: 5.77rem;
@@ -697,7 +707,7 @@
 				</div>
 			</div>
 		</section>
-		<img id="noP" src="../../image/planting/noPic.png" alt="">
+		<img id="noP" src="../../image/planting/plan.png" alt="">
 		<div id="part1">
 			<div id="biao1">
 				<p class="biaoTitle">
@@ -874,8 +884,8 @@
 				slidesPerView : 3,
 				slidesPerGroup : 2,
 				freeMode : true,
-				prevButton:'.swiper-button-prev',
-				nextButton:'.swiper-button-next',
+				prevButton:'.swiper-button-prev-'+className,
+				nextButton:'.swiper-button-next-'+className,
 			});
 	}
 
@@ -944,10 +954,9 @@
 				$(".more").addClass("hide");
 				setTimeout(function(){
 						$(".jutiwenzi").each(function(index, el){
-
 								var this_ = $(this);
 								var pHeight = $(this).height();
-								if (pHeight > 20) {
+								if (pHeight > 25) {
 										$(this).addClass("jutiwenzi-all");
 										$(this).next("span").removeClass("hide");
 								}else{
@@ -1384,8 +1393,8 @@
 													'								<div class="swiper-wrapper">'+
 																							objHtml.objStr+
 													'								</div>'+
-													'								<div class="swiper-button-prev swiper-button-black" style="background-image:url(../../image/planting/swiper-button-prev.png);margin-left:-0.2rem;z-index:99999;position:absolute;top:0.6rem;"></div>'+
-													'								<div class="swiper-button-next swiper-button-black" style="background-image:url(../../image/planting/swiper-button-next.png);margin-right:-0.2rem;z-index:99999;position:absolute;top:0.6rem;"></div>'+
+													'								<div class="swiper-button-prev swiper-button-prev-swiperWrap'+ i +' swiper-button-black" style="background-image:url(../../image/planting/swiper-button-prev.png);margin-left:-0.2rem;z-index:99999;position:absolute;top:0.6rem;"></div>'+
+													'								<div class="swiper-button-next swiper-button-next-swiperWrap'+ i +' swiper-button-black" style="background-image:url(../../image/planting/swiper-button-next.png);margin-right:-0.2rem;z-index:99999;position:absolute;top:0.6rem;"></div>'+
 													'						</div>'+
 																			objHtml.infoStr+
 													'				</div>';
