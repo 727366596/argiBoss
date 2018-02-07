@@ -208,6 +208,11 @@
           var total ;
           var paramObj = {};
           var eachData;
+          function sendCall(dom){
+            var phone = $(dom).attr('data-phone');
+            api.call({type: 'tel_prompt',number: phone });
+            event.stopPropagation();//阻止事件冒泡
+          }
           function pathListData(page, pageSize,growthCycleId,farmId,landId,categoryId,startDate,endDate,weak,modelNum){
                 pds.ajaxSubmit({
                    url:"app/task/cropModeltaskList",
