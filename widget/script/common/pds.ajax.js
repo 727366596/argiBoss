@@ -3,7 +3,7 @@ var pds = (typeof this.pds === 'undefined') ? {} : this.pds;
 
 	var uriConfig = {
 	  //  dev:"http://172.16.36.98:8080/",
-		dev:'http://172.16.36.224:8080/argi/',//小强
+		// dev:'http://192.168.10.164:8080/',//小强
 			//dev:'http://39.106.46.30:8081/',//富川
 		//	dev:'http://172.16.36.119:8080/',//富川
 		// dev:"http://172.16.36.132:8080/",
