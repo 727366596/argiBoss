@@ -1150,6 +1150,7 @@
          myChart.setOption(option = {
            tooltip: {
                trigger: 'axis',
+               triggerOn: 'click',
                confine : true,//将提示框限制在图表范围内
            },
            legend: {//图例
@@ -1174,15 +1175,16 @@
            },
            yAxis: {
                name : chartOptionObj.yAxisName,
-               splitLine: {
-                   show: false
-               }
+              //  splitLine: {
+              //      show: false
+              //  }
            },
            dataZoom: [{
-               //startValue: '2010'//设置起始时间
+               //startValue: '1',//设置起始时间
                type: 'slider',
                bottom : '35%',
-
+           },{
+               type: 'inside',
            }],
            series: chartOptionObj.series
          });
