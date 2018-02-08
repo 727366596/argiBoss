@@ -55,11 +55,11 @@
 
 <script type="text/javascript">
 	apiready = function() {
+
 		api.parseTapmode();
 		api.setFullScreen({
 			fullScreen: true
 		});
-		jumpLogin();
 		advImg();
 		api.addEventListener({
 			name: 'openLogin'
@@ -77,7 +77,7 @@
 		});
 
 	};
-
+var time
 	function advImg() {
 		var systemType = api.systemType;
 		var code = ''
@@ -93,29 +93,30 @@
 				"place": 'start'
 			},
 			success: function(e) {
-				console.log('++++++++' + JSON.stringify(e))
+			//	console.log('++++++++' + JSON.stringify(e))
+				if (e.data !== null && e.data !== '') {
+					var data = e.data.data || []
+					if (data.length > 0) {
+						var pictureUrl = data[0].pictureUrl
+						$('img').attr('src', pictureUrl)
+						$('img').on('click', function() {
+							jumpPage(data[0].title, data[0].url)
+						})
+					}
+				}
 				setTimeout(function() {
 					var number = 3;
-					var time = setInterval(function() {
+					 time = setInterval(function() {
 						number--;
 						if (number > 0) {
 							$('.jump').text(number)
 						} else {
 							clearInterval(time)
+							jumpLogin()
 						}
 					}, 1000)
-				}, 1500);
-				if (e.data !== null && e.data !== '') {
-					var data = e.data.data || []
-					if (data.length > 0) {
-						var pictureUrl = data[0].pictureUrl
-							// var url= data[0].url
-						$('img').attr('src', pictureUrl)
-						$('img').on('click', function() {
-							Page(data[0].title, data[0].url)
-						})
-					}
-				}
+				}, 2000);
+
 			},
 			error: function(e) {
 				api.alert({
@@ -124,10 +125,9 @@
 			}
 		});
 	}
-	var settime;
+
 
 	function jumpLogin() {
-		settime = setTimeout(function() {
 			api.openWin({
 				name: "login_new",
 				url: "widget://html/login/login_new.html",
@@ -139,24 +139,9 @@
 					duration: 400 //动画过渡时间，默认300毫秒
 				}
 			});
-		}, 3000)
 	}
 
-	function jumpSlogin() {
-		clearTimeout(settime)
-		api.openWin({
-			name: "login_new",
-			url: "widget://html/login/login_new.html",
-			reload: true,
-			slidBackEnabled: false,
-			animation: {
-				type: "movein", //动画类型（详见动画类型常量）
-				subType: "from_right", //动画子类型（详见动画子类型常量）
-				duration: 400 //动画过渡时间，默认300毫秒
-			}
-		});
-	}
-	$('.box').on('click', jumpSlogin)
+	$('.box').on('click', jumpLogin)
 
 	function jumpPage(title, url) {
 		api.openWin({
@@ -172,7 +157,7 @@
 				duration: 400 //动画过渡时间，默认300毫秒
 			}
 		});
-		clearTimeout(settime)
+		clearInterval(time)
 	}
 </script>
 
