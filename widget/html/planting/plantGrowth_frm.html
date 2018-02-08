@@ -223,7 +223,7 @@
 			 	float: right;
 			  width: 2.8rem;
 			  height: 2.8rem;
-			  background-color: #32D6C5;
+			  background-color: #6bada6;
 			}
 			#renGong{
 				width: 3.2rem;
@@ -651,9 +651,8 @@
 				height: 7.1rem;
 			}
 			#no{
-				display: none;
 				width: 100%;
-				height: 5.77rem;
+				height: 7.1rem;
 			}
 			#gong1{
 				position: absolute;
@@ -707,8 +706,8 @@
 				</div>
 			</div>
 		</section>
-		<img id="noP" src="../../image/planting/plan.png" alt="">
 		<div id="part1">
+			<img id="noP" src="../../image/planting/plan.png" alt="">
 			<div id="biao1">
 				<p class="biaoTitle">
 					<span class="leftTitle">总共投了多少钱</span>
@@ -764,7 +763,7 @@
 				<div id="gongJu" class="circle">
 					<p class="neiRong">
 						<span class="tuBiao"></span>
-						<span class="gongXu">工具</span>
+						<span class="gongXu">其他</span>
 						<span class="zhanBi">25%</span>
 						<span class="huaFei">200</span>
 						<span class="danWei">元</span>
@@ -862,6 +861,7 @@
 						</div>
 				</div> -->
 		</div>
+		<!-- <input id="month" type="hidden" value="0"> -->
 </article>
 <div id="body_totop_btn">
     返回顶部
@@ -884,8 +884,8 @@
 				slidesPerView : 3,
 				slidesPerGroup : 2,
 				freeMode : true,
-				prevButton:'.swiper-button-prev',
-				nextButton:'.swiper-button-next',
+				prevButton:'.swiper-button-prev-'+className,
+				nextButton:'.swiper-button-next-'+className,
 			});
 	}
 
@@ -907,7 +907,9 @@
 					$(this).css("backgroundColor","#204e41")
 					$(this).css("color","#fff")
 					$(this).css("border","0")
-					var m=$(this).html().replace(/[^0-9]/ig,""),y=$("#nianfen").html()
+					var y=$("#nianfen").html()
+					var m=$(this).html().replace(/[^0-9]/ig,"")
+					// $("#month").val(m)
 					m < 10 ? m = "0" + m : m;
 					var startDate=y+"-"+m+"-01",endDate;
 					if(m==1||m==3||m==5||m==7||m==8||m==10||m==12){
@@ -924,9 +926,23 @@
 		 }
 		 $("#sanjiao1").on("touchstart",function(){
 			 $("#nianfen").html(parseInt($("#nianfen").html())+1)
+			 $("#slider>span").css("backgroundColor","#fff")
+			 $("#slider>span").css("color","#747976")
+			 $("#slider>span").css("border","1px solid #ededed")
+			 var y=$("#nianfen").html()
+			 var startDate=y+"-"+"01"+"-01"
+			 var endDate=y+"-"+"12"+"-31"
+			 qiu($("#catId").val(),$("#landId").val(),startDate,endDate)
 		 })
 		 $("#sanjiao2").on("touchstart",function(){
 			$("#nianfen").html(parseInt($("#nianfen").html())-1)
+			$("#slider>span").css("backgroundColor","#fff")
+			$("#slider>span").css("color","#747976")
+			$("#slider>span").css("border","1px solid #ededed")
+			var y=$("#nianfen").html()
+			var startDate=y+"-"+"01"+"-01"
+			var endDate=y+"-"+"12"+"-31"
+			qiu($("#catId").val(),$("#landId").val(),startDate,endDate)
 		})
 		var show=1
 		$("#partA").on("touchstart",function(){
@@ -1007,6 +1023,10 @@
 			$("#startDate").val(startDate)
 			$("#endDate").val(endDate)
 			$("#shuru1").val(farmId)
+			$("#slider>span").css("backgroundColor","#fff")
+			$("#slider>span").css("color","#747976")
+			$("#slider>span").css("border","1px solid #ededed")
+			$("#month").val("0")
 			plan(categoryId,farmId,startDate,endDate)
 			qiu(categoryId,farmId,startDate,endDate)
 			gongxu(categoryId,farmId,startDate,endDate)
@@ -1022,6 +1042,14 @@
 				type : "GET",
 				success:function(ret,err){
 					//alert(JSON.stringify(ret))
+					if(!ret.data.farm){
+						alert("该账号下没有基地，请完善基地信息")
+						return
+					}
+					if(!ret.data.category){
+						alert("该账号下没有作物，请完善作物信息")
+						return
+					}
 					var farmId=ret.data.farm.id
 					var categoryId=ret.data.category.id
 					$("#land").val(ret.data.farm.farmName)
@@ -1175,16 +1203,12 @@
 			 							real=(real+"").slice(0, -12)+"万亿"
 			 						 }else if((real+"").length>8&&(real+"").length<=16){
 			 							real=(real+"").slice(0, -8)+"亿"
-									}else if(real>10000&&(real+"").length<=8){
-			 							real=parseFloat((real/10000).toFixed(2))+"万"
-			 						 }
+									}
 									 if((plan+"").length>12){
 			 							plan=(plan+"").slice(0, -12)+"万亿"
 			 						 }else if((plan+"").length>8&&(plan+"").length<=16){
 			 							plan=(plan+"").slice(0, -8)+"亿"
-									}else if(plan>=10000&&(plan+"").length<=8){
-			 							plan=parseFloat((plan/10000).toFixed(2))+"万"
-			 						 }
+									}
 									 $("#real").html("￥"+real)
 									 $("#plan").html("￥"+plan)
 								 },
@@ -1243,7 +1267,7 @@
 							$("#feiliao .zhanBi").html(bi)
 							$("#feiliao .huaFei").html(shi[i].money)
 						}
-						if(shi[i].resPriIdName=="工具"){
+						if(shi[i].resPriIdName=="其他"){
 							$("#gongJu").show()
 							$("#gongJu").css({"width":da+"rem","height":da+"rem"})
 							$("#gongJu .zhanBi").html(bi)
@@ -1296,7 +1320,7 @@
 			//api.alert({msg:JSON.stringify(ret)});
 			  $("#part2").html("");
 				if(!ret.data){
-						$("#part2").html('<img id="no" src="../../image/planting/noPic.png" alt="">');
+						$("#part2").html('<img id="no" src="../../image/planting/meiyou.jpg" alt="">');
 				}else{
 						$("#part2").html("");
 				}
@@ -1393,8 +1417,8 @@
 													'								<div class="swiper-wrapper">'+
 																							objHtml.objStr+
 													'								</div>'+
-													'								<div class="swiper-button-prev swiper-button-black" style="background-image:url(../../image/planting/swiper-button-prev.png);margin-left:-0.2rem;z-index:99999;position:absolute;top:0.6rem;"></div>'+
-													'								<div class="swiper-button-next swiper-button-black" style="background-image:url(../../image/planting/swiper-button-next.png);margin-right:-0.2rem;z-index:99999;position:absolute;top:0.6rem;"></div>'+
+													'								<div class="swiper-button-prev swiper-button-prev-swiperWrap'+ i +' swiper-button-black" style="background-image:url(../../image/planting/swiper-button-prev.png);margin-left:-0.2rem;z-index:99999;position:absolute;top:0.6rem;"></div>'+
+													'								<div class="swiper-button-next swiper-button-next-swiperWrap'+ i +' swiper-button-black" style="background-image:url(../../image/planting/swiper-button-next.png);margin-right:-0.2rem;z-index:99999;position:absolute;top:0.6rem;"></div>'+
 													'						</div>'+
 																			objHtml.infoStr+
 													'				</div>';
