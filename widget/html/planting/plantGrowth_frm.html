@@ -1253,7 +1253,7 @@
 							shi[i].money=shi[i].money.toFixed(0)
 						}
 						if(shi[i].money<1000){
-							shi[i].money=shi[i].money.toFixed(1)
+							shi[i].money=parseFloat(shi[i].money.toFixed(1))
 						}
 						if(shi[i].resPriIdName=="人工"){
 							$("#renGong").show()
