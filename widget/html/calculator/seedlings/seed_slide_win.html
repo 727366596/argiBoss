@@ -440,7 +440,6 @@
 		$('#idea-cost').text(api.pageParam.recommendInput);
 		$('#idea-num').text(api.pageParam.recommendEfficiency);
 		var saveMoney = api.pageParam.saveMoney;
-		save=111111;
 		if (save === null) {
 
 		} else if (saveMoney > 0) {
@@ -456,13 +455,7 @@
 			$('#save-cost').text('经过测算发现您是种植大牛，给种植专家跪下啦');
 			mineCost(api.pageParam.actualInput,api.pageParam.actualEfficiency);
 		}
-
 		mineRealCost(api.pageParam.recommendInput,api.pageParam.actualEfficiency);
-
-		// "actualEfficiency": 80, //实际每亩投入千克
-		//  "actualInput": 2880, //实际投入
-		//  "recommendEfficiency": 66.67,  //建议每亩投入千克
-		//  "recommendInput": 2640.13,  //建议投入
 		var mySwiper = new Swiper('.swiper-container', {
 			direction: 'vertical',
 			pagination: '.swiper-pagination'
@@ -488,8 +481,6 @@
 
 	//echarts
 	function mineCost(value1,value2) {
-		value1=1111111111111111111;
-		value2=2222;
 		var myChart = echarts.init(document.getElementById('echarts'));
 		var seriesLabel = {
 			normal: {
@@ -540,8 +531,6 @@
 	}
 
 	function mineRealCost(value3,value4) {
-   value3=1111111111111111111;
-	 value4=2222;
 		var myChart = echarts.init(document.getElementById('echarts2'));
 		var seriesLabel = {
 			normal: {
