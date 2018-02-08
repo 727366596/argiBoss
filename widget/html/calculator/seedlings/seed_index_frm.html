@@ -281,7 +281,7 @@
 
 <body>
 	<header id="header">
-		<div class="headerLeft" onclick="closeWin()"></div>
+		<div class="headerLeft" onclick="closeToWin()"></div>
 		<div class="headerCenter">种苗测算</div>
 		<div class="headerRight"></div>
 	</header>
@@ -289,16 +289,16 @@
 	<div class="swiper-container">
 		<div class="swiper-wrapper">
 			<!-- 第一页 -->
-			<div class="swiper-slide">
+			<div class="swiper-slide"  >
 				<div class="top-img">
 					<img src="../../../image/cal_img/seeding-top-img.png" alt="">
 				</div>
 				<div class="seeding-img">
 					<img src="../../../image/cal_img/seeding-img.png" alt="">
 					<!-- 株距 -->
-					<div class="row-spacing"><span id="plan-text">40</span>cm</div>
+					<div class="row-spacing"><span id="plan-text"></span>cm</div>
 					<!-- 垄距 -->
-					<div class="ridge-distance"><span id="dist-text">90</span>cm</div>
+					<div class="ridge-distance"><span id="dist-text"></span>cm</div>
 				</div>
 				<!-- 种苗测算填写页 -->
 				<div class="content">
@@ -306,35 +306,35 @@
 					<div class="item">
 						<div class="name">株距:</div>
 						<div class="item-r">
-							<input type="number" id="row-input">
+							<input type="number" id="row-input" readonly>
 							<div class="right-pic">cm</div>
 						</div>
 					</div>
 					<div class="item">
 						<div class="name">垄距:</div>
 						<div class="item-r">
-							<input type="number" id="dist-input">
+							<input type="number" id="dist-input" readonly>
 							<div class="right-pic">cm</div>
 						</div>
 					</div>
 					<div class="item">
 						<div class="name">每垄行数:</div>
 						<div class="item-r">
-							<input type="number" id="line">
+							<input type="number" id="line" readonly>
 							<div class="right-pic">行</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<!-- 第二页 -->
-			<div class="swiper-slide">
+			<div class="swiper-slide" >
 				<div class="top-img" style="margin-bottom:0.55rem;">
 					<img src="../../../image/cal_img/seeding-top-img.png" alt="">
 				</div>
 				<div class="calculated-data">
 					<div>经测算:</div>
 					<div class="calculated-num">
-						每亩地种薯用量为<span id="count">150</span>千克，约<span id="num-text">3700</span>颗/亩。
+						每亩地种薯用量为<span id="count"></span>千克，约<span id="num-text"></span>颗/亩。
 					</div>
 				</div>
 				<div class="seeding-show-img">
@@ -352,12 +352,12 @@
 					<span class="ddd"></span>
 					<span class="eee"></span>
 				</div>
-				<div id="cal-show" >
+				<div id="cal-show" style="display:none;" >
 					<div class="calculated-data" style="padding:0.3rem 0.6rem;margin-bottom:0;">
 						<div>测算结果:</div>
 						<div class="calculated-num">
-							建议投入成本为<span id="idea-cost">689872</span>元，建议每亩投入种薯<span id="idea-num">150</span>千克 您可以省下
-							<span id="save-cost">98778</span>元
+							建议投入成本为<span id="idea-cost"></span>元，建议每亩投入种薯<span id="idea-num"></span>千克 您可以省下
+							<span id="save-cost"></span>元
 						</div>
 					</div>
 					<!-- 分割线 -->
@@ -376,7 +376,7 @@
 							 <span>种薯用量</span>
 						 </div>
 							<!-- <div class="cost-back">200千克/亩</div>  -->
-							<div id="echarts" style="float:right;width:80%;height:45px; margin-top: -0.04rem;"></div>
+							<div id="echarts" style="float:right;width:80%;height:45px;    margin-top: 0.05rem;"></div>
 						</div>
 
 					</div>
@@ -389,14 +389,22 @@
 
 				<div class="investment r-investment">
 					<div class="top-tit">建议投入</div>
-					<div class="cost">
+					<div class="cost use">
+					<div style="float:left;width:20%;margin-top:0.02rem;">
+						 <span style="margin-bottom: 0.1rem;">投入成本</span>
+						 <span>种薯用量</span>
+					 </div>
+						<!-- <div class="cost-back">200千克/亩</div>  -->
+						<div id="echarts2" style="float:right;width:80%;height:45px;margin-top: 0.05rem;"></div>
+					</div>
+					<!-- <div class="cost">
 						<span>投入成本</span>
 						<div class="cost-back">178,722元</div>
 					</div>
 					<div class="cost use">
 						<span>种薯用量</span>
 						<div class="cost-back">200千克/亩</div>
-					</div>
+					</div> -->
 				</div>
 				<!-- 分割线 -->
 				<div class="line">
@@ -447,6 +455,7 @@
 			$('#save-cost').text('经过测算发现您是种植大牛，给种植专家跪下啦');
 			mineCost(api.pageParam.actualInput,api.pageParam.actualEfficiency);
 		}
+		mineRealCost(api.pageParam.recommendInput,api.pageParam.recommendEfficiency);
 
 		// "actualEfficiency": 80, //实际每亩投入千克
 		//  "actualInput": 2880, //实际投入
@@ -459,22 +468,31 @@
 
 	};
 	//返回按钮操作
-	function closeWin() {
+	function closeToWin() {
 		api.closeToWin({
 			name: 'index_win'
 		});
 	};
+	//重新测算
+	function closeWin() {
+		api.closeWin();
+		api.openWin({
+			name: 'seed_index_win',
+			url: './seedlings/seed_index_win.html',
+			reload:true,
+			animation: {
+				type: "movein", //动画类型（详见动画类型常量）
+				subType: "from_right", //动画子类型（详见动画子类型常量）
+				duration: 300 //动画过渡时间，默认300毫秒
+			}
+		});
+	};
+
 
 	//echarts
 	function mineCost(value1,value2) {
 		//alert(value1+','+value2)
 		var myChart = echarts.init(document.getElementById('echarts'));
-		/*用来配置参数*/
-		// var weatherIcons = {
-		// 	'Sunny': '../../../image/cal_img/seedlings/cost.png',
-		// 	'Cloudy': '../../../image/cal_img/seedlings/zhongshu.png'
-		// };
-
 		var seriesLabel = {
 			normal: {
 				show: true,
@@ -500,48 +518,11 @@
 				show: false,
 			  type: 'category',
 				inverse: true,
-				// axisLine: {
-				// 	show: false,
-				// },
-				// axisTick: {
-				// 	show: false,
-				// },
-				// axisPointer:{
-				// 	label:{
-				// 		shadowOffsetY:40
-				// 	}
-				// },
-			//	data: ['Sunny', 'Cloudy'],
-				// axisLabel: {
-				// 	formatter: function(value) {
-				// 		return '{' + value + '| }';
-				// 	},
-				// 	rich: {
-				// 		value: {
-				// 			align: 'center'
-				// 		},
-				// 		Sunny: {
-				// 			height: 20,
-				// 			width:50,
-				// 			align: 'right',
-				// 			backgroundColor:{
-				// 				image: weatherIcons.Sunny
-				// 			}
-				// 		},
-				// 		Cloudy: {
-				// 			height: 20,
-				// 			align: 'right',
-				// 			backgroundColor: {
-				// 				image: weatherIcons.Cloudy
-				// 			}
-				// 		}
-				// 	}
-				// }
 			},
 			grid:{
 			  left:"2%",
-        bottom:44,
-				top:44
+        bottom:50,
+				top:48
 			},
 			series: [{
 				type: 'bar',
@@ -551,6 +532,57 @@
 				itemStyle: {
 					normal: {
 						color: '#9f0500',
+					},
+				}
+			}]
+		};
+
+		/*调用option生成图表*/
+		myChart.setOption(option);
+	}
+
+	function mineRealCost(value1,value2) {
+		//alert(value1+','+value2)
+		var myChart = echarts.init(document.getElementById('echarts2'));
+		var seriesLabel = {
+			normal: {
+				show: true,
+				color: '#fff',
+				lineHeight:56,
+				formatter: function(params) {
+					console.log(JSON.stringify(params))
+					if (params.dataIndex === 0) {
+						return params.value + '元';
+					} else {
+						return params.value + '千克/亩';
+					}
+				}
+			}
+		}
+
+		var option = {
+			color: '#fff',
+			xAxis: {
+				show: false
+			},
+			yAxis: {
+				show: false,
+			  type: 'category',
+				inverse: true,
+			},
+			grid:{
+			  left:"2%",
+        bottom:50,
+				top:52
+			},
+			series: [{
+				type: 'bar',
+				data: [value1, value2],
+				label: seriesLabel,
+
+				itemStyle: {
+					normal: {
+						color: '#5b8c14',
 					},
 				}
 			}]
