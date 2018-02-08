@@ -219,7 +219,7 @@
 <script type="text/javascript" src="../../../script/common/jquery.min.js"></script>
 <script type="text/javascript" src="../../../script/common/pds.ajax.js"></script>
 <script type="text/javascript">
-  var type=null;//type判断公司下是否有马铃薯，0无1有
+	var type = null; //type判断公司下是否有马铃薯，0无1有
 	apiready = function() {
 		api.parseTapmode();
 		getKinds();
@@ -251,17 +251,26 @@
 			},
 			success: function(e) {
 				console.log('hhhhhhhhhhhhhhhhhhhhhhh' + JSON.stringify(e));
-				var data = e.data||[];
+				var data = e.data || [];
 				var _html = '';
 				if (data.length > 0) {
 					for (var i = 0, len = data.length; i < len; i++) {
 						_html += '<option value="' + data[i].id + '">' + data[i].catName + '</option>';
 					};
 					$('#kinds').html(_html);
-					type=1;
-				}else{
+					type = 1;
+				} else {
 					$('#kinds').html('<option value="17">荷兰15</option>');
-          type=0;
+					type = 0;
+					api.confirm({
+						title: '温馨提示',
+						msg: '目前种苗测算仅支持马铃薯，由于您公司没有种植马铃薯，您可以',
+						buttons: ['放弃计算', '体验一下']
+					}, function(ret, err) {
+						if (ret && ret.buttonIndex === 1) {
+							api.closeWin(); //1放弃2体验
+						}
+					});
 				};
 			},
 			error: function(e) {
@@ -281,14 +290,14 @@
 				"mu": $('#mu').val() * 1,
 				"categoryId": $('#kinds').val(),
 				"costVal": $('#price').val() * 1,
-				"type":type
+				"type": type
 			},
 			success: function(e) {
 				console.log('aaaaaaaaaaaaaaaaaaaaaaaaaa' + JSON.stringify(e));
 				api.openWin({
 					name: 'seed_index_frm',
 					url: './seed_index_frm.html',
-					pageParam:e.data
+					pageParam: e.data
 				});
 			},
 			error: function(e) {

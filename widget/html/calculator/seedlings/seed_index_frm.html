@@ -265,26 +265,16 @@
 		.ridge-distance span {
 			display: inline-block;
 		}
-		.swiper-container{
+
+		.swiper-container {
 			position: relative;
 		}
-		.swiper-pagination {
-			position: fixed;
-			right: 0.2rem;
-			top:23%;
-			width:10px;
-			height:50px;
-			background: #000;
-		}
-		.swiper-pagination-bullet {
-			width: 6px;
-			height: 6px;
-			background: #fff;
-			opacity: .4;
-		}
 
-		.swiper-pagination-bullet-active {
-			opacity: 1;
+		.swiper-pagination {
+			right: 0.2rem;
+			top: 23%;
+			width: 10px;
+			height: 50px;
 		}
 	</style>
 </head>
@@ -362,34 +352,41 @@
 					<span class="ddd"></span>
 					<span class="eee"></span>
 				</div>
-				<div class="calculated-data" style="padding:0.3rem 0.6rem;margin-bottom:0;">
-					<div>测算结果:</div>
-					<div class="calculated-num">
-						建议投入成本为<span id="idea-cost">689872</span>元，建议每亩投入种薯<span id="idea-num">150</span>千克 您可以省下
-						<span id="save-cost">98778</span>元
+				<div id="cal-show" >
+					<div class="calculated-data" style="padding:0.3rem 0.6rem;margin-bottom:0;">
+						<div>测算结果:</div>
+						<div class="calculated-num">
+							建议投入成本为<span id="idea-cost">689872</span>元，建议每亩投入种薯<span id="idea-num">150</span>千克 您可以省下
+							<span id="save-cost">98778</span>元
+						</div>
+					</div>
+					<!-- 分割线 -->
+					<div class="line">
+						<span class="eee"></span>
+					</div>
+					<div class="investment">
+						<div class="top-tit">您的投入</div>
+						 <!-- <div class="cost">
+							<span>投入成本</span>
+							<div class="cost-back">178,722元</div>
+						</div> -->
+						<div class="cost use">
+						<div style="float:left;width:20%;margin-top:0.02rem;">
+							 <span style="margin-bottom: 0.1rem;">投入成本</span>
+							 <span>种薯用量</span>
+						 </div>
+							<!-- <div class="cost-back">200千克/亩</div>  -->
+							<div id="echarts" style="float:right;width:80%;height:45px; margin-top: -0.04rem;"></div>
+						</div>
+
+					</div>
+					<!-- 分割线 -->
+					<div class="line">
+						<span class="ddd"></span>
+						<span class="white"></span>
 					</div>
 				</div>
-				<!-- 分割线 -->
-				<div class="line">
-					<span class="eee"></span>
-				</div>
-				<div class="investment">
-					<div class="top-tit">您的投入</div>
-					<div class="cost">
-						<span>投入成本</span>
-						<div class="cost-back">178,722元</div>
-					</div>
-					<div class="cost use">
-						<span>种薯用量</span>
-						<div class="cost-back">200千克/亩</div>
-					</div>
-					
-				</div>
-				<!-- 分割线 -->
-				<div class="line">
-					<span class="ddd"></span>
-					<span class="white"></span>
-				</div>
+
 				<div class="investment r-investment">
 					<div class="top-tit">建议投入</div>
 					<div class="cost">
@@ -405,17 +402,14 @@
 				<div class="line">
 					<span class="eee"></span>
 				</div>
-				<div class="btn-item">
+				<div class="btn-item" onclick="closeWin();">
 					<div class="btn">重新测算</div>
 				</div>
 
-
-
-
 			</div>
-			<!-- 分页器 -->
-			<div class="swiper-pagination"></div>
 		</div>
+		<!-- 分页器 -->
+		<div class="swiper-pagination"></div>
 	</div>
 
 </body>
@@ -424,8 +418,6 @@
 <script type="text/javascript" src="../../../script/common/pds.ajax.js"></script>
 <script type="text/javascript" src="../../../script/common/swiper.min.js"></script>
 <script type="text/javascript" src="../../../script/planting/echarts.common.min.js"></script>
-<script type="text/javascript" src="../../../script/planting/highcharts.js"></script>
-<script type="text/javascript" src="../../../script/planting/highcharts-3d.js"></script>
 <script>
 	apiready = function() {
 		$('#plan-text').text(api.pageParam.colSpacing);
@@ -434,30 +426,141 @@
 		$('#dist-input').val(api.pageParam.ridgeSpacing);
 		$('#line').val(api.pageParam.linesOnRidge);
 
-		$('#count').text(api.pageParam.count);
-		$('#num-text').text(22);
+		$('#count').text(api.pageParam.recommendEfficiency);
+		$('#num-text').text(api.pageParam.count);
 
-	$('#idea-cost').text(222);
-		$('#idea-num').text(223);
-			$('#save-cost').text(224);
+		$('#idea-cost').text(api.pageParam.recommendInput);
+		$('#idea-num').text(api.pageParam.recommendEfficiency);
+		var saveMoney = api.pageParam.saveMoney;
+		if (api.pageParam.saveMoney === null) {
 
+		} else if (saveMoney > 0) {
+			$('#cal-show').show();
+			$('#idea-cost').text(api.pageParam.recommendInput);
+			$('#idea-num').text(api.pageParam.recommendEfficiency);
+			$('#save-cost').text(saveMoney);
+			mineCost(api.pageParam.actualInput,api.pageParam.actualEfficiency);
+		} else {
+			$('#cal-show').show();
+			$('#idea-cost').text(api.pageParam.recommendInput);
+			$('#idea-num').text(api.pageParam.recommendEfficiency);
+			$('#save-cost').text('经过测算发现您是种植大牛，给种植专家跪下啦');
+			mineCost(api.pageParam.actualInput,api.pageParam.actualEfficiency);
+		}
 
-
+		// "actualEfficiency": 80, //实际每亩投入千克
+		//  "actualInput": 2880, //实际投入
+		//  "recommendEfficiency": 66.67,  //建议每亩投入千克
+		//  "recommendInput": 2640.13,  //建议投入
 		var mySwiper = new Swiper('.swiper-container', {
 			direction: 'vertical',
-       pagination: '.swiper-pagination',
-       mousewheelControl: true
+			pagination: '.swiper-pagination'
 		})
 
 	};
-  //返回按钮操作
+	//返回按钮操作
 	function closeWin() {
 		api.closeToWin({
 			name: 'index_win'
 		});
 	};
 
-	//
+	//echarts
+	function mineCost(value1,value2) {
+		//alert(value1+','+value2)
+		var myChart = echarts.init(document.getElementById('echarts'));
+		/*用来配置参数*/
+		// var weatherIcons = {
+		// 	'Sunny': '../../../image/cal_img/seedlings/cost.png',
+		// 	'Cloudy': '../../../image/cal_img/seedlings/zhongshu.png'
+		// };
+
+		var seriesLabel = {
+			normal: {
+				show: true,
+				color: '#ff0800',
+				lineHeight:56,
+				formatter: function(params) {
+					console.log(JSON.stringify(params))
+					if (params.dataIndex === 0) {
+						return params.value + '元';
+					} else {
+						return params.value + '千克/亩';
+					}
+				}
+			}
+		}
+
+		var option = {
+			color: '#fff',
+			xAxis: {
+				show: false
+			},
+			yAxis: {
+				show: false,
+			  type: 'category',
+				inverse: true,
+				// axisLine: {
+				// 	show: false,
+				// },
+				// axisTick: {
+				// 	show: false,
+				// },
+				// axisPointer:{
+				// 	label:{
+				// 		shadowOffsetY:40
+				// 	}
+				// },
+			//	data: ['Sunny', 'Cloudy'],
+				// axisLabel: {
+				// 	formatter: function(value) {
+				// 		return '{' + value + '| }';
+				// 	},
+				// 	rich: {
+				// 		value: {
+				// 			align: 'center'
+				// 		},
+				// 		Sunny: {
+				// 			height: 20,
+				// 			width:50,
+				// 			align: 'right',
+				// 			backgroundColor:{
+				// 				image: weatherIcons.Sunny
+				// 			}
+				// 		},
+				// 		Cloudy: {
+				// 			height: 20,
+				// 			align: 'right',
+				// 			backgroundColor: {
+				// 				image: weatherIcons.Cloudy
+				// 			}
+				// 		}
+				// 	}
+				// }
+			},
+			grid:{
+			  left:"2%",
+        bottom:44,
+				top:44
+			},
+			series: [{
+				type: 'bar',
+				data: [value1, value2],
+				label: seriesLabel,
+
+				itemStyle: {
+					normal: {
+						color: '#9f0500',
+					},
+				}
+			}]
+		};
+
+		/*调用option生成图表*/
+		myChart.setOption(option);
+	}
+
+
 </script>
 
 </html>

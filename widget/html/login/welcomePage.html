@@ -17,17 +17,17 @@
 			padding: 0;
 		}
 
-		.jump {
+		.box {
 			position: absolute;
 			top: 30px;
 			right: 10px;
-			background: #cdcdcd;
-			width: 40px;
-			height: 40px;
-			line-height: 40px;
-			font-size: 24px;
+			background: #848484;
+			width: 66px;
+			line-height: 24px;
+			font-size: 15px;
 			text-align: center;
-			border-radius: 50%;
+			border-radius: 85px;
+			color: #fff;
 		}
 
 		span {
@@ -47,7 +47,10 @@
 
 <body>
 	<img src="../../image/start.png" alt="">
-	<div class="jump">3</div>
+	<div class="box">
+			<span style="margin-right:5px;">跳过</span><span class="jump">3</span>
+	</div>
+
 </body>
 
 <script type="text/javascript">
@@ -109,7 +112,7 @@
 							// var url= data[0].url
 						$('img').attr('src', pictureUrl)
 						$('img').on('click', function() {
-							jumpPage(data[0].title, data[0].url)
+							Page(data[0].title, data[0].url)
 						})
 					}
 				}
@@ -153,7 +156,7 @@
 			}
 		});
 	}
-	$('.jump').on('click', jumpSlogin)
+	$('.box').on('click', jumpSlogin)
 
 	function jumpPage(title, url) {
 		api.openWin({
