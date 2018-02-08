@@ -475,17 +475,12 @@
 	};
 	//重新测算
 	function closeWin() {
-		api.closeWin();
 		api.openWin({
-			name: 'seed_index_win',
-			url: './seedlings/seed_index_win.html',
-			reload:true,
-			animation: {
-				type: "movein", //动画类型（详见动画类型常量）
-				subType: "from_right", //动画子类型（详见动画子类型常量）
-				duration: 300 //动画过渡时间，默认300毫秒
-			}
+				name: 'seed_index_win',
+				url: './seed_index_win.html',
+				reload:true
 		});
+		api.closeWin();
 	};
 
 
