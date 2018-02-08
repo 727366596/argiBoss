@@ -1199,11 +1199,13 @@
 													 }]
 											 }]
 									 });
+									 real=parseInt(real)
 									 if((real+"").length>12){
 			 							real=(real+"").slice(0, -12)+"万亿"
 			 						 }else if((real+"").length>8&&(real+"").length<=16){
 			 							real=(real+"").slice(0, -8)+"亿"
 									}
+									 plan=parseInt(plan)
 									 if((plan+"").length>12){
 			 							plan=(plan+"").slice(0, -12)+"万亿"
 			 						 }else if((plan+"").length>8&&(plan+"").length<=16){
