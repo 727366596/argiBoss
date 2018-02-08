@@ -117,7 +117,7 @@
 				border-top: 1px solid #fff;
 				border-bottom: 1px solid #ccc;
 				background: url(../../image/home/jump-page-back.png)no-repeat center 2.82rem;
-				background-size:5.53rem 2.46rem;
+		    background-size: 100% 3.5rem;
 			}
 			.jump-page .page-item{
 				width: 1.34rem;
@@ -383,7 +383,7 @@
 			url:"app/sys/get_adv",
 			data:{"code":code,"place":'home'},
 			success:function(e){
-					// alert('hhhhhhh'+JSON.stringify(e))
+					alert('hhhhhhh'+JSON.stringify(e))
 				// console.log('hhhhhhhhhhhhhhhhhhhhhhh'+JSON.stringify(e.data.data))
 				if(e.data !== null && e.data !== ''){
 					var data = e.data.data || '';
@@ -430,6 +430,8 @@
 						// 	 preloadImages:true
 						// })
 					}
+				}else{
+						$('#banner').html('<div class="swiper-slide" ><img src="../../image/home/home-banner.png"></div>')
 				}
 			},
 			error:function(e){
