@@ -216,7 +216,7 @@
 		.investment {
 			width: 100%;
 			overflow: hidden;
-			padding: 0.46rem 0.72rem 0.45rem 1.11rem;
+			padding: 0.3rem 0.72rem 0.3rem 1.11rem;
 			box-sizing: border-box;
 		}
 
@@ -229,7 +229,7 @@
 
 		.investment .cost {
 			width: 100%;
-			line-height: 0.44rem;
+			line-height:22px;
 			overflow: hidden;
 			font-size: 0.26rem;
 			margin-top: 2px;
@@ -289,7 +289,7 @@
 	<div class="swiper-container">
 		<div class="swiper-wrapper">
 			<!-- 第一页 -->
-			<div class="swiper-slide"  >
+			<div class="swiper-slide" >
 				<div class="top-img">
 					<img src="../../../image/cal_img/seeding-top-img.png" alt="">
 				</div>
@@ -353,11 +353,10 @@
 					<span class="eee"></span>
 				</div>
 				<div id="cal-show" style="display:none;" >
-					<div class="calculated-data" style="padding:0.3rem 0.6rem;margin-bottom:0;">
+					<div class="calculated-data" style="padding:0.1rem 0.6rem;margin-bottom:0;">
 						<div>测算结果:</div>
 						<div class="calculated-num">
-							建议投入成本为<span id="idea-cost"></span>元，建议每亩投入种薯<span id="idea-num"></span>千克 您可以省下
-							<span id="save-cost"></span>元
+							建议投入成本为<span id="idea-cost"></span>元，建议每亩投入种薯<span id="idea-num"></span>千克<span id="save-cost">经过测算发现您是种植大牛，给种植专家跪下啦</span></div>
 						</div>
 					</div>
 					<!-- 分割线 -->
@@ -385,34 +384,35 @@
 						<span class="ddd"></span>
 						<span class="white"></span>
 					</div>
+					<div class="investment r-investment">
+						<div class="top-tit">建议投入</div>
+						<div class="cost use">
+						<div style="float:left;width:20%;margin-top:0.02rem;">
+							 <span style="margin-bottom: 0.1rem;">投入成本</span>
+							 <span>种薯用量</span>
+						 </div>
+							<!-- <div class="cost-back">200千克/亩</div>  -->
+							<div id="echarts2" style="float:right;width:80%;height:45px;margin-top: 0.05rem;"></div>
+						</div>
+						<!-- <div class="cost">
+							<span>投入成本</span>
+							<div class="cost-back">178,722元</div>
+						</div>
+						<div class="cost use">
+							<span>种薯用量</span>
+							<div class="cost-back">200千克/亩</div>
+						</div> -->
+					</div>
+					<!-- 分割线 -->
+					<div class="line">
+						<span class="eee"></span>
+					</div>
+					<div class="btn-item" onclick="closeWin();">
+						<div class="btn">重新测算</div>
+					</div>
 				</div>
 
-				<div class="investment r-investment">
-					<div class="top-tit">建议投入</div>
-					<div class="cost use">
-					<div style="float:left;width:20%;margin-top:0.02rem;">
-						 <span style="margin-bottom: 0.1rem;">投入成本</span>
-						 <span>种薯用量</span>
-					 </div>
-						<!-- <div class="cost-back">200千克/亩</div>  -->
-						<div id="echarts2" style="float:right;width:80%;height:45px;margin-top: 0.05rem;"></div>
-					</div>
-					<!-- <div class="cost">
-						<span>投入成本</span>
-						<div class="cost-back">178,722元</div>
-					</div>
-					<div class="cost use">
-						<span>种薯用量</span>
-						<div class="cost-back">200千克/亩</div>
-					</div> -->
-				</div>
-				<!-- 分割线 -->
-				<div class="line">
-					<span class="eee"></span>
-				</div>
-				<div class="btn-item" onclick="closeWin();">
-					<div class="btn">重新测算</div>
-				</div>
+
 
 			</div>
 		</div>
@@ -440,13 +440,14 @@
 		$('#idea-cost').text(api.pageParam.recommendInput);
 		$('#idea-num').text(api.pageParam.recommendEfficiency);
 		var saveMoney = api.pageParam.saveMoney;
-		if (api.pageParam.saveMoney === null) {
+		save=111111;
+		if (save === null) {
 
 		} else if (saveMoney > 0) {
 			$('#cal-show').show();
 			$('#idea-cost').text(api.pageParam.recommendInput);
 			$('#idea-num').text(api.pageParam.recommendEfficiency);
-			$('#save-cost').text(saveMoney);
+			$('#save-cost').text('您可以省下'+saveMoney+'元');
 			mineCost(api.pageParam.actualInput,api.pageParam.actualEfficiency);
 		} else {
 			$('#cal-show').show();
@@ -455,7 +456,8 @@
 			$('#save-cost').text('经过测算发现您是种植大牛，给种植专家跪下啦');
 			mineCost(api.pageParam.actualInput,api.pageParam.actualEfficiency);
 		}
-		mineRealCost(api.pageParam.recommendInput,api.pageParam.recommendEfficiency);
+
+		mineRealCost(api.pageParam.recommendInput,api.pageParam.actualEfficiency);
 
 		// "actualEfficiency": 80, //实际每亩投入千克
 		//  "actualInput": 2880, //实际投入
@@ -486,7 +488,8 @@
 
 	//echarts
 	function mineCost(value1,value2) {
-		//alert(value1+','+value2)
+		value1=1111111111111111111;
+		value2=2222;
 		var myChart = echarts.init(document.getElementById('echarts'));
 		var seriesLabel = {
 			normal: {
@@ -494,7 +497,6 @@
 				color: '#ff0800',
 				lineHeight:56,
 				formatter: function(params) {
-					console.log(JSON.stringify(params))
 					if (params.dataIndex === 0) {
 						return params.value + '元';
 					} else {
@@ -523,7 +525,8 @@
 				type: 'bar',
 				data: [value1, value2],
 				label: seriesLabel,
-
+				barWidth: 25,
+				barMinHeight:100,
 				itemStyle: {
 					normal: {
 						color: '#9f0500',
@@ -536,8 +539,9 @@
 		myChart.setOption(option);
 	}
 
-	function mineRealCost(value1,value2) {
-		//alert(value1+','+value2)
+	function mineRealCost(value3,value4) {
+   value3=1111111111111111111;
+	 value4=2222;
 		var myChart = echarts.init(document.getElementById('echarts2'));
 		var seriesLabel = {
 			normal: {
@@ -545,7 +549,6 @@
 				color: '#fff',
 				lineHeight:56,
 				formatter: function(params) {
-					console.log(JSON.stringify(params))
 					if (params.dataIndex === 0) {
 						return params.value + '元';
 					} else {
@@ -554,7 +557,6 @@
 				}
 			}
 		}
-
 		var option = {
 			color: '#fff',
 			xAxis: {
@@ -572,9 +574,10 @@
 			},
 			series: [{
 				type: 'bar',
-				data: [value1, value2],
+				data: [value3, value4],
 				label: seriesLabel,
-
+        barWidth: 22,
+        barMinHeight:100,
 				itemStyle: {
 					normal: {
 						color: '#5b8c14',
