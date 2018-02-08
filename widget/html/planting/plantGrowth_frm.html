@@ -763,7 +763,7 @@
 				<div id="gongJu" class="circle">
 					<p class="neiRong">
 						<span class="tuBiao"></span>
-						<span class="gongXu">工具</span>
+						<span class="gongXu">其他</span>
 						<span class="zhanBi">25%</span>
 						<span class="huaFei">200</span>
 						<span class="danWei">元</span>
@@ -861,7 +861,7 @@
 						</div>
 				</div> -->
 		</div>
-		<input id="month" type="hidden" value="0">
+		<!-- <input id="month" type="hidden" value="0"> -->
 </article>
 <div id="body_totop_btn">
     返回顶部
@@ -909,7 +909,7 @@
 					$(this).css("border","0")
 					var y=$("#nianfen").html()
 					var m=$(this).html().replace(/[^0-9]/ig,"")
-					$("#month").val(m)
+					// $("#month").val(m)
 					m < 10 ? m = "0" + m : m;
 					var startDate=y+"-"+m+"-01",endDate;
 					if(m==1||m==3||m==5||m==7||m==8||m==10||m==12){
@@ -926,45 +926,23 @@
 		 }
 		 $("#sanjiao1").on("touchstart",function(){
 			 $("#nianfen").html(parseInt($("#nianfen").html())+1)
-			 var m=$("#month").val(),y=$("#nianfen").html()
-			 if(m>0){
-				 var startDate=y+"-"+m+"-01",endDate;
-				 if(m==1||m==3||m==5||m==7||m==8||m==10||m==12){
-						endDate=y+"-"+m+"-31"
-				 }else if(m==4|m==6||m==9||m==11){
-						endDate=y+"-"+m+"-30"
-				 }else if((y%4==0)&&(y%100!=0)||(y%400==0)){
-						endDate=y+"-"+m+"-29"
-				 }else{
-						endDate=y+"-"+m+"-28"
-				 }
-				 qiu($("#catId").val(),$("#landId").val(),startDate,endDate)
-			 }else{
-				 var startDate=y+"-"+"01"+"-01"
-				 var endDate=y+"-"+"12"+"-31"
-				 qiu($("#catId").val(),$("#landId").val(),startDate,endDate)
-			 }
+			 $("#slider>span").css("backgroundColor","#fff")
+			 $("#slider>span").css("color","#747976")
+			 $("#slider>span").css("border","1px solid #ededed")
+			 var y=$("#nianfen").html()
+			 var startDate=y+"-"+"01"+"-01"
+			 var endDate=y+"-"+"12"+"-31"
+			 qiu($("#catId").val(),$("#landId").val(),startDate,endDate)
 		 })
 		 $("#sanjiao2").on("touchstart",function(){
 			$("#nianfen").html(parseInt($("#nianfen").html())-1)
-			var m=$("#month").val(),y=$("#nianfen").html()
-			if(m>0){
-				var startDate=y+"-"+m+"-01",endDate;
-				if(m==1||m==3||m==5||m==7||m==8||m==10||m==12){
-					 endDate=y+"-"+m+"-31"
-				}else if(m==4|m==6||m==9||m==11){
-					 endDate=y+"-"+m+"-30"
-				}else if((y%4==0)&&(y%100!=0)||(y%400==0)){
-					 endDate=y+"-"+m+"-29"
-				}else{
-					 endDate=y+"-"+m+"-28"
-				}
-				qiu($("#catId").val(),$("#landId").val(),startDate,endDate)
-			}else{
-				var startDate=y+"-"+"01"+"-01"
-				var endDate=y+"-"+"12"+"-31"
-				qiu($("#catId").val(),$("#landId").val(),startDate,endDate)
-			}
+			$("#slider>span").css("backgroundColor","#fff")
+			$("#slider>span").css("color","#747976")
+			$("#slider>span").css("border","1px solid #ededed")
+			var y=$("#nianfen").html()
+			var startDate=y+"-"+"01"+"-01"
+			var endDate=y+"-"+"12"+"-31"
+			qiu($("#catId").val(),$("#landId").val(),startDate,endDate)
 		})
 		var show=1
 		$("#partA").on("touchstart",function(){
@@ -1293,7 +1271,7 @@
 							$("#feiliao .zhanBi").html(bi)
 							$("#feiliao .huaFei").html(shi[i].money)
 						}
-						if(shi[i].resPriIdName=="工具"){
+						if(shi[i].resPriIdName=="其他"){
 							$("#gongJu").show()
 							$("#gongJu").css({"width":da+"rem","height":da+"rem"})
 							$("#gongJu .zhanBi").html(bi)
