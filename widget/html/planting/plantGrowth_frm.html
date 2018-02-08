@@ -1015,6 +1015,7 @@
 			var endDate=data.endDates
 			var farmId=data.farmIds
 			var categoryId=data.categoryIds
+			$("#nianfen").html(endDate.substring(0,4))
 			$("#time").val(startDate.replace(/\-/g, '.')+"-"+endDate.replace(/\-/g, '.'))
 			$("#land").val(data.landNames)
 			$("#crop").val(data.categorys)
@@ -1413,7 +1414,7 @@
 											datasStr = '<div class="part2Content">'+
 													'						<div class="cropFiled">'+
 													'								<p class="cropName">'+ categoryName +'</p>'+
-													'								<p class="plantTime">定植时间：'+ datasTime +'</p>'+
+													// '								<p class="plantTime">定植时间：'+ datasTime +'</p>'+
 													'						</div>'+
 													'						<div class="swiper-container swiperWrap'+ i +'" style="">'+
 													'								<div class="swiper-wrapper">'+
