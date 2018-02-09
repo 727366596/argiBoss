@@ -17,7 +17,7 @@ var pds = (typeof this.pds === 'undefined') ? {} : this.pds;
 	/**
 	 * 获取服务器端uri
 	 */
-	var remoteUri = function(env){
+	var remoteUri = function(ph){
 		var uri = "";
 		switch(env){
 			case "dev":
