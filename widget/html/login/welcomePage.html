@@ -63,13 +63,7 @@
 		var url = api.pageParam.url;
 
 		advImg(pictureUrl,title,url);
-		api.addEventListener({
-			name: 'openLogin'
-		}, function(ret, err) {
-			if (ret) {
-				jumpSlogin()
-			}
-		});
+
 		api.addEventListener({
 			name: 'keyback'
 		}, function(ret, err) {
@@ -85,7 +79,6 @@
 		$('img').attr('src', pictureUrl)
 		if(url!==''){
 			$('img').on('click', function() {
-				clearInterval(time);
 				jumpPage(title, url);
 			})
 		};
@@ -96,7 +89,6 @@
 				if (number > 0) {
 					$('.jump').text(number)
 				} else {
-					clearInterval(time)
 					jumpLogin()
 				}
 			}, 1000)
@@ -105,6 +97,7 @@
 
 
 	function jumpLogin() {
+		clearInterval(time);
 		api.openWin({
 			name: "login_new",
 			url: "widget://html/login/login_new.html",
@@ -121,6 +114,7 @@
 	$('.box').on('click', jumpLogin)
 
 	function jumpPage(title, url) {
+		clearInterval(time);
 		api.openWin({
 			name: 'startPage_win',
 			url: './startPage.html',
@@ -134,7 +128,6 @@
 				duration: 400 //动画过渡时间，默认300毫秒
 			}
 		});
-		clearInterval(time)
 	}
 </script>
 
