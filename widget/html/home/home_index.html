@@ -468,7 +468,7 @@
 			url:"app/sys/get_adv",
 			data:{"code":code,"place":'list'},
 			success:function(e){
-						alert(JSON.stringify(e))
+					//	alert(JSON.stringify(e))
 				if(e.data !== null && e.data !== ''){
 
 					var data = e.data.data || '';
@@ -493,7 +493,7 @@
 						}else {
 								var techDataStr = ''
 								for(var i = 0; i <= 1; i++){
-								
+
 									if(data[i].contentTypeName == ''){
 										data[i].contentTypeName = '广告'
 									}
