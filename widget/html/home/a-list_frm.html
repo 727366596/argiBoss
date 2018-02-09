@@ -178,21 +178,23 @@
 				})
 			}else {
 			// 跳转url
-				var obj ={
-					url:$(node).find('.data-url').html(),
-					title:$(node).find('.data-title').html()
-				}
-				api.openWin({
-					name:'advertisement_win',
-					url:'../advertisement_win.html',
-					pageParam:obj,
-					slidBackEnabled : false,
-					animation : {
-						type : "movein", //动画类型（详见动画类型常量）
-						subType : "from_right", //动画子类型（详见动画子类型常量）
-						duration : 300 //动画过渡时间，默认300毫秒
+				if($(node).find('.data-url').html()){
+					var obj ={
+						url:$(node).find('.data-url').html(),
+						title:$(node).find('.data-title').html()
 					}
-				})
+					api.openWin({
+						name:'advertisement_win',
+						url:'../advertisement_win.html',
+						pageParam:obj,
+						slidBackEnabled : false,
+						animation : {
+							type : "movein", //动画类型（详见动画类型常量）
+							subType : "from_right", //动画子类型（详见动画子类型常量）
+							duration : 300 //动画过渡时间，默认300毫秒
+						}
+					})
+				}
 			}
 
 		}

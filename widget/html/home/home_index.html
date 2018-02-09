@@ -444,6 +444,7 @@
 	function JumpPage() {
 
 		 $('#banner').on('click','.swiper-slide',function() {
+				// 	alert($(this).find('img').attr('data-id'))
 			if($(this).find('img').attr('data-id')){
 				// alert($(this).attr('data-id'))
 				api.openWin({
@@ -532,6 +533,7 @@
 			})
 		}else {
 		// 跳转url
+		if($(node).find('.data-url').html()){
 			var obj ={
 				url:$(node).find('.data-url').html(),
 				title:$(node).find('.data-title').html()
@@ -547,6 +549,8 @@
 					duration : 300 //动画过渡时间，默认300毫秒
 				}
 			})
+		}
+
 		}
 
 	}
