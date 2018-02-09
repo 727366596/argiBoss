@@ -11,8 +11,8 @@ var pds = (typeof this.pds === 'undefined') ? {} : this.pds;
 		uat:"http://dev.znphjf.com/",
 		release:"http://47.93.238.45/",
 		show:"http://59.110.239.229/",
-		app:"http://121.42.230.107:8089/"
-		ph:"http://ph.znphjf.com/",
+		app:"http://121.42.230.107:8089/",
+		ph:"http://ph.znphjf.com/"
 	}
 	/**
 	 * 获取服务器端uri
