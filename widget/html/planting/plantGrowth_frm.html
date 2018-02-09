@@ -1012,6 +1012,7 @@
 		initRefresh()
 	}
 	function initIn(){
+		api.refreshHeaderLoadDone()
 		if($api.getStorage('plantGrowth'+$api.getStorage("userId"))){
 			var data=JSON.parse($api.getStorage('plantGrowth'+$api.getStorage("userId")))
 			var startDate=data.startDates
@@ -1217,7 +1218,6 @@
 									}
 									 $("#real").html("￥"+real)
 									 $("#plan").html("￥"+plan)
-									 api.refreshHeaderLoadDone()
 								 },
 								error:function(e){
 									 api.alert({msg:"服务器异常，请联系管理员!"});
