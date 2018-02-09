@@ -13,6 +13,8 @@
     </style>
     <script type="text/javascript" src="../../script/common/rem.js"></script>
     <script type="text/javascript" src="../../script/common/api.js"></script>
+  	<script type="text/javascript" src="../../script/common/jquery.min.js"></script>
+  	<script type="text/javascript" src="../../script/common/pds.ajax.js"></script>
 </head>
 
 <body>
@@ -27,7 +29,41 @@
         if (!showGuide) {
             openGuide();
         } else {
-            openWelcome();
+          var systemType = api.systemType;
+          var code = ''
+          if (systemType === 'ios') {
+            code = "e9b66e519c6944e595f47af8a7e45497"
+          } else if (systemType === 'android') {
+            code = "fca9b5db26b24e32b2743950578661c1"
+          }
+          pds.ajaxSubmit({
+            url: "app/sys/get_adv",
+            data: {
+              "code": code,
+              "place": 'start'
+            },
+            success: function(e) {
+            	//console.log('++++++++' + JSON.stringify(e))
+              if (e.data !== null && e.data !== '') {
+                var data = e.data.data || []
+                if (data.length > 0) {
+                  openWelcome(data[0]);
+                }else {
+                  api.openWin({
+                      name: 'login_new',
+                      url: './login_new.html',
+                      slidBackEnabled: false
+                  });
+                }
+              }
+            },
+            error: function(e) {
+              api.alert({
+                msg: "服务器错误，请联系管理员!"
+              });
+            }
+          });
+
         }
     };
     //打开引导页
@@ -45,11 +81,12 @@
         });
     }
     //打开启动页
-    function openWelcome() {
+    function openWelcome(pageParam) {
         api.openWin({
             name: 'welcomePage_win',
             url: './welcomePage.html',
-            slidBackEnabled: false
+            slidBackEnabled: false,
+            pageParam:pageParam
         });
     }
 </script>

@@ -42,25 +42,27 @@
 	<script type="text/javascript" src="../../script/common/rem.js"></script>
 	<script type="text/javascript" src="../../script/common/api.js"></script>
 	<script type="text/javascript" src="../../script/common/jquery.min.js"></script>
-	<script type="text/javascript" src="../../script/common/pds.ajax.js"></script>
 </head>
 
 <body>
-	<img src="../../image/start.png" alt="">
+	<img src="" alt="">
 	<div class="box">
-			<span style="margin-right:5px;">跳过</span><span class="jump">3</span>
+		<span style="margin-right:5px;">跳过</span><span class="jump">3</span>
 	</div>
 
 </body>
 
 <script type="text/javascript">
 	apiready = function() {
-
 		api.parseTapmode();
 		api.setFullScreen({
 			fullScreen: true
 		});
-		advImg();
+		var pictureUrl = api.pageParam.pictureUrl;
+		var title = api.pageParam.title;
+		var url = api.pageParam.url;
+
+		advImg(pictureUrl,title,url);
 		api.addEventListener({
 			name: 'openLogin'
 		}, function(ret, err) {
@@ -77,68 +79,40 @@
 		});
 
 	};
-var time
-	function advImg() {
-		var systemType = api.systemType;
-		var code = ''
-		if (systemType === 'ios') {
-			code = "e9b66e519c6944e595f47af8a7e45497"
-		} else if (systemType === 'android') {
-			code = "fca9b5db26b24e32b2743950578661c1"
-		}
-		pds.ajaxSubmit({
-			url: "app/sys/get_adv",
-			data: {
-				"code": code,
-				"place": 'start'
-			},
-			success: function(e) {
-			//	console.log('++++++++' + JSON.stringify(e))
-				if (e.data !== null && e.data !== '') {
-					var data = e.data.data || []
-					if (data.length > 0) {
-						var pictureUrl = data[0].pictureUrl
-						$('img').attr('src', pictureUrl)
-						$('img').on('click', function() {
-							jumpPage(data[0].title, data[0].url)
-						})
-					}
-				}
-				setTimeout(function() {
-					var number = 3;
-					 time = setInterval(function() {
-						number--;
-						if (number > 0) {
-							$('.jump').text(number)
-						} else {
-							clearInterval(time)
-							jumpLogin()
-						}
-					}, 1000)
-				}, 2000);
+	var time
 
-			},
-			error: function(e) {
-				api.alert({
-					msg: "服务器错误，请联系管理员!"
-				});
-			}
-		});
+	function advImg(pictureUrl,title,url) {
+		$('img').attr('src', pictureUrl)
+		$('img').on('click', function() {
+			jumpPage(title, url)
+		})
+		setTimeout(function() {
+			var number = 3;
+			time = setInterval(function() {
+				number--;
+				if (number > 0) {
+					$('.jump').text(number)
+				} else {
+					clearInterval(time)
+					jumpLogin()
+				}
+			}, 1000)
+		}, 2000);
 	}
 
 
 	function jumpLogin() {
-			api.openWin({
-				name: "login_new",
-				url: "widget://html/login/login_new.html",
-				reload: true,
-				slidBackEnabled: false,
-				animation: {
-					type: "movein", //动画类型（详见动画类型常量）
-					subType: "from_right", //动画子类型（详见动画子类型常量）
-					duration: 400 //动画过渡时间，默认300毫秒
-				}
-			});
+		api.openWin({
+			name: "login_new",
+			url: "widget://html/login/login_new.html",
+			reload: true,
+			slidBackEnabled: false,
+			animation: {
+				type: "movein", //动画类型（详见动画类型常量）
+				subType: "from_right", //动画子类型（详见动画子类型常量）
+				duration: 400 //动画过渡时间，默认300毫秒
+			}
+		});
 	}
 
 	$('.box').on('click', jumpLogin)
