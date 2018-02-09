@@ -20,9 +20,9 @@
 					right: 0;
 					top: 0;
 					bottom: 0;
-					overflow-y: auto;
+					/*overflow-y: auto;
 					-webkit-overflow-scrolling:touch;
-					z-index: 1;
+					z-index: 1;*/
 				}
 				section{
 					margin-top: 0.2rem;
@@ -1006,7 +1006,8 @@
 				});
 		})
 		initIn()
-		scrollToTop()
+		// scrollToTop()
+		initRefresh()
 	}
 	function initIn(){
 		if($api.getStorage('plantGrowth'+$api.getStorage("userId"))){
@@ -1182,7 +1183,7 @@
 													},
 														series: {
 															 animation: {
-																	 duration: 2500
+																	 duration: 1200
 															 }
 														}
 												},
@@ -1214,6 +1215,7 @@
 									}
 									 $("#real").html("￥"+real)
 									 $("#plan").html("￥"+plan)
+									 api.refreshHeaderLoadDone()
 								 },
 								error:function(e){
 									 api.alert({msg:"服务器异常，请联系管理员!"});
@@ -1445,33 +1447,45 @@
 	});
 	}
 	//页面回到顶部
-	function scrollToTop(){
-		  var systemType = api.systemType;
-			$("#wrapper").on("scroll",function(){
-					var scrollTop = $("#wrapper").scrollTop();
-					if(systemType!="ios"){
-						if(scrollTop >= 223){
-							$("#xuanxiang").addClass("you")
-							$("#zhan").css("height","1rem")
-						}else{
-							$("#xuanxiang").removeClass("you")
-							$("#zhan").css("height","0")
-						}
-			  	}
-					if(scrollTop >= 200){
-							$("#body_totop_btn").show().off("click").on("click",function(){
-									$("#wrapper").animate({'scrollTop': '0px'}, 1000);
-									//myScroll.scrollTo(0, 0, 300)
-									// $("#body_totop_btn").animate({'bottom': '10rem'}, 800,function(){
-									// 		$("#body_totop_btn").css("bottom","0.5rem")
-									// });
-							})
-					}else{
-							$("#body_totop_btn").hide();
-					}
-			})
-	};
-
+	// function scrollToTop(){
+	// 	  var systemType = api.systemType;
+	// 		$("#wrapper").on("scroll",function(){
+	// 				var scrollTop = $("#wrapper").scrollTop();
+	// 				if(systemType!="ios"){
+	// 					if(scrollTop >= 223){
+	// 						$("#xuanxiang").addClass("you")
+	// 						$("#zhan").css("height","1rem")
+	// 					}else{
+	// 						$("#xuanxiang").removeClass("you")
+	// 						$("#zhan").css("height","0")
+	// 					}
+	// 		  	}
+	// 				if(scrollTop >= 200){
+	// 						$("#body_totop_btn").show().off("click").on("click",function(){
+	// 								$("#wrapper").animate({'scrollTop': '0px'}, 1000);
+	// 								//myScroll.scrollTo(0, 0, 300)
+	// 								// $("#body_totop_btn").animate({'bottom': '10rem'}, 800,function(){
+	// 								// 		$("#body_totop_btn").css("bottom","0.5rem")
+	// 								// });
+	// 						})
+	// 				}else{
+	// 						$("#body_totop_btn").hide();
+	// 				}
+	// 		})
+	// };
+	function initRefresh() {
+	    api.setRefreshHeaderInfo({
+	        visible: true,
+	        // loadingImg: 'widget://image/refresh.png',
+	        bgColor: '#ccc',
+	        textColor: '#fff',
+	        textDown: '下拉刷新...',
+	        textUp: '松开刷新...',
+	        showTime: true
+	    }, function(ret, err) {
+	        initIn();
+	    });
+	}
 </script>
 </body>
 </html>
