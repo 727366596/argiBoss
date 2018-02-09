@@ -85,7 +85,8 @@
 		$('img').attr('src', pictureUrl)
 		if(url!==''){
 			$('img').on('click', function() {
-				jumpPage(title, url)
+				clearInterval(time);
+				jumpPage(title, url);
 			})
 		};
 		setTimeout(function() {
