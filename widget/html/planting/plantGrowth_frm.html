@@ -900,7 +900,7 @@
 			// $("#slider>span").eq(0).css("border","0")
 			le=$("#slider>span").length
 			for(var k=0; k<le; k++){
-				$("#slider>span").eq(k).on("touchstart",function(){
+				$("#slider>span").eq(k).on("click",function(){
 					$("#slider>span").css("backgroundColor","#fff")
 					$("#slider>span").css("color","#747976")
 					$("#slider>span").css("border","1px solid #ededed")
@@ -924,7 +924,7 @@
 					qiu($("#catId").val(),$("#landId").val(),startDate,endDate)
 				})
 		 }
-		 $("#sanjiao1").on("touchstart",function(){
+		 $("#sanjiao1").on("click",function(){
 			 $("#nianfen").html(parseInt($("#nianfen").html())+1)
 			 $("#slider>span").css("backgroundColor","#fff")
 			 $("#slider>span").css("color","#747976")
@@ -934,7 +934,7 @@
 			 var endDate=y+"-"+"12"+"-31"
 			 qiu($("#catId").val(),$("#landId").val(),startDate,endDate)
 		 })
-		 $("#sanjiao2").on("touchstart",function(){
+		 $("#sanjiao2").on("click",function(){
 			$("#nianfen").html(parseInt($("#nianfen").html())-1)
 			$("#slider>span").css("backgroundColor","#fff")
 			$("#slider>span").css("color","#747976")
