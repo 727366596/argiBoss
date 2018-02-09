@@ -468,32 +468,51 @@
 			url:"app/sys/get_adv",
 			data:{"code":code,"place":'list'},
 			success:function(e){
-						// alert(JSON.stringify(e))
+						alert(JSON.stringify(e))
 				if(e.data !== null && e.data !== ''){
 
 					var data = e.data.data || '';
 					// alert(JSON.stringify(data))
 					if(data.length > 0){
-						var techDataStr = ''
-						for(var i = 0; i <= 1; i++){
-							if(data[i].contentTypeName == ''){
-								data[i].contentTypeName = '广告'
-							}
-							techDataStr += '<div class="list-item" type="'+ data[i].type +'" id="'+data[i].contentId+'" onclick="goToDetail(this)">'+
-												   			'<div class="left">'+
-														 			'<div class="data-content" style="display:none;">'+ data[i].content +'</div>'+
-																	'<div class="data-url" style="display:none;">'+ data[i].url +'</div>'+
-																	'<div class="data-author" style="display:none;">'+ data[i].author +'</div>'+
-																	'<div class="title data-title">'+ data[i].title +'</div>'+
-																	'<span class="type contentTypeName">'+ data[i].contentTypeName +'</span>'+
-																	'<span class="date data-date">'+ (data[i].publishDate).split(" ")[0] +'</span>'+
+						if(data.length == 1){
+							var listOne = ''
+							listOne += '<div class="list-item" type="'+ data[0].type +'" id="'+data[0].contentId+'" onclick="goToDetail(this)">'+
+																'<div class="left">'+
+																	'<div class="data-content" style="display:none;">'+ data[0].content +'</div>'+
+																	'<div class="data-url" style="display:none;">'+ data[0].url +'</div>'+
+																	'<div class="data-author" style="display:none;">'+ data[0].author +'</div>'+
+																	'<div class="title data-title">'+ data[0].title +'</div>'+
+																	'<span class="type contentTypeName">'+ data[0].contentTypeName +'</span>'+
+																	'<span class="date data-date">'+ (data[0].publishDate).split(" ")[0] +'</span>'+
 																'</div>'+
 																'<div class="right">'+
-																  '<img src="'+ data[i].pictureUrl +'" alt="">'+
+																	'<img src="'+ data[0].pictureUrl +'" alt="">'+
 																'</div>'+
 														'</div>'
-						}
-						$(".list-content").html(techDataStr)
+									$(".list-content").html(listOne)
+						}else {
+								var techDataStr = ''
+								for(var i = 0; i <= 1; i++){
+								
+									if(data[i].contentTypeName == ''){
+										data[i].contentTypeName = '广告'
+									}
+									techDataStr += '<div class="list-item" type="'+ data[i].type +'" id="'+data[i].contentId+'" onclick="goToDetail(this)">'+
+														   			'<div class="left">'+
+																 			'<div class="data-content" style="display:none;">'+ data[i].content +'</div>'+
+																			'<div class="data-url" style="display:none;">'+ data[i].url +'</div>'+
+																			'<div class="data-author" style="display:none;">'+ data[i].author +'</div>'+
+																			'<div class="title data-title">'+ data[i].title +'</div>'+
+																			'<span class="type contentTypeName">'+ data[i].contentTypeName +'</span>'+
+																			'<span class="date data-date">'+ (data[i].publishDate).split(" ")[0] +'</span>'+
+																		'</div>'+
+																		'<div class="right">'+
+																		  '<img src="'+ data[i].pictureUrl +'" alt="">'+
+																		'</div>'+
+																'</div>'
+								}
+									$(".list-content").html(techDataStr)
+								}
 					}else {
 						$('#gotolist').hide()
 					}
