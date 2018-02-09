@@ -272,15 +272,35 @@
 
 	/********开始测算********/
 	function start() {
+		var obj={
+			"mu": $('#mu').val() * 1,
+			"categoryId": $('#kinds').val(),
+			"costVal": $('#price').val() * 1,
+			"type": type
+		};
+		
+  	if($('#mu').val()===''){
+		  	api.toast({
+	  	    msg: '种植面积不能为空',
+	  	    duration: 2000,
+	  	    location: 'bottom'
+	      });
+				return;
+		};
+
+		if($('#price').val()===''){
+			 api.toast({
+					msg: '种植价格不能为空',
+					duration: 2000,
+					location: 'bottom'
+		  	});
+				return;
+		}
+
 		pds.ajaxSubmit({
 			url: "app/calculator/cost",
 			type: "post",
-			data: {
-				"mu": $('#mu').val() * 1,
-				"categoryId": $('#kinds').val(),
-				"costVal": $('#price').val() * 1,
-				"type": type
-			},
+			data: obj,
 			success: function(e) {
 				console.log('aaaaaaaaaaaaaaaaaaaaaaaaaa' + JSON.stringify(e));
 				api.openWin({
