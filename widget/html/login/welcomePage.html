@@ -83,9 +83,11 @@
 
 	function advImg(pictureUrl,title,url) {
 		$('img').attr('src', pictureUrl)
-		$('img').on('click', function() {
-			jumpPage(title, url)
-		})
+		if(url!==''){
+			$('img').on('click', function() {
+				jumpPage(title, url)
+			})
+		};
 		setTimeout(function() {
 			var number = 3;
 			time = setInterval(function() {
