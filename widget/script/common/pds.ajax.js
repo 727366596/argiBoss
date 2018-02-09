@@ -36,7 +36,7 @@ var pds = (typeof this.pds === 'undefined') ? {} : this.pds;
 				uri = uriConfig.app;
 				break;
 				case "ph":
-					uri = uriConfig.app;
+					uri = uriConfig.ph;
 					break;
 			default:
 				uri = uriConfig.dev;
