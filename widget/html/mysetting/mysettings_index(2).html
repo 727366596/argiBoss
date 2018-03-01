@@ -438,6 +438,16 @@
 	}, function(ret, err) {
 		if (ret) {
 			if (ret.buttonIndex * 1 == 1) {
+				var buriedPoint = pds.buriedPoint();
+			 buriedPoint.pageId = 'page_mine_boss';
+			 buriedPoint.eventId = 'button_logout_page_mine_boss';
+				pds.ajaxSubmit({
+					url:"app/buried_point/save",
+					data:{"point":buriedPoint},
+					success:function(v){
+
+					}
+				})
 				//退出
 	//							$api.setStorage("userId", null);
 	//							$api.setStorage('argi_login_username', null);
