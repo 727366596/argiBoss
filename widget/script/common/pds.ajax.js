@@ -45,7 +45,7 @@ var pds = (typeof this.pds === 'undefined') ? {} : this.pds;
 	}
 
 
-	var defaultUri = remoteUri("uat")
+	var defaultUri = remoteUri("ph")
 
 
 	/**release
