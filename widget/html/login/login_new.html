@@ -337,16 +337,7 @@ function login(){
    var username = $('#username').val();
    var password = $('#password').val();
 	 var flag ="boss";
-	 var buriedPoint = pds.buriedPoint();
-	buriedPoint.pageId = 'page_login_boss';
-	buriedPoint.eventId = 'button_login_page_login_boss';
- pds.ajaxSubmit({
-	 url:"app/buried_point/save",
-	 data:{"point":buriedPoint},
-	 success:function(v){
 
-	 }
- })
    //ajax访问后端数据
    pds.ajaxSubmit({
 		url:"app/sys/enter",
@@ -367,7 +358,16 @@ function login(){
 //	        	$api.setStorage("user", e.data);
 		    	$api.setStorage('argi_login_username',username);
 				$api.setStorage('argi_login_password',password);
+				var buriedPoint = pds.buriedPoint();
+				buriedPoint.pageId = 'page_login_boss';
+				buriedPoint.eventId = 'button_login_page_login_boss';
+				pds.ajaxSubmit({
+				url:"app/buried_point/save",
+				data:{"point":buriedPoint},
+				success:function(v){
 
+				}
+				})
 			    api.openWin({
 	        		name:'win_home',
 	        		url:'../../html/win_home.html',
