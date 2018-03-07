@@ -3,11 +3,11 @@
 
 (function(window) {
 //       var host = 'http://47.93.238.45/'  //release
-var host = 'http://dev.znphjf.com/'
+// var host = 'http://dev.znphjf.com/'
 //var host ='http://39.106.46.30:8081/'
 // var host = 'http://192.168.10.159:8080/'  //小强
   // var host = 'http://172.16.36.119:8080/'  //富川
-  // var host = 'http://ph.znphjf.com/'
+  var host = 'http://ph.znphjf.com/'
 
     var basePath = '/app'
 
