@@ -8,7 +8,7 @@ var pds = (typeof this.pds === 'undefined') ? {} : this.pds;
 		//	dev:'http://172.16.36.119:8080/',//富川
 		// dev:"http://172.16.36.132:8080/",
 		// uat:"http://60.205.185.177/",
-		uat:"http://argi2.pds-inc.com.cn/",
+		uat:"http://dev.znphjf.com/",
 		release:"http://47.93.238.45/",
 		show:"http://ys.znphjf.com/",
 		app:"http://121.42.230.107:8089/",
