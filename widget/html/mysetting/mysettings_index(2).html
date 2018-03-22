@@ -529,6 +529,17 @@
 		});
 	}
 	function mypostion(){
+		 var buriedPoint = pds.buriedPoint();
+		 buriedPoint.pageId = 'page_mine_boss';
+		 buriedPoint.eventId = 'button_delineate_plots_page_mine_boss';
+		//  alert(JSON.stringify(buriedPoint.pageId+'---'+buriedPoint.eventId))
+		 pds.ajaxSubmit({
+				url:"app/buried_point/save",
+				data:{"point":buriedPoint},
+				success:function(v){
+					// alert(JSON.stringify(v))
+				}
+			})
 		$api.openWin({
             name: 'delimitBlockArea',
             url: 'widget://html/mysetting/mysettings/mypositions/delimitBlockArea.html',
