@@ -668,6 +668,9 @@
 
 	//点击“种植计算器”入口
 	function openPlant(){
+		// 埋点
+		PointFun('page_home_boss','button_calculator_page_home_boss')
+
 		$('#openPlant').html('<img src="../../image/home/plant-a.png" alt="">')
 		api.openWin({
 			name: 'index_win',
@@ -682,8 +685,27 @@
 	}
 	//**************DW****************************************************************************//
 
+
+	// 埋点方法
+	function PointFun(pageId,eventId){
+		alert(pageId+'----'+eventId)
+		var buriedPoint = pds.buriedPoint();
+		buriedPoint.pageId = pageId;
+		buriedPoint.eventId =eventId;
+
+		pds.ajaxSubmit({
+		url:"app/buried_point/save",
+		data:{"point":buriedPoint},
+		success:function(v){
+			alert(JSON.stringify(v))
+		}
+		})
+	}
 	//	点击“我的记工”页面跳转
 	function analysis() {
+		// 埋点
+		PointFun('page_home_boss','button_staff_efficiency_analysis_page_home_boss')
+
 		$('#analysis').html('<img src="../../image/home/people-a.png" alt="">')
 		api.openWin({
 			name : "list_win",
@@ -700,6 +722,9 @@
 	}
 	//点击“问问专家”入口
 	function openCall(){
+		// 埋点
+		PointFun('page_home_boss','button_consultant_expert_page_home_boss')
+
 		$('#openCall').html('<img src="../../image/home/ask-a.png" alt="">')
 		api.openWin({
 			name : "questionlist_win",
@@ -716,6 +741,8 @@
 	}
 	//点击跳转市场分析
 	function openMarketInfo(){
+
+			PointFun('page_home_boss','button_price_quotations_page_home_boss')
 			$('#openMarketInfo').html('<img src="../../image/home/mark-a.png" alt="">')
 			api.openWin({
 				name:'market-index-win',
