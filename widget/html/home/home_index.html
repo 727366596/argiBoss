@@ -688,7 +688,7 @@
 
 	// 埋点方法
 	function PointFun(pageId,eventId){
-		alert(pageId+'----'+eventId)
+		// alert(pageId+'----'+eventId)
 		var buriedPoint = pds.buriedPoint();
 		buriedPoint.pageId = pageId;
 		buriedPoint.eventId =eventId;
@@ -697,7 +697,7 @@
 		url:"app/buried_point/save",
 		data:{"point":buriedPoint},
 		success:function(v){
-			alert(JSON.stringify(v))
+			// alert(JSON.stringify(v))
 		}
 		})
 	}
