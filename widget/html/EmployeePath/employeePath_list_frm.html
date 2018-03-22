@@ -295,7 +295,21 @@
 
     //导航tab切换
   	var page = 1, pageSize = 5, navId = null;
+    // 埋点方法
+  	function PointFun(pageId,eventId){
+  		// alert(pageId+'----'+eventId)
+  		var buriedPoint = pds.buriedPoint();
+  		buriedPoint.pageId = pageId;
+  		buriedPoint.eventId =eventId;
 
+  		pds.ajaxSubmit({
+  		url:"app/buried_point/save",
+  		data:{"point":buriedPoint},
+  		success:function(v){
+  			// alert(JSON.stringify(v))
+  		}
+  		})
+  	}
   	function tabCheck(){
       emptyFrm.hide();
       var pathListDataUrl = "";
@@ -321,6 +335,15 @@
           setTimeout(function(){
               pathListData(page, pageSize, navId);
           },300);
+
+          if(navId == 0){
+            // 埋点方法
+        		PointFun('page_track_list_boss','button_todaytrack_page_track_list_boss')
+          }
+          if(navId == 1){
+            // 埋点方法
+        		PointFun('page_track_list_boss','button_historicaltrack_page_track_list_boss')
+          }
   		});
 
   };
@@ -376,9 +399,9 @@
       											};
                             //alert(JSON.stringify(headerImgSrc))
                             //显示以前走的路日期
-                            pathDate = '<span class="pathInfo center" onclick="openMapInfo(this)">查看轨迹</span>';
+                            pathDate = '<span class="pathInfo center" onclick="openMapInfo(this,navId)">查看轨迹</span>';
                             if(navId == "1" && techListArr[i].createDate != "" && techListArr[i].createDate != null){
-                                pathDate = '<span class="pathDate">'+ techListArr[i].createDate.split(" ")[0] +'</span><span class="pathInfo" onclick="openMapInfo(this)">查看轨迹</span>';
+                                pathDate = '<span class="pathDate">'+ techListArr[i].createDate.split(" ")[0] +'</span><span class="pathInfo" onclick="openMapInfo(this,navId)">查看轨迹</span>';
                             };
                             //是否显示今日在线状态
                             if(navId == "0"){
@@ -463,13 +486,23 @@
     };
 
     //点击跳转
-    function openMapInfo(obj){
+    function openMapInfo(obj,navId){
+          // alert(JSON.stringify(navId))
+          if(navId==1){
+            // 埋点方法
+            PointFun('page_historicaltrack_list_boss','button_check_the_details_page_historicaltrack_list_boss')
+          }else{
+            // 埋点方法
+            PointFun('page_todaytrack_list_boss','button_check_the_details_page_todaytrack_list_boss')
+          }
+
+
           var date = $(obj).parents().attr("data-date");
           var id = $(obj).parents().attr("data-id");
           var tel = $(obj).parents().attr("data-tel");
           var landId = $(obj).parents().attr("data-landId");
           var headerImgSrc = $(obj).parents().attr("data-photo");
-          //alert(date+"**********"+id+'**********'+1);
+          // alert(date+"**********"+id+'**********'+1);
           api.openWin({
             name : "employeePath_info_win",
             url : "widget://html/EmployeePath/employeePath_info_win.html",
