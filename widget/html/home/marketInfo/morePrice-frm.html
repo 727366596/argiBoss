@@ -223,6 +223,7 @@
 									nameDo(nameBoxId, marketName, marketId, provinceId, allMarketName);
 									//获取数据
 									dataInit();
+
 							}else {
 									$(this).text("选择市场").attr("data-id","").attr("data-provinceId","");
 							};
@@ -236,6 +237,7 @@
 
 	//请求默认市场数据
 	function getMarket(){
+
 			pds.ajaxSubmit({
 					type: "GET",
 					url : "app/price/defaultMultiMarketStat",
@@ -291,6 +293,7 @@
 
 	//市场框赋值
 	function nameDo(nameBox, marketName, marketId, provinceId, allMarketName){
+
 			$("#"+nameBox).text(marketName).attr("data-id",marketId).attr("data-name",allMarketName).attr("data-provinceId",provinceId);
 			//创建缓存
 			var marketArr = (function(){
@@ -331,6 +334,7 @@
 	//创建折线图
 	//**************************************************************
 	function dataInit(){
+
 			var statDays = 7;
 			var chartBoxs = $("#myChart").attr("id");
 			var plantId = $("#plantId").val();//获取作物id
@@ -598,9 +602,26 @@
 					height : chartH
 			});
 	};
+	// 埋点方法
+	function PointFun(pageId,eventId){
+		// alert(pageId+'----'+eventId)
+		var buriedPoint = pds.buriedPoint();
+		buriedPoint.pageId = pageId;
+		buriedPoint.eventId =eventId;
 
+		pds.ajaxSubmit({
+		url:"app/buried_point/save",
+		data:{"point":buriedPoint},
+		success:function(v){
+			// alert(JSON.stringify(v))
+		}
+		})
+	}
 	//打开市场页面***************************************************
 	function openMarketWin(obj){
+		// 埋点方法
+		PointFun('page_marketpricecontrast_boss','button_marketselect_page_marketpricecontrast_boss')
+
 		var nameBoxId = $(obj).attr("id");
 		var marketName = $(obj).text();
 		var provinceId = $(obj).attr("data-provinceId");

@@ -260,6 +260,7 @@
 			    }]
 			}, function(ret, err) {
 			    var index = ret.index;
+
 					$(".nav li span").css({
 							"color":"#666666",
 							"border":"none",
@@ -270,6 +271,18 @@
 							"fontSize" :"0.32rem"
 					});
 					frmName = ret.name;
+					if(index ==0){
+						//地头价埋点
+						PointFun('page_price_quotations_boss','button_landprice_page_price_quotations_boss')
+					}
+					if(index ==1){
+						// 市场价埋点
+						PointFun('page_price_quotations_boss','button_marketprice_page_price_quotations_boss')
+					}
+					if(index ==2){
+						// 多市场对比埋点
+						PointFun('page_price_quotations_boss','button_marketpricecontrast_page_price_quotations_boss')
+					}
 			});
 
 			//导航切换
@@ -278,6 +291,7 @@
 
 	//导航tab切换
 	function tabCheck(){
+
 			$(".nav li").off("touchend").on("touchend",function(){
 					$(".nav li span").css({
 							"color":"#666666",
@@ -314,9 +328,26 @@
 			};
 			$api.setStorage($api.getStorage('userId')+'plant', plantObj);
 	};
+	// 埋点方法
+	function PointFun(pageId,eventId){
+		// alert(pageId+'----'+eventId)
+		var buriedPoint = pds.buriedPoint();
+		buriedPoint.pageId = pageId;
+		buriedPoint.eventId =eventId;
 
+		pds.ajaxSubmit({
+		url:"app/buried_point/save",
+		data:{"point":buriedPoint},
+		success:function(v){
+			// alert(JSON.stringify(v))
+		}
+		})
+	}
 	//打开作物搜索页面***************************************************
 	function openSearchWin(obj){
+			// 埋点方法
+		PointFun('page_price_quotations_boss','button_variety_selection_page_price_quotations_boss')
+
 			var plantName = $(obj).find(".name").attr("data-name");
 			api.openWin({
 				name : "searchPlant-win",

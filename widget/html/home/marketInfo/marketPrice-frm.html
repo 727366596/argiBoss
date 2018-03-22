@@ -278,6 +278,7 @@
 
 	//导航tab切换
 	function tabCheck(){
+
 			$(".nav li").off("touchend").on("touchend",function(){
 					$(".nav li").each(function(index, el){
 							var bcId = $(this).attr("id");
@@ -304,6 +305,20 @@
 					});
 					//显示对应div
 					$("#"+boxActiveClassName_).parent().show().siblings().hide();
+
+					var TabIndex = $(this).index()
+					if(TabIndex == 0){
+						// 近7天埋点
+						PointFun('page_marketprice_boss','button_7days_page_marketprice_boss')
+					}
+					if(TabIndex == 1){
+						// 近30天埋点
+						PointFun('page_marketprice_boss','button_30days_page_marketprice_boss')
+					}
+					if(TabIndex == 2){
+						// 去年埋点
+						PointFun('page_marketprice_boss','button_lastyear_page_marketprice_boss')
+					}
 
 			});
 			//默认触发近七天
@@ -606,9 +621,26 @@
 					height : chartH
 			});
 	}
+	// 埋点方法
+	function PointFun(pageId,eventId){
+		// alert(pageId+'----'+eventId)
+		var buriedPoint = pds.buriedPoint();
+		buriedPoint.pageId = pageId;
+		buriedPoint.eventId =eventId;
 
+		pds.ajaxSubmit({
+		url:"app/buried_point/save",
+		data:{"point":buriedPoint},
+		success:function(v){
+			// alert(JSON.stringify(v))
+		}
+		})
+	}
 	//打开市场页面***************************************************
 	function openMarketWin(obj){
+			// 埋点
+			PointFun('page_marketprice_boss','button_marketselect_page_marketprice_boss')
+
 			var nameBox = $(obj).attr("id");
 			var marketName = $(obj).text();
 			var provinceId = $(obj).attr("data-provinceId");
