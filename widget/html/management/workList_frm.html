@@ -147,6 +147,9 @@
             // 点击tab切换第一页数据
             // tabCheck();
             $('#inner_w').on('click','.top',function(){
+              // 埋点
+              PointFun('page_field_completed_list_boss','button_check_the_details_page_field_completed_list_boss')
+
                var detail_Id = $(this).attr('data-workId')
                // $(this).css('backgroundColor','red')
                //alert(detail_Id)
@@ -202,6 +205,22 @@
           //     });
           // }
           // Tab切换
+
+          // 埋点方法
+          function PointFun(pageId,eventId){
+            // alert(pageId+'----'+eventId)
+            var buriedPoint = pds.buriedPoint();
+            buriedPoint.pageId = pageId;
+            buriedPoint.eventId =eventId;
+
+            pds.ajaxSubmit({
+            url:"app/buried_point/save",
+            data:{"point":buriedPoint},
+            success:function(v){
+              // alert(JSON.stringify(v))
+            }
+            })
+          }
           var work_type = 1;
           var page = 1;
           var pageSize = 4;
@@ -209,6 +228,9 @@
           var paramObj = {};
           var eachData;
           function sendCall(dom){
+            // 埋点
+            PointFun('page_field_completed_list_boss','button_making_calls_page_field_completed_list_boss')
+
             var phone = $(dom).attr('data-phone');
             api.call({type: 'tel_prompt',number: phone });
             event.stopPropagation();//阻止事件冒泡

@@ -642,7 +642,25 @@
 			}
 		});
 	}
+	// 埋点方法
+	function PointFun(pageId,eventId){
+		// alert(pageId+'----'+eventId)
+		var buriedPoint = pds.buriedPoint();
+		buriedPoint.pageId = pageId;
+		buriedPoint.eventId =eventId;
+
+		pds.ajaxSubmit({
+		url:"app/buried_point/save",
+		data:{"point":buriedPoint},
+		success:function(v){
+			// alert(JSON.stringify(v))
+		}
+		})
+	}
 	function selectSearchTerm(){
+		// 埋点
+		PointFun('page_the_growth_boss','button_filtering_condition_page_the_growth_boss')
+
 			api.openWin({
 				name : 'selectSearchTerm_win',
 				url : './selectSearchTerm_win.html',
@@ -653,6 +671,9 @@
 	}
 
 	function workList(dom){
+		// 埋点
+		PointFun('page_the_growth_boss','button_check_the_details_page_the_growth_boss')
+
 		let growthCycleId=$(dom).attr('id').split(',')[0],weak=$(dom).attr('id').split(',')[1],modelNum=$(dom).attr('id').split(',')[2]
 		if(back){
 			var landId=$api.getStorage('landIds')
