@@ -318,9 +318,26 @@
               });
           });
       }
+      // 埋点方法
+    	function PointFun(pageId,eventId){
+    		// alert(pageId+'----'+eventId)
+    		var buriedPoint = pds.buriedPoint();
+    		buriedPoint.pageId = pageId;
+    		buriedPoint.eventId =eventId;
 
+    		pds.ajaxSubmit({
+    		url:"app/buried_point/save",
+    		data:{"point":buriedPoint},
+    		success:function(v){
+    			// alert(JSON.stringify(v))
+    		}
+    		})
+    	}
       //时间选择框点击,出弹窗
       function timeStyle(){
+        // 埋点方法
+        PointFun('page_staff_efficiency_analysis_boss','button_date_selection_page_staff_efficiency_analysis_boss')
+
           $('#section2').addClass('active');
           if($('#section3').hasClass("active")){
               $('#section3').removeClass('active')
@@ -352,6 +369,9 @@
 
       //基地选择框点击,出弹窗
       function farmStyle(){
+        // 埋点方法
+        PointFun('page_staff_efficiency_analysis_boss','button_base_selection_page_staff_efficiency_analysis_boss')
+
           $('#section3').addClass('active');
           if($('#section2').hasClass("active")){
               $('#section2').removeClass('active')
