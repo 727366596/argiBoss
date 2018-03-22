@@ -948,6 +948,9 @@
 		})
 		var show=1
 		$("#partA").on("touchstart",function(){
+			// 埋点方法
+			PointFun('page_Input_and_growth_boss','button_cost_analysis_page_Input_and_growth_boss')
+
 			if(!show){
 				show=1
 				$("#partA").attr("class","plantA")
@@ -959,6 +962,9 @@
 			}
 		})
 		$("#partB").on("touchstart",function(){
+			// 埋点方法
+			PointFun('page_Input_and_growth_boss','button_implementation_analysis_page_Input_and_growth_boss')
+
 			if(show){
 				show=null
 				$("#partA").attr("class","plantB")
@@ -999,6 +1005,9 @@
 			}
 		})
 		$("#select").on("touchstart",function(){
+			// 埋点方法
+			PointFun('page_Input_and_growth_boss','button_filtering_condition_page_Input_and_growth_boss')
+
 				api.openWin({
 					name : 'selectSearchTerm_win',
 					url : './selectSearchTerm_win.html',
@@ -1010,6 +1019,21 @@
 		initIn()
 		// scrollToTop()
 		initRefresh()
+	}
+	// 埋点方法
+	function PointFun(pageId,eventId){
+		// alert(pageId+'----'+eventId)
+		var buriedPoint = pds.buriedPoint();
+		buriedPoint.pageId = pageId;
+		buriedPoint.eventId =eventId;
+
+		pds.ajaxSubmit({
+		url:"app/buried_point/save",
+		data:{"point":buriedPoint},
+		success:function(v){
+			// alert(JSON.stringify(v))
+		}
+		})
 	}
 	function initIn(){
 		api.refreshHeaderLoadDone()
