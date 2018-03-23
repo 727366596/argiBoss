@@ -623,6 +623,10 @@
 		//
 		// },30);
 
+		// 点击首页tab埋点
+
+			PointFun('page_mine_boss','button_mine_page_mine_boss')
+
 		getUserInfo();
 		api.addEventListener({
 	        name:'viewappear'
@@ -642,5 +646,33 @@ function openScreenWrap(){
 		$("#screenWrap").hide();
 	},1000)
 };
+
+
+
+
+
+	// 埋点方法
+	function PointFun(pageId,eventId){
+		// alert(pageId+'----'+eventId)
+		var buriedPoint = pds.buriedPoint();
+		buriedPoint.pageId = pageId;
+		buriedPoint.eventId =eventId;
+
+		pds.ajaxSubmit({
+		url:"app/buried_point/save",
+		data:{"point":buriedPoint},
+		success:function(v){
+			// alert(JSON.stringify(v))
+		}
+		})
+	}
+
+
+
+
+
+
+
+
 </script>
 </html>
