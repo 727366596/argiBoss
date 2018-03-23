@@ -892,6 +892,9 @@
 	}
 
 	apiready=function(){
+		// 点击首页tab埋点
+		PointFun('page_Input_and_growth_boss','button_cultivate_page_Input_and_growth_boss')
+
 		$("#nianfen").html(new Date().getFullYear())
 		// var header = $api.byId('header');
 		// 	$api.fixStatusBar(header);
@@ -1020,6 +1023,7 @@
 		// scrollToTop()
 		initRefresh()
 	}
+
 	// 埋点方法
 	function PointFun(pageId,eventId){
 		// alert(pageId+'----'+eventId)
