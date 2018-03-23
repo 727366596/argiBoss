@@ -467,6 +467,17 @@
 
 		// 按ID删除标注
 		function deleteAnnotation(){
+			var buriedPoint = pds.buriedPoint();
+      buriedPoint.pageId = 'page_delineate_plots_boss';
+      buriedPoint.eventId = 'button_cancel_the_draw_page_delineate_plots_boss';
+      // alert(JSON.stringify(buriedPoint.pageId+'---'+buriedPoint.eventId))
+      pds.ajaxSubmit({
+         url:"app/buried_point/save",
+         data:{"point":buriedPoint},
+         success:function(v){
+          //  alert(JSON.stringify(v))
+         }
+       })
 				// 删除指定位置的元素（在添加元素时，id就是index,所以id与index等）
 				var id = $("#deletePointId").val();
 
@@ -523,6 +534,18 @@
 		}
 		// 完成打点: 第一步：闭合几何图形，第二步：计算面积，第三步：后台数据生成
 		function completeMakePoint(){
+
+			var buriedPoint = pds.buriedPoint();
+			buriedPoint.pageId = 'page_delineate_plots_boss';
+			buriedPoint.eventId = 'button_delineate_plots_page_delineate_plots_boss';
+			// alert(JSON.stringify(buriedPoint.pageId+'---'+buriedPoint.eventId))
+			pds.ajaxSubmit({
+				 url:"app/buried_point/save",
+				 data:{"point":buriedPoint},
+				 success:function(v){
+					//  alert(JSON.stringify(v))
+				 }
+			 })
 				closePolygon();
 				getArea();
 				if(!area){
