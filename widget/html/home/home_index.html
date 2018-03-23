@@ -684,7 +684,10 @@
 		})
 	}
 	//**************DW****************************************************************************//
-
+// 点击首页tab埋点
+	window.BuriedPoint0 = function() {
+		PointFun('page_home_boss','button_home_page_home_boss')
+	}
 
 	// 埋点方法
 	function PointFun(pageId,eventId){
