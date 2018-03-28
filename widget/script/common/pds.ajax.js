@@ -45,7 +45,7 @@ var pds = (typeof this.pds === 'undefined') ? {} : this.pds;
 	}
 
 
-	var defaultUri = remoteUri("uat")
+	var defaultUri = remoteUri("show")
 
 
 	/**release
@@ -156,7 +156,6 @@ var pds = (typeof this.pds === 'undefined') ? {} : this.pds;
 		device.deviceModel = api.deviceModel; //设备型号，字符串类型
 		device.deviceName = api.deviceName; //设备名称，字符串类型
 		device.resPower = api.winWidth+'*'+api.winHeight; //分辨率
-		device.systemVersion = api.systemVersion;  //手机平台的系统版本
 		device.terminal  = 'App';
 		device.product = 'boss';
 		return device
