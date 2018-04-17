@@ -82,6 +82,11 @@
 				jumpPage(title, url);
 			})
 		};
+		var systemType = api.systemType;  // 比如： ios
+		var timeLong = 0;
+		if (systemType != "ios") {
+				timeLong = 2000
+		};
 		setTimeout(function() {
 			var number = 3;
 			time = setInterval(function() {
@@ -92,7 +97,8 @@
 					jumpLogin()
 				}
 			}, 1000)
-		}, 2000);
+			$('.box').on('click', jumpLogin)
+		}, timeLong);
 	}
 
 
@@ -111,7 +117,7 @@
 		});
 	}
 
-	$('.box').on('click', jumpLogin)
+
 
 	function jumpPage(title, url) {
 		clearInterval(time);
