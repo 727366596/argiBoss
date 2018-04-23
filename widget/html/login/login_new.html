@@ -172,96 +172,108 @@ function addInputAccountChanageListener(){
 	$("#username").keyup(function (){
 		swichSubmitButton();
 	})
-}
+};
+
+var ajpush = null;
 apiready=function(){
 
 	api.setFullScreen({
 	    fullScreen:false
 	});
 
-	//app消息推送开始
-// 	ajpush = api.require('ajpush');
-// 	ajpush.init(function(ret) {
-//
-// 					if (ret && ret.status ) {
-// 						//success
-// 						ajpush.setListener(function(ret) {
-// 							var id = ret.id;
-// 							var title = ret.title;
-// 							var content = ret.content;
-// 							var extra = ret.extra;
-//
-// //							console.log("id=" + id + ",title=" + title + ",content=" + content + ",extra=" + extra);
-// 						});
-// 					}
-// 				});
-//			ajpush.init();
+	//app消息推送开始****************************************
+	ajpush = api.require('ajpush');
+	var badge = 0;
+	ajpush.setBadge({
+			badge:0
+	});
+	ajpush.init(function(ret) {
+			//alert(JSON.stringify(ret))
+			if (ret && ret.status ) {
+					ajpush.setListener(function(ret) {
+								// if(ret.extra.type=="workSound"){
+								// 		var audio = document.getElementById("au")
+								// 		audio.play()
+								// }
+								badge += 1;
+								console.log("哈哈哈哈哈****************"+badge)
+								ajpush.setBadge({
+										badge:badge
+								});
+					});
+			}
+	});
+
+	//ios推送**************************************************************
+	ajpush.init();
+	var systemType = api.systemType
+	if(systemType=="ios"){
+			ajpush.setListener(function(ret) {
+					// if(ret.extra.type=="workSound"){
+					// 		var audio = document.getElementById("au")
+					// 		audio.play()
+					// }
+					badge += 1;
+					console.log("哈哈哈哈哈********ios********"+badge)
+					ajpush.setBadge({
+							badge:badge
+					});
+			});
+	};
+	api.addEventListener({name:'pause'}, function(ret,err) {
+			onPause();//监听应用进入后台，通知jpush暂停事件
+	})
+
+	api.addEventListener({name:'resume'}, function(ret,err) {
+			onResume();//监听应用恢复到前台，通知jpush恢复事件
+	});
+	//*****************************************
 	api.addEventListener({name:'appintent'}, function(ret,err) {
-//      alert('通知被点击，收到数据11：n' + JSON.stringify(ret));//监听通知被点击后收到的数据
+			//alert('通知被点击，收到数据11：n' + JSON.stringify(ret));//监听通知被点击后收到的数据
+			//alert(JSON.stringify(ret.appParam.ajpush.extra))
+			var extra = ret.appParam.ajpush.extra;
+			var name = extra.jump2name;
+			var url = extra.jump2url;//alert(url)
+			var dataArr = url.split("?")[1].split("&"), data = {};
+			for (var i = 0; i < dataArr.length; i++) {
+				var data_ = dataArr[i].split("=");
+				data[data_[0]] = data_[1];
+			};
+			console.log("哈哈哈哈哈哈哈" + JSON.stringify(data));
+			if(url.indexOf("widget:")<0)url ="widget://"+url;
+			var selecteIndex = extra.jump2menu||'0';
+			api.openWin({
+				name:'content-detail_win',
+				url:'widget://html/home/content-detail_win.html',
+				slidBackEnabled : false,
+				pageParam:data,
+				animation : {
+					type : "movein", //动画类型（详见动画类型常量）
+					subType : "from_right", //动画子类型（详见动画子类型常量）
+					duration : 300 //动画过渡时间，默认300毫秒
+				}
+			})
 
-        var extra = JSON.parse(ret.appParam.ajpush.extra);
-        var name = extra.jump2name;
-        var url = extra.jump2url;
-        if(url.indexOf("widget:")<0)url ="widget://"+url;
-       var selecteIndex = extra.jump2menu||'0';
-        $api.openWin({
-	        name: name,
-	        url:  url,
-	        vScrollBarEnabled:false,
-	        slidBackEnabled:false,
-	        selecteIndex:selecteIndex,
-	        animation:{
-	            type:"movein",                //动画类型（详见动画类型常量）
-	            subType:"from_right",       //动画子类型（详见动画子类型常量）
-	            duration:300                //动画过渡时间，默认300毫秒
-	        }
-      });
-
-    })
-    //因为IOS和andriod监听不同所以我这里不同的作了不同的处理
-    api.addEventListener({name:'noticeclicked'}, function(ret,err) {
-//      alert('通知被点击，收到数据11：n' + JSON.stringify(ret));//监听通知被点击后收到的数据
-
-        var extra = JSON.parse(ret.value.extra);
-        var name = extra.jump2name;
-        var url = extra.jump2url;
-        if(url.indexOf("widget:")<0)url ="widget://"+url;
-        var selecteIndex = extra.jump2menu||'0';
-        $api.openWin({
-	        name: name,
-	        url:  url,
-	        vScrollBarEnabled:false,
-	        slidBackEnabled:false,
-	        selecteIndex:selecteIndex,
-	        animation:{
-	            type:"movein",                //动画类型（详见动画类型常量）
-	            subType:"from_right",       //动画子类型（详见动画子类型常量）
-	            duration:300                //动画过渡时间，默认300毫秒
-	        }
-      });
-
-    })
-    api.addEventListener({name:'pause'}, function(ret,err) {
-        onPause();//监听应用进入后台，通知jpush暂停事件
-    });
-
-    api.addEventListener({name:'resume'}, function(ret,err) {
-        onResume();//监听应用恢复到前台，通知jpush恢复事件
-    });
-
-	//app消息推送结束
+	})
+	//因为IOS和andriod监听不同所以我这里不同的作了不同的处理
+	api.addEventListener({name:'noticeclicked'}, function(ret,err) {
+			//alert('通知被点击，收到数据11：n' + JSON.stringify(ret));//监听通知被点击后收到的数据
+	});
+	//app消息推送结束****************************************************
 
 
-   	$api.fixIos7Bar($(".content"));
- 	pageParams = api.pageParam;
-	phone = pageParams.username;
-	if(phone!=null){
-		$api.val(document.getElementById("username"), phone);
-		$api.val(document.getElementById("password"), '');
-	}
-	var username =  $api.getStorage('argi_login_username');
-	var password = $api.getStorage('argi_login_password');
-	var userId = $api.getStorage('userId');
+
+
+  $api.fixIos7Bar($(".content"));
+	 	pageParams = api.pageParam;
+		phone = pageParams.username;
+		if(phone!=null){
+			$api.val(document.getElementById("username"), phone);
+			$api.val(document.getElementById("password"), '');
+		}
+		var username =  $api.getStorage('argi_login_username');
+		var password = $api.getStorage('argi_login_password');
+		var userId = $api.getStorage('userId');
 
 	if(userId!=null){
 		if(username!=null && username.length>0){
@@ -305,13 +317,13 @@ apiready=function(){
 
 //统计-app恢复
 function onResume(){
-//  jpush.onResume();
+		ajpush.onResume();
     console.log('JPush onResume');
 }
 
 //统计-app暂停
 function onPause(){
-//  jpush.onPause();
+		ajpush.onPause();
     console.log('JPush onPause');
 }
 
@@ -325,14 +337,14 @@ function cleanAccount(){
 }
 
 function login(){
-	// 电话号码校验
-	if(!testPhone()){
-		return ;
-	}
-	// 密码校验
-	if(!testPassword()){
-		return ;
-	}
+		// 电话号码校验
+		if(!testPhone()){
+			return ;
+		}
+		// 密码校验
+		if(!testPassword()){
+			return ;
+		}
 
    var username = $('#username').val();
    var password = $('#password').val();
@@ -340,65 +352,70 @@ function login(){
 
    //ajax访问后端数据
    pds.ajaxSubmit({
-		url:"app/sys/enter",
-		data:{"username":username,"password":password,"flag":flag},
-		success:function(e){
-			$api.rmStorage('denyNum')
-	        if(e.status == "error"){
-	        	$('#username').val("");
-	    		$('#password').val("");
-	    		$api.clearStorage();
-                api.alert({msg:e.message});
-                swichSubmitButton();
-		    }else{
-			    var sType = api.systemType;
-			    //if(e.data!=null){
-			    	$api.setStorage("userId",e.data);
-			    	//			}
-//	        	$api.setStorage("user", e.data);
-		    	$api.setStorage('argi_login_username',username);
-				$api.setStorage('argi_login_password',password);
-				var buriedPoint = pds.buriedPoint();
-				buriedPoint.pageId = 'page_login_boss';
-				buriedPoint.eventId = 'button_login_page_login_boss';
-				pds.ajaxSubmit({
-				url:"app/buried_point/save",
-				data:{"point":buriedPoint},
-				success:function(v){
+			url:"app/sys/enter",
+			data:{"username":username,"password":password,"flag":flag},
+			success:function(e){
+					$api.rmStorage('denyNum')
+		      if(e.status == "error"){
+		        	$('#username').val("");
+		    			$('#password').val("");
+		    			$api.clearStorage();
+	            api.alert({msg:e.message});
+	            swichSubmitButton();
+			    }else{
 
-				}
-				})
-			    api.openWin({
-	        		name:'win_home',
-	        		url:'../../html/win_home.html',
-	        		slidBackEnabled:false,
-	        		reload:true,
-	        		animation:{
-			            type:"movein",                //动画类型（详见动画类型常量）
-			            subType:"from_right",       //动画子类型（详见动画子类型常量）
-			            duration:300                //动画过渡时间，默认300毫秒
-			        }
-		    	});
-		    	//bindAlias(username);
-		    }
-		},
-		error:function(e){
-			api.alert({msg:"服务器错误，请联系管理员!"});
-			swichSubmitButton();
-		}
-  });
+							//登陆成功后，绑定别名************************************************
+							bindAlias(username);
 
-}
-// function bindAlias(username){
-// 	var ajpush = api.require('ajpush');
-// 	var param = {
-// 		alias : username,
-// 		tags : ['tag1', 'tag2']
-// 	};
-// 	ajpush.bindAliasAndTags(param, function(ret) {
-// 		var statusCode = ret.statusCode;
-// 	});
-// }
+					    var sType = api.systemType;
+					    //if(e.data!=null){
+					    $api.setStorage("userId",e.data);
+					    //}
+							//$api.setStorage("user", e.data);
+				    	$api.setStorage('argi_login_username',username);
+							$api.setStorage('argi_login_password',password);
+							var buriedPoint = pds.buriedPoint();
+							buriedPoint.pageId = 'page_login_boss';
+							buriedPoint.eventId = 'button_login_page_login_boss';
+							pds.ajaxSubmit({
+									url:"app/buried_point/save",
+									data:{"point":buriedPoint},
+									success:function(v){
+
+									}
+							})
+					    api.openWin({
+			        		name:'win_home',
+			        		url:'../../html/win_home.html',
+			        		slidBackEnabled:false,
+			        		reload:true,
+			        		animation:{
+					            type:"movein",                //动画类型（详见动画类型常量）
+					            subType:"from_right",       //动画子类型（详见动画子类型常量）
+					            duration:300                //动画过渡时间，默认300毫秒
+					        }
+				    	});
+			    }
+			},
+			error:function(e){
+				api.alert({msg:"服务器错误，请联系管理员!"});
+				swichSubmitButton();
+			}
+   });
+
+};
+//绑定推送
+function bindAlias(username){
+		var param = {
+				alias : username,
+				tags : ['tag1', 'tag2']
+		};
+		ajpush.bindAliasAndTags(param, function(ret) {
+				var statusCode = ret.statusCode;
+				//alert("ajpush成功*****"+statusCode)
+		});
+};
+
 /* 跳转至忘记密码页面   */
 function forget(){
 	var username = document.getElementById("username").value;
