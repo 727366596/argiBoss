@@ -409,13 +409,23 @@
 					$("#tishi").hide()
 					$("#growth").show()
 				}
-				for(let i=0;i<period.length;i++){
+
+
+				//解决初始化照片不回显问题*************************************************************8
+				setTimeout(function(){
+						$(".slider").each(function(index){
+								$(this).find("span").eq(0).trigger("click")
+						})
+				},30)
+
+
+				for(var i=0;i<period.length;i++){
 					var per=""
 					period[i]=period[i].reverse()
 					if(i>0){
 						$("#section2").append($("#growth").clone().removeAttr("id"))
 					}
-					for(let j=0; j<period[i].length; j++){
+					for(var j=0; j<period[i].length; j++){
 						per='<span onclick="qiehuan(this)" id='+period[i][j].updateDate+','+period[i][j].growthCycleId+','+period[i][j].disease+','+period[i][j].insectPests+','+period[i][j].grassHarm+','+period[i][j].physiologicalStress+','+period[i][j].ifDeficiency+','+period[i][j].weak+','+categoryId+','+period[i][j].modelNum+' >'+period[i][j].lifeCycle+'</span>'+per
 					}
 					$(".slider").eq(i).html(per)
@@ -500,8 +510,8 @@
 
 				// $(".slider>span").on("touchstart",function(){
 				// 	//$api.setStorage('growthCycleId',$(this).attr("id"))
-				// 	let i=$(this).parent().parent().parent().index()-2
-				// 	let arr=$(this).attr('name').split(',')
+				// 	var i=$(this).parent().parent().parent().index()-2
+				// 	var arr=$(this).attr('name').split(',')
 				// 	//$("#imgShow").attr("src", period[arr[0]][arr[1]].imageUrl)
 				// 	$(".updateTime").eq(i).html(arr[0])
 				// 	//$(".warning").eq(i).html(period[arr[0]][arr[1]].physiologicalStress)
@@ -674,7 +684,7 @@
 		// 埋点
 		PointFun('page_the_growth_boss','button_check_the_details_page_the_growth_boss')
 
-		let growthCycleId=$(dom).attr('id').split(',')[0],weak=$(dom).attr('id').split(',')[1],modelNum=$(dom).attr('id').split(',')[2]
+		var growthCycleId=$(dom).attr('id').split(',')[0],weak=$(dom).attr('id').split(',')[1],modelNum=$(dom).attr('id').split(',')[2]
 		if(back){
 			var landId=$api.getStorage('landIds')
 			var categoryId=$api.getStorage('categoryIds')
@@ -693,7 +703,7 @@
 				}
 			});
 		}else{
-			let growthCycleId=$(dom).attr('id').split(',')[0],weak=$(dom).attr('id').split(',')[1],modelNum=$(dom).attr('id').split(',')[2]
+			var growthCycleId=$(dom).attr('id').split(',')[0],weak=$(dom).attr('id').split(',')[1],modelNum=$(dom).attr('id').split(',')[2]
 			var d = new Date(), y = d.getFullYear(), m = d.getMonth() + 1, r = d.getDate();
 			m < 10 ? m = "0" + m : m;
 			r < 10 ? r = "0" + r : r;
@@ -717,8 +727,8 @@
 	}
 	 function qiehuan(dom){
 		 //$api.setStorage('growthCycleId',$(this).attr("id"))
-			let i=$(dom).parent().parent().parent().index()-2
-			let arr=$(dom).attr('id').split(',')
+			var i=$(dom).parent().parent().parent().index()-2
+			var arr=$(dom).attr('id').split(',')
 			//alert(JSON.stringify(arr))
 			//$("#imgShow").attr("src", period[arr[0]][arr[1]].imageUrl)
 			$(".updateTime").eq(i).html(arr[0])
