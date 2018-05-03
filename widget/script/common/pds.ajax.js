@@ -45,7 +45,7 @@ var pds = (typeof this.pds === 'undefined') ? {} : this.pds;
 	}
 
 
-	var defaultUri = remoteUri("uat")
+	var defaultUri = remoteUri("ph")
 
 
 	/**release
@@ -87,6 +87,7 @@ var pds = (typeof this.pds === 'undefined') ? {} : this.pds;
 	    authorization: $api.getStorage('userId'),
 	    mobile: 'true'
 	  };
+		console.log("**************8"+defaultUri + _custom.url)
 		api.ajax({
 		    url: defaultUri + _custom.url,
 		    method: _custom.type,
