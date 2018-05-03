@@ -41,6 +41,7 @@ function closeWin(){
 var obj = null;
 apiready = function(){
 	var flag = api.pageParam.extend_params==undefined;// 是否是点击导航
+
 	api.addEventListener({name: 'keyback'}, function(ret, err){
 //	 alert('按了返回键'+api.winName+","+api.frameName);
 		if(api.winName=='agriculturalData'||api.winName=='listCollect'){
@@ -239,6 +240,12 @@ apiready = function(){
 				}
 			}, param_));
 	}
+
+	api.addEventListener({
+			name: 'keyback'
+	}, function(ret, err) {
+			back();
+	});
 }
 
 function setTabBarIndex(tabBarIndex){
@@ -248,14 +255,23 @@ function setTabBarIndex(tabBarIndex){
 }
 
 function back(){
-     api.closeWidget({
-    	silent:false,
-	    animation: {
-        type: 'flip',
-        subType: 'from_bottom',
-        duration: 1500
-    		}
-     });
+		api.confirm({
+			 title: '退出提示',
+			 msg: '确定要退出程序吗？',
+			 buttons: ['确定', '取消']
+	 }, function(ret, err) {
+			 var index = ret.buttonIndex;
+			 if (index == 1) {
+					 api.closeWidget({
+						 silent:true,
+						 animation: {
+							 type: 'flip',
+							 subType: 'from_bottom',
+							 duration: 1500
+						 }
+					});
+			 }
+	 });
  }
 </script>
 </body>
