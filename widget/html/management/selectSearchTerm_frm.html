@@ -375,7 +375,7 @@ function cropGrowth() {
              type: 'date', //设置日历初始视图模式
              labels: [ '年', '月', '日' ], //设置默认标签区域提示语
             } )
-            dtpicker.show = function( rs ){
+            dtpicker.show(function( rs ){
              //console.log( JSON.stringify( rs ) );
              var dateValue = JSON.parse(JSON.stringify( rs ));
 
@@ -397,7 +397,7 @@ function cropGrowth() {
                name: 'record_frm',
                bounces: true
              } )
-            }
+            })
       } )
 		})
 			$("#time2").on("touchstart",function(){
@@ -414,7 +414,7 @@ function cropGrowth() {
              type: 'date', //设置日历初始视图模式
              labels: [ '年', '月', '日' ], //设置默认标签区域提示语
             } )
-            dtpicker.show = function( rs ){
+            dtpicker.show(function( rs ){
              //console.log( JSON.stringify( rs ) );
              var dateValue = JSON.parse(JSON.stringify( rs ));
 
@@ -436,7 +436,7 @@ function cropGrowth() {
                name: 'record_frm',
                bounces: true
              })
-            }
+            })
       })
 		})
 </script>
