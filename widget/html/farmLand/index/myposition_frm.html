@@ -105,7 +105,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 95);
+/******/ 	return __webpack_require__(__webpack_require__.s = 99);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -113,7 +113,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 var store = __webpack_require__(19)('wks');
-var uid = __webpack_require__(13);
+var uid = __webpack_require__(14);
 var Symbol = __webpack_require__(2).Symbol;
 var USE_SYMBOL = typeof Symbol == 'function';
 
@@ -129,7 +129,7 @@ $exports.store = store;
 /* 1 */
 /***/ (function(module, exports) {
 
-var core = module.exports = { version: '2.5.1' };
+var core = module.exports = { version: '2.5.0' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
@@ -191,6 +191,18 @@ module.exports = !__webpack_require__(10)(function () {
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
+// to indexed object, toObject with fallback for non-array-like ES3 strings
+var IObject = __webpack_require__(53);
+var defined = __webpack_require__(17);
+module.exports = function (it) {
+  return IObject(defined(it));
+};
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var dP = __webpack_require__(3);
 var createDesc = __webpack_require__(11);
 module.exports = __webpack_require__(5) ? function (object, key, value) {
@@ -202,25 +214,13 @@ module.exports = __webpack_require__(5) ? function (object, key, value) {
 
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(51);
-var defined = __webpack_require__(17);
-module.exports = function (it) {
-  return IObject(defined(it));
-};
-
-
-/***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(2);
 var core = __webpack_require__(1);
 var ctx = __webpack_require__(30);
-var hide = __webpack_require__(6);
+var hide = __webpack_require__(7);
 var PROTOTYPE = 'prototype';
 
 var $export = function (type, name, source) {
@@ -284,7 +284,7 @@ module.exports = $export;
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(14);
+var isObject = __webpack_require__(15);
 module.exports = function (it) {
   if (!isObject(it)) throw TypeError(it + ' is not an object!');
   return it;
@@ -327,6 +327,19 @@ module.exports = {};
 
 /***/ }),
 /* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.14 / 15.2.3.14 Object.keys(O)
+var $keys = __webpack_require__(37);
+var enumBugKeys = __webpack_require__(24);
+
+module.exports = Object.keys || function keys(O) {
+  return $keys(O, enumBugKeys);
+};
+
+
+/***/ }),
+/* 14 */
 /***/ (function(module, exports) {
 
 var id = 0;
@@ -337,24 +350,11 @@ module.exports = function (key) {
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 module.exports = function (it) {
   return typeof it === 'object' ? it !== null : typeof it === 'function';
-};
-
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = __webpack_require__(37);
-var enumBugKeys = __webpack_require__(24);
-
-module.exports = Object.keys || function keys(O) {
-  return $keys(O, enumBugKeys);
 };
 
 
@@ -385,7 +385,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var shared = __webpack_require__(19)('keys');
-var uid = __webpack_require__(13);
+var uid = __webpack_require__(14);
 module.exports = function (key) {
   return shared[key] || (shared[key] = uid(key));
 };
@@ -408,7 +408,7 @@ module.exports = function (key) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(14);
+var isObject = __webpack_require__(15);
 // instead of the ES6 spec version, we didn't implement @@toPrimitive case
 // and the second argument - flag - preferred type is a string
 module.exports = function (it, S) {
@@ -512,11 +512,11 @@ exports.f = {}.propertyIsEnumerable;
 
 exports.__esModule = true;
 
-var _iterator = __webpack_require__(46);
+var _iterator = __webpack_require__(48);
 
 var _iterator2 = _interopRequireDefault(_iterator);
 
-var _symbol = __webpack_require__(59);
+var _symbol = __webpack_require__(61);
 
 var _symbol2 = _interopRequireDefault(_symbol);
 
@@ -535,7 +535,7 @@ exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.d
 /***/ (function(module, exports, __webpack_require__) {
 
 // optional / simple context binding
-var aFunction = __webpack_require__(45);
+var aFunction = __webpack_require__(47);
 module.exports = function (fn, that, length) {
   aFunction(fn);
   if (that === undefined) return fn;
@@ -569,7 +569,7 @@ module.exports = !__webpack_require__(5) && !__webpack_require__(10)(function ()
 /* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(14);
+var isObject = __webpack_require__(15);
 var document = __webpack_require__(2).document;
 // typeof document.createElement is 'object' in old IE
 var is = isObject(document) && isObject(document.createElement);
@@ -584,7 +584,7 @@ module.exports = function (it) {
 
 "use strict";
 
-var $at = __webpack_require__(48)(true);
+var $at = __webpack_require__(50)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
 __webpack_require__(34)(String, 'String', function (iterated) {
@@ -611,10 +611,10 @@ __webpack_require__(34)(String, 'String', function (iterated) {
 var LIBRARY = __webpack_require__(22);
 var $export = __webpack_require__(8);
 var redefine = __webpack_require__(35);
-var hide = __webpack_require__(6);
+var hide = __webpack_require__(7);
 var has = __webpack_require__(4);
 var Iterators = __webpack_require__(12);
-var $iterCreate = __webpack_require__(49);
+var $iterCreate = __webpack_require__(51);
 var setToStringTag = __webpack_require__(25);
 var getPrototypeOf = __webpack_require__(42);
 var ITERATOR = __webpack_require__(0)('iterator');
@@ -683,7 +683,7 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 /* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(6);
+module.exports = __webpack_require__(7);
 
 
 /***/ }),
@@ -692,7 +692,7 @@ module.exports = __webpack_require__(6);
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
 var anObject = __webpack_require__(9);
-var dPs = __webpack_require__(50);
+var dPs = __webpack_require__(52);
 var enumBugKeys = __webpack_require__(24);
 var IE_PROTO = __webpack_require__(18)('IE_PROTO');
 var Empty = function () { /* empty */ };
@@ -707,7 +707,7 @@ var createDict = function () {
   var gt = '>';
   var iframeDocument;
   iframe.style.display = 'none';
-  __webpack_require__(54).appendChild(iframe);
+  __webpack_require__(56).appendChild(iframe);
   iframe.src = 'javascript:'; // eslint-disable-line no-script-url
   // createDict = iframe.contentWindow.Object;
   // html.removeChild(iframe);
@@ -738,8 +738,8 @@ module.exports = Object.create || function create(O, Properties) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var has = __webpack_require__(4);
-var toIObject = __webpack_require__(7);
-var arrayIndexOf = __webpack_require__(52)(false);
+var toIObject = __webpack_require__(6);
+var arrayIndexOf = __webpack_require__(54)(false);
 var IE_PROTO = __webpack_require__(18)('IE_PROTO');
 
 module.exports = function (object, names) {
@@ -792,7 +792,7 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 /* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(44), __esModule: true };
+module.exports = { "default": __webpack_require__(46), __esModule: true };
 
 /***/ }),
 /* 42 */
@@ -833,6 +833,587 @@ module.exports = function (KEY, exec) {
 /* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = { "default": __webpack_require__(75), __esModule: true };
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof2 = __webpack_require__(29);
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+var _stringify = __webpack_require__(41);
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/*
+ * APICloud JavaScript Library
+ * Copyright (c) 2014 apicloud.com
+ */
+(function (window) {
+    var u = {};
+    var isAndroid = /android/gi.test(navigator.appVersion);
+    var uzStorage = function uzStorage() {
+        var ls = window.localStorage;
+        if (isAndroid) {
+            ls = os.localStorage();
+        }
+        return ls;
+    };
+    function parseArguments(url, data, fnSuc, dataType) {
+        if (typeof data == 'function') {
+            dataType = fnSuc;
+            fnSuc = data;
+            data = undefined;
+        }
+        if (typeof fnSuc != 'function') {
+            dataType = fnSuc;
+            fnSuc = undefined;
+        }
+        return {
+            url: url,
+            data: data,
+            fnSuc: fnSuc,
+            dataType: dataType
+        };
+    }
+    u.trim = function (str) {
+        if (String.prototype.trim) {
+            return str == null ? "" : String.prototype.trim.call(str);
+        } else {
+            return str.replace(/(^\s*)|(\s*$)/g, "");
+        }
+    };
+    u.trimAll = function (str) {
+        return str.replace(/\s*/g, '');
+    };
+    u.isElement = function (obj) {
+        return !!(obj && obj.nodeType == 1);
+    };
+    u.isArray = function (obj) {
+        if (Array.isArray) {
+            return Array.isArray(obj);
+        } else {
+            return obj instanceof Array;
+        }
+    };
+    u.isEmptyObject = function (obj) {
+        if ((0, _stringify2.default)(obj) === '{}') {
+            return true;
+        }
+        return false;
+    };
+    u.addEvt = function (el, name, fn, useCapture) {
+        if (!u.isElement(el)) {
+            console.warn('$api.addEvt Function need el param, el param must be DOM Element');
+            return;
+        }
+        useCapture = useCapture || false;
+        if (el.addEventListener) {
+            el.addEventListener(name, fn, useCapture);
+        }
+    };
+    u.rmEvt = function (el, name, fn, useCapture) {
+        if (!u.isElement(el)) {
+            console.warn('$api.rmEvt Function need el param, el param must be DOM Element');
+            return;
+        }
+        useCapture = useCapture || false;
+        if (el.removeEventListener) {
+            el.removeEventListener(name, fn, useCapture);
+        }
+    };
+    u.one = function (el, name, fn, useCapture) {
+        if (!u.isElement(el)) {
+            console.warn('$api.one Function need el param, el param must be DOM Element');
+            return;
+        }
+        useCapture = useCapture || false;
+        var that = this;
+        var cb = function cb() {
+            fn && fn();
+            that.rmEvt(el, name, cb, useCapture);
+        };
+        that.addEvt(el, name, cb, useCapture);
+    };
+    u.dom = function (el, selector) {
+        if (arguments.length === 1 && typeof arguments[0] == 'string') {
+            if (document.querySelector) {
+                return document.querySelector(arguments[0]);
+            }
+        } else if (arguments.length === 2) {
+            if (el.querySelector) {
+                return el.querySelector(selector);
+            }
+        }
+    };
+    u.domAll = function (el, selector) {
+        if (arguments.length === 1 && typeof arguments[0] == 'string') {
+            if (document.querySelectorAll) {
+                return document.querySelectorAll(arguments[0]);
+            }
+        } else if (arguments.length === 2) {
+            if (el.querySelectorAll) {
+                return el.querySelectorAll(selector);
+            }
+        }
+    };
+    u.byId = function (id) {
+        return document.getElementById(id);
+    };
+    u.first = function (el, selector) {
+        if (arguments.length === 1) {
+            if (!u.isElement(el)) {
+                console.warn('$api.first Function need el param, el param must be DOM Element');
+                return;
+            }
+            return el.children[0];
+        }
+        if (arguments.length === 2) {
+            return this.dom(el, selector + ':first-child');
+        }
+    };
+    u.last = function (el, selector) {
+        if (arguments.length === 1) {
+            if (!u.isElement(el)) {
+                console.warn('$api.last Function need el param, el param must be DOM Element');
+                return;
+            }
+            var children = el.children;
+            return children[children.length - 1];
+        }
+        if (arguments.length === 2) {
+            return this.dom(el, selector + ':last-child');
+        }
+    };
+    u.eq = function (el, index) {
+        return this.dom(el, ':nth-child(' + index + ')');
+    };
+    u.not = function (el, selector) {
+        return this.domAll(el, ':not(' + selector + ')');
+    };
+    u.prev = function (el) {
+        if (!u.isElement(el)) {
+            console.warn('$api.prev Function need el param, el param must be DOM Element');
+            return;
+        }
+        var node = el.previousSibling;
+        if (node.nodeType && node.nodeType === 3) {
+            node = node.previousSibling;
+            return node;
+        }
+    };
+    u.next = function (el) {
+        if (!u.isElement(el)) {
+            console.warn('$api.next Function need el param, el param must be DOM Element');
+            return;
+        }
+        var node = el.nextSibling;
+        if (node.nodeType && node.nodeType === 3) {
+            node = node.nextSibling;
+            return node;
+        }
+    };
+    u.closest = function (el, selector) {
+        if (!u.isElement(el)) {
+            console.warn('$api.closest Function need el param, el param must be DOM Element');
+            return;
+        }
+        var doms, targetDom;
+        var isSame = function isSame(doms, el) {
+            var i = 0,
+                len = doms.length;
+            for (i; i < len; i++) {
+                if (doms[i].isEqualNode(el)) {
+                    return doms[i];
+                }
+            }
+            return false;
+        };
+        var traversal = function traversal(el, selector) {
+            doms = u.domAll(el.parentNode, selector);
+            targetDom = isSame(doms, el);
+            while (!targetDom) {
+                el = el.parentNode;
+                if (el != null && el.nodeType == el.DOCUMENT_NODE) {
+                    return false;
+                }
+                traversal(el, selector);
+            }
+
+            return targetDom;
+        };
+
+        return traversal(el, selector);
+    };
+    u.contains = function (parent, el) {
+        var mark = false;
+        if (el === parent) {
+            mark = true;
+            return mark;
+        } else {
+            do {
+                el = el.parentNode;
+                if (el === parent) {
+                    mark = true;
+                    return mark;
+                }
+            } while (el === document.body || el === document.documentElement);
+
+            return mark;
+        }
+    };
+    u.remove = function (el) {
+        if (el && el.parentNode) {
+            el.parentNode.removeChild(el);
+        }
+    };
+    u.attr = function (el, name, value) {
+        if (!u.isElement(el)) {
+            console.warn('$api.attr Function need el param, el param must be DOM Element');
+            return;
+        }
+        if (arguments.length == 2) {
+            return el.getAttribute(name);
+        } else if (arguments.length == 3) {
+            el.setAttribute(name, value);
+            return el;
+        }
+    };
+    u.removeAttr = function (el, name) {
+        if (!u.isElement(el)) {
+            console.warn('$api.removeAttr Function need el param, el param must be DOM Element');
+            return;
+        }
+        if (arguments.length === 2) {
+            el.removeAttribute(name);
+        }
+    };
+    u.hasCls = function (el, cls) {
+        if (!u.isElement(el)) {
+            console.warn('$api.hasCls Function need el param, el param must be DOM Element');
+            return;
+        }
+        if (el.className.indexOf(cls) > -1) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+    u.addCls = function (el, cls) {
+        if (!u.isElement(el)) {
+            console.warn('$api.addCls Function need el param, el param must be DOM Element');
+            return;
+        }
+        if ('classList' in el) {
+            el.classList.add(cls);
+        } else {
+            var preCls = el.className;
+            var newCls = preCls + ' ' + cls;
+            el.className = newCls;
+        }
+        return el;
+    };
+    u.removeCls = function (el, cls) {
+        if (!u.isElement(el)) {
+            console.warn('$api.removeCls Function need el param, el param must be DOM Element');
+            return;
+        }
+        if ('classList' in el) {
+            el.classList.remove(cls);
+        } else {
+            var preCls = el.className;
+            var newCls = preCls.replace(cls, '');
+            el.className = newCls;
+        }
+        return el;
+    };
+    u.toggleCls = function (el, cls) {
+        if (!u.isElement(el)) {
+            console.warn('$api.toggleCls Function need el param, el param must be DOM Element');
+            return;
+        }
+        if ('classList' in el) {
+            el.classList.toggle(cls);
+        } else {
+            if (u.hasCls(el, cls)) {
+                u.removeCls(el, cls);
+            } else {
+                u.addCls(el, cls);
+            }
+        }
+        return el;
+    };
+    u.val = function (el, val) {
+        if (!u.isElement(el)) {
+            console.warn('$api.val Function need el param, el param must be DOM Element');
+            return;
+        }
+        if (arguments.length === 1) {
+            switch (el.tagName) {
+                case 'SELECT':
+                    var value = el.options[el.selectedIndex].value;
+                    return value;
+                    break;
+                case 'INPUT':
+                    return el.value;
+                    break;
+                case 'TEXTAREA':
+                    return el.value;
+                    break;
+            }
+        }
+        if (arguments.length === 2) {
+            switch (el.tagName) {
+                case 'SELECT':
+                    el.options[el.selectedIndex].value = val;
+                    return el;
+                    break;
+                case 'INPUT':
+                    el.value = val;
+                    return el;
+                    break;
+                case 'TEXTAREA':
+                    el.value = val;
+                    return el;
+                    break;
+            }
+        }
+    };
+    u.prepend = function (el, html) {
+        if (!u.isElement(el)) {
+            console.warn('$api.prepend Function need el param, el param must be DOM Element');
+            return;
+        }
+        el.insertAdjacentHTML('afterbegin', html);
+        return el;
+    };
+    u.append = function (el, html) {
+        if (!u.isElement(el)) {
+            console.warn('$api.append Function need el param, el param must be DOM Element');
+            return;
+        }
+        el.insertAdjacentHTML('beforeend', html);
+        return el;
+    };
+    u.before = function (el, html) {
+        if (!u.isElement(el)) {
+            console.warn('$api.before Function need el param, el param must be DOM Element');
+            return;
+        }
+        el.insertAdjacentHTML('beforebegin', html);
+        return el;
+    };
+    u.after = function (el, html) {
+        if (!u.isElement(el)) {
+            console.warn('$api.after Function need el param, el param must be DOM Element');
+            return;
+        }
+        el.insertAdjacentHTML('afterend', html);
+        return el;
+    };
+    u.html = function (el, html) {
+        if (!u.isElement(el)) {
+            console.warn('$api.html Function need el param, el param must be DOM Element');
+            return;
+        }
+        if (arguments.length === 1) {
+            return el.innerHTML;
+        } else if (arguments.length === 2) {
+            el.innerHTML = html;
+            return el;
+        }
+    };
+    u.text = function (el, txt) {
+        if (!u.isElement(el)) {
+            console.warn('$api.text Function need el param, el param must be DOM Element');
+            return;
+        }
+        if (arguments.length === 1) {
+            return el.textContent;
+        } else if (arguments.length === 2) {
+            el.textContent = txt;
+            return el;
+        }
+    };
+    u.offset = function (el) {
+        if (!u.isElement(el)) {
+            console.warn('$api.offset Function need el param, el param must be DOM Element');
+            return;
+        }
+        var sl = Math.max(document.documentElement.scrollLeft, document.body.scrollLeft);
+        var st = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+
+        var rect = el.getBoundingClientRect();
+        return {
+            l: rect.left + sl,
+            t: rect.top + st,
+            w: el.offsetWidth,
+            h: el.offsetHeight
+        };
+    };
+    u.css = function (el, css) {
+        if (!u.isElement(el)) {
+            console.warn('$api.css Function need el param, el param must be DOM Element');
+            return;
+        }
+        if (typeof css == 'string' && css.indexOf(':') > 0) {
+            el.style && (el.style.cssText += ';' + css);
+        }
+    };
+    u.cssVal = function (el, prop) {
+        if (!u.isElement(el)) {
+            console.warn('$api.cssVal Function need el param, el param must be DOM Element');
+            return;
+        }
+        if (arguments.length === 2) {
+            var computedStyle = window.getComputedStyle(el, null);
+            return computedStyle.getPropertyValue(prop);
+        }
+    };
+    u.jsonToStr = function (json) {
+        if ((typeof json === 'undefined' ? 'undefined' : (0, _typeof3.default)(json)) === 'object') {
+            return JSON && (0, _stringify2.default)(json);
+        }
+    };
+    u.strToJson = function (str) {
+        if (typeof str === 'string') {
+            return JSON && JSON.parse(str);
+        }
+    };
+    u.setStorage = function (key, value) {
+        if (arguments.length === 2) {
+            var v = value;
+            if ((typeof v === 'undefined' ? 'undefined' : (0, _typeof3.default)(v)) == 'object') {
+                v = (0, _stringify2.default)(v);
+                v = 'obj-' + v;
+            } else {
+                v = 'str-' + v;
+            }
+            var ls = uzStorage();
+            if (ls) {
+                ls.setItem(key, v);
+            }
+        }
+    };
+    u.getStorage = function (key) {
+        var ls = uzStorage();
+        if (ls) {
+            var v = ls.getItem(key);
+            if (!v) {
+                return;
+            }
+            if (v.indexOf('obj-') === 0) {
+                v = v.slice(4);
+                return JSON.parse(v);
+            } else if (v.indexOf('str-') === 0) {
+                return v.slice(4);
+            }
+        }
+    };
+    u.rmStorage = function (key) {
+        var ls = uzStorage();
+        if (ls && key) {
+            ls.removeItem(key);
+        }
+    };
+    u.clearStorage = function () {
+        var ls = uzStorage();
+        if (ls) {
+            ls.clear();
+        }
+    };
+
+    /*by king*/
+    u.fixIos7Bar = function (el) {
+        if (!u.isElement(el)) {
+            console.warn('$api.fixIos7Bar Function need el param, el param must be DOM Element');
+            return;
+        }
+        var strDM = api.systemType;
+        if (strDM == 'ios') {
+            var strSV = api.systemVersion;
+            var numSV = parseInt(strSV, 10);
+            var fullScreen = api.fullScreen;
+            var iOS7StatusBarAppearance = api.iOS7StatusBarAppearance;
+            if (numSV >= 7 && !fullScreen && iOS7StatusBarAppearance) {
+                el.style.paddingTop = '20px';
+            }
+        }
+    };
+    u.fixStatusBar = function (el) {
+        if (!u.isElement(el)) {
+            console.warn('$api.fixStatusBar Function need el param, el param must be DOM Element');
+            return;
+        }
+        var sysType = api.systemType;
+        if (sysType == 'ios') {
+            u.fixIos7Bar(el);
+        } else if (sysType == 'android') {
+            var ver = api.systemVersion;
+            ver = parseFloat(ver);
+            if (ver >= 4.4) {
+                el.style.paddingTop = '25px';
+            }
+        }
+    };
+    u.toast = function (title, text, time) {
+        var opts = {};
+        var show = function show(opts, time) {
+            api.showProgress(opts);
+            setTimeout(function () {
+                api.hideProgress();
+            }, time);
+        };
+        if (arguments.length === 1) {
+            var time = time || 500;
+            if (typeof title === 'number') {
+                time = title;
+            } else {
+                opts.title = title + '';
+            }
+            show(opts, time);
+        } else if (arguments.length === 2) {
+            var time = time || 500;
+            var text = text;
+            if (typeof text === "number") {
+                var tmp = text;
+                time = tmp;
+                text = null;
+            }
+            if (title) {
+                opts.title = title;
+            }
+            if (text) {
+                opts.text = text;
+            }
+            show(opts, time);
+        }
+        if (title) {
+            opts.title = title;
+        }
+        if (text) {
+            opts.text = text;
+        }
+        time = time || 500;
+        show(opts, time);
+    };
+
+    /*end*/
+
+    window.$api = u;
+})(window);
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var core = __webpack_require__(1);
 var $JSON = core.JSON || (core.JSON = { stringify: JSON.stringify });
 module.exports = function stringify(it) { // eslint-disable-line no-unused-vars
@@ -841,7 +1422,7 @@ module.exports = function stringify(it) { // eslint-disable-line no-unused-vars
 
 
 /***/ }),
-/* 45 */
+/* 47 */
 /***/ (function(module, exports) {
 
 module.exports = function (it) {
@@ -851,22 +1432,22 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(47), __esModule: true };
+module.exports = { "default": __webpack_require__(49), __esModule: true };
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(33);
-__webpack_require__(55);
+__webpack_require__(57);
 module.exports = __webpack_require__(26).f('iterator');
 
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(21);
@@ -889,7 +1470,7 @@ module.exports = function (TO_STRING) {
 
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -900,7 +1481,7 @@ var setToStringTag = __webpack_require__(25);
 var IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(6)(IteratorPrototype, __webpack_require__(0)('iterator'), function () { return this; });
+__webpack_require__(7)(IteratorPrototype, __webpack_require__(0)('iterator'), function () { return this; });
 
 module.exports = function (Constructor, NAME, next) {
   Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
@@ -909,12 +1490,12 @@ module.exports = function (Constructor, NAME, next) {
 
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(3);
 var anObject = __webpack_require__(9);
-var getKeys = __webpack_require__(15);
+var getKeys = __webpack_require__(13);
 
 module.exports = __webpack_require__(5) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
@@ -928,7 +1509,7 @@ module.exports = __webpack_require__(5) ? Object.defineProperties : function def
 
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
@@ -940,14 +1521,14 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 
 
 /***/ }),
-/* 52 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // false -> Array#indexOf
 // true  -> Array#includes
-var toIObject = __webpack_require__(7);
+var toIObject = __webpack_require__(6);
 var toLength = __webpack_require__(38);
-var toAbsoluteIndex = __webpack_require__(53);
+var toAbsoluteIndex = __webpack_require__(55);
 module.exports = function (IS_INCLUDES) {
   return function ($this, el, fromIndex) {
     var O = toIObject($this);
@@ -969,7 +1550,7 @@ module.exports = function (IS_INCLUDES) {
 
 
 /***/ }),
-/* 53 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(21);
@@ -982,7 +1563,7 @@ module.exports = function (index, length) {
 
 
 /***/ }),
-/* 54 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var document = __webpack_require__(2).document;
@@ -990,12 +1571,12 @@ module.exports = document && document.documentElement;
 
 
 /***/ }),
-/* 55 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(56);
+__webpack_require__(58);
 var global = __webpack_require__(2);
-var hide = __webpack_require__(6);
+var hide = __webpack_require__(7);
 var Iterators = __webpack_require__(12);
 var TO_STRING_TAG = __webpack_require__(0)('toStringTag');
 
@@ -1015,15 +1596,15 @@ for (var i = 0; i < DOMIterables.length; i++) {
 
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var addToUnscopables = __webpack_require__(57);
-var step = __webpack_require__(58);
+var addToUnscopables = __webpack_require__(59);
+var step = __webpack_require__(60);
 var Iterators = __webpack_require__(12);
-var toIObject = __webpack_require__(7);
+var toIObject = __webpack_require__(6);
 
 // 22.1.3.4 Array.prototype.entries()
 // 22.1.3.13 Array.prototype.keys()
@@ -1056,14 +1637,14 @@ addToUnscopables('entries');
 
 
 /***/ }),
-/* 57 */
+/* 59 */
 /***/ (function(module, exports) {
 
 module.exports = function () { /* empty */ };
 
 
 /***/ }),
-/* 58 */
+/* 60 */
 /***/ (function(module, exports) {
 
 module.exports = function (done, value) {
@@ -1072,24 +1653,24 @@ module.exports = function (done, value) {
 
 
 /***/ }),
-/* 59 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(60), __esModule: true };
+module.exports = { "default": __webpack_require__(62), __esModule: true };
 
 /***/ }),
-/* 60 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(61);
-__webpack_require__(67);
-__webpack_require__(68);
-__webpack_require__(69);
+__webpack_require__(63);
+__webpack_require__(70);
+__webpack_require__(71);
+__webpack_require__(72);
 module.exports = __webpack_require__(1).Symbol;
 
 
 /***/ }),
-/* 61 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1100,25 +1681,26 @@ var has = __webpack_require__(4);
 var DESCRIPTORS = __webpack_require__(5);
 var $export = __webpack_require__(8);
 var redefine = __webpack_require__(35);
-var META = __webpack_require__(62).KEY;
+var META = __webpack_require__(64).KEY;
 var $fails = __webpack_require__(10);
 var shared = __webpack_require__(19);
 var setToStringTag = __webpack_require__(25);
-var uid = __webpack_require__(13);
+var uid = __webpack_require__(14);
 var wks = __webpack_require__(0);
 var wksExt = __webpack_require__(26);
 var wksDefine = __webpack_require__(27);
-var enumKeys = __webpack_require__(63);
-var isArray = __webpack_require__(64);
+var keyOf = __webpack_require__(65);
+var enumKeys = __webpack_require__(66);
+var isArray = __webpack_require__(67);
 var anObject = __webpack_require__(9);
-var toIObject = __webpack_require__(7);
+var toIObject = __webpack_require__(6);
 var toPrimitive = __webpack_require__(20);
 var createDesc = __webpack_require__(11);
 var _create = __webpack_require__(36);
-var gOPNExt = __webpack_require__(65);
-var $GOPD = __webpack_require__(66);
+var gOPNExt = __webpack_require__(68);
+var $GOPD = __webpack_require__(69);
 var $DP = __webpack_require__(3);
-var $keys = __webpack_require__(15);
+var $keys = __webpack_require__(13);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
 var gOPN = gOPNExt.f;
@@ -1271,9 +1853,9 @@ $export($export.S + $export.F * !USE_NATIVE, 'Symbol', {
       : SymbolRegistry[key] = $Symbol(key);
   },
   // 19.4.2.5 Symbol.keyFor(sym)
-  keyFor: function keyFor(sym) {
-    if (!isSymbol(sym)) throw TypeError(sym + ' is not a symbol!');
-    for (var key in SymbolRegistry) if (SymbolRegistry[key] === sym) return key;
+  keyFor: function keyFor(key) {
+    if (isSymbol(key)) return keyOf(SymbolRegistry, key);
+    throw TypeError(key + ' is not a symbol!');
   },
   useSetter: function () { setter = true; },
   useSimple: function () { setter = false; }
@@ -1320,7 +1902,7 @@ $JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function () {
 });
 
 // 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
-$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(6)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(7)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
 // 19.4.3.5 Symbol.prototype[@@toStringTag]
 setToStringTag($Symbol, 'Symbol');
 // 20.2.1.9 Math[@@toStringTag]
@@ -1330,11 +1912,11 @@ setToStringTag(global.JSON, 'JSON', true);
 
 
 /***/ }),
-/* 62 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var META = __webpack_require__(13)('meta');
-var isObject = __webpack_require__(14);
+var META = __webpack_require__(14)('meta');
+var isObject = __webpack_require__(15);
 var has = __webpack_require__(4);
 var setDesc = __webpack_require__(3).f;
 var id = 0;
@@ -1389,11 +1971,27 @@ var meta = module.exports = {
 
 
 /***/ }),
-/* 63 */
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var getKeys = __webpack_require__(13);
+var toIObject = __webpack_require__(6);
+module.exports = function (object, el) {
+  var O = toIObject(object);
+  var keys = getKeys(O);
+  var length = keys.length;
+  var index = 0;
+  var key;
+  while (length > index) if (O[key = keys[index++]] === el) return key;
+};
+
+
+/***/ }),
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // all enumerable object keys, includes symbols
-var getKeys = __webpack_require__(15);
+var getKeys = __webpack_require__(13);
 var gOPS = __webpack_require__(39);
 var pIE = __webpack_require__(28);
 module.exports = function (it) {
@@ -1410,7 +2008,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 64 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.2 IsArray(argument)
@@ -1421,11 +2019,11 @@ module.exports = Array.isArray || function isArray(arg) {
 
 
 /***/ }),
-/* 65 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-var toIObject = __webpack_require__(7);
+var toIObject = __webpack_require__(6);
 var gOPN = __webpack_require__(40).f;
 var toString = {}.toString;
 
@@ -1446,12 +2044,12 @@ module.exports.f = function getOwnPropertyNames(it) {
 
 
 /***/ }),
-/* 66 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var pIE = __webpack_require__(28);
 var createDesc = __webpack_require__(11);
-var toIObject = __webpack_require__(7);
+var toIObject = __webpack_require__(6);
 var toPrimitive = __webpack_require__(20);
 var has = __webpack_require__(4);
 var IE8_DOM_DEFINE = __webpack_require__(31);
@@ -1468,27 +2066,27 @@ exports.f = __webpack_require__(5) ? gOPD : function getOwnPropertyDescriptor(O,
 
 
 /***/ }),
-/* 67 */
+/* 70 */
 /***/ (function(module, exports) {
 
 
 
 /***/ }),
-/* 68 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(27)('asyncIterator');
 
 
 /***/ }),
-/* 69 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(27)('observable');
 
 
 /***/ }),
-/* 70 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1498,7 +2096,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _defineProperty2 = __webpack_require__(71);
+var _defineProperty2 = __webpack_require__(74);
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
@@ -1506,11 +2104,11 @@ var _typeof2 = __webpack_require__(29);
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
-var _keys = __webpack_require__(75);
+var _keys = __webpack_require__(77);
 
 var _keys2 = _interopRequireDefault(_keys);
 
-var _from = __webpack_require__(78);
+var _from = __webpack_require__(80);
 
 var _from2 = _interopRequireDefault(_from);
 
@@ -1522,7 +2120,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Created by wenwang on 2017/8/24.
  */
 
-__webpack_require__(87);
+__webpack_require__(45);
 
 /*function isArrayLike(o) {
  if (o &&                                    // o不是null、undefined等
@@ -2329,7 +2927,7 @@ function getSize(el) {
 exports.default = jqStyle;
 
 /***/ }),
-/* 71 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2337,7 +2935,7 @@ exports.default = jqStyle;
 
 exports.__esModule = true;
 
-var _defineProperty = __webpack_require__(72);
+var _defineProperty = __webpack_require__(44);
 
 var _defineProperty2 = _interopRequireDefault(_defineProperty);
 
@@ -2359,16 +2957,10 @@ exports.default = function (obj, key, value) {
 };
 
 /***/ }),
-/* 72 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(73), __esModule: true };
-
-/***/ }),
-/* 73 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(74);
+__webpack_require__(76);
 var $Object = __webpack_require__(1).Object;
 module.exports = function defineProperty(it, key, desc) {
   return $Object.defineProperty(it, key, desc);
@@ -2376,7 +2968,7 @@ module.exports = function defineProperty(it, key, desc) {
 
 
 /***/ }),
-/* 74 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(8);
@@ -2385,26 +2977,26 @@ $export($export.S + $export.F * !__webpack_require__(5), 'Object', { definePrope
 
 
 /***/ }),
-/* 75 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(76), __esModule: true };
+module.exports = { "default": __webpack_require__(78), __esModule: true };
 
 /***/ }),
-/* 76 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(77);
+__webpack_require__(79);
 module.exports = __webpack_require__(1).Object.keys;
 
 
 /***/ }),
-/* 77 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 Object.keys(O)
 var toObject = __webpack_require__(16);
-var $keys = __webpack_require__(15);
+var $keys = __webpack_require__(13);
 
 __webpack_require__(43)('keys', function () {
   return function keys(it) {
@@ -2414,22 +3006,22 @@ __webpack_require__(43)('keys', function () {
 
 
 /***/ }),
-/* 78 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(79), __esModule: true };
+module.exports = { "default": __webpack_require__(81), __esModule: true };
 
 /***/ }),
-/* 79 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(33);
-__webpack_require__(80);
+__webpack_require__(82);
 module.exports = __webpack_require__(1).Array.from;
 
 
 /***/ }),
-/* 80 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2437,13 +3029,13 @@ module.exports = __webpack_require__(1).Array.from;
 var ctx = __webpack_require__(30);
 var $export = __webpack_require__(8);
 var toObject = __webpack_require__(16);
-var call = __webpack_require__(81);
-var isArrayIter = __webpack_require__(82);
+var call = __webpack_require__(83);
+var isArrayIter = __webpack_require__(84);
 var toLength = __webpack_require__(38);
-var createProperty = __webpack_require__(83);
-var getIterFn = __webpack_require__(84);
+var createProperty = __webpack_require__(85);
+var getIterFn = __webpack_require__(86);
 
-$export($export.S + $export.F * !__webpack_require__(86)(function (iter) { Array.from(iter); }), 'Array', {
+$export($export.S + $export.F * !__webpack_require__(88)(function (iter) { Array.from(iter); }), 'Array', {
   // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
   from: function from(arrayLike /* , mapfn = undefined, thisArg = undefined */) {
     var O = toObject(arrayLike);
@@ -2473,7 +3065,7 @@ $export($export.S + $export.F * !__webpack_require__(86)(function (iter) { Array
 
 
 /***/ }),
-/* 81 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // call something on iterator step with safe closing on error
@@ -2491,7 +3083,7 @@ module.exports = function (iterator, fn, value, entries) {
 
 
 /***/ }),
-/* 82 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // check on default Array iterator
@@ -2505,7 +3097,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 83 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2520,10 +3112,10 @@ module.exports = function (object, index, value) {
 
 
 /***/ }),
-/* 84 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var classof = __webpack_require__(85);
+var classof = __webpack_require__(87);
 var ITERATOR = __webpack_require__(0)('iterator');
 var Iterators = __webpack_require__(12);
 module.exports = __webpack_require__(1).getIteratorMethod = function (it) {
@@ -2534,7 +3126,7 @@ module.exports = __webpack_require__(1).getIteratorMethod = function (it) {
 
 
 /***/ }),
-/* 85 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
@@ -2563,7 +3155,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 86 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ITERATOR = __webpack_require__(0)('iterator');
@@ -2591,595 +3183,23 @@ module.exports = function (exec, skipClosing) {
 
 
 /***/ }),
-/* 87 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof2 = __webpack_require__(29);
-
-var _typeof3 = _interopRequireDefault(_typeof2);
-
-var _stringify = __webpack_require__(41);
-
-var _stringify2 = _interopRequireDefault(_stringify);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/*
- * APICloud JavaScript Library
- * Copyright (c) 2014 apicloud.com
- */
-(function (window) {
-    var u = {};
-    var isAndroid = /android/gi.test(navigator.appVersion);
-    var uzStorage = function uzStorage() {
-        var ls = window.localStorage;
-        if (isAndroid) {
-            ls = os.localStorage();
-        }
-        return ls;
-    };
-    function parseArguments(url, data, fnSuc, dataType) {
-        if (typeof data == 'function') {
-            dataType = fnSuc;
-            fnSuc = data;
-            data = undefined;
-        }
-        if (typeof fnSuc != 'function') {
-            dataType = fnSuc;
-            fnSuc = undefined;
-        }
-        return {
-            url: url,
-            data: data,
-            fnSuc: fnSuc,
-            dataType: dataType
-        };
-    }
-    u.trim = function (str) {
-        if (String.prototype.trim) {
-            return str == null ? "" : String.prototype.trim.call(str);
-        } else {
-            return str.replace(/(^\s*)|(\s*$)/g, "");
-        }
-    };
-    u.trimAll = function (str) {
-        return str.replace(/\s*/g, '');
-    };
-    u.isElement = function (obj) {
-        return !!(obj && obj.nodeType == 1);
-    };
-    u.isArray = function (obj) {
-        if (Array.isArray) {
-            return Array.isArray(obj);
-        } else {
-            return obj instanceof Array;
-        }
-    };
-    u.isEmptyObject = function (obj) {
-        if ((0, _stringify2.default)(obj) === '{}') {
-            return true;
-        }
-        return false;
-    };
-    u.addEvt = function (el, name, fn, useCapture) {
-        if (!u.isElement(el)) {
-            console.warn('$api.addEvt Function need el param, el param must be DOM Element');
-            return;
-        }
-        useCapture = useCapture || false;
-        if (el.addEventListener) {
-            el.addEventListener(name, fn, useCapture);
-        }
-    };
-    u.rmEvt = function (el, name, fn, useCapture) {
-        if (!u.isElement(el)) {
-            console.warn('$api.rmEvt Function need el param, el param must be DOM Element');
-            return;
-        }
-        useCapture = useCapture || false;
-        if (el.removeEventListener) {
-            el.removeEventListener(name, fn, useCapture);
-        }
-    };
-    u.one = function (el, name, fn, useCapture) {
-        if (!u.isElement(el)) {
-            console.warn('$api.one Function need el param, el param must be DOM Element');
-            return;
-        }
-        useCapture = useCapture || false;
-        var that = this;
-        var cb = function cb() {
-            fn && fn();
-            that.rmEvt(el, name, cb, useCapture);
-        };
-        that.addEvt(el, name, cb, useCapture);
-    };
-    u.dom = function (el, selector) {
-        if (arguments.length === 1 && typeof arguments[0] == 'string') {
-            if (document.querySelector) {
-                return document.querySelector(arguments[0]);
-            }
-        } else if (arguments.length === 2) {
-            if (el.querySelector) {
-                return el.querySelector(selector);
-            }
-        }
-    };
-    u.domAll = function (el, selector) {
-        if (arguments.length === 1 && typeof arguments[0] == 'string') {
-            if (document.querySelectorAll) {
-                return document.querySelectorAll(arguments[0]);
-            }
-        } else if (arguments.length === 2) {
-            if (el.querySelectorAll) {
-                return el.querySelectorAll(selector);
-            }
-        }
-    };
-    u.byId = function (id) {
-        return document.getElementById(id);
-    };
-    u.first = function (el, selector) {
-        if (arguments.length === 1) {
-            if (!u.isElement(el)) {
-                console.warn('$api.first Function need el param, el param must be DOM Element');
-                return;
-            }
-            return el.children[0];
-        }
-        if (arguments.length === 2) {
-            return this.dom(el, selector + ':first-child');
-        }
-    };
-    u.last = function (el, selector) {
-        if (arguments.length === 1) {
-            if (!u.isElement(el)) {
-                console.warn('$api.last Function need el param, el param must be DOM Element');
-                return;
-            }
-            var children = el.children;
-            return children[children.length - 1];
-        }
-        if (arguments.length === 2) {
-            return this.dom(el, selector + ':last-child');
-        }
-    };
-    u.eq = function (el, index) {
-        return this.dom(el, ':nth-child(' + index + ')');
-    };
-    u.not = function (el, selector) {
-        return this.domAll(el, ':not(' + selector + ')');
-    };
-    u.prev = function (el) {
-        if (!u.isElement(el)) {
-            console.warn('$api.prev Function need el param, el param must be DOM Element');
-            return;
-        }
-        var node = el.previousSibling;
-        if (node.nodeType && node.nodeType === 3) {
-            node = node.previousSibling;
-            return node;
-        }
-    };
-    u.next = function (el) {
-        if (!u.isElement(el)) {
-            console.warn('$api.next Function need el param, el param must be DOM Element');
-            return;
-        }
-        var node = el.nextSibling;
-        if (node.nodeType && node.nodeType === 3) {
-            node = node.nextSibling;
-            return node;
-        }
-    };
-    u.closest = function (el, selector) {
-        if (!u.isElement(el)) {
-            console.warn('$api.closest Function need el param, el param must be DOM Element');
-            return;
-        }
-        var doms, targetDom;
-        var isSame = function isSame(doms, el) {
-            var i = 0,
-                len = doms.length;
-            for (i; i < len; i++) {
-                if (doms[i].isEqualNode(el)) {
-                    return doms[i];
-                }
-            }
-            return false;
-        };
-        var traversal = function traversal(el, selector) {
-            doms = u.domAll(el.parentNode, selector);
-            targetDom = isSame(doms, el);
-            while (!targetDom) {
-                el = el.parentNode;
-                if (el != null && el.nodeType == el.DOCUMENT_NODE) {
-                    return false;
-                }
-                traversal(el, selector);
-            }
-
-            return targetDom;
-        };
-
-        return traversal(el, selector);
-    };
-    u.contains = function (parent, el) {
-        var mark = false;
-        if (el === parent) {
-            mark = true;
-            return mark;
-        } else {
-            do {
-                el = el.parentNode;
-                if (el === parent) {
-                    mark = true;
-                    return mark;
-                }
-            } while (el === document.body || el === document.documentElement);
-
-            return mark;
-        }
-    };
-    u.remove = function (el) {
-        if (el && el.parentNode) {
-            el.parentNode.removeChild(el);
-        }
-    };
-    u.attr = function (el, name, value) {
-        if (!u.isElement(el)) {
-            console.warn('$api.attr Function need el param, el param must be DOM Element');
-            return;
-        }
-        if (arguments.length == 2) {
-            return el.getAttribute(name);
-        } else if (arguments.length == 3) {
-            el.setAttribute(name, value);
-            return el;
-        }
-    };
-    u.removeAttr = function (el, name) {
-        if (!u.isElement(el)) {
-            console.warn('$api.removeAttr Function need el param, el param must be DOM Element');
-            return;
-        }
-        if (arguments.length === 2) {
-            el.removeAttribute(name);
-        }
-    };
-    u.hasCls = function (el, cls) {
-        if (!u.isElement(el)) {
-            console.warn('$api.hasCls Function need el param, el param must be DOM Element');
-            return;
-        }
-        if (el.className.indexOf(cls) > -1) {
-            return true;
-        } else {
-            return false;
-        }
-    };
-    u.addCls = function (el, cls) {
-        if (!u.isElement(el)) {
-            console.warn('$api.addCls Function need el param, el param must be DOM Element');
-            return;
-        }
-        if ('classList' in el) {
-            el.classList.add(cls);
-        } else {
-            var preCls = el.className;
-            var newCls = preCls + ' ' + cls;
-            el.className = newCls;
-        }
-        return el;
-    };
-    u.removeCls = function (el, cls) {
-        if (!u.isElement(el)) {
-            console.warn('$api.removeCls Function need el param, el param must be DOM Element');
-            return;
-        }
-        if ('classList' in el) {
-            el.classList.remove(cls);
-        } else {
-            var preCls = el.className;
-            var newCls = preCls.replace(cls, '');
-            el.className = newCls;
-        }
-        return el;
-    };
-    u.toggleCls = function (el, cls) {
-        if (!u.isElement(el)) {
-            console.warn('$api.toggleCls Function need el param, el param must be DOM Element');
-            return;
-        }
-        if ('classList' in el) {
-            el.classList.toggle(cls);
-        } else {
-            if (u.hasCls(el, cls)) {
-                u.removeCls(el, cls);
-            } else {
-                u.addCls(el, cls);
-            }
-        }
-        return el;
-    };
-    u.val = function (el, val) {
-        if (!u.isElement(el)) {
-            console.warn('$api.val Function need el param, el param must be DOM Element');
-            return;
-        }
-        if (arguments.length === 1) {
-            switch (el.tagName) {
-                case 'SELECT':
-                    var value = el.options[el.selectedIndex].value;
-                    return value;
-                    break;
-                case 'INPUT':
-                    return el.value;
-                    break;
-                case 'TEXTAREA':
-                    return el.value;
-                    break;
-            }
-        }
-        if (arguments.length === 2) {
-            switch (el.tagName) {
-                case 'SELECT':
-                    el.options[el.selectedIndex].value = val;
-                    return el;
-                    break;
-                case 'INPUT':
-                    el.value = val;
-                    return el;
-                    break;
-                case 'TEXTAREA':
-                    el.value = val;
-                    return el;
-                    break;
-            }
-        }
-    };
-    u.prepend = function (el, html) {
-        if (!u.isElement(el)) {
-            console.warn('$api.prepend Function need el param, el param must be DOM Element');
-            return;
-        }
-        el.insertAdjacentHTML('afterbegin', html);
-        return el;
-    };
-    u.append = function (el, html) {
-        if (!u.isElement(el)) {
-            console.warn('$api.append Function need el param, el param must be DOM Element');
-            return;
-        }
-        el.insertAdjacentHTML('beforeend', html);
-        return el;
-    };
-    u.before = function (el, html) {
-        if (!u.isElement(el)) {
-            console.warn('$api.before Function need el param, el param must be DOM Element');
-            return;
-        }
-        el.insertAdjacentHTML('beforebegin', html);
-        return el;
-    };
-    u.after = function (el, html) {
-        if (!u.isElement(el)) {
-            console.warn('$api.after Function need el param, el param must be DOM Element');
-            return;
-        }
-        el.insertAdjacentHTML('afterend', html);
-        return el;
-    };
-    u.html = function (el, html) {
-        if (!u.isElement(el)) {
-            console.warn('$api.html Function need el param, el param must be DOM Element');
-            return;
-        }
-        if (arguments.length === 1) {
-            return el.innerHTML;
-        } else if (arguments.length === 2) {
-            el.innerHTML = html;
-            return el;
-        }
-    };
-    u.text = function (el, txt) {
-        if (!u.isElement(el)) {
-            console.warn('$api.text Function need el param, el param must be DOM Element');
-            return;
-        }
-        if (arguments.length === 1) {
-            return el.textContent;
-        } else if (arguments.length === 2) {
-            el.textContent = txt;
-            return el;
-        }
-    };
-    u.offset = function (el) {
-        if (!u.isElement(el)) {
-            console.warn('$api.offset Function need el param, el param must be DOM Element');
-            return;
-        }
-        var sl = Math.max(document.documentElement.scrollLeft, document.body.scrollLeft);
-        var st = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
-
-        var rect = el.getBoundingClientRect();
-        return {
-            l: rect.left + sl,
-            t: rect.top + st,
-            w: el.offsetWidth,
-            h: el.offsetHeight
-        };
-    };
-    u.css = function (el, css) {
-        if (!u.isElement(el)) {
-            console.warn('$api.css Function need el param, el param must be DOM Element');
-            return;
-        }
-        if (typeof css == 'string' && css.indexOf(':') > 0) {
-            el.style && (el.style.cssText += ';' + css);
-        }
-    };
-    u.cssVal = function (el, prop) {
-        if (!u.isElement(el)) {
-            console.warn('$api.cssVal Function need el param, el param must be DOM Element');
-            return;
-        }
-        if (arguments.length === 2) {
-            var computedStyle = window.getComputedStyle(el, null);
-            return computedStyle.getPropertyValue(prop);
-        }
-    };
-    u.jsonToStr = function (json) {
-        if ((typeof json === 'undefined' ? 'undefined' : (0, _typeof3.default)(json)) === 'object') {
-            return JSON && (0, _stringify2.default)(json);
-        }
-    };
-    u.strToJson = function (str) {
-        if (typeof str === 'string') {
-            return JSON && JSON.parse(str);
-        }
-    };
-    u.setStorage = function (key, value) {
-        if (arguments.length === 2) {
-            var v = value;
-            if ((typeof v === 'undefined' ? 'undefined' : (0, _typeof3.default)(v)) == 'object') {
-                v = (0, _stringify2.default)(v);
-                v = 'obj-' + v;
-            } else {
-                v = 'str-' + v;
-            }
-            var ls = uzStorage();
-            if (ls) {
-                ls.setItem(key, v);
-            }
-        }
-    };
-    u.getStorage = function (key) {
-        var ls = uzStorage();
-        if (ls) {
-            var v = ls.getItem(key);
-            if (!v) {
-                return;
-            }
-            if (v.indexOf('obj-') === 0) {
-                v = v.slice(4);
-                return JSON.parse(v);
-            } else if (v.indexOf('str-') === 0) {
-                return v.slice(4);
-            }
-        }
-    };
-    u.rmStorage = function (key) {
-        var ls = uzStorage();
-        if (ls && key) {
-            ls.removeItem(key);
-        }
-    };
-    u.clearStorage = function () {
-        var ls = uzStorage();
-        if (ls) {
-            ls.clear();
-        }
-    };
-
-    /*by king*/
-    u.fixIos7Bar = function (el) {
-        if (!u.isElement(el)) {
-            console.warn('$api.fixIos7Bar Function need el param, el param must be DOM Element');
-            return;
-        }
-        var strDM = api.systemType;
-        if (strDM == 'ios') {
-            var strSV = api.systemVersion;
-            var numSV = parseInt(strSV, 10);
-            var fullScreen = api.fullScreen;
-            var iOS7StatusBarAppearance = api.iOS7StatusBarAppearance;
-            if (numSV >= 7 && !fullScreen && iOS7StatusBarAppearance) {
-                el.style.paddingTop = '20px';
-            }
-        }
-    };
-    u.fixStatusBar = function (el) {
-        if (!u.isElement(el)) {
-            console.warn('$api.fixStatusBar Function need el param, el param must be DOM Element');
-            return;
-        }
-        var sysType = api.systemType;
-        if (sysType == 'ios') {
-            u.fixIos7Bar(el);
-        } else if (sysType == 'android') {
-            var ver = api.systemVersion;
-            ver = parseFloat(ver);
-            if (ver >= 4.4) {
-                el.style.paddingTop = '25px';
-            }
-        }
-    };
-    u.toast = function (title, text, time) {
-        var opts = {};
-        var show = function show(opts, time) {
-            api.showProgress(opts);
-            setTimeout(function () {
-                api.hideProgress();
-            }, time);
-        };
-        if (arguments.length === 1) {
-            var time = time || 500;
-            if (typeof title === 'number') {
-                time = title;
-            } else {
-                opts.title = title + '';
-            }
-            show(opts, time);
-        } else if (arguments.length === 2) {
-            var time = time || 500;
-            var text = text;
-            if (typeof text === "number") {
-                var tmp = text;
-                time = tmp;
-                text = null;
-            }
-            if (title) {
-                opts.title = title;
-            }
-            if (text) {
-                opts.text = text;
-            }
-            show(opts, time);
-        }
-        if (title) {
-            opts.title = title;
-        }
-        if (text) {
-            opts.text = text;
-        }
-        time = time || 500;
-        show(opts, time);
-    };
-
-    /*end*/
-
-    window.$api = u;
-})(window);
-
-/***/ }),
-/* 88 */,
 /* 89 */,
 /* 90 */,
 /* 91 */,
 /* 92 */,
 /* 93 */,
 /* 94 */,
-/* 95 */
+/* 95 */,
+/* 96 */,
+/* 97 */,
+/* 98 */,
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _jq = __webpack_require__(70);
+var _jq = __webpack_require__(73);
 
 var _jq2 = _interopRequireDefault(_jq);
 
