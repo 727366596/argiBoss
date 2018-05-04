@@ -57,6 +57,7 @@
 					name : 'content-detail_frm',
 					url : './content-detail_frm.html',
 					pageParam:api.pageParam,
+					reload: true,
 					rect : {
 						x : 0,
 						y : headerPos.h,
@@ -64,6 +65,15 @@
 						h : 'auto'
 					}
 				})
+
+				api.sendEvent({
+				    name: 'ajpush',
+				    extra: {
+				        flag: 1, 
+				    }
+				});
+
+
 				api.addEventListener({
 						name: 'keyback'
 				}, function(ret, err){

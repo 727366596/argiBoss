@@ -226,9 +226,15 @@ apiready=function(){
 
 	api.addEventListener({name:'resume'}, function(ret,err) {
 			onResume();//监听应用恢复到前台，通知jpush恢复事件
+			ajpush.setBadge({
+					badge:0
+			});
 	});
 	//*****************************************
 	api.addEventListener({name:'appintent'}, function(ret,err) {
+			ajpush.setBadge({
+					badge:0
+			});
 			//alert('通知被点击，收到数据11：n' + JSON.stringify(ret));//监听通知被点击后收到的数据
 			//alert(JSON.stringify(ret.appParam.ajpush.extra))
 			var extra = ret.appParam.ajpush.extra;
@@ -257,7 +263,41 @@ apiready=function(){
 	})
 	//因为IOS和andriod监听不同所以我这里不同的作了不同的处理
 	api.addEventListener({name:'noticeclicked'}, function(ret,err) {
+			ajpush.setBadge({
+					badge:0
+			});
 			//alert('通知被点击，收到数据11：n' + JSON.stringify(ret));//监听通知被点击后收到的数据
+			var extra = ret.value.extra;
+			var name = extra.jump2name;
+			var url = extra.jump2url;//alert(url)
+			var dataArr = url.split("?")[1].split("&"), data = {};
+			for (var i = 0; i < dataArr.length; i++) {
+				var data_ = dataArr[i].split("=");
+				data[data_[0]] = data_[1];
+			};
+			console.log("哈哈哈哈哈哈哈" + JSON.stringify(data));
+			if(url.indexOf("widget:")<0)url ="widget://"+url;
+			var selecteIndex = extra.jump2menu||'0';
+			api.openWin({
+				name:'content-detail_win',
+				url:'widget://html/home/content-detail_win.html',
+				slidBackEnabled : false,
+				pageParam:data,
+				animation : {
+					type : "movein", //动画类型（详见动画类型常量）
+					subType : "from_right", //动画子类型（详见动画子类型常量）
+					duration : 300 //动画过渡时间，默认300毫秒
+				}
+			})
+	});
+	api.addEventListener({name:'ajpush'}, function(ret,err) {
+			//alert('通知被点击，收到数据11：n' + JSON.stringify(ret));//监听通知被点击后收到的数据
+			api.execScript({
+			    name: 'win_home',
+			    frameName: 'home_index',
+			    script: 'window.location.reload();'
+			});
+
 	});
 	//app消息推送结束****************************************************
 
