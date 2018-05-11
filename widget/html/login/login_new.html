@@ -220,6 +220,17 @@ apiready=function(){
 					// });
 			});
 	};
+
+	//默认先推个空号，保证不登录收不到
+	var param = {
+			alias : "",
+			tags : ['tag1', 'tag2']
+	};
+	ajpush.bindAliasAndTags(param, function(ret) {
+			var statusCode = ret.statusCode;
+			//alert("ajpush成功*****"+statusCode)
+	});
+
 	api.addEventListener({name:'pause'}, function(ret,err) {
 			onPause();//监听应用进入后台，通知jpush暂停事件
 	})

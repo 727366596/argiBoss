@@ -207,14 +207,18 @@ apiready = function(){
 	        }
 			api.openFrame($.extend({}, {
 				name : frameName,
-			   	url :  frameUrl,
-		        pageParam : $.extend(api.pageParam,{iOS7StatusBarAppearance:iOS7StatusBarAppearance}),
+			  url :  frameUrl,
+		    pageParam : $.extend(api.pageParam,{iOS7StatusBarAppearance:iOS7StatusBarAppearance}),
 				reload : true,
-			    rect : {
-					x : 0,
-					y : 0+iOS7StatusBarAppearance,
-					w : 'auto',
-					h : api.winHeight-50-iOS7StatusBarAppearance
+				rect : {
+					// x : 0,
+					// y : 0,
+					// w : 'auto',
+					// h : api.winHeight-51,
+					marginTop : 0,
+					marginLeft : 0,
+					marginRight : 0,
+					marginBottom : 51
 				}
 			}, param_));
 
@@ -230,13 +234,17 @@ apiready = function(){
 	    param_=JSON.parse(api.pageParam.extend_params);
 	    param_.animation=null;
 		api.openFrame($.extend({}, {
-		        pageParam : $.extend(api.pageParam,{iOS7StatusBarAppearance:iOS7StatusBarAppearance}),
+		    pageParam : $.extend(api.pageParam,{iOS7StatusBarAppearance:iOS7StatusBarAppearance}),
 				reload : true,
-			    rect : {
-					x : 0,
-					y : 0,
-					w : 'auto',
-					h : api.winHeight
+				rect : {
+					// x : 0,
+					// y : 0,
+					// w : 'auto',
+					// h : api.winHeight-51,
+					marginTop : 0,
+					marginLeft : 0,
+					marginRight : 0,
+					marginBottom : 51
 				}
 			}, param_));
 	}
@@ -270,6 +278,7 @@ function back(){
 							 duration: 1500
 						 }
 					});
+					//api.toLauncher();
 			 }
 	 });
  }

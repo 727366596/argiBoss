@@ -213,7 +213,7 @@
 
             return mark;
         }
-        
+
     };
     u.remove = function(el){
         if(el && el.parentNode){
@@ -338,7 +338,7 @@
                     break;
             }
         }
-        
+
     };
     u.prepend = function(el, html){
         if(!u.isElement(el)){
@@ -482,7 +482,7 @@
         }
     };
 
-   
+
     /*by king*/
     u.fixIos7Bar = function(el){
         if(!u.isElement(el)){
@@ -605,7 +605,7 @@
     };
 
 /*end*/
-    
+
 	u.openWin = function(params){
 //  	if($api.getStorage("openWin")&&$api.getStorage("openWin").indexOf(params.name+"&")>-1){
 //  		params.own = true;
@@ -615,9 +615,9 @@
     	if(api.winName==params.name){
     		params.own = true;
     	}
-    	api.openWin({		
+    	api.openWin({
         		name:params.name,
-        		url:'widget://html/win_home.html',
+        		url:params.url,
         		slidBackEnabled:false,
         		reload:true,
         		pageParam:{'extend_params':JSON.stringify(params)}
@@ -626,5 +626,3 @@
     window.$api = u;
 
 })(window);
-
-
