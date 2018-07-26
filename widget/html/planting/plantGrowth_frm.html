@@ -1266,7 +1266,7 @@
 			//data:{values:{categoryId:"0",farmId:"1797",startDate:"2017-01-01",endDate:"2017-12-29"}}
 			success:function(ret,err){
 					// alert(categoryId+","+farmId+","+startDate+","+endDate)
-					// alert(JSON.stringify(ret));
+					//alert(JSON.stringify(ret));
 					$(".circle").hide()
 					if(ret.data.length==0){
 							$("#noPic").show()
@@ -1277,9 +1277,11 @@
 					}
 					var shi=ret.data,l=ret.data.length,zhan=0,str=""
 					for(var i=0;i<l;i++){
+						if(!shi[i]){continue}
 						zhan+=shi[i].money
 					}
 					for(var i=0;i<l;i++){
+						if(!shi[i]){continue}
 						var bi=((shi[i].money/zhan)*100).toFixed(1)+"%",da=2*(0.9+2*shi[i].money/zhan)
 					  if(shi[i].money>10000){
 							shi[i].money=parseFloat((shi[i].money/10000).toFixed(1))+"万"
